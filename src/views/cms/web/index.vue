@@ -87,6 +87,7 @@
       <el-table-column label="描述" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
+          <el-button-group>
           <el-button
             link
             type="primary"
@@ -108,6 +109,7 @@
             @click="handleThemeList(scope.row)"
             v-hasPermi="['cms:theme:list']"
           >站点</el-button>
+          </el-button-group>
         </template>
       </el-table-column>
     </el-table>
