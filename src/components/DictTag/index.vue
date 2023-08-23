@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="(item, index) in options">
-      <template v-if="values.includes(item.value)">
+      <template v-if="(dictSort && values==(''+item.dictSort)) ||values.includes(item.value) ">
         <span
           v-if="item.elTagType == 'default' || item.elTagType == ''"
           :key="item.value"
@@ -30,6 +30,11 @@ const props = defineProps({
   },
   // 当前的值
   value: [Number, String, Array],
+  // 是否通过dictSort
+  dictSort:{
+    type: Boolean,
+    default:false
+  }
 })
 
 const values = computed(() => {
