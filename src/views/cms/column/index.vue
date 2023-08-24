@@ -151,9 +151,9 @@
           <dict-tag :options="sys_show_hide" :value="scope.row.visible" />
         </template>
       </el-table-column>
-      <el-table-column label="目录" align="center" prop="parent">
+      <el-table-column label="目录" align="center" prop="nodeType">
         <template #default="scope">
-          <dict-tag :options="cms_yes_no" :value="scope.row.parent" />
+          <dict-tag :options="cms_yes_no" :value="scope.row.nodeType" />
         </template>
       </el-table-column>
       <el-table-column label="导航类型" align="center" prop="columnType" >
@@ -205,7 +205,7 @@
             >
           </el-button>
         </el-tooltip>
-         <el-tooltip content="添加下级" placement="top" v-if="!scope.row.parent">
+         <el-tooltip content="添加下级" placement="top" v-if="!scope.row.nodeType">
           <el-button
             link
                 type="primary"
@@ -247,8 +247,8 @@
             check-strictly
           />
         </el-form-item>
-        <el-form-item label="目录" prop="parent">
-          <el-radio-group v-model="form.parent">
+        <el-form-item label="目录" prop="nodeType">
+          <el-radio-group v-model="form.nodeType">
             <el-radio
               v-for="dict in cms_yes_no"
               :key="dict.value"
@@ -392,7 +392,7 @@ const data = reactive({
     columnIcon: null,
     visible: null,
     parentId: null,
-    parent: null,
+    nodeType: null,
     openType: null,
     perms: null,
     columnUrl: null,
@@ -415,7 +415,7 @@ const data = reactive({
     openType: [
       { required: true, message: "打开方式不能为空", trigger: "blur" },
     ],
-    parent: [{ required: true, message: "目录不能为空", trigger: "blur" }],
+    nodeType: [{ required: true, message: "目录不能为空", trigger: "blur" }],
   },
 });
 
@@ -474,7 +474,7 @@ function reset() {
     columnIcon: null,
     visible: 0,
     parentId: null,
-    parent: 0,
+    nodeType: 0,
     remark: null,
     openType: 0,
     perms: null,

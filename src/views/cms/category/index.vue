@@ -7,18 +7,18 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-form-item label="分类ID" prop="catId">
+      <el-form-item label="类目ID" prop="categoryId">
         <el-input
-          v-model="queryParams.catId"
-          placeholder="请输入分类ID"
+          v-model="queryParams.categoryId"
+          placeholder="请输入类目ID"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="分类名字" prop="catName">
+      <el-form-item label="类目名字" prop="categoryName">
         <el-input
-          v-model="queryParams.catName"
-          placeholder="请输入分类名字"
+          v-model="queryParams.categoryName"
+          placeholder="请输入类目名字"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -39,10 +39,10 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="分类状态" prop="visible">
+      <el-form-item label="类目状态" prop="visible">
         <el-select
           v-model="queryParams.visible"
-          placeholder="请选择分类状态"
+          placeholder="请选择类目状态"
           clearable
         >
           <el-option
@@ -53,17 +53,17 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="分类类型" prop="catType">
+      <el-form-item label="类目类型" prop="categoryType">
         <el-select
-          v-model="queryParams.catType"
-          placeholder="请选择分类类型"
+          v-model="queryParams.categoryType"
+          placeholder="请选择类目类型"
           clearable
         >
           <el-option
-            v-for="dict in cms_support_type"
+            v-for="dict in cms_category_type"
             :key="dict.value"
             :label="dict.label"
-            :value="dict.value"
+            :value="dict.dictSort"
           />
         </el-select>
       </el-form-item>
@@ -100,7 +100,7 @@
           plain
           icon="Plus"
           @click="handleAdd"
-          v-hasPermi="['cms:cat:add']"
+          v-hasPermi="['cms:category:add']"
           >新增</el-button
         >
       </el-col>
@@ -120,13 +120,13 @@
     <el-table
       v-if="refreshTable"
       v-loading="loading"
-      :data="catList"
-      row-key="catId"
+      :data="categoryList"
+      row-key="categoryId"
       :default-expand-all="isExpandAll"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
-      <el-table-column label="分类ID" prop="catId" />
-      <el-table-column label="分类名字" prop="catName" />
+      <el-table-column label="类目ID" prop="categoryId" />
+      <el-table-column label="类目名字" prop="categoryName" />
       <el-table-column label="父ID" align="center" prop="parentId" />
       <el-table-column
         label="创建时间"
@@ -151,31 +151,31 @@
           <dict-tag :options="sys_show_hide" :value="scope.row.visible" />
         </template>
       </el-table-column>
-      <el-table-column label="类别类型" align="center" prop="catType">
+      <el-table-column label="类目类型" align="center" prop="categoryType">
         <template #default="scope">
-          <dict-tag :options="cms_support_type" :value="scope.row.catType" />
+          <dict-tag :options="cms_category_type" :dictSort="true"  :value="scope.row.categoryType" />
         </template>
       </el-table-column>
       <el-table-column
         label="目录"
         align="center"
-        prop="parent"
+        prop="nodeType"
         v-if="columns[2].visible"
       >
         <template #default="scope">
-          <dict-tag :options="cms_yes_no" :value="scope.row.parent" />
+          <dict-tag :options="cms_yes_no" :value="scope.row.nodeType" />
         </template>
       </el-table-column>
 
       <el-table-column
         label="栏目图标"
         align="center"
-        prop="catIcon"
+        prop="categoryIcon"
         width="100"
       >
         <template #default="scope">
           <image-preview
-            :src="scope.row.catIcon"
+            :src="scope.row.categoryIcon"
             :preview-teleported="true"
             :width="50"
             :height="50"
@@ -233,10 +233,10 @@
       <el-table-column
         label="类目路径"
         align="center"
-        prop="catUrl"
+        prop="categoryUrl"
         v-if="columns[10].visible"
       />
-      <el-table-column label="关联文章数" align="center" prop="catCount" />
+      <el-table-column label="关联文章数" align="center" prop="categoryCount" />
       <el-table-column
         label="操作"
         align="center"
@@ -249,17 +249,17 @@
               type="primary"
               icon="Edit"
               @click="handleUpdate(scope.row)"
-              v-hasPermi="['cms:cat:edit']"
+              v-hasPermi="['cms:category:edit']"
             >
             </el-button>
           </el-tooltip>
-          <el-tooltip content="新增" placement="top" v-if="scope.row.parent==0">
+          <el-tooltip content="新增" placement="top" v-if="scope.row.nodeType==0">
             <el-button
               link
               type="primary"
               icon="Plus"
               @click="handleAdd(scope.row)"
-              v-hasPermi="['cms:cat:add']"
+              v-hasPermi="['cms:category:add']"
             ></el-button>
           </el-tooltip>
           <el-tooltip content="删除" placement="top">
@@ -268,7 +268,7 @@
               type="primary"
               icon="Delete"
               @click="handleDelete(scope.row)"
-              v-hasPermi="['cms:cat:remove']"
+              v-hasPermi="['cms:category:remove']"
             >
             </el-button>
           </el-tooltip>
@@ -276,25 +276,25 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或修改分类对话框 -->
+    <!-- 添加或修改类目对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="catRef" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="categoryRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="父元素" prop="parentId">
           <el-tree-select
             v-model="form.parentId"
-            :data="catOptions"
-            :props="{ value: 'catId', label: 'catName', children: 'children' }"
-            value-key="catId"
+            :data="categoryOptions"
+            :props="{ value: 'categoryId', label: 'categoryName', children: 'children' }"
+            value-key="categoryId"
             placeholder="请选择父元素id"
             
             check-strictly
           />
         </el-form-item>
-        <el-form-item label="分类名字" prop="catName">
-          <el-input v-model="form.catName" placeholder="请输入分类名字" />
+        <el-form-item label="类目名字" prop="categoryName">
+          <el-input v-model="form.categoryName" placeholder="请输入类目名字" />
         </el-form-item>
-        <el-form-item label="分类目录" prop="parent">
-          <el-radio-group v-model="form.parent">
+        <el-form-item label="类目目录" prop="nodeType">
+          <el-radio-group v-model="form.nodeType">
             <el-radio
               v-for="dict in cms_yes_no"
               :key="dict.value"
@@ -303,11 +303,11 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="类目地址" prop="catUrl">
-          <el-input v-model="form.catUrl" placeholder="请输入类目地址" />
+        <el-form-item label="类目地址" prop="categoryUrl">
+          <el-input v-model="form.categoryUrl" placeholder="请输入类目地址" />
         </el-form-item>
-        <el-form-item label="栏目图标" prop="catIcon">
-          <image-upload v-model="form.catIcon" :limit="1" />
+        <el-form-item label="栏目图标" prop="categoryIcon">
+          <image-upload v-model="form.categoryIcon" :limit="1" />
         </el-form-item>
         <el-form-item label="权限字符" prop="perms">
           <el-input v-model="form.perms" placeholder="请输入权限字符" />
@@ -319,17 +319,17 @@
             :min="0"
           />
         </el-form-item>
-        <el-form-item label="分类类别" prop="catType">
-          <el-select v-model="form.catType" placeholder="请选择类别类">
+        <el-form-item label="类目类别" prop="categoryType">
+          <el-select v-model="form.categoryType" placeholder="请选择类别类">
             <el-option
-              v-for="dict in cms_support_type"
+              v-for="dict in cms_category_type"
               :key="dict.value"
               :label="dict.label"
-              :value="parseInt(dict.value)"
+              :value="dict.dictSort"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="分类状态" prop="catType">
+        <el-form-item label="类目状态" prop="categoryType">
           <el-radio-group v-model="form.visible">
             <el-radio
               v-for="dict in sys_show_hide"
@@ -364,18 +364,18 @@
   </div>
 </template>
 
-<script setup name="Cat">
-import { listCat, getCat, delCat, addCat, updateCat } from "@/api/cms/category";
+<script setup name="Category">
+import { listCategory, getCategory, delCategory, addCategory, updateCategory } from "@/api/cms/category";
 import KeysTag from "@/components/KeysTag";
 const { proxy } = getCurrentInstance();
-const { cms_support_type, sys_show_hide, cms_yes_no } = proxy.useDict(
-  "cms_support_type",
+const { cms_category_type, sys_show_hide, cms_yes_no } = proxy.useDict(
+  "cms_category_type",
   "sys_show_hide",
   "cms_yes_no"
 );
 
-const catList = ref([]);
-const catOptions = ref([]);
+const categoryList = ref([]);
+const categoryOptions = ref([]);
 const open = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
@@ -387,19 +387,19 @@ const dateRange = ref([]);
 const data = reactive({
   form: {},
   queryParams: {
-    catId: null,
-    catName: null,
-    catIcon: null,
+    categoryId: null,
+    categoryName: null,
+    categoryIcon: null,
     visible: null,
     parentId: null,
-    catUrl: null,
+    categoryUrl: null,
     orderNum: null,
-    catType: null,
+    categoryType: null,
   },
   rules: {
-    catName: [{ required: true, message: "分类名字不能为空", trigger: "blur" }],
+    categoryName: [{ required: true, message: "类目名字不能为空", trigger: "blur" }],
     visible: [{ required: true, message: "状态不能为空", trigger: "blur" }],
-    catType: [{ required: true, message: "支持类型不能为空", trigger: "blur" }],
+    categoryType: [{ required: true, message: "支持类型不能为空", trigger: "blur" }],
   },
 });
 
@@ -420,24 +420,24 @@ const columns = ref([
   { key: 10, label: `类目路径`, visible: false },
 ]);
 
-/** 查询分类列表 */
+/** 查询类目列表 */
 function getList() {
   loading.value = true;
-  listCat(proxy.addDateRange(queryParams.value, dateRange.value)).then(
+  listCategory(proxy.addDateRange(queryParams.value, dateRange.value)).then(
     (response) => {
-      catList.value = proxy.handleTree(response.data, "catId", "parentId");
+      categoryList.value = proxy.handleTree(response.data, "categoryId", "parentId");
       loading.value = false;
     }
   );
 }
 
-/** 查询分类下拉树结构 */
+/** 查询类目下拉树结构 */
 function getTreeselect() {
-  listCat({ parent: 0 }).then((response) => {
-    catOptions.value = [];
-    const data = { catId: 0, catName: "顶级节点", children: [] };
-    data.children = proxy.handleTree(response.data, "catId", "parentId");
-    catOptions.value.push(data);
+  listCategory({ nodeType: 0 }).then((response) => {
+    categoryOptions.value = [];
+    const data = { categoryId: 0, categoryName: "顶级节点", children: [] };
+    data.children = proxy.handleTree(response.data, "categoryId", "parentId");
+    categoryOptions.value.push(data);
   });
 }
 
@@ -450,23 +450,23 @@ function cancel() {
 // 表单重置
 function reset() {
   form.value = {
-    catId: null,
-    catName: null,
-    catIcon: null,
+    categoryId: null,
+    categoryName: null,
+    categoryIcon: null,
     visible: 0,
     parentId: null,
     remark: null,
-    catUrl: null,
-    parent: null,
+    categoryUrl: null,
+    nodeType: null,
     ancestors: null,
     perms: null,
     keywords: null,
     description: null,
     orderNum: 0,
-    catCount: null,
-    catType: null,
+    categoryCount: null,
+    categoryType: null,
   };
-  proxy.resetForm("catRef");
+  proxy.resetForm("categoryRef");
 }
 
 /** 搜索按钮操作 */
@@ -484,13 +484,13 @@ function resetQuery() {
 function handleAdd(row) {
   reset();
   getTreeselect();
-  if (row != null && row.catId) {
-    form.value.parentId = row.catId;
+  if (row != null && row.categoryId) {
+    form.value.parentId = row.categoryId;
   } else {
     form.value.parentId = 0;
   }
   open.value = true;
-  title.value = "添加分类";
+  title.value = "添加类目";
 }
 
 /** 展开/折叠操作 */
@@ -506,25 +506,25 @@ function toggleExpandAll() {
 async function handleUpdate(row) {
   reset();
   await getTreeselect();
-  getCat(row.catId).then((response) => {
+  getCategory(row.categoryId).then((response) => {
     form.value = response.data;
     open.value = true;
-    title.value = "修改分类";
+    title.value = "修改类目";
   });
 }
 
 /** 提交按钮 */
 function submitForm() {
-  proxy.$refs["catRef"].validate((valid) => {
+  proxy.$refs["categoryRef"].validate((valid) => {
     if (valid) {
-      if (form.value.catId != null) {
-        updateCat(form.value).then((response) => {
+      if (form.value.categoryId != null) {
+        updateCategory(form.value).then((response) => {
           proxy.$modal.msgSuccess("修改成功");
           open.value = false;
           getList();
         });
       } else {
-        addCat(form.value).then((response) => {
+        addCategory(form.value).then((response) => {
           proxy.$modal.msgSuccess("新增成功");
           open.value = false;
           getList();
@@ -537,9 +537,9 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   proxy.$modal
-    .confirm('是否确认删除分类编号为"' + row.catId + '"的数据项？')
+    .confirm('是否确认删除类目编号为"' + row.categoryId + '"的数据项？')
     .then(function () {
-      return delCat(row.catId);
+      return delCategory(row.categoryId);
     })
     .then(() => {
       getList();

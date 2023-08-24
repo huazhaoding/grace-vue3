@@ -43,7 +43,7 @@
               value: 'id',
               label: 'label',
               children: 'children',
-              disabled: getCatDisabled,
+              disabled: getCategoryDisabled,
             }"
             value-key="id"
             placeholder="请选择归属分类"
@@ -321,7 +321,7 @@ function submitForm() {
   });
 }
 
-function getCatDisabled(da, node) {
+function getCategoryDisabled(da, node) {
   return Boolean(da.visible) && form.value.cats.indexOf(da.id) == -1;
 }
 

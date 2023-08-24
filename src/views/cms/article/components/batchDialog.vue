@@ -22,7 +22,7 @@
         <el-button type="primary" @click="batchTag">更新标签</el-button>
       </el-form-item>
       <el-form-item label="分类" prop="categoryIds">
-        <el-tree-select v-model="batchForm.categoryIds" :data="catOptions" node-key="id" :props="{
+        <el-tree-select v-model="batchForm.categoryIds" :data="categoryOptions" node-key="id" :props="{
           value: 'id',
           label: 'label',
           children: 'children'
@@ -66,7 +66,7 @@ const props = defineProps({
 const { cms_article_visible } = proxy.useDict(
   "cms_article_visible"
 );
-const catOptions = ref(undefined);
+const categoryOptions = ref(undefined);
 const tagOptions = ref(undefined);
 const maxTag = ref(undefined);
 const maxCat = ref(undefined);
@@ -94,7 +94,7 @@ watch(
 /** 查询树下拉树结构 */
 function getCategoryTree() {
   categoryTree({}).then((response) => {
-    catOptions.value = response.data;
+    categoryOptions.value = response.data;
   });
 }
 

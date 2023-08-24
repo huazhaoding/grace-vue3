@@ -16,6 +16,27 @@
       </tr>
     </tbody>
   </table>
+  <br/>
+  <table cellspacing="0" v-if="formVisible">
+    <tbody>
+      <tr>
+        <td class="el-table__cell is-leaf" align="right"><strong>{{ labelName }}</strong></td>
+        <td class="el-table__cell is-leaf" >
+            <el-input v-model="formData.label" :placeholder="'请输入' + labelName" maxlength="8" /> 
+        </td>
+        </tr>
+        <tr>
+          <td class="el-table__cell is-leaf" align="right"><strong>{{ valueName }}</strong></td>
+        <td class="el-table__cell is-leaf">
+            <el-input v-model="formData.value" maxlength="256" :placeholder="'请输入' + valueName">
+              <template #append><el-button type="danger" icon="Plus" size="small" circle
+                  @click="addJsonData" /></template>
+            </el-input>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
   <el-form-item>
     <el-button
       type="danger"
@@ -25,29 +46,7 @@
       @click="statusJsonForm"
     />
   </el-form-item>
-  <el-row :gutter="10" v-if="formVisible" class="json-box">
-    <el-col :span="6">
-      <el-form-item :label="labelName">
-        <el-input
-          v-model="formData.label"
-          :placeholder="'请输入' + labelName"
-          maxlength="8"
-        /> </el-form-item>
-      </el-col>
-    <el-col :span="8">
-      <el-form-item :label="valueName">
-        <el-input v-model="formData.value" maxlength="256" :placeholder="'请输入' + valueName">
-          <template #append
-            ><el-button
-              type="danger"
-              icon="Plus"
-              size="small"
-              circle
-              @click="addJsonData"
-          /></template>
-        </el-input> </el-form-item
-    ></el-col>
-  </el-row>
+ 
 </template>
 
 <script setup>
@@ -134,8 +133,4 @@ function removeJsonData(key) {
 }
 </script>
 
-<style>
-.json-box {
-  padding-bottom: 10px;
-}
-</style>
+

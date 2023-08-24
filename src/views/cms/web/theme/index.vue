@@ -37,7 +37,7 @@
           plain
           icon="Refresh"
           v-hasPermi="['cms:theme:reFlash']"
-          >刷新主题</el-button
+          >刷新列表</el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -52,7 +52,7 @@
       <el-table :data="themeList">
         <el-table-column label="站点名" align="center" prop="webName" />
         <el-table-column label="主题名" align="center" prop="themeName" />
-        <el-table-column label="上传者ID" align="center" prop="createBy" />
+        <el-table-column label="创建者" align="center" prop="createBy" />
         <el-table-column label="主题作者" align="center" prop="themeAuthor" />
         <el-table-column
           label="上传时间"

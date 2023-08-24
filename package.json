@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.0.10",
-    "@jsdawn/vue3-tinymce": "^2.0.3",
+    "@jsdawn/vue3-tinymce": "^2.0.4",
     "@vueup/vue-quill": "1.1.0",
     "@vueuse/core": "9.5.0",
     "axios": "0.27.2",

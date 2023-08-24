@@ -2,23 +2,23 @@
   <div class="app-container">
     <el-row :gutter="20">
       <!--分类数据-->
-      <el-col v-show="catTreeCollapse" :span="4" :xs="24">
+      <el-col v-show="categoryTreeCollapse" :span="4" :xs="24">
         <div class="head-container">
-          <el-input v-model="catName" placeholder="请输入分类" clearable prefix-icon="Search" style="margin-bottom: 20px" />
+          <el-input v-model="categoryName" placeholder="请输入分类" clearable prefix-icon="Search" style="margin-bottom: 20px" />
         </div>
         <div class="head-container">
-          <el-tree :data="catOptions" :props="{ label: 'label', children: 'children' }" :expand-on-click-node="false"
-            :filter-node-method="filterNode" ref="catTreeRef" node-key="id" highlight-current default-expand-all
+          <el-tree :data="categoryOptions" :props="{ label: 'label', children: 'children' }" :expand-on-click-node="false"
+            :filter-node-method="filterNode" ref="categoryTreeRef" node-key="id" highlight-current default-expand-all
             @node-click="handleNodeClick" />
         </div>
       </el-col>
       <!--文章数据-->
-      <el-col :span="catTreeCollapse ? 20 : 24" :xs="24">
+      <el-col :span="categoryTreeCollapse ? 20 : 24" :xs="24">
         <div class="cat-btn-box">
-          <el-icon class="cat-btn" v-show="catTreeCollapse" @click="catTreeCollapse = !catTreeCollapse">
+          <el-icon class="cat-btn" v-show="categoryTreeCollapse" @click="categoryTreeCollapse = !categoryTreeCollapse">
             <CaretLeft />
           </el-icon>
-          <el-icon class="cat-btn" v-show="!catTreeCollapse" @click="catTreeCollapse = !catTreeCollapse">
+          <el-icon class="cat-btn" v-show="!categoryTreeCollapse" @click="categoryTreeCollapse = !categoryTreeCollapse">
             <CaretRight />
           </el-icon>
         </div>
@@ -154,12 +154,12 @@ const ids = ref([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
-const catName = ref("");
-const catOptions = ref(undefined);
+const categoryName = ref("");
+const categoryOptions = ref(undefined);
 const tagOptions = ref(undefined);
 const batchOpen=ref(false);
 const dateRange = ref([]);
-const catTreeCollapse = ref(true);
+const categoryTreeCollapse = ref(true);
 const { sys_true_false, cms_article_type, cms_article_visible } = proxy.useDict(
   "sys_true_false",
   "cms_article_type",
@@ -172,7 +172,7 @@ const data = reactive({
     pageNum: 1,
     pageSize: 10,
     articleId: null,
-    catId: null,
+    categoryId: null,
     tagId: null,
     articleTitle: null,
     createBy: null,
@@ -205,8 +205,8 @@ const filterNode = (value, data) => {
   return data.label.indexOf(value) !== -1;
 };
 /** 根据名称筛选分类树 */
-watch(catName, (val) => {
-  proxy.$refs["catTreeRef"].filter(val);
+watch(categoryName, (val) => {
+  proxy.$refs["categoryTreeRef"].filter(val);
 });
 
 
@@ -222,7 +222,7 @@ function handleBatch(){
 /** 查询树下拉树结构 */
 function getCategoryTree() {
   categoryTree({}).then((response) => {
-    catOptions.value = response.data;
+    categoryOptions.value = response.data;
   });
 }
 
@@ -234,7 +234,7 @@ function getTagOptions() {
 
 /** 节点单击事件 */
 function handleNodeClick(data) {
-  queryParams.value.catId = data.id;
+  queryParams.value.categoryId = data.id;
   handleQuery();
 }
 

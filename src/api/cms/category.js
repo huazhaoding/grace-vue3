@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询分类列表
-export function listCat(query) {
+export function listCategory(query) {
   return request({
     url: '/cms/category/list',
     method: 'get',
@@ -10,15 +10,15 @@ export function listCat(query) {
 }
 
 // 查询分类详细
-export function getCat(catId) {
+export function getCategory(categoryId) {
   return request({
-    url: '/cms/category/' + catId,
+    url: '/cms/category/' + categoryId,
     method: 'get'
   })
 }
 
 // 新增分类
-export function addCat(data) {
+export function addCategory(data) {
   return request({
     url: '/cms/category',
     method: 'post',
@@ -27,7 +27,7 @@ export function addCat(data) {
 }
 
 // 修改分类
-export function updateCat(data) {
+export function updateCategory(data) {
   return request({
     url: '/cms/category',
     method: 'put',
@@ -37,9 +37,9 @@ export function updateCat(data) {
 
 
 // 删除分类
-export function delCat(catId) {
+export function delCategory(categoryId) {
   return request({
-    url: '/cms/category/' + catId,
+    url: '/cms/category/' + categoryId,
     method: 'delete'
   })
 }
