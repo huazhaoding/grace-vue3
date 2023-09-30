@@ -170,7 +170,7 @@
 </template>
 
 <script setup>
-import { getServer } from '@/api/monitor/server'
+import { getServer } from '@/api/monitor/minister'
 const server = ref([]);
 const { proxy } = getCurrentInstance();
 function getList() {

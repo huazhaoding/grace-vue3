@@ -14,13 +14,6 @@
         <el-input-number v-model="batchForm.articleTop" :min="1" />
         <el-button type="primary" @click="batchTop">更新顶置</el-button>
       </el-form-item>
-      <el-form-item label="标签" prop="tagIds">
-        <el-select v-model="batchForm.tagIds" multiple placeholder="请选择标签" style="width: 240px"
-          :multiple-limit="maxTag">
-          <el-option v-for="item in tagOptions" :key="item.tagId" :label="item.tagName" :value="item.tagId" />
-        </el-select>
-        <el-button type="primary" @click="batchTag">更新标签</el-button>
-      </el-form-item>
       <el-form-item label="分类" prop="categoryIds">
         <el-tree-select v-model="batchForm.categoryIds" :data="categoryOptions" node-key="id" :props="{
           value: 'id',
@@ -46,8 +39,7 @@ import {
   batchArticleTop,
   batchArticleTag,
   batchArticleCategory,
-  categoryTree,
-  listTag,
+  categoryTree
 } from "@/api/cms/article";
 const { proxy } = getCurrentInstance();
 const emit = defineEmits(["update:modelValue","closeBatchDialog"]);
@@ -67,7 +59,6 @@ const { cms_article_visible } = proxy.useDict(
   "cms_article_visible"
 );
 const categoryOptions = ref(undefined);
-const tagOptions = ref(undefined);
 const maxTag = ref(undefined);
 const maxCat = ref(undefined);
 const batchOpen = ref(undefined);
@@ -98,12 +89,6 @@ function getCategoryTree() {
   });
 }
 
-/** 查询标签列表 */
-function getListTag() {
-  listTag({}).then((response) => {
-    tagOptions.value = response.data;
-  });
-}
 
 function batchVisible() {
   if (batchForm.value.visible!=undefined) {
@@ -170,7 +155,6 @@ function batchCancel() {
 function init() {
   setConfig();
   getCategoryTree();
-  getListTag();
 }
 
 init();

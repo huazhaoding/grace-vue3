@@ -32,11 +32,7 @@
           <el-form-item label="发表人" prop="createBy">
             <el-input v-model="queryParams.createBy" placeholder="请输入发表人" clearable @keyup.enter="handleQuery" />
           </el-form-item>
-          <el-form-item label="文章标签" prop="tagId">
-            <el-select v-model="queryParams.tagId" placeholder="请选择文章标签" clearable filterable>
-              <el-option v-for="dict in tagOptions" :key="dict.tagId" :label="dict.tagName" :value="dict.tagId" />
-            </el-select>
-          </el-form-item>
+  
           <el-form-item label="顶置级别" prop="articleTop">
             <el-input-number v-model="queryParams.articleTop" controls-position="right" clearable />
           </el-form-item>
@@ -142,7 +138,6 @@ import {
   listArticle,
   delArticle,
   categoryTree,
-  listTag,
 } from "@/api/cms/article";
 import batchDialog  from '@/views/cms/article/components/batchDialog'
 const { proxy } = getCurrentInstance();
@@ -156,7 +151,6 @@ const multiple = ref(true);
 const total = ref(0);
 const categoryName = ref("");
 const categoryOptions = ref(undefined);
-const tagOptions = ref(undefined);
 const batchOpen=ref(false);
 const dateRange = ref([]);
 const categoryTreeCollapse = ref(true);
@@ -226,11 +220,6 @@ function getCategoryTree() {
   });
 }
 
-function getTagOptions() {
-  listTag({}).then((response) => {
-    tagOptions.value = response.data;
-  });
-}
 
 /** 节点单击事件 */
 function handleNodeClick(data) {
@@ -293,7 +282,6 @@ function handleDelete(row) {
     .catch(() => { });
 }
 getCategoryTree();
-getTagOptions();
 </script>
 
 <style lang='scss' scoped>

@@ -34,6 +34,7 @@ import {
   handleTree,
   selectDictLabel,
   selectDictLabels,
+  includeDict,
 } from "@/utils/ruoyi";
 
 import {
@@ -73,6 +74,7 @@ app.config.globalProperties.handleTree = handleTree;
 app.config.globalProperties.addDateRange = addDateRange;
 app.config.globalProperties.selectDictLabel = selectDictLabel;
 app.config.globalProperties.selectDictLabels = selectDictLabels;
+app.config.globalProperties.includeDict = includeDict;
 // 挂载全局配置方法
 app.config.globalProperties.getConfigValue = getConfigValue;
 app.config.globalProperties.getConfigGroups = getConfigGroups;

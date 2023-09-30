@@ -31,10 +31,10 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建人ID" prop="createBy">
+      <el-form-item label="创建人" prop="createBy">
         <el-input
           v-model="queryParams.createBy"
-          placeholder="请输入创建人ID"
+          placeholder="请输入创建人"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -68,12 +68,12 @@
         </el-select>
       </el-form-item>
       <el-form-item label="排序" prop="orderNum">
-        <el-input
-          v-model="queryParams.orderNum"
-          placeholder="请输入排序"
-          clearable
-          @keyup.enter="handleQuery"
-        />
+        <el-input-number
+            v-model="queryParams.orderNum"
+            controls-position="right"
+            :min="0"
+            @keyup.enter="handleQuery"
+          />
       </el-form-item>
       <el-form-item label="创建时间" style="width: 308px">
         <el-date-picker
@@ -157,7 +157,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="目录"
+        label="节点类型"
         align="center"
         prop="nodeType"
         v-if="columns[2].visible"

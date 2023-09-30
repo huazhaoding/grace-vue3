@@ -9,15 +9,6 @@ export function listArticle(query) {
   })
 }
 
-// 查询标签列表
-export function listTag(query) {
-  return request({
-    url: '/cms/article/listTag',
-    method: 'get',
-    params: query
-  })
-}
-
 // 查询分类树
 export function categoryTree(query) {
   return request({
