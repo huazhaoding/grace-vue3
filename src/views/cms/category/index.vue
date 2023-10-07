@@ -1,275 +1,109 @@
 <template>
   <div class="app-container">
-    <el-form
-      :model="queryParams"
-      ref="queryRef"
-      :inline="true"
-      v-show="showSearch"
-      label-width="68px"
-    >
+    <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="类目ID" prop="categoryId">
-        <el-input
-          v-model="queryParams.categoryId"
-          placeholder="请输入类目ID"
-          clearable
-          @keyup.enter="handleQuery"
-        />
+        <el-input v-model="queryParams.categoryId" placeholder="请输入类目ID" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类目名字" prop="categoryName">
-        <el-input
-          v-model="queryParams.categoryName"
-          placeholder="请输入类目名字"
-          clearable
-          @keyup.enter="handleQuery"
-        />
+        <el-input v-model="queryParams.categoryName" placeholder="请输入类目名字" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="父ID" prop="parentId">
-        <el-input
-          v-model="queryParams.parentId"
-          placeholder="请输入父ID"
-          clearable
-          @keyup.enter="handleQuery"
-        />
+        <el-input v-model="queryParams.parentId" placeholder="请输入父ID" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="创建人" prop="createBy">
-        <el-input
-          v-model="queryParams.createBy"
-          placeholder="请输入创建人"
-          clearable
-          @keyup.enter="handleQuery"
-        />
+        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类目状态" prop="visible">
-        <el-select
-          v-model="queryParams.visible"
-          placeholder="请选择类目状态"
-          clearable
-        >
-          <el-option
-            v-for="dict in sys_show_hide"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+        <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable>
+          <el-option v-for="dict in sys_show_hide" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
-      <el-form-item label="类目类型" prop="categoryType">
-        <el-select
-          v-model="queryParams.categoryType"
-          placeholder="请选择类目类型"
-          clearable
-        >
-          <el-option
-            v-for="dict in cms_category_type"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.dictSort"
-          />
+      <el-form-item label="节点类型" prop="nodeType">
+        <el-select v-model="queryParams.nodeType" placeholder="请选择节点类型" clearable>
+          <el-option v-for="dict in cms_category_node_type" :key="dict.value" :label="dict.label"
+            :value="dict.dictSort" />
         </el-select>
       </el-form-item>
       <el-form-item label="排序" prop="orderNum">
-        <el-input-number
-            v-model="queryParams.orderNum"
-            controls-position="right"
-            :min="0"
-            @keyup.enter="handleQuery"
-          />
+        <el-input-number v-model="queryParams.orderNum" controls-position="right" :min="0" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="创建时间" style="width: 308px">
-        <el-date-picker
-          v-model="dateRange"
-          value-format="YYYY-MM-DD"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="dateRange" value-format="YYYY-MM-DD" type="daterange" range-separator="-"
+          start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="Search" @click="handleQuery"
-          >搜索</el-button
-        >
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="Plus"
-          @click="handleAdd"
-          v-hasPermi="['cms:category:add']"
-          >新增</el-button
-        >
+        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['cms:category:add']">新增</el-button>
       </el-col>
 
       <el-col :span="1.5">
-        <el-button type="info" plain icon="Sort" @click="toggleExpandAll"
-          >展开/折叠</el-button
-        >
+        <el-button type="info" plain icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
       </el-col>
-      <right-toolbar
-        v-model:showSearch="showSearch"
-        @queryTable="getList"
-        :columns="columns"
-      ></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
     </el-row>
 
-    <el-table
-      v-if="refreshTable"
-      v-loading="loading"
-      :data="categoryList"
-      row-key="categoryId"
-      :default-expand-all="isExpandAll"
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-    >
+    <el-table v-if="refreshTable" v-loading="loading" :data="categoryList" row-key="categoryId"
+      :default-expand-all="isExpandAll" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
       <el-table-column label="类目ID" prop="categoryId" />
       <el-table-column label="类目名字" prop="categoryName" />
       <el-table-column label="父ID" align="center" prop="parentId" />
-      <el-table-column
-        label="创建时间"
-        align="center"
-        prop="createTime"
-        width="180"
-        v-if="columns[0].visible"
-      >
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180" v-if="columns[0].visible">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="创建人"
-        align="center"
-        prop="createBy"
-        v-if="columns[1].visible"
-      />
+      <el-table-column label="创建人" align="center" prop="createBy" v-if="columns[1].visible" />
 
       <el-table-column label="状态" align="center" prop="visible">
         <template #default="scope">
           <dict-tag :options="sys_show_hide" :value="scope.row.visible" />
         </template>
       </el-table-column>
-      <el-table-column label="类目类型" align="center" prop="categoryType">
+      <el-table-column label="节点类型" align="center" prop="nodeType">
         <template #default="scope">
-          <dict-tag :options="cms_category_type" :dictSort="true"  :value="scope.row.categoryType" />
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="节点类型"
-        align="center"
-        prop="nodeType"
-        v-if="columns[2].visible"
-      >
-        <template #default="scope">
-          <dict-tag :options="cms_yes_no" :value="scope.row.nodeType" />
+          <dict-tag :options="cms_category_node_type" :dictSort="true" :value="scope.row.nodeType" />
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="栏目图标"
-        align="center"
-        prop="categoryIcon"
-        width="100"
-      >
+      <el-table-column label="栏目图标" align="center" prop="categoryIcon" width="100">
         <template #default="scope">
-          <image-preview
-            :src="scope.row.categoryIcon"
-            :preview-teleported="true"
-            :width="50"
-            :height="50"
-          />
+          <image-preview :src="scope.row.categoryIcon" :preview-teleported="true" :width="50" :height="50" />
         </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="orderNum" />
-      <el-table-column
-        label="祖级列表"
-        align="center"
-        prop="ancestors"
-        v-if="columns[3].visible"
-      />
-      <el-table-column
-        label="权限字符"
-        align="center"
-        prop="perms"
-        v-if="columns[4].visible"
-      />
-      <el-table-column
-        label="关键词"
-        align="center"
-        prop="keywords"
-        v-if="columns[5].visible"
-      />
-      <el-table-column
-        label="描述"
-        align="center"
-        prop="description"
-        v-if="columns[6].visible"
-      />
-      <el-table-column
-        label="备注"
-        align="center"
-        prop="remark"
-        v-if="columns[7].visible"
-      />
-      <el-table-column
-        label="更新时间"
-        align="center"
-        prop="updateTime"
-        width="180"
-        v-if="columns[8].visible"
-      >
+      <el-table-column label="祖级列表" align="center" prop="ancestors" v-if="columns[3].visible" />
+      <el-table-column label="权限字符" align="center" prop="perms" v-if="columns[4].visible" />
+      <el-table-column label="关键词" align="center" prop="keywords" v-if="columns[5].visible" />
+      <el-table-column label="描述" align="center" prop="description" v-if="columns[6].visible" />
+      <el-table-column label="备注" align="center" prop="remark" v-if="columns[7].visible" />
+      <el-table-column label="更新时间" align="center" prop="updateTime" width="180" v-if="columns[8].visible">
         <template #default="scope">
           <span>{{ parseTime(scope.row.updateTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="更新人"
-        align="center"
-        prop="updateBy"
-        v-if="columns[9].visible"
-      />
-      <el-table-column
-        label="类目路径"
-        align="center"
-        prop="categoryUrl"
-        v-if="columns[10].visible"
-      />
+      <el-table-column label="更新人" align="center" prop="updateBy" v-if="columns[9].visible" />
+      <el-table-column label="类目路径" align="center" prop="categoryUrl" v-if="columns[10].visible" />
       <el-table-column label="关联文章数" align="center" prop="categoryCount" />
-      <el-table-column
-        label="操作"
-        align="center"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-tooltip content="修改" placement="top">
-            <el-button
-              link
-              type="primary"
-              icon="Edit"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['cms:category:edit']"
-            >
+            <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
+              v-hasPermi="['cms:category:edit']">
             </el-button>
           </el-tooltip>
-          <el-tooltip content="新增" placement="top" v-if="scope.row.nodeType==0">
-            <el-button
-              link
-              type="primary"
-              icon="Plus"
-              @click="handleAdd(scope.row)"
-              v-hasPermi="['cms:category:add']"
-            ></el-button>
+          <el-tooltip content="添加下级" placement="top" v-if="scope.row.nodeRoot">
+            <el-button link type="primary" icon="Plus" @click="handleAdd(scope.row)"
+              v-hasPermi="['cms:category:add']"></el-button>
           </el-tooltip>
           <el-tooltip content="删除" placement="top">
-            <el-button
-              link
-              type="primary"
-              icon="Delete"
-              @click="handleDelete(scope.row)"
-              v-hasPermi="['cms:category:remove']"
-            >
+            <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
+              v-hasPermi="['cms:category:remove']">
             </el-button>
           </el-tooltip>
         </template>
@@ -277,82 +111,75 @@
     </el-table>
 
     <!-- 添加或修改类目对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="600px" append-to-body>
       <el-form ref="categoryRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="父元素" prop="parentId">
-          <el-tree-select
-            v-model="form.parentId"
-            :data="categoryOptions"
-            :props="{ value: 'categoryId', label: 'categoryName', children: 'children' }"
-            value-key="categoryId"
-            placeholder="请选择父元素id"
-            
-            check-strictly
-          />
-        </el-form-item>
-        <el-form-item label="类目名字" prop="categoryName">
-          <el-input v-model="form.categoryName" placeholder="请输入类目名字" />
-        </el-form-item>
-        <el-form-item label="类目目录" prop="nodeType">
-          <el-radio-group v-model="form.nodeType">
-            <el-radio
-              v-for="dict in cms_yes_no"
-              :key="dict.value"
-              :label="parseInt(dict.value)"
-              >{{ dict.label }}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="类目地址" prop="categoryUrl">
-          <el-input v-model="form.categoryUrl" placeholder="请输入类目地址" />
-        </el-form-item>
-        <el-form-item label="栏目图标" prop="categoryIcon">
-          <image-upload v-model="form.categoryIcon" :limit="1" />
-        </el-form-item>
-        <el-form-item label="权限字符" prop="perms">
-          <el-input v-model="form.perms" placeholder="请输入权限字符" />
-        </el-form-item>
-        <el-form-item label="类目排序" prop="orderNum">
-          <el-input-number
-            v-model="form.orderNum"
-            controls-position="right"
-            :min="0"
-          />
-        </el-form-item>
-        <el-form-item label="类目类别" prop="categoryType">
-          <el-select v-model="form.categoryType" placeholder="请选择类别类">
-            <el-option
-              v-for="dict in cms_category_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.dictSort"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="类目状态" prop="categoryType">
-          <el-radio-group v-model="form.visible">
-            <el-radio
-              v-for="dict in sys_show_hide"
-              :key="dict.value"
-              :label="parseInt(dict.value)"
-              >{{ dict.label }}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="关键词" prop="keywords">
-          <keys-tag
-            v-model="form.keywords"
-            :limit="3"
-            :min-length="1"
-            :max-length="5"
-          />
-        </el-form-item>
-        <el-form-item label="描述" prop="description">
-          <el-input v-model="form.description" placeholder="请输入描述" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注" />
-        </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="上层元素" prop="parentId">
+              <el-tree-select v-model="form.parentId" :data="categoryOptions" @node-click="clickCategoryTree"
+                :props="{ value: 'categoryId', label: 'categoryName', children: 'children' }" value-key="categoryId"
+                placeholder="请选择父元素" check-strictly />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="节点类型" prop="nodeType">
+              <el-radio-group v-model="form.nodeType">
+                <el-radio v-for="dict in cms_category_node_type" :key="dict.dictSort"
+                  v-show="proxy.includeDict(allowNodeTypeDict, dict.dictSort)" :label="dict.dictSort">{{ dict.label }}
+                </el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类目名字" prop="categoryName">
+              <el-input v-model="form.categoryName" placeholder="请输入类目名字" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类目地址" prop="categoryUrl">
+              <el-input v-model="form.categoryUrl" placeholder="请输入类目地址" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="栏目图标" prop="categoryIcon">
+              <image-upload v-model="form.categoryIcon" :limit="1" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="权限字符" prop="perms">
+              <el-input v-model="form.perms" placeholder="请输入权限字符" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类目排序" prop="orderNum">
+              <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
+
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类目状态" prop="visible">
+              <el-radio-group v-model="form.visible">
+                <el-radio v-for="dict in sys_show_hide" :key="dict.value" :label="parseInt(dict.value)">{{ dict.label }}
+                </el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="关键词" prop="keywords">
+              <keys-tag v-model="form.keywords" :limit="3" :min-length="1" :max-length="5" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="描述" prop="description">
+              <el-input v-model="form.description" type="textarea" placeholder="请输入描述" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="备注" prop="remark">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -367,13 +194,14 @@
 <script setup name="Category">
 import { listCategory, getCategory, delCategory, addCategory, updateCategory } from "@/api/cms/category";
 import KeysTag from "@/components/KeysTag";
+import { getHold } from "@/api/system/hold";
 const { proxy } = getCurrentInstance();
-const { cms_category_type, sys_show_hide, cms_yes_no } = proxy.useDict(
-  "cms_category_type",
+const { cms_category_node_type, sys_show_hide, cms_yes_no } = proxy.useDict(
+  "cms_category_node_type",
   "sys_show_hide",
   "cms_yes_no"
 );
-
+const allowNodeTypeDict = ref([]);
 const categoryList = ref([]);
 const categoryOptions = ref([]);
 const open = ref(false);
@@ -394,12 +222,12 @@ const data = reactive({
     parentId: null,
     categoryUrl: null,
     orderNum: null,
-    categoryType: null,
+    nodeType: null,
   },
   rules: {
     categoryName: [{ required: true, message: "类目名字不能为空", trigger: "blur" }],
     visible: [{ required: true, message: "状态不能为空", trigger: "blur" }],
-    categoryType: [{ required: true, message: "支持类型不能为空", trigger: "blur" }],
+    nodeType: [{ required: true, message: "节点类型不能为空", trigger: "blur" }],
   },
 });
 
@@ -409,7 +237,7 @@ const { queryParams, form, rules } = toRefs(data);
 const columns = ref([
   { key: 0, label: `创建时间`, visible: false },
   { key: 1, label: `创建人`, visible: true },
-  { key: 2, label: `目录`, visible: false },
+  { key: 2, label: `节点类型`, visible: true },
   { key: 3, label: `组级列表`, visible: false },
   { key: 4, label: `权限字符`, visible: false },
   { key: 5, label: `关键词`, visible: false },
@@ -464,7 +292,7 @@ function reset() {
     description: null,
     orderNum: 0,
     categoryCount: null,
-    categoryType: null,
+    nodeType: null,
   };
   proxy.resetForm("categoryRef");
 }
@@ -486,8 +314,10 @@ function handleAdd(row) {
   getTreeselect();
   if (row != null && row.categoryId) {
     form.value.parentId = row.categoryId;
+    allowDictData(row.nodeType);
   } else {
     form.value.parentId = 0;
+    allowDictData(-1);
   }
   open.value = true;
   title.value = "添加类目";
@@ -508,9 +338,43 @@ async function handleUpdate(row) {
   await getTreeselect();
   getCategory(row.categoryId).then((response) => {
     form.value = response.data;
+    getAllowDict(response.data.parentId);
     open.value = true;
     title.value = "修改类目";
   });
+}
+
+async function getAllowDict(parentId) {
+  if (parentId == 0) {
+    allowDictData(-1);
+  }
+  else {
+    getCategory(parentId).then((response) => {
+      allowDictData(response.data.nodeType);
+    });
+  }
+}
+
+async function allowDictData(nodeType) {
+  getHold(2,"nodeType_" + nodeType).then((response) => {
+    if (response.hasOwnProperty("data")) {
+      allowNodeTypeDict.value = response.data.holdData;
+    }
+    else {
+      allowDict.value = [];
+    }
+  });
+}
+
+
+function clickCategoryTree(item, data) {
+  form.value.nodeType=null;
+  if (item.columnId == 0) {
+    allowDictData(-1);
+  }
+  else {
+    allowDictData(item.nodeType);
+  }
 }
 
 /** 提交按钮 */
@@ -545,7 +409,7 @@ function handleDelete(row) {
       getList();
       proxy.$modal.msgSuccess("删除成功");
     })
-    .catch(() => {});
+    .catch(() => { });
 }
 
 getList();

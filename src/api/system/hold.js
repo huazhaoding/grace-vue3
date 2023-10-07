@@ -10,9 +10,9 @@ export function listHold(query) {
 }
 
 // 查询资源数据映射详细
-export function getHold(holdCode) {
+export function getHold(holdType,holdCode) {
   return request({
-    url: '/system/hold/' + holdCode,
+    url: '/system/hold/' +holdType+'/'+ holdCode,
     method: 'get'
   })
 }

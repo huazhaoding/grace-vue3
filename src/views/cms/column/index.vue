@@ -106,12 +106,12 @@
       <el-form ref="columnRef" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="父元素ID" prop="parentId">
+            <el-form-item label="上层元素" prop="parentId">
               <el-tree-select v-model="form.parentId" :data="columnOptions" @node-click="clickColumnTree" :props="{
                 value: 'columnId',
                 label: 'columnName',
                 children: 'children',
-              }" value-key="columnId" placeholder="请选择父元素ID" check-strictly />
+              }" value-key="columnId" placeholder="请选择父元素" check-strictly />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -283,6 +283,9 @@ const data = reactive({
     orderNum: null
   },
   rules: {
+    parentId: [
+      { required: true, message: "父元素不能为空", trigger: "blur" },
+    ],
     columnName: [
       { required: true, message: "栏目名字不能为空", trigger: "blur" },
     ],
@@ -415,7 +418,6 @@ async function handleUpdate(row) {
 }
 
 async function getAllowDict(parentId) {
-  console.log(parentId);
   if (parentId == 0) {
     allowDictData(-1);
   }
@@ -428,7 +430,7 @@ async function getAllowDict(parentId) {
 }
 
 async function allowDictData(nodeType) {
-  getHold("nodeType_" + nodeType).then((response) => {
+  getHold(1,"nodeType_" + nodeType).then((response) => {
     if (response.hasOwnProperty("data")) {
       allowDict.value = response.data.holdData;
     }
@@ -437,7 +439,9 @@ async function allowDictData(nodeType) {
     }
   });
 }
+
 function clickColumnTree(item, data) {
+  form.value.nodeType=null;
   if (item.columnId == 0) {
     allowDictData(-1);
   }
