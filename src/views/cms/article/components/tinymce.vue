@@ -12,32 +12,11 @@
           <el-input v-model="form.articleTitle" placeholder="请输入文章标题" />
         </el-form-item>
       </el-col>
-      <el-col :span="6">
-        <el-form-item label="标签" prop="tags">
-          <el-select
-            v-model="form.tags"
-            multiple
-            placeholder="请选择标签"
-            style="width: 240px"
-            :multiple-limit="maxTag"
-          >
-            <el-option
-              v-for="item in tagOptions"
-              :key="item.tagId"
-              :label="item.tagName"
-              :disabled="
-                Boolean(item.visible) && form.tags.indexOf(item.tagId) == -1
-              "
-              :value="item.tagId"
-            />
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item label="分类" prop="cats">
+      <el-col :span="12">
+        <el-form-item label="分类" prop="categoryIds">
           <el-tree-select
-            v-model="form.cats"
-            :data="catOptions"
+            v-model="form.categoryIds"
+            :data="categoryOptions"
             node-key="id"
             :props="{
               value: 'id',
@@ -46,8 +25,7 @@
               disabled: getCategoryDisabled,
             }"
             value-key="id"
-            placeholder="请选择归属分类"
-            
+            placeholder="请选择归属分类" 
             check-strictly
             multiple
             :multiple-limit="maxCat"
@@ -177,8 +155,7 @@ import {
   getArticle,
   addArticle,
   updateArticle,
-  categoryTree,
-  listTag,
+  categoryTree
 } from "@/api/cms/article";
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
 const route = useRoute();
@@ -187,8 +164,7 @@ const { sys_true_false, cms_article_type } = proxy.useDict(
   "sys_true_false",
   "cms_article_type"
 );
-const catOptions = ref(undefined);
-const tagOptions = ref(undefined);
+const categoryOptions = ref(undefined);
 const maxTag = ref(undefined);
 const maxCat = ref(undefined);
 const maxImg = ref(undefined);
@@ -196,7 +172,7 @@ const maxKey = ref(undefined);
 
 function titleRemote(rule, value, callback) {
   proxy.remote("/cms/article/check", { articleTitle: value,articleId: form.value.articleId }).then((res) => {
-    if(res.data==0){
+    if(res.data){
       return callback();
     }
     else{
@@ -207,7 +183,7 @@ function titleRemote(rule, value, callback) {
 
 function urlRemote(rule, value, callback) {
   proxy.remote("/cms/article/check", { articleUrl: value,articleId: form.value.articleId }).then((res) => {
-    if(res.data==0){
+    if(res.data){
       return callback();
     }
     else{
@@ -256,14 +232,7 @@ watch(() =>form.value.articleUrl,(newValue,oldValue)=>{
 /** 查询树下拉树结构 */
 function getCategoryTree() {
   categoryTree({}).then((response) => {
-    catOptions.value = response.data;
-  });
-}
-
-/** 查询标签列表 */
-function getListTag() {
-  listTag({}).then((response) => {
-    tagOptions.value = response.data;
+    categoryOptions.value = response.data;
   });
 }
 
@@ -271,7 +240,6 @@ function init() {
   getArticleById();
   setConfig();
   getCategoryTree();
-  getListTag();
 }
 
 // 获取参数
@@ -322,7 +290,7 @@ function submitForm() {
 }
 
 function getCategoryDisabled(da, node) {
-  return Boolean(da.visible) && form.value.cats.indexOf(da.id) == -1;
+  return Boolean(da.visible) && form.value.categoryIds.indexOf(da.id) == -1;
 }
 
 function deleteChoose(value) {
