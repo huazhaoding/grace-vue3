@@ -60,7 +60,7 @@
           type="danger"
           plain
           icon="Delete"
-          :disabled="multiple"
+          :disabled="single"
           @click="handleDelete"
           v-hasPermi="['system:hold:remove']"
         >删除</el-button>
@@ -130,7 +130,7 @@
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="holdRef" :model="form" :rules="rules" :disabled="title=='查看资源数据映射'" label-width="80px">
         <el-form-item label="资源类型" prop="holdType">
-          <el-select v-model="form.holdType" placeholder="请选择资源类型">
+          <el-select v-model="form.holdType" :disabled="title=='修改资源数据映射'" placeholder="请选择资源类型">
             <el-option
               v-for="dict in sys_hold_type"
               :key="dict.value"
@@ -138,6 +138,9 @@
 :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="资源编码" prop="holdCode">
+          <el-input v-model="form.holdCode" :disabled="title=='修改资源数据映射'" placeholder="请输入资源编码" />
         </el-form-item>
         <el-form-item label="数据类型" prop="dataType">
           <el-select v-model="form.dataType" placeholder="请选择数据类型">
@@ -149,9 +152,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="资源编码" prop="holdCode">
-          <el-input v-model="form.holdCode" :disabled="title=='修改资源数据映射'" placeholder="请输入资源编码" />
-        </el-form-item>
+   
         <el-form-item label="资源名称" prop="holdName">
           <el-input v-model="form.holdName" placeholder="请输入资源名称" />
         </el-form-item>
@@ -182,7 +183,7 @@ const holdList = ref([]);
 const open = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const ids = ref([]);
+const selectData = ref([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
@@ -212,7 +213,7 @@ const data = reactive({
       { required: true, message: "配置名称不能为空", trigger: "blur" },
     ],
     holdData: [
-      { required: true, message: "配置参数不能为空", trigger: "blur" },
+      { required: true, message: "配置参数不能为空"},
     ],
   },
 });
@@ -266,7 +267,7 @@ function resetQuery() {
 
 // 多选框选中数据
 function handleSelectionChange(selection) {
-  ids.value = selection.map(item => item.holdCode);
+  selectData.value = selection.map(item => item);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
 }
@@ -281,8 +282,8 @@ function handleAdd() {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
-  const _holdCode = row.holdCode || ids.value
-  getHold(_holdCode).then(response => {
+  const _row = row || selectData.value
+  getHold(_row.holdType,_row.holdCode).then(response => {
     form.value = response.data;
     open.value = true;
     title.value = "修改资源数据映射";
@@ -318,9 +319,9 @@ function submitForm() {
 
 /** 删除按钮操作 */
 function handleDelete(row) {
-  const _holdCodes = row.holdCode || ids.value;
-  proxy.$modal.confirm('是否确认删除资源数据映射编号为"' + _holdCodes + '"的数据项？').then(function() {
-    return delHold(_holdCodes);
+  const _row = row || selectData.value;
+  proxy.$modal.confirm('是否确认删除{holdType:' + _row.holdType+",holdType:"+_row.holdCode + '}的数据项？').then(function() {
+    return delHold(_row.holdType,_row.holdCode);
   }).then(() => {
     getList();
     proxy.$modal.msgSuccess("删除成功");

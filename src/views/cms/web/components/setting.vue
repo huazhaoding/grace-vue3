@@ -61,7 +61,7 @@
               ></el-input>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane name="tab-2" label="页面设置">
+          <el-tab-pane name="tab-2" label="默认页面">
             <el-form-item label="首页：" prop="oly.web.pageIndex">
               <el-input-number
                 v-model="formData['oly.web.pageIndex']"

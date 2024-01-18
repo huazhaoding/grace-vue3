@@ -361,7 +361,7 @@ async function allowDictData(nodeType) {
       allowNodeTypeDict.value = response.data.holdData;
     }
     else {
-      allowDict.value = [];
+      allowNodeTypeDict.value = [];
     }
   });
 }

@@ -285,7 +285,7 @@ function handleDelete(row) {
 
 function handleThemeList(row){
   const _webName = row.webName || webNames.value;
-  router.push({path: "/cms/theme/"+ _webName});
+  router.push({path: "/cms/web/theme/"+ _webName});
 
 }
 

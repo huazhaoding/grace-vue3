@@ -64,14 +64,14 @@
             <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d}") }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="主题介绍" align="center" prop="themeInfo" />
+        <!-- <el-table-column label="主题介绍" align="center" prop="themeInfo" /> -->
         <el-table-column label="是否启用" align="center" prop="themeEnabled"   >
           <template #default="scope">
             <el-switch v-model="scope.row.themeEnabled"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="更新地址" align="center" prop="themeUpdate" />
-        <el-table-column label="联系方式" align="center" prop="themeTouch" />
+        <!-- <el-table-column label="联系方式" align="center" prop="themeTouch" /> -->
         <el-table-column
           label="主题版本号"
           align="center"
@@ -184,13 +184,6 @@
         </div>
       </template>
     </el-dialog>
-    <!--主题通用配置对话框 -->
-    <setting-config
-      v-model="openSettingDialog"
-      :themeName="actionChoose.themeName"
-      :webName="actionChoose.webName"
-      :themeUsed="themeUsed"
-    ></setting-config>
     
     <!-- 主题个性化配置 -->
     <theme-config
@@ -211,7 +204,6 @@
 </template>
 <script setup name="theme">
 import { getToken } from "@/utils/auth"; // 自己存储token的文件
-import settingConfig from "@/views/cms/web/components/setting";
 import themeConfig from "@/components/FormConfig";
 import webConfig from "@/views/cms/web/components/web";
 import {
@@ -224,21 +216,19 @@ import {
   getThemeConfigForm
 } from "@/api/cms/theme";
 const { proxy } = getCurrentInstance();
+const router = useRouter();
 const data = reactive({
   uploadParam: {
     cover: "false",
     coverConfig: "false",
     webName: null,
-  },actionChoose:{
-    webName:undefined,
-    themeName:undefined
   }
 });
 const isChoose = ref(false); 
 const configGroup=ref(undefined);
 const updateConfigUrl=ref(undefined);
 const configForm=ref(undefined);
-const { uploadParam,actionChoose } = toRefs(data);
+const { uploadParam} = toRefs(data);
 const themeUsed=ref('');
 
 const { sys_true_false } = proxy.useDict("sys_true_false");
@@ -246,7 +236,6 @@ const uploadUrl = ref(
   import.meta.env.VITE_APP_BASE_API + "/cms/theme/uploadTheme"
 );
 const openDialog = ref(false);
-const openSettingDialog = ref(false);
 const openThemeDialog = ref(false);
 const openWebDialog = ref(false);
 const headers = ref({ Authorization: "Bearer " + getToken() });
@@ -275,9 +264,8 @@ function openUploadDialog() {
 
 // 通用主题弹窗
 function handleSetting(row) {
-  openSettingDialog.value = true;
-  actionChoose.value.webName=row.webName;
-  actionChoose.value.themeName=row.themeName;
+  router.push({ path: "/cms/web/theme/themeConfig/" + row.webName+"/"+row.themeName });
+
 }
 // 主题个性配置弹窗
 function handleTheme(row) {

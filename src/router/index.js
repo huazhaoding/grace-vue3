@@ -189,17 +189,44 @@ export const dynamicRoutes = [
     ]
   },
   {
-    path: '/cms',
+    path: '/cms/web/theme',
     component: Layout,
     hidden: true,
-    permissions: ['cms:theme:list'],
+    permissions: ['cms:web:view'],
     children: [
       {
-        path: 'theme/:webName(\\w+)',
+        path: ':webName(\\w+)',
         component: () => import('@/views/cms/web/theme/index'),
         name: 'theme',
         meta: { title: '主题列表', activeMenu: '/cms/web' }
       }
+    ]
+  },
+  {
+    path: '/cms/web/theme/themeConfig',
+    component: Layout,
+    hidden: true,
+    permissions: ['cms:theme:config'],
+    children: [
+      {
+        path: ':webName(\\w+)/:themeName(\\w+)',
+        component: () => import('@/views/cms/web/theme/themeConfig'),
+        name: 'ThemeConfig',
+        meta: { title: '网站配置', activeMenu: '/cms/web/theme' }
+      }
+    ]
+  },
+  {
+    path: '/cms/web/theme/themeSetting',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: ':webName(\\w+)/:themeName(\\w+)',
+        component: () => import('@/views/cms/web/theme/themeSeting'),
+        name: 'themeSeting',
+        meta: { title: '主题配置', activeMenu: '/cms/web/theme' }
+      },
     ]
   }
 ]

@@ -36,9 +36,9 @@ export function updateHold(hold) {
 }
 
 // 删除资源数据映射
-export function delHold(holdCode) {
+export function delHold(holdType,holdCode) {
   return request({
-    url: '/system/hold/' + holdCode,
+    url: '/system/hold/' +holdType+'/'+ holdCode,
     method: 'delete'
   })
 }

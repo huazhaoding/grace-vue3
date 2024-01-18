@@ -167,6 +167,7 @@ const data = reactive({
     pageSize: 10,
     articleId: null,
     categoryId: null,
+    themeCategoryId:null,
     tagId: null,
     articleTitle: null,
     createBy: null,
