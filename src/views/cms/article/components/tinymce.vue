@@ -7,12 +7,12 @@
     label-width="100px"
   >
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="文章标题" prop="articleTitle">
           <el-input v-model="form.articleTitle" placeholder="请输入文章标题" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="分类" prop="categoryIds">
           <el-tree-select
             v-model="form.categoryIds"
@@ -25,12 +25,34 @@
               disabled: getCategoryDisabled,
             }"
             value-key="id"
-            placeholder="请选择归属分类" 
+            placeholder="请选择分类" 
             check-strictly
             multiple
             :multiple-limit="maxCat"
           />
         </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="标签" prop="tags">
+          <el-select
+            v-model="form.tags"
+            multiple
+            placeholder="请选择标签"
+            style="width: 240px"
+            :multiple-limit="maxTag"
+          >
+            <el-option
+              v-for="item in tagOptions"
+              :key="item.categoryId"
+              :label="item.categoryName"
+              :disabled="
+                Boolean(item.visible) && form.tags.indexOf(item.categoryId) == -1
+              "
+              :value="item.categoryId"
+            />
+          </el-select>
+        </el-form-item>
+      
       </el-col>
       <el-col :span="7">
         <el-form-item label="文章类型" prop="articleType">
@@ -155,7 +177,8 @@ import {
   getArticle,
   addArticle,
   updateArticle,
-  categoryTree
+  categoryTree,
+  listTag 
 } from "@/api/cms/article";
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
 const route = useRoute();
@@ -165,6 +188,7 @@ const { sys_true_false, cms_article_type } = proxy.useDict(
   "cms_article_type"
 );
 const categoryOptions = ref(undefined);
+const tagOptions = ref(undefined);
 const maxTag = ref(undefined);
 const maxCat = ref(undefined);
 const maxImg = ref(undefined);
@@ -231,8 +255,15 @@ watch(() =>form.value.articleUrl,(newValue,oldValue)=>{
 },{ deep: true, immediate: true })
 /** 查询树下拉树结构 */
 function getCategoryTree() {
-  categoryTree({}).then((response) => {
+  categoryTree({nodeTypes:'2,3',themeName:'',visible:0}).then((response) => {
     categoryOptions.value = response.data;
+  });
+}
+
+/** 查询标签列表 */
+function getListTag() {
+  listTag({nodeTypes:'5',themeName:'',visible:0}).then((response) => {
+    tagOptions.value = response.data;
   });
 }
 
@@ -240,6 +271,7 @@ function init() {
   getArticleById();
   setConfig();
   getCategoryTree();
+  getListTag();
 }
 
 // 获取参数

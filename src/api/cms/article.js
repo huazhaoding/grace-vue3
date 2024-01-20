@@ -18,6 +18,15 @@ export function categoryTree(query) {
   })
 }
 
+// 查询标签列表
+export function listTag(query) {
+  return request({
+    url: '/cms/article/listTag',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询文章详细
 export function getArticle(articleId) {
   return request({
