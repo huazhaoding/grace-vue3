@@ -33,9 +33,9 @@
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="标签" prop="tags">
+        <el-form-item label="标签" prop="tagIds">
           <el-select
-            v-model="form.tags"
+            v-model="form.tagIds"
             multiple
             placeholder="请选择标签"
             style="width: 240px"
@@ -46,7 +46,7 @@
               :key="item.categoryId"
               :label="item.categoryName"
               :disabled="
-                Boolean(item.visible) && form.tags.indexOf(item.categoryId) == -1
+                Boolean(item.visible) && form.tagIds.indexOf(item.categoryId) == -1
               "
               :value="item.categoryId"
             />
@@ -255,14 +255,14 @@ watch(() =>form.value.articleUrl,(newValue,oldValue)=>{
 },{ deep: true, immediate: true })
 /** 查询树下拉树结构 */
 function getCategoryTree() {
-  categoryTree({nodeTypes:'2,3',themeName:'',visible:0}).then((response) => {
+  categoryTree({nodeTypes:'2,3',syncThemeNames:'',visible:0}).then((response) => {
     categoryOptions.value = response.data;
   });
 }
 
 /** 查询标签列表 */
 function getListTag() {
-  listTag({nodeTypes:'5',themeName:'',visible:0}).then((response) => {
+  listTag({nodeTypes:'5',syncThemeNames:'',visible:0}).then((response) => {
     tagOptions.value = response.data;
   });
 }
