@@ -83,13 +83,13 @@
           class-name="small-padding fixed-width"
         >
           <template #default="scope">
-            <el-tooltip content="修改" placement="top">
+            <el-tooltip content="类别配置" placement="top">
               <el-button
                 link
                 type="primary"
-                icon="Edit"
-                @click="handleUpdate(scope.row)"
-                v-hasPermi="['cms:theme:edit']"
+                icon="Discount"
+                @click="handleCategory(scope.row)"
+                v-hasPermi="['theme:category:config']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="站点配置" placement="top">
@@ -278,6 +278,10 @@ function handleTheme(row) {
     });
 }
 
+function handleCategory(row){
+  router.push({ path: "/cms/web/theme/category/" +row.webName+"/"+ row.themeName });
+}
+
 function handleWebDialog() {
   openWebDialog.value = true;
 }
@@ -293,14 +297,6 @@ function cancel() {
 function handleDelete(row) {
   delTheme(row.webName, row.themeName).then((response) => {
     proxy.$modal.msgSuccess("删除成功");
-    open.value = false;
-    getList();
-  });
-}
-
-function handleUpdate(row) {
-  updateWeb(row.webName, row.themeName).then((response) => {
-    proxy.$modal.msgSuccess("修改成功");
     open.value = false;
     getList();
   });

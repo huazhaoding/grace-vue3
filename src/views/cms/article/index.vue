@@ -4,7 +4,8 @@
       <!--分类数据-->
       <el-col v-show="categoryTreeCollapse" :span="4" :xs="24">
         <div class="head-container">
-          <el-input v-model="categoryName" placeholder="请输入分类" clearable prefix-icon="Search" style="margin-bottom: 20px" />
+          <el-input v-model="categoryName" placeholder="请输入分类" clearable prefix-icon="Search"
+            style="margin-bottom: 20px" />
         </div>
         <div class="head-container">
           <el-tree :data="categoryOptions" :props="{ label: 'label', children: 'children' }" :expand-on-click-node="false"
@@ -32,14 +33,13 @@
           <el-form-item label="发表人" prop="createBy">
             <el-input v-model="queryParams.createBy" placeholder="请输入发表人" clearable @keyup.enter="handleQuery" />
           </el-form-item>
-  
+
           <el-form-item label="顶置级别" prop="articleTop">
             <el-input-number v-model="queryParams.articleTop" controls-position="right" clearable />
           </el-form-item>
           <el-form-item label="状态" prop="visible">
             <el-select v-model="queryParams.visible" placeholder="请选择状态" clearable>
-              <el-option v-for="dict in cms_article_visible" :key="dict.value" :label="dict.label"
-                :value="dict.value" />
+              <el-option v-for="dict in cms_article_visible" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="类型" prop="articleType">
@@ -47,6 +47,15 @@
               <el-option v-for="dict in cms_article_type" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
           </el-form-item>
+
+          <el-form-item label="站点" prop="supportThemeCategoryId">
+            <el-select v-model="queryParams.params['supportThemeCategoryId']" placeholder="请选择站点" clearable>
+              <el-option-group v-for="(themes,key ) of themeMapData" :key="key" :label="key">
+                <el-option v-for="theme in themes" :key="theme.themeName+'_'+theme.themeName" :label="theme.themeName" :value="theme.supportThemeCategoryId" />
+              </el-option-group>
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="创建时间" style="width: 308px">
             <el-date-picker v-model="dateRange" value-format="YYYY-MM-DD" type="daterange" range-separator="-"
               start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
@@ -138,8 +147,9 @@ import {
   listArticle,
   delArticle,
   categoryTree,
+  themeMap
 } from "@/api/cms/article";
-import batchDialog  from '@/views/cms/article/components/batchDialog'
+import batchDialog from '@/views/cms/article/components/batchDialog'
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const articleList = ref([]);
@@ -151,8 +161,9 @@ const multiple = ref(true);
 const total = ref(0);
 const categoryName = ref("");
 const categoryOptions = ref(undefined);
-const batchOpen=ref(false);
+const batchOpen = ref(false);
 const dateRange = ref([]);
+const themeMapData = ref({});
 const categoryTreeCollapse = ref(true);
 const { sys_true_false, cms_article_type, cms_article_visible } = proxy.useDict(
   "sys_true_false",
@@ -167,13 +178,14 @@ const data = reactive({
     pageSize: 10,
     articleId: null,
     categoryId: null,
-    themeCategoryId:null,
+    themeCategoryId: null,
     tagId: null,
     articleTitle: null,
     createBy: null,
     articleType: null,
     articleTop: null,
     visible: null,
+    params:{}
   },
 });
 
@@ -206,12 +218,12 @@ watch(categoryName, (val) => {
 
 
 /**初始化执行一次 */
-function closeBatchDialog(val){
+function closeBatchDialog(val) {
   getList();
 }
 
-function handleBatch(){
-    batchOpen.value=true;
+function handleBatch() {
+  batchOpen.value = true;
 }
 
 /** 查询树下拉树结构 */
@@ -237,6 +249,10 @@ function getList() {
     loading.value = false;
   });
 }
+
+themeMap().then((response) => {
+    themeMapData.value=response.data;
+  });
 
 /** 搜索按钮操作 */
 function handleQuery() {

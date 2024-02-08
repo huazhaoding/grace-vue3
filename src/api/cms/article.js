@@ -27,6 +27,14 @@ export function listTag(query) {
   })
 }
 
+// themeMap
+export function themeMap() {
+  return request({
+    url: '/cms/article/themeMap',
+    method: 'get'
+  })
+}
+
 // 查询文章详细
 export function getArticle(articleId) {
   return request({

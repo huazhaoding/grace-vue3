@@ -8,12 +8,29 @@ export function listCategory(query) {
     params: query
   })
 }
+// 查询分类ID列表
+export function listCategoryIds(query) {
+  return request({
+    url: '/cms/category/listCategoryIds',
+    method: 'get',
+    params: query
+  })
+}
 
 // 查询分类详细
 export function getCategory(categoryId) {
   return request({
     url: '/cms/category/' + categoryId,
     method: 'get'
+  })
+}
+
+// 查询分类树
+export function categoryTree(query) {
+  return request({
+    url: '/cms/article/categoryTree',
+    method: 'get',
+    params: query
   })
 }
 
@@ -41,5 +58,29 @@ export function delCategory(categoryId) {
   return request({
     url: '/cms/category/' + categoryId,
     method: 'delete'
+  })
+}
+
+//移除分类关联主题
+export function removeCategoryTheme(themeName,categoryIds) {
+  return request({
+    url: '/cms/category/removeCategoryTheme/'+themeName+"/"+categoryIds,
+    method: 'delete'
+  })
+}
+
+//添加分类关联主题
+export function addCategoryTheme(themeName,categoryIds) {
+  return request({
+    url: '/cms/category/addCategoryTheme/'+themeName+"/"+categoryIds,
+    method: 'post'
+  })
+}
+
+// 查询分类详细
+export function listCategoryTheme(categoryId) {
+  return request({
+    url: '/cms/category/listCategoryTheme/' + categoryId,
+    method: 'get'
   })
 }

@@ -12,7 +12,7 @@ export function listTheme(query) {
 // 查询主题详细
 export function getTheme(webName,themeName) {
   return request({
-    url: '/cms/theme/' + webName+'/'+themeName,
+    url: '/cms/theme/getTheme/' + webName+'/'+themeName,
     method: 'get'
   })
 }

@@ -106,6 +106,16 @@
               v-hasPermi="['cms:category:remove']">
             </el-button>
           </el-tooltip>
+          <el-tooltip content="查看关联文章" placement="top">
+            <el-button link type="primary" icon="Grid" @click="handleArticleView(scope.row)"
+              v-hasPermi="['cms:category:remove']">
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="查看关联主题" placement="top">
+            <el-button link type="primary" icon="Discount" @click="handleThemeDialog(scope.row)"
+              v-hasPermi="['cms:category:remove']">
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -188,11 +198,23 @@
         </div>
       </template>
     </el-dialog>
+     <!-- 查看关联主题对话框 -->
+     <el-dialog :title="themeTitle" v-model="themOpen" width="500px" append-to-body>
+      <el-table :data="themeData" style="width: 100%">
+        <el-table-column prop="themeName" label="主题名"  />
+        <el-table-column prop="categoryId" label="类目ID"  />
+      </el-table>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="themeDialogCancel()">关 闭</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup name="Category">
-import { listCategory, getCategory, delCategory, addCategory, updateCategory } from "@/api/cms/category";
+import { listCategory, getCategory, delCategory, addCategory, updateCategory,listCategoryTheme } from "@/api/cms/category";
 import KeysTag from "@/components/KeysTag";
 import { getHold } from "@/api/system/hold";
 const { proxy } = getCurrentInstance();
@@ -211,6 +233,11 @@ const title = ref("");
 const isExpandAll = ref(true);
 const refreshTable = ref(true);
 const dateRange = ref([]);
+
+const themOpen=ref(false);
+const themeTitle=ref("查看关联主题");
+const themeData=ref([]);
+
 
 const data = reactive({
   form: {},
@@ -247,6 +274,19 @@ const columns = ref([
   { key: 9, label: `修改人`, visible: false },
   { key: 10, label: `类目路径`, visible: false },
 ]);
+
+function handleThemeDialog(row){
+  listCategoryTheme(row.categoryId).then((response) => {
+    themeData.value=response.data;
+    themOpen.value = true;
+});
+
+}
+
+function themeDialogCancel(){
+  themOpen.value = false;
+}
+
 
 /** 查询类目列表 */
 function getList() {
