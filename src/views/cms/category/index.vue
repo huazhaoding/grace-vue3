@@ -126,7 +126,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="上层元素" prop="parentId">
-              <el-tree-select v-model="form.parentId" :data="categoryOptions" @node-click="clickCategoryTree"
+              <el-tree-select :disabled="title!='添加类目'" v-model="form.parentId" :data="categoryOptions" @node-click="clickCategoryTree"
                 :props="{ value: 'categoryId', label: 'categoryName', children: 'children' }" value-key="categoryId"
                 placeholder="请选择父元素" check-strictly />
             </el-form-item>
@@ -300,7 +300,7 @@ function getList() {
 
 /** 查询类目下拉树结构 */
 function getTreeselect() {
-  listCategory({ nodeType: 0 }).then((response) => {
+  listCategory({ nodeTypes: '0,1,2,4,6,8' }).then((response) => {
     categoryOptions.value = [];
     const data = { categoryId: 0, categoryName: "顶级节点", children: [] };
     data.children = proxy.handleTree(response.data, "categoryId", "parentId");

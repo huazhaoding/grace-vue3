@@ -226,9 +226,9 @@ function handleBatch() {
   batchOpen.value = true;
 }
 
-/** 查询树下拉树结构 */
+/** 查询树下拉树结构 {themeName:'',nodeType:1} */
 function getCategoryTree() {
-  categoryTree({}).then((response) => {
+  categoryTree().then((response) => {
     categoryOptions.value = response.data;
   });
 }
