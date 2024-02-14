@@ -53,7 +53,11 @@
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createBy" v-if="columns[1].visible" />
-      <el-table-column label="栏目图标" align="center" prop="columnIcon" v-if="columns[2].visible" />
+      <el-table-column label="栏目图标" align="center" prop="columnIcon" v-if="columns[2].visible" >
+        <template #default="scope">
+          <image-preview v-if="scope.row.columnIcon" :src="scope.row.columnIcon" :preview-teleported="true" :width="50" :height="50" />
+        </template>
+      </el-table-column>
       <el-table-column label="栏目地址" align="center" prop="columnUrl" />
       <el-table-column label="状态" align="center" prop="visible">
         <template #default="scope">
@@ -128,19 +132,9 @@
               <el-input v-model="form.columnName" placeholder="请输入栏目名字" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item prop="columnIcon" >
-              <template #label>
-                <span>
-                  <el-tooltip content="如果是图片需要手动粘贴图标地址" placement="top">
-                    <el-icon>
-                      <question-filled />
-                    </el-icon>
-                  </el-tooltip>
-                  栏目图标
-                </span>
-              </template>
-              <el-input v-model="form.columnIcon" placeholder="请输入栏目图标" />
+              <image-upload v-model="form.columnIcon" :fileSize="1" :fileType='["png", "jpg", "jpeg","ico"]' :limit="1" />
             </el-form-item>
           </el-col>
 
@@ -166,17 +160,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="打开方式" prop="openType">
-              <el-select v-model="form.openType" placeholder="请选择打开方式">
-                <el-option v-for="dict in cms_link_open" :key="dict.value" :label="dict.label"
-                  :value="Number(dict.value)">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
+            <el-col :span="12">
             <el-form-item label="打开方式" prop="openType">
               <el-select v-model="form.openType" placeholder="请选择打开方式">
                 <el-option v-for="dict in cms_link_open" :key="dict.value" :label="dict.label"
@@ -211,19 +195,19 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item label="关键词" prop="keywords">
               <keys-tag v-model="form.keywords" :limit="3" :min-length="1" :max-length="5" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="描述" prop="description">
-              <el-input v-model="form.description" type="textarea" placeholder="请输入描述" />
+              <el-input v-model="form.description" rows="3" maxlength="256" type="textarea" placeholder="请输入描述" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
+              <el-input v-model="form.remark" type="textarea" rows="3" maxlength="256" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -248,11 +232,9 @@ import {
 import { getHold } from "@/api/system/hold";
 import KeysTag from "@/components/KeysTag";
 const { proxy } = getCurrentInstance();
-const { cms_yes_no, cms_column_node_type, sys_show_hide, cms_column_type, cms_link_open } = proxy.useDict(
-  "cms_yes_no",
+const { cms_column_node_type, sys_show_hide, cms_link_open } = proxy.useDict(
   "cms_column_node_type",
   "sys_show_hide",
-  "cms_column_type",
   "cms_link_open"
 );
 const allowDict = ref([]);

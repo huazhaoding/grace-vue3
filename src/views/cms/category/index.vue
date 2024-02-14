@@ -152,7 +152,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="栏目图标" prop="categoryIcon">
-              <image-upload v-model="form.categoryIcon" :limit="1" />
+              <image-upload v-model="form.categoryIcon" :fileSize="1" :fileType='["png", "jpg", "jpeg","ico"]' :limit="1" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -176,17 +176,17 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="关键词" prop="keywords">
-              <keys-tag v-model="form.keywords" :limit="3" :min-length="1" :max-length="5" />
+              <keys-tag v-model="form.keywords" :limit="3" :min-length="1" :max-length="8" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="描述" prop="description">
-              <el-input v-model="form.description" type="textarea" placeholder="请输入描述" />
+              <el-input v-model="form.description" rows="3" maxlength="256" type="textarea" placeholder="请输入描述" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
+              <el-input v-model="form.remark" rows="3" maxlength="256" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -218,10 +218,9 @@ import { listCategory, getCategory, delCategory, addCategory, updateCategory,lis
 import KeysTag from "@/components/KeysTag";
 import { getHold } from "@/api/system/hold";
 const { proxy } = getCurrentInstance();
-const { cms_category_node_type, sys_show_hide, cms_yes_no } = proxy.useDict(
+const { cms_category_node_type, sys_show_hide } = proxy.useDict(
   "cms_category_node_type",
-  "sys_show_hide",
-  "cms_yes_no"
+  "sys_show_hide"
 );
 const allowNodeTypeDict = ref([]);
 const categoryList = ref([]);
