@@ -76,7 +76,7 @@
          </el-table-column>
          <el-table-column label="操作" align="center" width="210" class-name="small-padding fixed-width">
             <template #default="scope">
-           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:menu:edit']">修改</el-button>
+               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:menu:edit']">修改</el-button>
                <el-button link type="primary" icon="Plus" @click="handleAdd(scope.row)" v-hasPermi="['system:menu:add']">新增</el-button>
                <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:menu:remove']">删除</el-button>
             </template>
@@ -96,8 +96,6 @@
                         value-key="menuId"
                         placeholder="选择上级菜单"
                         check-strictly
-                        :render-after-expand="false"
-                        
                      />
                   </el-form-item>
                </el-col>
@@ -115,12 +113,10 @@
                      <el-popover
                         placement="bottom-start"
                         :width="540"
-                        v-model:visible="showChooseIcon"
                         trigger="click"
-                        @show="showSelectIcon"
                      >
                         <template #reference>
-                           <el-input v-model="form.icon" placeholder="点击选择图标" @blur="showSelectIcon" v-click-outside="hideSelectIcon" readonly>
+                           <el-input v-model="form.icon" placeholder="点击选择图标" @blur="showSelectIcon" readonly>
                               <template #prefix>
                                  <svg-icon
                                     v-if="form.icon"
@@ -283,9 +279,10 @@
 import { addMenu, delMenu, getMenu, listMenu, updateMenu } from "@/api/system/menu";
 import SvgIcon from "@/components/SvgIcon";
 import IconSelect from "@/components/IconSelect";
-import { ClickOutside as vClickOutside } from 'element-plus'
+
 const { proxy } = getCurrentInstance();
 const { sys_show_hide, sys_normal_disable } = proxy.useDict("sys_show_hide", "sys_normal_disable");
+
 const menuList = ref([]);
 const open = ref(false);
 const loading = ref(true);
@@ -294,8 +291,8 @@ const title = ref("");
 const menuOptions = ref([]);
 const isExpandAll = ref(false);
 const refreshTable = ref(true);
-const showChooseIcon = ref(false);
 const iconSelectRef = ref(null);
+
 const data = reactive({
   form: {},
   queryParams: {
@@ -308,7 +305,9 @@ const data = reactive({
     path: [{ required: true, message: "路由地址不能为空", trigger: "blur" }]
   },
 });
+
 const { queryParams, form, rules } = toRefs(data);
+
 /** 查询菜单列表 */
 function getList() {
   loading.value = true;
@@ -350,20 +349,10 @@ function reset() {
 /** 展示下拉图标 */
 function showSelectIcon() {
   iconSelectRef.value.reset();
-  showChooseIcon.value = true;
 }
 /** 选择图标 */
 function selected(name) {
   form.value.icon = name;
-  showChooseIcon.value = false;
-}
-/** 图标外层点击隐藏下拉列表 */
-function hideSelectIcon(event) {
-  var elem = event.relatedTarget || event.srcElement || event.target || event.currentTarget;
-  var className = elem.className;
-  if (className !== "el-input__inner") {
-    showChooseIcon.value = false;
-  }
 }
 /** 搜索按钮操作 */
 function handleQuery() {
@@ -433,5 +422,6 @@ function handleDelete(row) {
     proxy.$modal.msgSuccess("删除成功");
   }).catch(() => {});
 }
+
 getList();
 </script>
