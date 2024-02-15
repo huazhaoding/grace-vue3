@@ -67,7 +67,6 @@ const props = defineProps({
   },
 });
 const options = ref({
-  theme: "snow",
   bounds: document.body,
   debug: "warn",
   placeholder: "请输入内容呀",
