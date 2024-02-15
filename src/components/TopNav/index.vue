@@ -11,8 +11,7 @@
         :index="item.path"
         :key="index"
         v-if="index < visibleNumber"
-      >
-        <svg-icon
+      ><svg-icon
           v-if="item.meta && item.meta.icon && item.meta.icon !== '#'"
           :icon-class="item.meta.icon"
         />
@@ -230,4 +229,14 @@ onMounted(() => {
   margin-left: 8px;
   margin-top: 0px;
 }
+
+/* 背景色隐藏 */
+.topmenu-container.el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .topmenu-container.el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .topmenu-container.el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+    background-color: #ffffff !important;
+}
+/* 图标右间距 */
+.topmenu-container .svg-icon {
+  margin-right: 4px;
+}
+
 </style>
