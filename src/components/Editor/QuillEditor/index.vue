@@ -19,6 +19,8 @@
       ref="quillEditorRef"
       v-model:content="content"
       contentType="html"
+      :modules="modules"
+      :toolbar="toolbar"
       @textChange="(e) => $emit('update:modelValue', content)"
       :options="options"
       :style="styles"
