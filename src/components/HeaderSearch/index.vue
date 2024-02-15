@@ -82,8 +82,8 @@ function initFuse(list) {
 }
 // Filter out the routes that can be displayed in the sidebar
 // And generate the internationalized title
-function generateRoutes(routes, basePath = '', prefixTitle = [], query = {}) {
-  let res = []
+function generateRoutes(routes, basePath = '', prefixTitle = []) {
+let res = []
 
   for (const r of routes) {
     // skip hidden router
@@ -110,7 +110,7 @@ function generateRoutes(routes, basePath = '', prefixTitle = [], query = {}) {
 
     // recursive child routes
     if (r.children) {
-      const tempRoutes = generateRoutes(r.children, data.path, data.title, data.query)
+      const tempRoutes = generateRoutes(r.children, data.path, data.title)
       if (tempRoutes.length >= 1) {
         res = [...res, ...tempRoutes]
       }
