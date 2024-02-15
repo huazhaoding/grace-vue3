@@ -70,6 +70,7 @@ import useUserStore from '@/store/modules/user'
 import FooterTag from "@/components/FooterTag"
 
 const userStore = useUserStore()
+const route = useRoute();
 const router = useRouter();
 const { proxy } = getCurrentInstance();
 
@@ -95,6 +96,12 @@ const captchaEnabled = ref(proxy.$sysConfig.captchaEnabled=="true");
 // 注册开关
 const register = ref(proxy.$sysConfig.registerUser=="true");
 const redirect = ref(router.currentRoute.value.query.redirect);
+
+watch(route, (newRoute) => {
+    redirect.value = newRoute.query && newRoute.query.redirect;
+}, { immediate: true });
+
+
 function handleLogin() {
   proxy.$refs.loginRef.validate(valid => {
     if (valid) {
