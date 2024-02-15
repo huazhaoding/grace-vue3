@@ -89,11 +89,10 @@ const content = ref("");
 watch(
   () => props.modelValue,
   (v) => {
-    if (v !== content) {
+    if (v !== content.value) {
     document.querySelectorAll('.blot-formatter__overlay').forEach((item, index, arr) => {
         item.style.display="none";
     })
-
       content.value = v === undefined ? "<p></p>" : v;
     }
   },
