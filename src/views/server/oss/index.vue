@@ -120,7 +120,7 @@
             style="width: 100px; height: 100px"
             v-if="'image' === scope.row.fileType"
             :src="getThumbnail(scope.row.fk,scope.row.domain,scope.row.ossType)"
-            :preview-teleported="true"
+           preview-teleported
             :preview-src-list="[
               getImgUrl(scope.row.fk,scope.row.domain,scope.row.ossType)
             ]"

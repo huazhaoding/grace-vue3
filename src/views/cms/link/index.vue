@@ -46,7 +46,7 @@
       <el-table-column label="链接名" align="center" prop="linkName" />
       <el-table-column label="链接LOGO" align="center" prop="linkIco" >
         <template #default="scope">
-          <image-preview :src="scope.row.linkIco" :preview-teleported="true" :width="50" :height="50" />
+          <image-preview :src="scope.row.linkIco"preview-teleported :width="50" :height="50" />
         </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="orderNum" />
