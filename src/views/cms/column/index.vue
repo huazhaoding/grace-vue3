@@ -55,7 +55,7 @@
       <el-table-column label="创建人" align="center" prop="createBy" v-if="columns[1].visible" />
       <el-table-column label="栏目图标" align="center" prop="columnIcon" v-if="columns[2].visible" >
         <template #default="scope">
-          <image-preview v-if="scope.row.columnIcon" :src="scope.row.columnIcon"preview-teleported :width="50" :height="50" />
+          <image-preview v-if="scope.row.columnIcon" :src="scope.row.columnIcon" preview-teleported :width="50" :height="50" />
         </template>
       </el-table-column>
       <el-table-column label="栏目地址" align="center" prop="columnUrl" />

@@ -73,7 +73,7 @@
 
       <el-table-column label="栏目图标" align="center" prop="categoryIcon" width="100">
         <template #default="scope">
-          <image-preview :src="scope.row.categoryIcon"preview-teleported :width="50" :height="50" />
+          <image-preview :src="scope.row.categoryIcon" preview-teleported :width="50" :height="50" />
         </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="orderNum" />
