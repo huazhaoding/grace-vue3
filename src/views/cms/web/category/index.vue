@@ -200,7 +200,7 @@ const states = reactive({
   queryParams: {
     categoryId: null,
     categoryName: null,
-    themeName: route.params.webName + "_" + route.params.webName,
+    themeName: route.params.webName + "_" + route.params.themeName,
     orderNum: null,
     nodeTypes: "2,3",
   },

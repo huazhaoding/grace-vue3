@@ -107,8 +107,8 @@
             </el-button>
           </el-tooltip>
           <el-tooltip content="查看关联文章" placement="top">
-            <el-button link type="primary" icon="Grid" @click="handleArticleView(scope.row)"
-              v-hasPermi="['cms:category:remove']">
+            <el-button link type="primary" icon="Grid" @click="handleArticleList(scope.row)"
+              v-hasPermi="['cms:article:list']">
             </el-button>
           </el-tooltip>
           <el-tooltip content="查看关联主题" placement="top">
@@ -217,6 +217,7 @@
 import { listCategory, getCategory, delCategory, addCategory, updateCategory,listCategoryTheme } from "@/api/cms/category";
 import KeysTag from "@/components/KeysTag";
 import { getHold } from "@/api/system/hold";
+const router = useRouter();
 const { proxy } = getCurrentInstance();
 const { cms_category_node_type, sys_show_hide } = proxy.useDict(
   "cms_category_node_type",
@@ -403,6 +404,11 @@ async function allowDictData(nodeType) {
       allowNodeTypeDict.value = [];
     }
   });
+}
+
+function handleArticleList(row){
+  router.push({path: "/cms/article",query:{categoryId:row.categoryId}});
+
 }
 
 

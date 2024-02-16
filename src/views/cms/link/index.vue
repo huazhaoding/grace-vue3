@@ -68,13 +68,16 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-tooltip content="修改" placement="top">
-            <el-button type="text" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:link:edit']" />
+            <el-button type="primary"
+          plain icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:link:edit']" />
           </el-tooltip>
           <el-tooltip content="添加" placement="top">
-            <el-button type="text" icon="Plus" @click="handleAdd(scope.row)" v-hasPermi="['system:link:add']" />
+            <el-button type="primary"
+          plain icon="Plus" @click="handleAdd(scope.row)" v-hasPermi="['system:link:add']" />
           </el-tooltip>
           <el-tooltip content="删除" placement="top">
-            <el-button type="text" icon="Delete" @click="handleDelete(scope.row)"
+            <el-button type="primary"
+          plain icon="Delete" @click="handleDelete(scope.row)"
               v-hasPermi="['system:link:remove']" /></el-tooltip>
         </template>
       </el-table-column>
