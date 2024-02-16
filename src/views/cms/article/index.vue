@@ -8,7 +8,7 @@
             style="margin-bottom: 20px" />
         </div>
         <div class="head-container">
-          <el-tree :data="categoryOptions" :props="{ label: 'label', children: 'children' }" :expand-on-click-node="false"
+          <el-tree :data="categoryOptions"   :props="{ label: 'label', children: 'children' }" :expand-on-click-node="false"
             :filter-node-method="filterNode" ref="categoryTreeRef" node-key="id" highlight-current default-expand-all
             @node-click="handleNodeClick" />
         </div>
@@ -179,7 +179,6 @@ const data = reactive({
     articleId: null,
     categoryId: null,
     themeCategoryId: null,
-    tagId: null,
     articleTitle: null,
     createBy: null,
     articleType: null,
@@ -263,6 +262,9 @@ function handleQuery() {
 /** 重置按钮操作 */
 function resetQuery() {
   proxy.resetForm("queryRef");
+  queryParams.value.categoryId=null;
+  proxy.$refs["categoryTreeRef"].setCheckedKeys([], false);
+  categoryName.value=null;
   handleQuery();
 }
 
