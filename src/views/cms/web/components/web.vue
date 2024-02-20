@@ -78,7 +78,7 @@ watch(
 function getConfig() {
   if (props.webName !== "") {
     proxy
-      .getConfigValueMap(props.webName + "_theme")
+      .getConfigValueMap(props.webName + "_themeConfig")
       .then((response) => {
         formData.value = response.data;
       });
@@ -91,7 +91,7 @@ function getConfig() {
 
 //传递表单
 function submitConfig() {
-  updateConfig(props.webName, "theme", formData.value)
+  updateConfig(props.webName, "themeConfig", formData.value)
     .then((response) => {
       cancel();
       proxy.$modal.msgSuccess("修改成功");
