@@ -111,7 +111,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="上层元素" prop="parentId">
-              <el-tree-select v-model="form.parentId" :data="columnOptions" @node-click="clickColumnTree" :props="{
+              <el-tree-select :disabled="title!='添加菜单'" v-model="form.parentId" :data="columnOptions" @node-click="clickColumnTree" :props="{
                 value: 'columnId',
                 label: 'columnName',
                 children: 'children',
@@ -372,7 +372,7 @@ async function handleAdd(row) {
     allowDictData(-1);
   }
   open.value = true;
-  title.value = "添加内容菜单";
+  title.value = "添加菜单";
 }
 
 /** 展开/折叠操作 */

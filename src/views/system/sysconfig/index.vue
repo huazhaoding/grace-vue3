@@ -19,14 +19,6 @@
                   clearable
                 ></el-input>
               </el-form-item>
-              <el-form-item label="描述" prop="sys.common.description">
-                <el-input
-                  v-model="formData['sys.common.description']"
-                  type="textarea"
-                  placeholder="请输描述"
-                  :rows="2"
-                ></el-input>
-              </el-form-item>
               <el-form-item label="LOGO" prop="sys.common.logo">
                 <image-upload
                   v-model="formData['sys.common.logo']"
@@ -35,6 +27,14 @@
               </el-form-item>
               <el-form-item label="ICO" prop="sys.common.ico">
                 <image-upload v-model="formData['sys.common.ico']" :limit="1" />
+              </el-form-item>
+              <el-form-item label="描述" prop="sys.common.description">
+                <el-input
+                  v-model="formData['sys.common.description']"
+                  type="textarea"
+                  placeholder="请输描述"
+                  :rows="2"
+                ></el-input>
               </el-form-item>
               <el-form-item label="底部" prop="sys.common.footer">
                 <el-input

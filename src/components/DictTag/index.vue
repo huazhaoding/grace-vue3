@@ -1,8 +1,7 @@
 <template>
   <div>
     <template v-for="(item, index) in options">
-      <template
-        v-if="
+      <template v-if="
           (dictSort && values == '' + item.dictSort) ||
           values.includes(item.value)
         "
@@ -12,8 +11,7 @@
           :key="item.value"
           :index="index"
           :class="item.elTagClass"
-          >{{ item.label + " " }}</span
-        >
+          >{{ item.label + " " }}</span>
         <el-tag
           v-else
           :disable-transitions="true"
@@ -26,7 +24,7 @@
         >
       </template>
     </template>
-    <template v-if="unmatch && showValue">
+    <template v-if="!dictSort && unmatch && showValue ">
       {{ unmatchArray | handleArray }}
     </template>
   </div>

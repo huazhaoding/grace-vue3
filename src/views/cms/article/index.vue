@@ -49,7 +49,7 @@
         >
           <el-form-item label="站点" prop="supportThemeCategoryId">
             <el-select
-              ref="categoryTreeRef"
+              ref="themeSelectRef"
               v-model="queryParams.params['supportThemeCategoryId']"
               placeholder="请选择站点"
               clearable

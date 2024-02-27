@@ -91,15 +91,29 @@
             :props="{ value: 'linkId', label: 'linkName', children: 'children' }" value-key="linkId"
             placeholder="请选择父元素id" check-strictly :render-after-expand="false" />
         </el-form-item>
+        <el-form-item label="链接名" prop="linkName">
+          <el-input v-model="form.linkName" placeholder="请输入链接名" />
+        </el-form-item>
         <el-form-item label="链接地址" prop="linkUrl">
           <el-input v-model="form.linkUrl" placeholder="请输入链接地址" />
         </el-form-item>
-        <el-form-item label="链接名" prop="linkName">
-          <el-input v-model="form.linkName" placeholder="请输入链接名" />
+        <el-form-item label="节点类型" prop="linkName">
+          <el-input v-model="form.nodeType" placeholder="请输入节点类型" />
         </el-form-item>
         <el-form-item prop="linkIcon" >
               <image-upload v-model="form.linkIcon" :fileSize="1" :fileType='["png", "jpg", "jpeg","ico"]' :limit="1" />
             </el-form-item>
+            <el-form-item label="打开方式" prop="openType">
+          <el-select v-model="form.openType" placeholder="请选择打开方式">
+            <el-option
+              v-for="dict in cms_link_open"
+              :key="dict.value"
+              :label="dict.label"
+              :value="Number(dict.value)"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="排序" prop="orderNum">
           <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
         </el-form-item>

@@ -1,11 +1,5 @@
 <template>
-  <el-form
-    ref="articleRef"
-    :model="form"
-    :rules="rules"
-    class="article-form"
-    label-width="100px"
-  >
+  <el-form ref="articleRef" :model="form" :rules="rules" class="article-form" label-width="100px">
     <el-row :gutter="20">
       <el-col :span="8">
         <el-form-item label="文章标题" prop="articleTitle">
@@ -13,56 +7,40 @@
         </el-form-item>
       </el-col>
       <el-col :span="8">
+        <el-form-item label="站点" prop="syncThemeName">
+          <el-select ref="themeSelectRef" v-model="form.syncThemeName" placeholder="请选择站点" @clear="empty()" clearable>
+            <el-option-group v-for="(themes, key) of themeMapData" :key="key" :label="key">
+              <el-option v-for="theme in themes" :key="theme.webName + '_' + theme.themeName" :label="theme.themeName"
+                :value="theme.webName + '_' + theme.themeName"
+                @click="themeChange(theme.webName + '_' + theme.themeName)" />
+            </el-option-group>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
         <el-form-item label="分类" prop="categoryIds">
-          <el-tree-select
-            v-model="form.categoryIds"
-            :data="categoryOptions"
-            node-key="id"
-            :props="{
-              value: 'id',
-              label: 'label',
-              children: 'children',
-              disabled: getCategoryDisabled,
-            }"
-            value-key="id"
-            placeholder="请选择分类" 
-            check-strictly
-            multiple
-            :multiple-limit="maxCat"
-          />
+          <el-tree-select v-model="form.categoryIds" :data="categoryOptions" node-key="id" :props="{
+            value: 'id',
+            label: 'label',
+            children: 'children',
+            disabled: getCategoryDisabled,
+          }" value-key="id" placeholder="请选择分类" check-strictly multiple :multiple-limit="maxCat" />
         </el-form-item>
       </el-col>
       <el-col :span="8">
         <el-form-item label="标签" prop="tagIds">
-          <el-select
-            v-model="form.tagIds"
-            multiple
-            placeholder="请选择标签"
-            style="width: 240px"
-            :multiple-limit="maxTag"
-          >
-            <el-option
-              v-for="item in tagOptions"
-              :key="item.categoryId"
-              :label="item.categoryName"
-              :disabled="
-                Boolean(item.visible) && form.tagIds.indexOf(item.categoryId) == -1
-              "
-              :value="item.categoryId"
-            />
+          <el-select v-model="form.tagIds" multiple placeholder="请选择标签" style="width: 240px" :multiple-limit="maxTag">
+            <el-option v-for="item in tagOptions" :key="item.categoryId" :label="item.categoryName" :disabled="
+              Boolean(item.visible) && form.tagIds.indexOf(item.categoryId) == -1
+            " :value="item.categoryId" />
           </el-select>
         </el-form-item>
-      
       </el-col>
+
       <el-col :span="7">
         <el-form-item label="文章类型" prop="articleType">
           <el-select v-model="form.articleType" placeholder="请选择文章类型">
-            <el-option
-              v-for="dict in cms_article_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="Number(dict.value)"
-            >
+            <el-option v-for="dict in cms_article_type" :key="dict.value" :label="dict.label" :value="Number(dict.value)">
             </el-option>
           </el-select>
         </el-form-item>
@@ -70,31 +48,20 @@
       <el-col :span="5">
         <el-form-item label="开启评论" prop="allowComment">
           <el-radio-group v-model="form.allowComment">
-            <el-radio
-              v-for="dict in sys_true_false"
-              :key="dict.value"
-              :label="dict.value == 'true' ? true : false"
-              >{{ dict.label }}
+            <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true' ? true : false">{{
+              dict.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item label="关键词" prop="keywords">
-          <keys-tag
-            v-model="form.keywords"
-            :limit="maxKey"
-            :min-length="2"
-            :max-length="5"
-          />
+          <keys-tag v-model="form.keywords" :limit="maxKey" :min-length="2" :max-length="5" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item label="固定链接" prop="articleUrl">
-          <el-input
-            v-model="form.articleUrl"
-            placeholder="请输入文章固定链接"
-          />
+          <el-input v-model="form.articleUrl" placeholder="请输入文章固定链接" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
@@ -104,31 +71,17 @@
       </el-col>
       <el-col :span="24">
         <el-tooltip content="从本地选择图片" placement="top">
-          <el-button
-            size="small"
-            type="primary"
-            icon="Plus"
-            @click="chooseImgDialog"
-            style="position: relative; top: 90px; right: -50px"
-          >
+          <el-button size="small" type="primary" icon="Plus" @click="chooseImgDialog"
+            style="position: relative; top: 90px; right: -50px">
           </el-button>
         </el-tooltip>
         <el-form-item label="缩略图" prop="articleImg">
-          <image-upload
-            v-model="form.articleImg"
-            @delete="deleteChoose"
-            :limit="maxImg"
-          />
+          <image-upload v-model="form.articleImg" @delete="deleteChoose" :limit="maxImg" />
         </el-form-item>
       </el-col>
       <el-col :span="8">
         <el-form-item label="描述" prop="description">
-          <el-input
-            v-model="form.description"
-            type="textarea"
-            :rows="4"
-            placeholder="请输入描述"
-          />
+          <el-input v-model="form.description" type="textarea" :rows="4" placeholder="请输入描述" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
@@ -143,21 +96,10 @@
       </el-col>
     </el-row>
   </el-form>
-  <el-dialog
-    title="选择图片"
-    v-model="openImgDialog"
-    lock-scroll
-    width="705px"
-    append-to-body
-  >
+  <el-dialog title="选择图片" v-model="openImgDialog" lock-scroll width="705px" append-to-body>
     <el-checkbox-group class="dialog-box" v-model="imgCheck" @change="check">
       <div class="dialog-li" v-for="(item, index) in imgSrcs">
-        <el-checkbox
-          class="dialog-check"
-          :key="index"
-          :label="item"
-          size="large"
-        >
+        <el-checkbox class="dialog-check" :key="index" :label="item" size="large">
           &nbsp
         </el-checkbox>
         <img :src="item" class="dialog-img" />
@@ -178,7 +120,8 @@ import {
   addArticle,
   updateArticle,
   categoryTree,
-  listTag 
+  themeMap,
+  listTag
 } from "@/api/cms/article";
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
 const route = useRoute();
@@ -193,24 +136,59 @@ const maxTag = ref(undefined);
 const maxCat = ref(undefined);
 const maxImg = ref(undefined);
 const maxKey = ref(undefined);
+const themeMapData = ref({});
+
+
+themeMap().then((response) => {
+  themeMapData.value = response.data;
+  if (route.params && route.params.articleId) {
+    getArticle(route.params.articleId).then((response) => {
+      form.value = response.data;
+      let yt = themeMapData.value;
+      for (let key in yt) {
+        for (let key2 in yt[key]) {
+          if (yt[key][key2].supportThemeCategoryId == form.value.categoryId) {
+            form.value.syncThemeName = yt[key][key2].webName + "_" + yt[key][key2].themeName;
+            themeChange(yt[key][key2].webName + "_" + yt[key][key2].themeName);
+          }
+        }
+      }
+    });
+  }
+  else {
+    autoComplateUrl();
+  }
+});
+
+function themeChange(themeName) {
+  getCategoryTree(themeName);
+  getListTag(themeName);
+}
+
+function empty() {
+  categoryOptions.value = undefined;
+  form.value.tagIds = [];
+  tagOptions.value = undefined;
+  form.value.categoryIds = [];
+}
 
 function titleRemote(rule, value, callback) {
-  proxy.remote("/cms/article/check", { articleTitle: value,articleId: form.value.articleId }).then((res) => {
-    if(res.data){
+  proxy.remote("/cms/article/check", { articleTitle: value, articleId: form.value.articleId }).then((res) => {
+    if (res.data) {
       return callback();
     }
-    else{
+    else {
       return callback(new Error("标题名已经存在,请检查!"));
     }
   });
 }
 
 function urlRemote(rule, value, callback) {
-  proxy.remote("/cms/article/check", { articleUrl: value,articleId: form.value.articleId }).then((res) => {
-    if(res.data){
+  proxy.remote("/cms/article/check", { articleUrl: value, articleId: form.value.articleId }).then((res) => {
+    if (res.data) {
       return callback();
     }
-    else{
+    else {
       return callback(new Error("固定路径已经存在,请检查!"));
     }
   });
@@ -224,8 +202,8 @@ const data = reactive({
       { validator: titleRemote, trigger: "blur" },
     ],
     articleUrl: [
-    { required: true, message: "固定路径不能为空", trigger: "blur" },
-    { validator: urlRemote, trigger: "blur" }
+      { required: true, message: "固定路径不能为空", trigger: "blur" },
+      { validator: urlRemote, trigger: "blur" }
     ],
     articleType: [
       { required: true, message: "文章类型不能为空", trigger: "change" },
@@ -248,42 +226,23 @@ const imgSrcs = ref([]);
 const imgCheck = ref([]);
 const openImgDialog = ref(false);
 const { form, rules } = toRefs(data);
-watch(() =>form.value.articleUrl,(newValue,oldValue)=>{
-     if(newValue!=undefined && newValue.substr(0,1)!='/'){
-      form.value.articleUrl=  "/"+newValue;
-     }
-},{ deep: true, immediate: true })
+watch(() => form.value.articleUrl, (newValue, oldValue) => {
+  if (newValue != undefined && newValue.substr(0, 1) != '/') {
+    form.value.articleUrl = "/" + newValue;
+  }
+}, { deep: true, immediate: true })
 /** 查询树下拉树结构 */
-function getCategoryTree() {
-  categoryTree({nodeTypes:'2,3',syncThemeNames:'',visible:0}).then((response) => {
+function getCategoryTree(themeName) {
+  categoryTree({ nodeTypes: '2,3', themeName: themeName, visible: 0 }).then((response) => {
     categoryOptions.value = response.data;
   });
 }
 
 /** 查询标签列表 */
-function getListTag() {
-  listTag({nodeTypes:'5',syncThemeNames:'',visible:0}).then((response) => {
+function getListTag(themeName) {
+  listTag({ nodeTypes: '5', themeName: themeName, visible: 0 }).then((response) => {
     tagOptions.value = response.data;
   });
-}
-
-function init() {
-  getArticleById();
-  setConfig();
-  getCategoryTree();
-  getListTag();
-}
-
-// 获取参数
-function getArticleById() {
-  if (route.params && route.params.articleId) {
-    getArticle(route.params.articleId).then((response) => {
-      form.value = response.data;
-    });
-  }
-  else {
-    autoComplateUrl();
-  }
 }
 
 function setConfig() {
@@ -296,22 +255,24 @@ function setConfig() {
   });
 }
 
+setConfig();
+
 function submitForm() {
   form.value.articleBuild = 0;
   proxy.$refs["articleRef"].validate((valid) => {
     if (valid) {
-       // 关闭当前tab页签，打开新页签
-       const obj = { path: "/cms/article", name: "Article" };
+      // 关闭当前tab页签，打开新页签
+      const obj = { path: "/cms/article", name: "Article" };
       if (form.value.articleId != null) {
         updateArticle(form.value).then((response) => {
-        proxy.$modal.msgSuccess("修改成功");
-        proxy.$tab.closeOpenPage(obj).then(() => {
+          proxy.$modal.msgSuccess("修改成功");
+          proxy.$tab.closeOpenPage(obj).then(() => {
             proxy.$tab.refreshPage(obj);
           });
         });
       } else {
         addArticle(form.value).then((response) => {
-          proxy.$modal.msgSuccess("新增成功"); 
+          proxy.$modal.msgSuccess("新增成功");
           proxy.$tab.closeOpenPage(obj).then(() => {
             proxy.$tab.refreshPage(obj);
           });
@@ -389,8 +350,8 @@ function check(value) {
 
 // 自动填充Url
 function autoComplateUrl() {
-   form.value.articleUrl=new Date().getTime()+'';
-	}
+  form.value.articleUrl = new Date().getTime() + '';
+}
 
 function chooseImg(str) {
   const data = [];
@@ -407,7 +368,6 @@ function chooseImg(str) {
   }
   return data;
 }
-init();
 </script>
 
 <style lang="scss" scoped>
