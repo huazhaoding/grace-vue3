@@ -143,7 +143,7 @@ function batchCategory() {
 function setConfig() {
   proxy.getConfigValueMap("cmsConfig").then((response) => {
     const data = response.data;
-    maxCat.value = data["oly.cms.articleCat.maxNum"];
+    maxCat.value = data["oly.cms.articleCategory.maxNum"];
     maxTag.value = data["oly.cms.articleTag.maxNum"];
   });
 }

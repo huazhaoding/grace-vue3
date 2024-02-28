@@ -68,9 +68,9 @@
                 >
                 </el-input-number>
               </el-form-item>
-              <el-form-item label="分类页：" prop="oly.web.pageCategory">
+              <el-form-item label="分类页：" prop="oly.web.pageCategory.classify">
                 <el-input-number
-                  v-model="formData['oly.web.pageCategory']"
+                  v-model="formData['oly.web.pageCategory.classify']"
                   controls-position="right"
                   :min="0"
                   :max="100000000000"
@@ -79,9 +79,9 @@
                 >
                 </el-input-number>
               </el-form-item>
-              <el-form-item label="标签页：" prop="oly.web.pageTag">
+              <el-form-item label="标签页：" prop="oly.web.pageCategory.tag">
                 <el-input-number
-                  v-model="formData['oly.web.pageTag']"
+                  v-model="formData['oly.web.pageCategory.tag']"
                   controls-position="right"
                   :min="0"
                   :max="100000000000"

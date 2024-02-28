@@ -5,8 +5,8 @@
       <el-tab-pane name="article" label="文章设置">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="分类上限" prop="oly.cms.articleCat.maxNum">
-                <el-input-number v-model="formData['oly.cms.articleCat.maxNum']" controls-position="right" :min="1"
+              <el-form-item label="分类上限" prop="oly.cms.articleCategory.maxNum">
+                <el-input-number v-model="formData['oly.cms.articleCategory.maxNum']" controls-position="right" :min="1"
                   :max="100" />
               </el-form-item>
               <el-form-item label="标签上限" prop="oly.cms.articleTag.maxNum">
