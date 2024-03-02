@@ -88,7 +88,7 @@
       </el-form-item>
     </el-form>
     <!--  底部  -->
-      <footer-tag></footer-tag>
+    <footer-tag></footer-tag>
   </div>
 </template>
 
@@ -140,6 +140,11 @@ const registerRules = {
       min: 5,
       max: 20,
       message: "用户密码长度必须介于 5 和 20 之间",
+      trigger: "blur",
+    },
+    {
+      pattern: /^[^<>"'|\\]+$/,
+      message: "不能包含非法字符：< > \" ' \\\ |",
       trigger: "blur",
     },
   ],
