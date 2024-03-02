@@ -41,9 +41,19 @@
           type="primary"
           plain
           icon="Download"
+          :disabled="multiple"
           @click="handleGenTable"
           v-hasPermi="['tool:gen:code']"
         >生成</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="Plus"
+          @click="openCreateTable"
+          v-hasRole="['admin']"
+        >创建</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -146,6 +156,7 @@
       </el-tabs>
     </el-dialog>
     <import-table ref="importRef" @ok="handleQuery" />
+    <create-table ref="createRef" @ok="handleQuery" />
   </div>
 </template>
 
@@ -153,8 +164,11 @@
 import { listTable, previewTable, delTable, genCode, synchDb } from "@/api/tool/gen";
 import router from "@/router";
 import importTable from "./importTable";
+import createTable from "./createTable";
+
 const route = useRoute();
 const { proxy } = getCurrentInstance();
+
 const tableList = ref([]);
 const loading = ref(true);
 const showSearch = ref(true);
@@ -165,6 +179,7 @@ const total = ref(0);
 const tableNames = ref([]);
 const dateRange = ref([]);
 const uniqueId = ref("");
+
 const data = reactive({
   queryParams: {
     pageNum: 1,
@@ -179,7 +194,9 @@ const data = reactive({
     activeName: "domain.java"
   }
 });
+
 const { queryParams, preview } = toRefs(data);
+
 onActivated(() => {
   const time = route.query.t;
   if (time != null && time != uniqueId.value) {
@@ -190,6 +207,7 @@ onActivated(() => {
     getList();
   }
 })
+
 /** 查询表集合 */
 function getList() {
   loading.value = true;
@@ -232,6 +250,10 @@ function handleSynchDb(row) {
 function openImportTable() {
   proxy.$refs["importRef"].show();
 }
+/** 打开创建表弹窗 */
+function openCreateTable() {
+  proxy.$refs["createRef"].show();
+}
 /** 重置按钮操作 */
 function resetQuery() {
   dateRange.value = [];
@@ -272,5 +294,6 @@ function handleDelete(row) {
     proxy.$modal.msgSuccess("删除成功");
   }).catch(() => {});
 }
+
 getList();
 </script>
