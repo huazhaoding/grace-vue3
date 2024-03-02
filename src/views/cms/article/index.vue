@@ -387,7 +387,7 @@ const data = reactive({
     pageSize: 10,
     articleId: null,
     categoryId:
-      route.query && route.query.categoryId ? route.query.categoryId : null,
+    route.query && route.query.categoryId ? route.query.categoryId : null,
     themeCategoryId: null,
     articleTitle: null,
     createBy: null,

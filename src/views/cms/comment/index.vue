@@ -13,13 +13,13 @@
 
       <el-form-item label="状态" prop="visible">
         <el-select v-model="queryParams.visible" placeholder="请选择状态" clearable>
-          <el-option v-for="dict in cms_comment_visible" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <el-option v-for="dict in cms_comment_visible" :key="dict.value" :label="dict.label" :value="dict.dictSort" />
         </el-select>
       </el-form-item>
 
       <el-form-item label="类型" prop="commentType">
         <el-select v-model="queryParams.commentType" placeholder="请选择类型" clearable>
-          <el-option v-for="dict in cms_comment_type" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <el-option v-for="dict in cms_comment_type" :key="dict.value" :label="dict.label" :value="dict.dictSort" />
         </el-select>
       </el-form-item>
 
@@ -55,12 +55,12 @@
       <el-table-column label="内容" align="center" prop="content" />
       <el-table-column label="评论类型" align="center" prop="commentType">
         <template #default="scope">
-          <dict-tag :options="cms_comment_type" :value="scope.row.commentType" />
+          <dict-tag :options="cms_comment_type" :dictSort="true" :value="scope.row.commentType" />
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="visible">
         <template #default="scope">
-          <dict-tag :options="cms_comment_visible" :value="scope.row.visible" />
+          <dict-tag :options="cms_comment_visible" :dictSort="true" :value="scope.row.visible" />
         </template>
       </el-table-column>
       <el-table-column label="IP" v-if="columns[3].visible" align="center" prop="ip" />
@@ -91,7 +91,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="visible">
           <el-radio-group v-model="form.visible">
-            <el-radio v-for="dict in cms_comment_visible" :key="dict.value" :label="Number(dict.value)">{{ dict.label }}
+            <el-radio v-for="dict in cms_comment_visible" :key="dict.dictSort" :label="dict.dictSort">{{ dict.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>

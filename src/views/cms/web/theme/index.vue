@@ -208,11 +208,7 @@ import themeConfig from "@/components/FormConfig";
 import webConfig from "@/views/cms/web/components/web";
 import {
   listTheme,
-  getTheme,
   delTheme,
-  addTheme,
-  updateTheme,
-  updateConfig, 
   getThemeConfigForm
 } from "@/api/cms/theme";
 const { proxy } = getCurrentInstance();
