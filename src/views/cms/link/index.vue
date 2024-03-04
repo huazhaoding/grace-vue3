@@ -14,7 +14,9 @@
         <el-input v-model="queryParams.description" placeholder="请输入链接描述" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="状态" prop="visible">
-        <el-input v-model="queryParams.visible" placeholder="请输入状态" clearable @keyup.enter="handleQuery" />
+        <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable>
+          <el-option v-for="dict in sys_show_hide" :key="dict.value" :label="dict.label" :value="dict.value" />
+        </el-select>
       </el-form-item>
       <el-form-item label="排序" prop="orderNum">
         <el-input v-model="queryParams.orderNum" placeholder="请输入排序" clearable @keyup.enter="handleQuery" />
@@ -97,11 +99,14 @@
         <el-form-item label="链接地址" prop="linkUrl">
           <el-input v-model="form.linkUrl" placeholder="请输入链接地址" />
         </el-form-item>
-        <el-form-item label="节点类型" prop="linkName">
+        <el-form-item label="节点类型" prop="nodeType">
           <el-input v-model="form.nodeType" placeholder="请输入节点类型" />
         </el-form-item>
-        <el-form-item prop="linkIcon" >
-              <image-upload v-model="form.linkIcon" :fileSize="1" :fileType='["png", "jpg", "jpeg","ico"]' :limit="1" />
+        <el-form-item label="页面类型" prop="pageType">
+          <el-input v-model="form.pageType" placeholder="请输入页面类型" />
+        </el-form-item>
+        <el-form-item prop="linkIco" >
+              <image-upload v-model="form.linkIco" :fileSize="1" :fileType='["png", "jpg", "jpeg","ico"]' :limit="1" />
             </el-form-item>
             <el-form-item label="打开方式" prop="openType">
           <el-select v-model="form.openType" placeholder="请选择打开方式">
