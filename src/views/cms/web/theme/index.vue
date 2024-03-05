@@ -67,8 +67,8 @@
         <!-- <el-table-column label="主题介绍" align="center" prop="themeInfo" /> -->
         <el-table-column label="是否启用" align="center" prop="themeEnabled"   >
           <template #default="scope">
-            <el-switch v-model="scope.row.themeEnabled"></el-switch>
-          </template>
+          <dict-tag :options="cms_theme_enabled" :dictSort="true" :value="scope.row.themeEnabled" />
+        </template>   
         </el-table-column>
         <el-table-column label="更新地址" align="center" prop="themeUpdate" />
         <!-- <el-table-column label="联系方式" align="center" prop="themeTouch" /> -->
@@ -227,7 +227,7 @@ const configForm=ref(undefined);
 const { uploadParam} = toRefs(data);
 const themeUsed=ref('');
 
-const { sys_true_false } = proxy.useDict("sys_true_false");
+const { sys_true_false,cms_theme_enabled } = proxy.useDict("sys_true_false","cms_theme_enabled");
 const uploadUrl = ref(
   import.meta.env.VITE_APP_BASE_API + "/cms/theme/uploadTheme"
 );

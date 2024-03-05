@@ -259,8 +259,11 @@
           <el-form-item label="主题类型：">
             {{ themeData.themeType }}
           </el-form-item>
-          <el-form-item label="主题开关：">
-            <el-switch v-model="themeData.themeEnable"></el-switch>
+          <el-form-item label="主题状态：">
+            <el-radio-group v-model="themeData.themeEnabled">
+                <el-radio v-for="dict in cms_theme_enabled" :key="dict.value" :label="Number(dict.dictSort)">{{ dict.label }}
+                </el-radio>
+              </el-radio-group>
           </el-form-item>
           <el-form-item label="主类别ID：">
             <el-select
@@ -307,7 +310,7 @@ import {
 import { ref } from "vue";
 const route = useRoute();
 const { proxy } = getCurrentInstance();
-const { cms_support_type } = proxy.useDict("cms_support_type");
+const { cms_support_type,cms_theme_enabled } = proxy.useDict("cms_support_type","cms_theme_enabled");
 const emit = defineEmits(["update:modelValue"]);
 const activeTab = ref("tab-1");
 const themeData = ref({});
