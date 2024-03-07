@@ -197,7 +197,17 @@
 
           <el-col :span="24">
             <el-form-item label="关键词" prop="keywords">
-              <keys-tag v-model="form.keywords" :limit="3" :min-length="1" :max-length="5" />
+              <template #label>
+                <span>
+                  <el-tooltip content="关键词限制1-8个字符" placement="top">
+                    <el-icon>
+                      <question-filled />
+                    </el-icon>
+                  </el-tooltip>
+                  关键词
+                </span>
+              </template>
+              <keys-tag v-model="form.keywords" :limit="3" :min-length="1" :max-length="8" />
             </el-form-item>
           </el-col>
           <el-col :span="24">

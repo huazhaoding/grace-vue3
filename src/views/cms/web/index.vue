@@ -123,17 +123,37 @@
     />
 
     <!-- 添加或修改站点对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="webRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="站点名" prop="webName">
+    <el-dialog :title="title" v-model="open" width="600px" append-to-body>
+      <el-form ref="webRef" :model="form" :rules="rules" label-width="120px">
+        <el-form-item  prop="webName">
+          <template #label>
+                <span>
+                  <el-tooltip content="请填写启动服务唯一olyCode" placement="top">
+                    <el-icon>
+                      <question-filled />
+                    </el-icon>
+                  </el-tooltip>
+                  站点名
+                </span>
+              </template>
           <el-input v-model="form.webName" placeholder="请输入站点名" />
         </el-form-item>
         <el-form-item label="站点地址" prop="webUrl">
           <el-input v-model="form.webUrl" placeholder="请输入站点地址" />
         </el-form-item>
-        <el-form-item label="管理IP" prop="manageIp">
-          <el-input v-model="form.manageIp" placeholder="请输管理Ip" />
-        </el-form-item>
+        <el-form-item  prop="manageIp">
+              <template #label>
+                <span>
+                  <el-tooltip content="管理IP限制8个,关键词限制8-32个字符" placement="top">
+                    <el-icon>
+                      <question-filled />
+                    </el-icon>
+                  </el-tooltip>
+                  管理IP
+                </span>
+              </template>
+              <keys-tag v-model="form.manageIp" :limit="8" :min-length="8" :max-length="32" />
+            </el-form-item>
         <el-form-item label="描述" prop="remark">
           <el-input type="textarea" v-model="form.remark" placeholder="请输入描述" />
         </el-form-item>
@@ -150,9 +170,9 @@
 
 <script setup name="Web">
 import { listWeb, getWeb, delWeb, addWeb, updateWeb } from "@/api/cms/web";
+import KeysTag from "@/components/KeysTag";
 const router = useRouter();
 const { proxy } = getCurrentInstance();
-
 const webList = ref([]);
 const open = ref(false);
 const loading = ref(true);

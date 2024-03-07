@@ -90,7 +90,7 @@ const handleInputConfirm = () => {
     inputVisible.value = false;
     return false;
   }
-    if (v.length < props.minLength || v.length > props.maxLength) {
+  if (v.length < props.minLength || v.length > props.maxLength) {
     proxy.$modal.msgError(`字符限制 ${props.minLength} 至${props.maxLength} 字符`);
     inputVisible.value = false
     return false;

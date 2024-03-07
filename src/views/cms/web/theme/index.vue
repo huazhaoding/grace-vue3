@@ -25,16 +25,6 @@
         <el-button
           type="primary"
           plain
-          icon="Open"
-          v-hasPermi="['cms:theme:config']"
-          @click="handleWebDialog()"
-          >站点配置</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
           icon="Refresh"
           v-hasPermi="['cms:theme:reFlash']"
           >刷新列表</el-button
@@ -193,19 +183,13 @@
       :configForm="configForm"
     ></theme-config>
     
-    <!-- 站点配置 -->
-    <web-config
-      v-model="openWebDialog"
-      :webName="uploadParam.webName"
-      :themeUsed="themeUsed"
-    ></web-config>
+
 
   </div>
 </template>
 <script setup name="theme">
 import { getToken } from "@/utils/auth"; // 自己存储token的文件
 import themeConfig from "@/components/FormConfig";
-import webConfig from "@/views/cms/web/components/web";
 import {
   listTheme,
   delTheme,
@@ -225,7 +209,7 @@ const configGroup=ref(undefined);
 const updateConfigUrl=ref(undefined);
 const configForm=ref(undefined);
 const { uploadParam} = toRefs(data);
-const themeUsed=ref('');
+
 
 const { sys_true_false,cms_theme_enabled } = proxy.useDict("sys_true_false","cms_theme_enabled");
 const uploadUrl = ref(
@@ -233,7 +217,6 @@ const uploadUrl = ref(
 );
 const openDialog = ref(false);
 const openThemeDialog = ref(false);
-const openWebDialog = ref(false);
 const headers = ref({ Authorization: "Bearer " + getToken() });
 const route = useRoute();
 const themeList = ref([]);
@@ -244,12 +227,6 @@ function getList() {
     listTheme({ webName: route.params.webName }).then((response) => {
       themeList.value = response.rows;
     });
-    
-    proxy.getConfigValue(route.params.webName + "_theme","oly.theme.used")
-      .then((response) => {
-        themeUsed.value=response.msg;
-      });
-
   }
 }
 
@@ -276,10 +253,6 @@ function handleTheme(row) {
 
 function handleCategory(row){
   router.push({ path: "/cms/web/theme/category/" +row.webName+"/"+ row.themeName });
-}
-
-function handleWebDialog() {
-  openWebDialog.value = true;
 }
 
 // 取消按钮
