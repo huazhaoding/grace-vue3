@@ -55,10 +55,14 @@
           </template>
         </el-table-column>
         <!-- <el-table-column label="主题介绍" align="center" prop="themeInfo" /> -->
-        <el-table-column label="是否启用" align="center" prop="themeEnabled"   >
+        <el-table-column label="主题状态" align="center" prop="themeEnabled">
           <template #default="scope">
-          <dict-tag :options="cms_theme_enabled" :dictSort="true" :value="scope.row.themeEnabled" />
-        </template>   
+            <dict-tag
+              :options="cms_theme_enabled"
+              :dictSort="true"
+              :value="scope.row.themeEnabled"
+            />
+          </template>
         </el-table-column>
         <el-table-column label="更新地址" align="center" prop="themeUpdate" />
         <!-- <el-table-column label="联系方式" align="center" prop="themeTouch" /> -->
@@ -153,16 +157,6 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="覆盖配置">
-          <el-radio-group v-model="uploadParam.coverConfig">
-            <el-radio
-              v-for="dict in sys_true_false"
-              :key="dict.value"
-              :label="dict.value"
-              >{{ dict.label }}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
       </el-form>
 
       <template #footer>
@@ -174,7 +168,7 @@
         </div>
       </template>
     </el-dialog>
-    
+
     <!-- 主题个性化配置 -->
     <theme-config
       v-model="openThemeDialog"
@@ -182,36 +176,32 @@
       :updateConfigUrl="updateConfigUrl"
       :configForm="configForm"
     ></theme-config>
-    
-
-
   </div>
 </template>
 <script setup name="theme">
 import { getToken } from "@/utils/auth"; // 自己存储token的文件
 import themeConfig from "@/components/FormConfig";
-import {
-  listTheme,
-  delTheme,
-  getThemeConfigForm
-} from "@/api/cms/theme";
+import { listTheme, delTheme, getThemeConfigForm } from "@/api/cms/theme";
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const data = reactive({
+  //附带参数
   uploadParam: {
     cover: "false",
     coverConfig: "false",
     webName: null,
-  }
+  },
 });
-const isChoose = ref(false); 
-const configGroup=ref(undefined);
-const updateConfigUrl=ref(undefined);
-const configForm=ref(undefined);
-const { uploadParam} = toRefs(data);
+const isChoose = ref(false);
+const configGroup = ref(undefined);
+const updateConfigUrl = ref(undefined);
+const configForm = ref(undefined);
+const { uploadParam } = toRefs(data);
 
-
-const { sys_true_false,cms_theme_enabled } = proxy.useDict("sys_true_false","cms_theme_enabled");
+const { sys_true_false, cms_theme_enabled } = proxy.useDict(
+  "sys_true_false",
+  "cms_theme_enabled"
+);
 const uploadUrl = ref(
   import.meta.env.VITE_APP_BASE_API + "/cms/theme/uploadTheme"
 );
@@ -237,22 +227,25 @@ function openUploadDialog() {
 
 // 通用主题弹窗
 function handleSetting(row) {
-  router.push({ path: "/cms/web/theme/themeConfig/" + row.webName+"/"+row.themeName });
-
+  router.push({
+    path: "/cms/web/theme/themeConfig/" + row.webName + "/" + row.themeName,
+  });
 }
 // 主题个性配置弹窗
 function handleTheme(row) {
-  configGroup.value=row.webName+"_"+row.themeName;
+  configGroup.value = row.webName + "_" + row.themeName;
   // 表单更新地址
-  updateConfigUrl.value="cms/theme/updateConfig/"+configGroup.value;
-  getThemeConfigForm(row.webName,row.themeName).then((response) => {
-      configForm.value = response.data;
-      openThemeDialog.value = true;
-    });
+  updateConfigUrl.value = "cms/theme/updateConfig/" + configGroup.value;
+  getThemeConfigForm(row.webName, row.themeName).then((response) => {
+    configForm.value = response.data;
+    openThemeDialog.value = true;
+  });
 }
 
-function handleCategory(row){
-  router.push({ path: "/cms/web/theme/category/" +row.webName+"/"+ row.themeName });
+function handleCategory(row) {
+  router.push({
+    path: "/cms/web/theme/category/" + row.webName + "/" + row.themeName,
+  });
 }
 
 // 取消按钮
@@ -273,31 +266,45 @@ function handleDelete(row) {
 
 function beforeThemeUpload(file) {
   let fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
+  let fileName = file.name.slice(0, file.name.lastIndexOf("_"));
   if (fileExtension !== "zip") {
     proxy.$message.error(`请上传后缀为.zip的压缩文件!`);
+    proxy.$refs["uploadRef"].clearFiles();
+    isChoose.value = false;
+    return false;
+  } else if (fileName != route.params.webName) {
+    proxy.$message.error(`请修改文件名前缀为:` + route.params.webName+",与主题名以_分割(站点名_主题名)");
+    proxy.$refs["uploadRef"].clearFiles();
+    isChoose.value = false;
     return false;
   } else {
     return true;
   }
 }
-function errorThemeUpload() {
-  proxy.$message.error(`上传失败`);
+function errorThemeUpload(res) {
+
+  proxy.$message.error(res.msg);
+  isChoose.value = false;
 }
 
 function successThemeUpload(res) {
   proxy.$refs["uploadRef"].clearFiles();
+  setTimeout(() => {
+    isChoose.value = false;
+  }, 200);
+  
   if (res.code === 500) {
-    proxy.$message.error(`上传失败!`);
+    proxy.$message.error(res.msg);
   } else {
     openDialog.value = false;
-    isChoose.value = false;
-    proxy.$message.success(`安装成功!`);
+    proxy.$message.success(res.msg);
     getList();
   }
+ 
 }
 
 function uploadChange(file, files) {
-  isChoose.value = true;
+  isChoose.value =true; 
 }
 
 function uploadRemove(file, files) {

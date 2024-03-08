@@ -26,13 +26,6 @@
                   placeholder="请输入网站域名"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="网站主页：" prop="oly.web.index">
-                <el-input
-                  v-model="formData['oly.web.index']"
-                  type="text"
-                  placeholder="请输入网站主页"
-                ></el-input>
-              </el-form-item>
               <el-form-item label="LOGO: " prop="oly.web.logo">
                 <image-upload v-model="formData['oly.web.logo']" :limit="1" />
               </el-form-item>
@@ -284,17 +277,23 @@
           <el-form-item label="支持更新：">
             <el-switch disabled v-model="themeData.themeUpdate"></el-switch>
           </el-form-item>
-          <el-form-item label="更新地址：">
+          <el-form-item label="主题地址：">
             {{ themeData.themeUrl }}
           </el-form-item>
           <el-form-item label="创建人：">
             {{ themeData.createBy }}
+          </el-form-item>
+          <el-form-item label="联系方式：">
+            <JsonTag labelName="社交平台" valueName="账号" v-model="themeData.themeTouch" ></JsonTag>
           </el-form-item>
           <el-form-item label="主题作者：">
             {{ themeData.themeAuthor }}
           </el-form-item>
           <el-form-item label="创建时间：">
             {{ themeData.createTime }}
+          </el-form-item>
+          <el-form-item label="主题介绍：">
+            {{ themeData.themeInfo }}
           </el-form-item>
         </div>
       </el-card>
@@ -304,13 +303,14 @@
 
 <script setup name="ThemeConfig">
 import { updateConfig, getTheme,updateTheme } from "@/api/cms/theme";
+import JsonTag from "@/components/JsonTag";
 import {
   listCategory
 } from "@/api/cms/category";
 import { ref } from "vue";
 const route = useRoute();
 const { proxy } = getCurrentInstance();
-const { cms_support_type,cms_theme_enabled } = proxy.useDict("cms_support_type","cms_theme_enabled");
+const { cms_support_type,cms_theme_enabled,cms_theme_type } = proxy.useDict("cms_support_type","cms_theme_enabled","cms_theme_type");
 const emit = defineEmits(["update:modelValue"]);
 const activeTab = ref("tab-1");
 const themeData = ref({});
