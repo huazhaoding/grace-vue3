@@ -60,6 +60,31 @@ export function getThemeConfigForm(webName,themeName) {
   })
 }
 
+// 获取主题树
+export function getThemeTree(webName) {
+  return request({
+    url: '/cms/theme/getThemeTree/'+webName,
+    method: 'get'
+  })
+}
+
+// 获取主题文件内容
+export function getThemeFileContent(webName,path) {
+  return request({
+    url: '/cms/theme/getThemeFileContent/'+webName+'?path='+path,
+    method: 'get'
+  })
+}
+
+// 更新配置
+export function updateThemeFileContent(webName,data) {
+  return request({
+    url: '/cms/theme/updateThemeFileContent/'+webName,
+    method: 'post',
+    data: data
+  })
+}
+
 // 获取主题名列表
 export function listThemeNames(webName) {
   return request({

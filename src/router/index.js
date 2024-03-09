@@ -217,6 +217,20 @@ export const dynamicRoutes = [
     ]
   },
   {
+    path: '/cms/web/theme/themeEdit',
+    component: Layout,
+    hidden: true,
+    permissions: ['cms:theme:edit'],
+    children: [
+      {
+        path: ':webName(\\w+)',
+        component: () => import('@/views/cms/web/theme/themeEdit'),
+        name: 'ThemeEdit',
+        meta: { title: '主题编辑', activeMenu: '/cms/web/theme' }
+      }
+    ]
+  },
+  {
     path: '/cms/web/theme/category',
     component: Layout,
     hidden: true,

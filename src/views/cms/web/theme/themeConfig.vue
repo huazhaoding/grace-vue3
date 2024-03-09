@@ -35,7 +35,7 @@
               <el-form-item label="网站版权：" prop="oly.web.copyright">
                 <el-input
                   type="textarea"
-                  v-model="formData['oly.web.copyright']"
+                  v-model.number="formData['oly.web.copyright']"
                   rows="3"
                   placeholder="请输入网站版权"
                 ></el-input>
@@ -43,7 +43,7 @@
               <el-form-item label="页脚设置：" prop="oly.web.footer">
                 <el-input
                   type="textarea"
-                  v-model="formData['oly.web.footer']"
+                  v-model.number="formData['oly.web.footer']"
                   rows="3"
                   placeholder="请输入页脚设置"
                 ></el-input>

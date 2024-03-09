@@ -18,6 +18,7 @@
           plain
           icon="EditPen"
           v-hasPermi="['cms:theme:edit']"
+          @click="themeEditLink"
           >编辑主题</el-button
         >
       </el-col>
@@ -220,17 +221,26 @@ function getList() {
   }
 }
 
+//主题弹窗
 function openUploadDialog() {
   isChoose.value = false;
   openDialog.value = true;
 }
 
-// 通用主题弹窗
+// 主题设置Link
 function handleSetting(row) {
   router.push({
     path: "/cms/web/theme/themeConfig/" + row.webName + "/" + row.themeName,
   });
 }
+
+function themeEditLink(){
+  router.push({
+    path: "/cms/web/theme/themeEdit/" + route.params.webName ,
+  });
+  
+}
+
 // 主题个性配置弹窗
 function handleTheme(row) {
   configGroup.value = row.webName + "_" + row.themeName;
