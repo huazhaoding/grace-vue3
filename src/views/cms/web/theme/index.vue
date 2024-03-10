@@ -22,24 +22,6 @@
           >编辑主题</el-button
         >
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="Refresh"
-          v-hasPermi="['cms:theme:reFlash']"
-          >刷新列表</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="Discount"
-          v-hasPermi="['cms:theme:back']"
-          >备份管理</el-button
-        >
-      </el-col>
       <el-table :data="themeList">
         <el-table-column label="站点名" align="center" prop="webName" />
         <el-table-column label="主题名" align="center" prop="themeName" />
@@ -113,6 +95,16 @@
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['cms:theme:remove']"
               ></el-button>
+            </el-tooltip>
+            <el-tooltip content="主题下载" placement="top">
+              <el-button
+                link
+                type="primary"
+                icon="Download"
+                v-hasPermi="['cms:theme:back']"
+                @click="themeDownload(scope.row)"
+                ></el-button
+              >
             </el-tooltip>
           </template>
         </el-table-column>
@@ -234,11 +226,10 @@ function handleSetting(row) {
   });
 }
 
-function themeEditLink(){
+function themeEditLink() {
   router.push({
-    path: "/cms/web/theme/themeEdit/" + route.params.webName ,
+    path: "/cms/web/theme/themeEdit/" + route.params.webName,
   });
-  
 }
 
 // 主题个性配置弹窗
@@ -283,7 +274,11 @@ function beforeThemeUpload(file) {
     isChoose.value = false;
     return false;
   } else if (fileName != route.params.webName) {
-    proxy.$message.error(`请修改文件名前缀为:` + route.params.webName+",与主题名以_分割(站点名_主题名)");
+    proxy.$message.error(
+      `请修改文件名前缀为:` +
+        route.params.webName +
+        ",与主题名以_分割(站点名_主题名)"
+    );
     proxy.$refs["uploadRef"].clearFiles();
     isChoose.value = false;
     return false;
@@ -292,7 +287,6 @@ function beforeThemeUpload(file) {
   }
 }
 function errorThemeUpload(res) {
-
   proxy.$message.error(res.msg);
   isChoose.value = false;
 }
@@ -302,7 +296,7 @@ function successThemeUpload(res) {
   setTimeout(() => {
     isChoose.value = false;
   }, 200);
-  
+
   if (res.code === 500) {
     proxy.$message.error(res.msg);
   } else {
@@ -310,11 +304,10 @@ function successThemeUpload(res) {
     proxy.$message.success(res.msg);
     getList();
   }
- 
 }
 
 function uploadChange(file, files) {
-  isChoose.value =true; 
+  isChoose.value = true;
 }
 
 function uploadRemove(file, files) {
@@ -324,6 +317,17 @@ function uploadRemove(file, files) {
 
 function uploadTheme() {
   proxy.$refs["uploadRef"].submit();
+}
+
+function themeDownload(row){
+  proxy.download(
+    "cms/theme/themeDownload/"+row.webName+"/"+row.themeName,
+    {
+   
+    },
+    row.webName+`.zip`
+  );
+
 }
 
 getList();
