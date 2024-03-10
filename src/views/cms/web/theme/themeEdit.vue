@@ -81,8 +81,6 @@ function handleNodeClick(data) {
   }
 }
 
-
-
 getThemeTree(route.params.webName).then((res) => {
   if (res.code === 200) {
     themeTreeData.value = res.data;
