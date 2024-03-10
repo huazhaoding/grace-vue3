@@ -18,13 +18,14 @@
           @node-click="handleNodeClick"
         />
       </el-col>
-      <el-col :span="20">
+      <el-col :span="20" class="code-content">
         <Codemirror
           ref="codeRef"
           v-model="content"
           :extensions="extensions"
           basic
           @changes="onChanges"
+          :disabled="activeUrl==''"
       /></el-col>
       <el-col :span="24"> 底部 </el-col>
     </el-row>
@@ -63,8 +64,10 @@ function handleNodeClick(data) {
     if ("html|js|css|txt|json|yaml".indexOf(fileExtension) != -1) {
       getThemeFileContent(route.params.webName, data.id).then((res) => {
         if (res.code === 200) {
-          activeUrl.value=data.id;
+          //设置光标到头部 防止超出范围后无法设置内容
+          codeRef.value.setCursor(0);
           content.value = res.msg;
+          activeUrl.value=data.id;
         } else {
           proxy.$message.error(res.msg);
         }
@@ -75,9 +78,10 @@ function handleNodeClick(data) {
     content.value = "";
     proxy.$message.error("不支持类型,请选择html|js|css|txt|json");
   }
-
   }
 }
+
+
 
 getThemeTree(route.params.webName).then((res) => {
   if (res.code === 200) {
@@ -100,21 +104,11 @@ const defaultProps = {
   children: "children",
   label: "name",
 };
-const props = defineProps({
-  code: {
-    type: String,
-    required: true,
-  },
-});
-watch(
-  () => props.code,
-  (newValue, oldValue) => {
-    content.value = newValue;
-  }
-);
+
+
 const emit = defineEmits(["codeChange"]);
 const onChanges = () => {
-  content.value = codeRef.value.content;
+
 };
 
 function saveEditHandle(){
@@ -127,19 +121,6 @@ function saveEditHandle(){
   }
 });
 }
-
-const play = () => {
-  // 调用父组件的方法
-  emit("codeChange", content.value);
-};
-const refresh = () => {
-  content.value = props.code;
-  emit("codeChange", props.code);
-};
-// 复制成功时的回调函数
-const onCopy = (e) => {
-  console.log(content.value);
-};
 </script>
 
 <style lang="scss" scoped>
@@ -148,5 +129,10 @@ const onCopy = (e) => {
 }
 .save-btn {
   margin-left: 40px;
+}
+.code-content{
+  height: 85vh;
+  background-color: black;
+  overflow-y: scroll;
 }
 </style>
