@@ -128,6 +128,8 @@ function saveEditHandle() {
 }
 .save-btn {
   margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .code-content {
   height: 85vh;
