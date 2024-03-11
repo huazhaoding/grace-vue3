@@ -22,6 +22,17 @@
           >编辑主题</el-button
         >
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          class="upload-demo"
+          type="primary"
+          plain
+          icon="RefreshLeft"
+          v-hasPermi="['cms:theme:sync']"
+          @click="syncThemeHandle"
+          >同步主题</el-button
+        >
+      </el-col>
       <el-table :data="themeList">
         <el-table-column label="站点名" align="center" prop="webName" />
         <el-table-column label="主题名" align="center" prop="themeName" />
@@ -174,7 +185,7 @@
 <script setup name="theme">
 import { getToken } from "@/utils/auth"; // 自己存储token的文件
 import themeConfig from "@/components/FormConfig";
-import { listTheme, delTheme, getThemeConfigForm } from "@/api/cms/theme";
+import { listTheme, delTheme, getThemeConfigForm,syncTheme } from "@/api/cms/theme";
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const data = reactive({
@@ -249,6 +260,12 @@ function handleCategory(row) {
   });
 }
 
+function syncThemeHandle(){
+  syncTheme(route.params.webName, {}).then((response) => {
+    proxy.$modal.msgSuccess(response.msg);
+  });
+}
+
 // 取消按钮
 function cancel() {
   uploadParam.value.cover = "false";
@@ -301,7 +318,7 @@ function successThemeUpload(res) {
     proxy.$message.error(res.msg);
   } else {
     openDialog.value = false;
-    proxy.$message.success(res.msg);
+    proxy.$modal.msgSuccess(res.msg);
     getList();
   }
 }
@@ -315,10 +332,11 @@ function uploadRemove(file, files) {
   return true;
 }
 
+
+
 function uploadTheme() {
   proxy.$refs["uploadRef"].submit();
 }
-
 function themeDownload(row){
   proxy.download(
     "cms/theme/themeDownload/"+row.webName+"/"+row.themeName,
@@ -327,8 +345,8 @@ function themeDownload(row){
     },
     row.webName+`.zip`
   );
-
 }
+
 
 getList();
 </script>

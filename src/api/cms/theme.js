@@ -38,7 +38,7 @@ export function updateTheme(data) {
 // 删除主题
 export function delTheme(webName,themeName) {
   return request({
-    url: '/cms/theme/' + webName+'/'+themeName,
+    url: '/cms/theme/remove/' + webName+'/'+themeName,
     method: 'delete'
   })
 }
@@ -84,6 +84,18 @@ export function updateThemeFileContent(webName,data) {
     data: data
   })
 }
+
+
+
+// 同步主题
+export function syncTheme(webName,data) {
+  return request({
+    url: '/cms/theme/syncTheme/'+webName,
+    method: 'post',
+    data: data
+  })
+}
+
 
 // 获取主题名列表
 export function listThemeNames(webName) {
