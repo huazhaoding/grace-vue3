@@ -70,16 +70,6 @@
           >
         </el-button-group>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="Plus"
-          @click="handleAdd"
-          v-hasPermi="['theme:category:add']"
-          >添加</el-button
-        >
-      </el-col>
     </el-row>
 
     <div class="card-list">
