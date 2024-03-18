@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup name="editArticleTiny">
+<script setup name="EditArticleTiny">
 import tinyMce  from '@/views/cms/article/components/tinymce'
 
 </script>

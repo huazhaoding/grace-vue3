@@ -85,6 +85,4 @@ const onUploadImg = async (files, callback) => {
     item.data.domain + item.data.fk
   ));
 };
-
-
 </script>

@@ -84,6 +84,11 @@ function editChange() {
 </script>
 
 <style >
+
+.tinymce-container {
+  width: 100%;
+}
+
 /* 强制样式顶级 防止dialog被遮挡 */
 .el-popup-parent--hidden .tox-tinymce-aux{
   z-index: 99999!important ;

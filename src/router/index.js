@@ -161,29 +161,29 @@ export const dynamicRoutes = [
     ]
   },
   {
-    path: '/cms/article-add',
+    path: '/cms/article/edit',
     component: Layout,
     hidden: true,
     permissions: ['cms:article:add'],
     children: [
       {
-        path: 'tinymce',
+        path: ':editType(\\w+)',
         component: () => import('@/views/cms/article/add/tinymce'),
-        name: 'addArticleTiny',
+        name: 'AddArticleTiny',
         meta: { title: '添加文章', activeMenu: '/cms/article' }
       },
     ]
   },
   {
-    path: '/cms/article-edit',
+    path: '/cms/article/edit',
     component: Layout,
     hidden: true,
     permissions: ['cms:article:edit'],
     children: [
       {
-        path: 'tinymce/:articleId(\\d+)',
+        path: ':editType(\\w+)/:articleId(\\d+)',
         component: () => import('@/views/cms/article/edit/tinymce'),
-        name: 'editArticleTiny',
+        name: 'EditArticleTiny',
         meta: { title: '修改文章', activeMenu: '/cms/article' }
       }
     ]

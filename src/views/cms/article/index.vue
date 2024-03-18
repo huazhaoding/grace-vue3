@@ -1,8 +1,7 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20">
-      <!--分类数据-->
-      <el-col v-show="categoryTreeCollapse" :span="4" :xs="20">
+    <el-container>
+      <left>
         <el-input
           v-model="categoryName"
           placeholder="分类"
@@ -21,25 +20,9 @@
           default-expand-all
           @node-click="handleNodeClick"
         />
-      </el-col>
+    </left>
+    <el-main>
       <!--文章数据-->
-      <el-col :span="categoryTreeCollapse ? 20 : 24" :xs="24">
-        <div class="cat-btn-box">
-          <el-icon
-            class="cat-btn"
-            v-show="categoryTreeCollapse"
-            @click="categoryTreeCollapse = !categoryTreeCollapse"
-          >
-            <CaretLeft />
-          </el-icon>
-          <el-icon
-            class="cat-btn"
-            v-show="!categoryTreeCollapse"
-            @click="categoryTreeCollapse = !categoryTreeCollapse"
-          >
-            <CaretRight />
-          </el-icon>
-        </div>
         <el-form
           :model="queryParams"
           ref="queryRef"
@@ -47,10 +30,10 @@
           v-show="showSearch"
           label-width="68px"
         >
-          <el-form-item label="站点" prop="supportThemeCategoryId">
+          <el-form-item label="站点" prop="supportCategoryId">
             <el-select
               ref="themeSelectRef"
-              v-model="queryParams.params['supportThemeCategoryId']"
+              v-model="queryParams.params['supportCategoryId']"
               placeholder="请选择站点"
               clearable
             >
@@ -63,7 +46,7 @@
                   v-for="theme in themes"
                   :key="theme.webName + '_' + theme.themeName"
                   :label="theme.themeName"
-                  :value="theme.supportThemeCategoryId"
+                  :value="theme.supportCategoryId"
                   @click="themeChange(theme.webName + '_' + theme.themeName)"
                 />
               </el-option-group>
@@ -151,7 +134,7 @@
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd"
+            <el-button type="primary" plain icon="Plus" @click="handleAddArticle"
               >新增</el-button
             >
           </el-col>
@@ -177,6 +160,7 @@
               >批量操作</el-button
             >
           </el-col>
+
           <el-col :span="1.5">
             <el-button
               type="danger"
@@ -341,13 +325,22 @@
           v-model:limit="queryParams.pageSize"
           @pagination="getList"
         />
-      </el-col>
-    </el-row>
+    
+    </el-main>
+  </el-container>
     <batch-dialog
       v-model="batchOpen"
       :articleIds="ids"
       @closeBatchDialog="closeBatchDialog"
     ></batch-dialog>
+
+    <choose-edit v-model="chooseOpen"
+    :themeMapData="themeMapData"
+    :articleTypes="cms_article_type"
+    :articleEdits="cms_article_edit"
+    >
+
+    </choose-edit>
   </div>
 </template>
 <script setup name="Article">
@@ -358,6 +351,8 @@ import {
   themeMap,
 } from "@/api/cms/article";
 import batchDialog from "@/views/cms/article/components/batchDialog";
+import chooseEdit from "@/views/cms/article/components/chooseEdit";
+import left from "@/components/Left";
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const route = useRoute();
@@ -373,11 +368,13 @@ const categoryOptions = ref(undefined);
 const batchOpen = ref(false);
 const dateRange = ref([]);
 const themeMapData = ref({});
+const chooseOpen = ref(false);
 const categoryTreeCollapse = ref(true);
-const { sys_true_false, cms_article_type, cms_article_visible } = proxy.useDict(
+const { sys_true_false, cms_article_type, cms_article_visible,cms_article_edit } = proxy.useDict(
   "sys_true_false",
   "cms_article_type",
-  "cms_article_visible"
+  "cms_article_visible",
+  "cms_article_edit"
 );
 
 const data = reactive({
@@ -473,6 +470,11 @@ function handleQuery() {
   getList();
 }
 
+function handleAddArticle(){
+  chooseOpen.value=true;
+
+}
+
 /** 重置按钮操作 */
 function resetQuery() {
   proxy.resetForm("queryRef");
@@ -489,10 +491,6 @@ function handleSelectionChange(selection) {
   multiple.value = !selection.length;
 }
 
-/** 新增按钮操作 */
-function handleAdd() {
-  router.push("/cms/article-add/tinymce");
-}
 
 /** 修改按钮操作 */
 function handleUpdate(row) {
@@ -518,16 +516,4 @@ function handleDelete(row) {
 getCategoryTree({});
 </script>
 
-<style lang="scss" scoped>
-.cat-btn-box {
-  position: absolute;
-  top: 50%;
-  z-index: 9999;
-  width: 16px;
 
-  .cat-btn {
-    position: relative;
-    right: 13px;
-  }
-}
-</style>

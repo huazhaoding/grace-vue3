@@ -260,7 +260,7 @@
           </el-form-item>
           <el-form-item label="主类别ID：">
             <el-select
-              v-model="themeData.supportThemeCategoryId"
+              v-model="themeData.supportCategoryId"
               class="m-2"
               placeholder="请选择类别ID"
               size="large"
