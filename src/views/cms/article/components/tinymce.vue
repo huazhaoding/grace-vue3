@@ -2,35 +2,52 @@
     <el-form ref="articleRef" :model="form" :rules="rules" class="article-form" label-width="100px">
         <el-container>
             <el-header>
-                <el-button-group>
                     <el-tooltip content="草稿" placement="top">
-                        <el-button>top-start</el-button>
+                        <el-button type="primary" size="large" icon="Edit" @click="saveForm" >草稿</el-button>
                     </el-tooltip>
-                    <el-tooltip content="发布" @click="submitForm" placement="top">
-                        <el-button>top-start</el-button>
+                    <el-tooltip  content="发布"  placement="top">
+                        <el-button type="warning" size="large" icon="Position" @click="submitForm">发布</el-button>
                     </el-tooltip>
-                    <el-tooltip content="定时发布" placement="top">
-                        <el-button>top-start</el-button>
+                    <el-tooltip  content="定时发布" placement="top">
+                        <el-button type="success" size="large" icon="Clock">定时发布</el-button>
                     </el-tooltip>
-                    <el-tooltip content="预览" placement="top">
-                        <el-button>top-start</el-button>
+                    <el-tooltip  content="预览" placement="top">
+                        <el-button type="info" size="large" icon="View">预览</el-button>
                     </el-tooltip>
-                </el-button-group>
-
             </el-header>
             <el-container>
                 <left :maxWidth="'25vw'">
                     <el-tabs v-model="activeTab">
                         <el-tab-pane label="基本属性" name="basic">
-                            <el-form-item label="标签" prop="tagIds">
+                            <el-form-item label="内容标签" prop="tagIds">
                                 <el-select  size="large" v-model="form.tagIds" multiple placeholder="请选择标签" style="width: 240px"
                                     :multiple-limit="maxTag">
                                     <el-option v-for="item in tagOptions" :key="item.categoryId" :label="item.categoryName"
                                         :disabled="
                                             Boolean(item.visible) && form.tagIds.indexOf(item.categoryId) == -1
                                         " :value="item.categoryId" />
-                                </el-select>
-                            </el-form-item> <el-form-item label="评论开关" prop="allowComment">
+                               </el-select>
+                            </el-form-item> 
+
+                            <el-form-item  prop="pageType">
+                                <template #label>
+                                    <span>
+                                        <el-tooltip content="需要搭配主题使用" placement="top">
+                                            <el-icon>
+                                                <question-filled />
+                                            </el-icon>
+                                        </el-tooltip>
+                                       页面类型
+                                    </span>
+                                </template>
+                                <el-select  size="large" v-model="form.pageType" placeholder="请选择页面类型" style="width: 240px"
+                                    :multiple-limit="maxTag">
+                                    <el-option v-for="dict in cms_page_type" :key="dict.value" :label="dict.label"
+                                       :value="dict.label" />
+                               </el-select>
+                            </el-form-item>
+
+                            <el-form-item label="评论开关" prop="allowComment">
                                 <el-radio-group v-model="form.allowComment">
                                     <el-radio v-for="dict in sys_true_false" :key="dict.value"
                                         :label="dict.value == 'true' ? true : false">{{
@@ -38,11 +55,31 @@
                                     </el-radio>
                                 </el-radio-group>
                             </el-form-item>
-                            <el-form-item   label="固定链接" prop="articleUrl">
-                                <el-input size="large"  v-model="form.articleUrl" placeholder="请输入文章固定链接" />
+                            <el-form-item  prop="articleUrl">
+                                <template #label>
+                                    <span>
+                                        <el-tooltip content="不为空则需要保持唯一" placement="top">
+                                            <el-icon>
+                                                <question-filled />
+                                            </el-icon>
+                                        </el-tooltip>
+                                        固定链接
+                                    </span>
+                                </template>
+                                <el-input size="large"  v-model="form.articleUrl" maxlength="64" placeholder="请输入文章固定链接" show-word-limit />
                             </el-form-item>
-                            <el-form-item   label="转载url" prop="reprintUrl">
-                                <el-input size="large" v-model="form.reprintUrl" placeholder="请输入转载url" />
+                            <el-form-item    prop="reprintUrl">
+                                <template #label>
+                                    <span>
+                                        <el-tooltip content="为空为原创" placement="top">
+                                            <el-icon>
+                                                <question-filled />
+                                            </el-icon>
+                                        </el-tooltip>
+                                       转载连接
+                                    </span>
+                                </template>
+                                <el-input size="large" v-model="form.reprintUrl" maxlength="64" placeholder="请输入转载url" show-word-limit />
                             </el-form-item>
                             <el-tooltip content="从本地选择图片" placement="top">
                                 <el-button size="small" type="primary" icon="Plus" @click="chooseImgDialog"
@@ -67,8 +104,8 @@
                                 </template>
                                 <keys-tag v-model="form.keywords" :limit="maxKey" :min-length="2" :max-length="5" />
                             </el-form-item>
-                            <el-form-item label="描述" prop="description">
-                                <el-input v-model="form.description" type="textarea" :rows="4" placeholder="请输入描述" />
+                            <el-form-item label="内容描述" prop="description">
+                                <el-input v-model="form.description" type="textarea" :rows="4" placeholder="请输入描述" maxlength="256" show-word-limit />
                             </el-form-item>
                         </el-tab-pane>
                         <el-tab-pane label="扩展字段" name="extra">Role</el-tab-pane>
@@ -109,7 +146,7 @@
                         </el-col>
                         <el-col :span="12">
                             <el-form-item  size="large" label="文章标题" prop="articleTitle">
-                                <el-input v-model="form.articleTitle" placeholder="请输入文章标题" maxlength="64"
+                                <el-input v-model="form.articleTitle" placeholder="请输入文章标题" maxlength="128"
                                     show-word-limit />
                             </el-form-item>
                         </el-col>
@@ -153,7 +190,6 @@ import {
     addArticle,
     updateArticle,
     categoryTree,
-    themeMap,
     listTag
 } from "@/api/cms/article";
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
@@ -162,9 +198,10 @@ import { getTheme } from "@/api/cms/theme";
 const route = useRoute();
 const activeTab = ref('basic')
 const { proxy } = getCurrentInstance();
-const { sys_true_false, cms_article_type } = proxy.useDict(
+const { sys_true_false, cms_article_type,cms_page_type } = proxy.useDict(
     "sys_true_false",
-    "cms_article_type"
+    "cms_article_type",
+    "cms_page_type"
 );
 const categoryOptions = ref(undefined);
 const tagOptions = ref(undefined);
@@ -173,6 +210,10 @@ const maxCategory = ref(undefined);
 const maxImg = ref(undefined);
 const maxKey = ref(undefined);
 const activeTheme = ref({});
+// 文章截取的图片
+const imgSrcs = ref([]);
+const imgCheck = ref([]);
+const openImgDialog = ref(false);
 
 const data = reactive({
     form: { allowComment: true },
@@ -212,19 +253,27 @@ const { form, rules } = toRefs(data);
 
 //查询文章
 function selectArticle() {
-    if (route.query && route.query.articleId) {
-        getArticle(route.query.articleId).then((response) => {
+    if (route.params && route.params.articleId) {
+        getArticle(route.params.articleId).then((response) => {
             form.value = response.data;
+            let theme=response.theme;
+            let themeName = theme.webName + "_" + theme.themeName;
+            activeTheme.value = theme;
+            form.value.syncThemeName =themeName;
+            getCategoryTree(themeName);
+            getListTag(themeName);
+
         });
     }
-    else {
-        autoComplateUrl()
-    }
-    if (route.query && route.query.webName && route.query.themeName) {
+   else if (route.query && route.query.webName && route.query.themeName) {
         let themeName = route.query.webName + "_" + route.query.themeName;
         echoTheme(route.query.webName, route.query.themeName);
         getCategoryTree(themeName);
         getListTag(themeName);
+        autoComplateUrl()
+    }
+    else{
+
     }
 }
 // 自动填充Url
@@ -285,12 +334,6 @@ function urlRemote(rule, value, callback) {
 }
 
 
-
-// 文章截取的图片
-const imgSrcs = ref([]);
-const imgCheck = ref([]);
-const openImgDialog = ref(false);
-
 watch(() => form.value.articleUrl, (newValue, oldValue) => {
     if (newValue != undefined && newValue.substr(0, 1) != '/') {
         form.value.articleUrl = "/" + newValue;
@@ -333,6 +376,12 @@ function submitForm() {
             }
         }
     });
+}
+
+//保存文章
+function saveForm(){
+    form.value.visible = 1;
+    submitForm();
 }
 
 function getCategoryDisabled(da, node) {

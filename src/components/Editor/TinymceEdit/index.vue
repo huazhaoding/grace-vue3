@@ -37,7 +37,7 @@ const emit = defineEmits(["update:modelValue"]);
 const data = reactive({
   content: props.modelValue,
   tinySetting: {
-    height: 300,
+    height: 600,
     toolbar:
       "undo redo | fullscreen | blocks alignleft aligncenter alignright alignjustify | link unlink | numlist bullist | image media table | fontsize forecolor backcolor | bold italic underline strikethrough | indent outdent | superscript subscript | removeformat |",
     toolbar_mode: "sliding",

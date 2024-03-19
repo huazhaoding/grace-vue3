@@ -495,7 +495,7 @@ function handleSelectionChange(selection) {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   const _articleIds = row.articleId || ids.value;
-  router.push({ path: "/cms/article-edit/tinymce/" + _articleIds });
+  router.push({ path: "/cms/article/edit/tinymce/" + _articleIds });
 }
 
 /** 删除按钮操作 */

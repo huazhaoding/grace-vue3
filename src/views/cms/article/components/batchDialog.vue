@@ -4,9 +4,11 @@
     <el-form :model="batchForm" label-width="80px">
       <el-form-item label="状态" prop="visible">
         <el-radio-group v-model="batchForm.visible">
-          <el-radio v-for="dict in cms_article_visible" :key="dict.value" :label="Number(dict.value)">{{
+          <el-radio v-for="dict in cms_article_visible" :key="dict.value" :label="Number(dict.value)">
+           {{
             dict.label
-          }}</el-radio>
+          }}
+         </el-radio>
         </el-radio-group>
         <el-button type="primary" @click="batchVisible">更新状态</el-button>
       </el-form-item>
