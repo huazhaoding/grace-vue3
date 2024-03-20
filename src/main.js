@@ -109,47 +109,29 @@ app.use(ElementPlus, {
 
 let $sysConfig = {};
 function initConfig() {
-  //标题
-  getConfigValue("sysConfig", "sys.common.title").then((response) => {
-    $sysConfig.title = response.msg;
-  });
-  //验证码开关
-  getConfigValue("sysConfig", "sys.account.captchaEnabled").then((response) => {
-    $sysConfig.captchaEnabled = response.msg;
-  });
-  //是否开启注册
-  getConfigValue("sysConfig", "sys.account.registerUser").then((response) => {
-    $sysConfig.registerUser = response.msg;
-  });
-  //说明
-  getConfigValue("sysConfig", "sys.common.description").then((response) => {
-    $sysConfig.description = response.msg;
-  });
-    //底部
-  getConfigValue("sysConfig", "sys.common.footer").then((response) => {
-    $sysConfig.footer = response.msg;
-  });
-  //logo
-  getConfigValue("sysConfig", "sys.common.logo").then((response) => {
-    $sysConfig.logo = response.msg;
-  });
-  //ico
-  getConfigValue("sysConfig", "sys.common.ico").then((response) => {
-    $sysConfig.ico = response.msg;
+  getConfigValueMap("sysConfig").then((response) => {
+    $sysConfig.ico= response.data['sys.common.ico'];
+    $sysConfig.logo = response.data['sys.common.logo'];
+    $sysConfig.bgImg = response.data['sys.login.back'];
+    $sysConfig.title = response.data['sys.common.title'];
+    $sysConfig.footer = response.data['sys.common.footer'];
+    $sysConfig.description = response.data['sys.common.description'];
+    $sysConfig.registerUser = response.data['sys.account.registerUser'];
+    $sysConfig.captchaEnabled = response.data['sys.account.captchaEnabled'];
+    
   });
 }
 initConfig();
 
 setTimeout(function () {
-  // //设置ico
-  // if ($sysConfig.ico) {
-  //   document.getElementById("headIco").href = $sysConfig.ico;
-  // }
-  // //设置描述
-  // if ($sysConfig.description) {
-  //   document.getElementById("headDescription").content = $sysConfig.description;
-  // }
-
+  //设置ico
+  if ($sysConfig.ico) {
+    document.getElementById("headIco").href = $sysConfig.ico;
+  }
+  //设置描述
+  if ($sysConfig.description) {
+    document.getElementById("headDescription").content = $sysConfig.description;
+  }
   //main.js里面的代码
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面meta */

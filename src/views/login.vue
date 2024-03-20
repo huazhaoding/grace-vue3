@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login" :style="{ '--bg-image': 'url(' + bgImg + ')' }">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">{{proxy.$sysConfig.title}}</h3>
       <el-form-item prop="username">
@@ -73,6 +73,12 @@ const userStore = useUserStore()
 const route = useRoute();
 const router = useRouter();
 const { proxy } = getCurrentInstance();
+
+const bgImg=ref("../assets/images/login-background.jpg");
+
+if(proxy.$sysConfig.bgImg){
+  bgImg.value=proxy.$sysConfig.bgImg;
+}
 
 const loginForm = ref({
   username: "admin",
@@ -169,7 +175,7 @@ getCookie();
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background-image: var(--bg-image);
   background-size: cover;
 }
 .title {

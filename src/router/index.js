@@ -168,8 +168,8 @@ export const dynamicRoutes = [
     children: [
       {
         path: ':editType(\\w+)',
-        component: () => import('@/views/cms/article/add/tinymce'),
-        name: 'AddArticleTiny',
+        component: () => import('@/views/cms/article/add/index'),
+        name: 'AddArticle',
         meta: { title: '添加文章', activeMenu: '/cms/article' }
       },
     ]
@@ -182,8 +182,8 @@ export const dynamicRoutes = [
     children: [
       {
         path: ':editType(\\w+)/:articleId(\\d+)',
-        component: () => import('@/views/cms/article/edit/tinymce'),
-        name: 'EditArticleTiny',
+        component: () => import('@/views/cms/article/update/index'),
+        name: 'UpdateArticle',
         meta: { title: '修改文章', activeMenu: '/cms/article' }
       }
     ]
