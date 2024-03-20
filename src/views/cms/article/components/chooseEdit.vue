@@ -97,10 +97,10 @@ async function allowDictData(articleType) {
 
 // 添加
 function chooseEditLink(editType){
-  
-  router.push({path:"/cms/article/edit/"+editType,query:{webName:activeTheme.value.webName,themeName:activeTheme.value.themeName}});
+setTimeout(function() {
   chooseCancel();
-  
+}, 1000); 
+  router.push({path:"/cms/article/edit/"+editType,query:{webName:activeTheme.value.webName,themeName:activeTheme.value.themeName}});
 }
 
 //或类型字典

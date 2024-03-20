@@ -140,17 +140,6 @@
           </el-col>
           <el-col :span="1.5">
             <el-button
-              type="success"
-              plain
-              icon="Edit"
-              :disabled="single"
-              @click="handleUpdate"
-              v-hasPermi="['cms:article:edit']"
-              >修改</el-button
-            >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
               type="danger"
               plain
               icon="Aim"
@@ -369,7 +358,6 @@ const batchOpen = ref(false);
 const dateRange = ref([]);
 const themeMapData = ref({});
 const chooseOpen = ref(false);
-const categoryTreeCollapse = ref(true);
 const { sys_true_false, cms_article_type, cms_article_visible,cms_article_edit } = proxy.useDict(
   "sys_true_false",
   "cms_article_type",
@@ -494,8 +482,14 @@ function handleSelectionChange(selection) {
 
 /** 修改按钮操作 */
 function handleUpdate(row) {
-  const _articleIds = row.articleId || ids.value;
-  router.push({ path: "/cms/article/edit/tinymce/" + _articleIds });
+  const _articleIds = row.articleId;
+  cms_article_edit.value.forEach((item, key) => {
+    if(item.value==row.articleBuild+''){
+      router.push({ path: "/cms/article/edit/"+item.label +"/"+ _articleIds });
+      return;
+    }
+})
+  
 }
 
 /** 删除按钮操作 */

@@ -43,7 +43,7 @@
                                 <el-select  size="large" v-model="form.pageType" placeholder="请选择页面类型" style="width: 240px"
                                     :multiple-limit="maxTag">
                                     <el-option v-for="dict in cms_page_type" :key="dict.value" :label="dict.label"
-                                       :value="dict.label" />
+                                       :value="dict.value" />
                                </el-select>
                             </el-form-item>
 
@@ -253,6 +253,7 @@ const { form, rules } = toRefs(data);
 
 //查询文章
 function selectArticle() {
+    //修改文章
     if (route.params && route.params.articleId) {
         getArticle(route.params.articleId).then((response) => {
             form.value = response.data;
@@ -265,6 +266,7 @@ function selectArticle() {
 
         });
     }
+    //添加文章
    else if (route.query && route.query.webName && route.query.themeName) {
         let themeName = route.query.webName + "_" + route.query.themeName;
         echoTheme(route.query.webName, route.query.themeName);
@@ -354,7 +356,7 @@ function setConfig() {
 setConfig();
 
 function submitForm() {
-    form.value.articleBuild = 0;
+    
     proxy.$refs["articleRef"].validate((valid) => {
         if (valid) {
             // 关闭当前tab页签，打开新页签
@@ -367,6 +369,7 @@ function submitForm() {
                     });
                 });
             } else {
+                form.value.articleBuild = 0;
                 addArticle(form.value).then((response) => {
                     proxy.$modal.msgSuccess("新增成功");
                     proxy.$tab.closeOpenPage(obj).then(() => {

@@ -1,5 +1,5 @@
 <template>
-  <md-editor v-model="content" @on-change="onChange" @on-html-changed="onHtmlChanged" @on-upload-img="onUploadImg" />
+  <md-editor v-model="content"  @on-change="onChange" @on-html-changed="onHtmlChanged" @on-upload-img="onUploadImg" />
 </template>
 
 <script setup>
@@ -17,7 +17,7 @@ const props=defineProps({
   /* 高度 */
   height: {
     type: Number,
-    default: null,
+    default: 600,
   },
   // 大小限制(MB)
   fileSize: {
@@ -43,6 +43,8 @@ const props=defineProps({
 
 const content=ref("");
 
+const mdContent=ref("");
+
 //初始化数据
 watch(
   () => props.modelValue,
@@ -57,9 +59,16 @@ watch(
 const onChange = (v) => {
     emit('update:modelValue', v);
 };
+
 const onHtmlChanged= (v) => {
     emit('getHtml', v);
+    mdContent.value=v;
 };
+
+function getHtml(){
+
+  return mdContent.value;
+}
 
 const onUploadImg = async (files, callback) => {
   const res = await Promise.all(
@@ -85,4 +94,15 @@ const onUploadImg = async (files, callback) => {
     item.data.domain + item.data.fk
   ));
 };
+
+defineExpose({
+  getHtml
+});
 </script>
+
+<style scoped>
+.md-editor{
+min-height: 600px;
+
+}
+</style>
