@@ -46,6 +46,8 @@ const useUserStore = defineStore(
             this.id = user.userId;
             this.name = user.userName;
             this.avatar = avatar;
+            this.loginUser=user;
+            this.loginUser.avatar=avatar;
             resolve(res)
           }).catch(error => {
             reject(error)
