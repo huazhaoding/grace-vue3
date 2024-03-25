@@ -1,46 +1,28 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20">
-      <el-col :span="3" class="el-col">
-        <el-select v-model="language" @change="langChange" placeholder="代码模式" size="large">
-          <el-option
-            v-for="(item, key) in languages"
-            :key="key"
-            :label="key"
-            :value="key"
-          />
-        </el-select>
-        <el-button
-          class="save-btn"
-          type="primary"
-          plain
-          icon="Edit"
-          v-hasPermi="['cms:theme:edit']"
-          :disabled="activeUrl == ''"
-          @click="saveEditHandle"
-          >保存主题</el-button
-        >
-        <el-tree
-          :data="themeTreeData"
-          :props="defaultProps"
-          @node-click="handleNodeClick"
-        />
-      </el-col>
-      <el-col :span="20" class="code-content">
-        <Codemirror
-          ref="codeRef"
-          v-model="content"
-          :extensions="extensions"
-          basic
-          @changes="onChanges"
-          :disabled="activeUrl == ''"
-      /></el-col>
-      <el-col :span="24"> 底部 </el-col>
-    </el-row>
+    <el-container>
+      <left>
+        <div class="el-col">
+          <el-select v-model="language" @change="langChange" placeholder="代码模式" size="large">
+            <el-option v-for="(item, key) in languages" :key="key" :label="key" :value="key" />
+          </el-select>
+          <el-button class="save-btn" type="primary" plain icon="Edit" v-hasPermi="['cms:theme:edit']"
+            :disabled="activeUrl == ''" @click="saveEditHandle">保存编辑</el-button>
+          <el-tree :data="themeTreeData" :props="defaultProps" @node-click="handleNodeClick" />
+        </div>
+      </left>
+      <el-main>
+        <div class="code-content">
+          <Codemirror ref="codeRef" v-model="content" :extensions="extensions" basic @changes="onChanges"
+            :disabled="activeUrl == ''" />
+        </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
 <script setup name="themeEdit">
+import left from "@/components/Left";
 import Codemirror from "vue-codemirror6";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
@@ -58,8 +40,8 @@ const content = ref(null);
 const codeRef = ref(null);
 const themeTreeData = ref([]);
 const activeUrl = ref("");
-const extensions = ref([html(),oneDark]); 
-const language=ref("html");
+const extensions = ref([html(), oneDark]);
+const language = ref("html");
 
 const languages = {
   html: html(),
@@ -68,8 +50,8 @@ const languages = {
   json: json(),
 };
 
-function langChange(value){
-  extensions.value=[languages[value],oneDark];
+function langChange(value) {
+  extensions.value = [languages[value], oneDark];
 }
 
 function handleNodeClick(data) {
@@ -108,7 +90,7 @@ const defaultProps = {
 };
 
 const emit = defineEmits(["codeChange"]);
-const onChanges = () => {};
+const onChanges = () => { };
 
 function saveEditHandle() {
   const poData = { path: activeUrl.value, fileContent: content.value };
@@ -126,11 +108,13 @@ function saveEditHandle() {
 .el-col {
   margin-bottom: 20px;
 }
+
 .save-btn {
   margin-left: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .code-content {
   height: 85vh;
   background-color: black;
