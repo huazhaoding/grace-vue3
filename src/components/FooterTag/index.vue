@@ -1,11 +1,17 @@
 <template>
-    <div v-html="proxy.$sysConfig.footer" class="el-footer-box">
+    <div v-html="footHtml" class="el-footer-box">
 
     </div>
 </template>
 
 <script setup>
 const { proxy } = getCurrentInstance();
+
+const footHtml=ref("");
+setTimeout(function (){
+  footHtml.value=proxy.$sysConfig.footer;
+},1000);
+
 </script>
 
 <style lang='scss' scoped>
