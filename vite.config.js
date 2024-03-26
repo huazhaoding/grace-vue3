@@ -34,13 +34,6 @@ export default defineConfig(({ mode, command }) => {
           target: 'http://localhost:8080',
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/dev-api/, '')
-        },
-        '/server/oss/download':{
-          target: 'http://localhost:8080',
-          changeOrigin: true,
-          pathRewrite: {
-            '^/server/oss/download': '/server/oss/download' //请求的时候使用这个api就可以
-            }
         }
       }
     },

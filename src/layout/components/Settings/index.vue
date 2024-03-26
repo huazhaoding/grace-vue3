@@ -66,7 +66,7 @@
     <div class="drawer-item">
       <span>动态标题</span>
       <span class="comp-style">
-        <el-switch v-model="dynamicTitle" class="drawer-switch" />
+        <el-switch v-model="storeSettings.dynamicTitle" class="drawer-switch" />
       </span>
     </div>
 

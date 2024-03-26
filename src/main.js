@@ -109,10 +109,11 @@ app.use(ElementPlus, {
 
 let $sysConfig = {};
 function initConfig() {
+  const baseUrl = import.meta.env.VITE_APP_BASE_API;
   getConfigValueMap("sysConfig").then((response) => {
-    $sysConfig.ico= response.data['sys.common.ico'];
-    $sysConfig.logo = response.data['sys.common.logo'];
-    $sysConfig.bgImg = response.data['sys.login.back'];
+    $sysConfig.ico= baseUrl+response.data['sys.common.ico'];
+    $sysConfig.logo =baseUrl+ response.data['sys.common.logo'];
+    $sysConfig.bgImg =baseUrl+ response.data['sys.login.back'];
     $sysConfig.title = response.data['sys.common.title'];
     $sysConfig.footer = response.data['sys.common.footer'];
     $sysConfig.description = response.data['sys.common.description'];

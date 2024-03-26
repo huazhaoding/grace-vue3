@@ -66,6 +66,7 @@
 import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
+import defaultBgImg from "../assets/images/login-background.jpg";
 import useUserStore from '@/store/modules/user'
 import FooterTag from "@/components/FooterTag"
 
@@ -74,9 +75,8 @@ const route = useRoute();
 const router = useRouter();
 const { proxy } = getCurrentInstance();
 
-const bgImg=ref("../assets/images/login-background.jpg");
-
-if(proxy.$sysConfig.bgImg){
+const bgImg=ref(defaultBgImg);
+if(proxy.$sysConfig.bgImg && proxy.$sysConfig.bgImg!=import.meta.env.VITE_APP_BASE_API){
   bgImg.value=proxy.$sysConfig.bgImg;
 }
 
