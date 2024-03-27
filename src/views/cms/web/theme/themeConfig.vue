@@ -215,6 +215,40 @@
                 ></el-input>
               </el-form-item>
             </el-tab-pane>
+            <el-tab-pane name="tab-6" label="用户设置">
+              <el-form-item  prop="oly.web.hand.back">
+                <template #label>
+                        <span>
+                          背景：
+                           <el-tooltip placement="top">
+                              <template #content>
+                                 <div>
+                                  登录页或者注册页背景
+                                 </div>
+                              </template>
+                              <el-icon><question-filled /></el-icon>
+                           </el-tooltip>
+                        </span>
+                     </template>
+                <image-upload v-model="formData['oly.web.hand.back']" :limit="1" />
+              </el-form-item>
+              <el-form-item  prop="oly.web.hand.logo">
+                <template #label>
+                        <span>
+                          LOGO：
+                           <el-tooltip placement="top">
+                              <template #content>
+                                 <div>
+                                  登录页或者注册页LOGO
+                                 </div>
+                              </template>
+                              <el-icon><question-filled /></el-icon>
+                           </el-tooltip>
+                        </span>
+                     </template>
+                <image-upload v-model="formData['oly.web.hand.logo']" :limit="1" />
+              </el-form-item>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </el-form>
