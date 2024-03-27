@@ -119,10 +119,10 @@
           <el-image
             style="width: 100px; height: 100px"
             v-if="'image' === scope.row.fileType"
-            :src="getThumbnail(scope.row.fk,scope.row.domain,scope.row.ossType)"
+            :src="getThumbnail(scope.row.fk,baseUrl+scope.row.domain,scope.row.ossType)"
            preview-teleported
             :preview-src-list="[
-              getImgUrl(scope.row.fk,scope.row.domain,scope.row.ossType)
+              getImgUrl(scope.row.fk,baseUrl+scope.row.domain,scope.row.ossType)
             ]"
           />
           <el-image
@@ -307,7 +307,7 @@
 import { getToken } from "@/utils/auth";
 import { listOss,  delOss, updateConfig } from "@/api/server/oss";
 const { proxy } = getCurrentInstance();
-
+const baseUrl=import.meta.env.VITE_APP_BASE_API;
 const { sys_server_oss_types, sys_server_oss_list, sys_true_false } =
   proxy.useDict(
     "sys_server_oss_types",
@@ -333,7 +333,7 @@ const upload = reactive({
   // 设置上传的请求头部
   headers: { Authorization: "Bearer " + getToken() },
   // 上传的地址
-  url: import.meta.env.VITE_APP_BASE_API + "/server/oss/upload",
+  url: baseUrl + "/server/oss/upload",
 });
 
 const data = reactive({

@@ -168,6 +168,7 @@ service.interceptors.response.use(
 
 // 通用下载方法
 export function download(url, params, filename, config) {
+  params.responseType="blob";
   downloadLoadingInstance = ElLoading.service({
     text: "正在下载数据，请稍候",
     background: "rgba(0, 0, 0, 0.7)",
@@ -206,6 +207,7 @@ export function download(url, params, filename, config) {
 
 // 通用下载方法
 export function downloadFile(url, params, filename, config) {
+  params.responseType="blob";
   downloadLoadingInstance = ElLoading.service({
     text: "正在下载数据，请稍候",
     background: "rgba(0, 0, 0, 0.7)",
@@ -225,6 +227,7 @@ export function downloadFile(url, params, filename, config) {
       ...config,
     })
     .then(async (data) => {
+      console.log(data.type);
       const isBlob = blobValidate(data);
       if (isBlob) {
         const blob = new Blob([data]);
