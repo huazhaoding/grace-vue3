@@ -60,6 +60,7 @@ const data = reactive({
     // 以中文简体为例
     language: "zh-Hans",
     language_url: "/tinymce/langs/zh-Hans.js",
+    convert_urls : false,
     readonly: props.readOnly
   },
 });

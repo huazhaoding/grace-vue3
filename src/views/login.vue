@@ -76,7 +76,7 @@ const router = useRouter();
 const { proxy } = getCurrentInstance();
 
 const bgImg=ref(defaultBgImg);
-if(proxy.$sysConfig.bgImg && proxy.$sysConfig.bgImg!=import.meta.env.VITE_APP_BASE_API){
+if(proxy.$sysConfig.bgImg && proxy.$sysConfig.bgImg!=""){
   bgImg.value=proxy.$sysConfig.bgImg;
 }
 
