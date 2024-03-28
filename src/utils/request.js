@@ -57,7 +57,10 @@ service.interceptors.request.use(
       const requestSize = Object.keys(JSON.stringify(requestObj)).length; // 请求数据大小
       const limitSize = 5 * 1024 * 1024; // 限制存放数据5M
       if (requestSize >= limitSize) {
-        console.warn(`[${config.url}]: ` + '请求数据大小超出允许的5M限制，无法进行防重复提交验证。')
+        console.warn(
+          `[${config.url}]: ` +
+            "请求数据大小超出允许的5M限制，无法进行防重复提交验证。"
+        );
         return config;
       }
       const sessionObj = cache.session.getJSON("sessionObj");
@@ -101,7 +104,10 @@ service.interceptors.response.use(
     // 获取错误信息
     const msg = errorCode[code] || res.data.msg || errorCode["default"];
     // 二进制数据则直接返回
-    if (res.request.responseType ===  'blob' || res.request.responseType ===  'arraybuffer') {
+    if (
+      res.request.responseType === "blob" ||
+      res.request.responseType === "arraybuffer"
+    ) {
       return res.data;
     }
     if (code === 401) {
@@ -168,7 +174,7 @@ service.interceptors.response.use(
 
 // 通用下载方法
 export function download(url, params, filename, config) {
-  params.responseType="blob";
+  params.responseType = "blob";
   downloadLoadingInstance = ElLoading.service({
     text: "正在下载数据，请稍候",
     background: "rgba(0, 0, 0, 0.7)",
@@ -207,7 +213,7 @@ export function download(url, params, filename, config) {
 
 // 通用下载方法
 export function downloadFile(url, params, filename, config) {
-  params.responseType="blob";
+  params.responseType = "blob";
   downloadLoadingInstance = ElLoading.service({
     text: "正在下载数据，请稍候",
     background: "rgba(0, 0, 0, 0.7)",

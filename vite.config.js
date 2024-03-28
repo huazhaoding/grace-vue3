@@ -34,7 +34,15 @@ export default defineConfig(({ mode, command }) => {
           target: 'http://localhost:8080',
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/dev-api/, '')
-        }
+        },
+        //请求资源时候按照这个代理
+        '/server/oss/download':{
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/server/oss/download': '/server/oss/download' 
+          } 
+      } 
       }
     },
     //fix:error:stdin>:7356:1: warning: "@charset" must be the first rule in the file
