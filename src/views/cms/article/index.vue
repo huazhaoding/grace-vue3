@@ -328,7 +328,6 @@
     :articleTypes="cms_article_type"
     :articleEdits="cms_article_edit"
     >
-
     </choose-edit>
   </div>
 </template>
