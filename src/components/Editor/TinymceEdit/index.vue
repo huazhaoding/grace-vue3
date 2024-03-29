@@ -69,9 +69,12 @@ const { content, tinySetting } = toRefs(data);
 
 watch(
   () => props.modelValue,
-  (val) => {
+  (val) => {  
     if (val) {
       content.value=val;
+    }
+    else{
+      content.value="";
     }
   },
   { deep: true, immediate: true }
