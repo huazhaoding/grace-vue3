@@ -245,6 +245,7 @@ export function blobValidate(data) {
   return data.type !== 'application/json'
 }
 
+// 是否包含某个字典
 export function includeDict(datas,item){
   let flag=false;
   for (let index = 0; index < datas.length; index++) {
