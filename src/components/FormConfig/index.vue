@@ -15,7 +15,7 @@
               <el-input v-else-if="formItem.type === 'textarea'" type="textarea" v-model="formData[formItem.prop]"
                 :placeholder="formItem.placeholder" rows="3"></el-input>
               <image-upload v-else-if="formItem.type === 'imgUpload'" v-model="formData[formItem.prop]"
-                :limit="formItem.limit" />
+                :limit="formItem.limit" :fileSize="formItem.fileSize" />
               <el-input-number v-else-if="formItem.type === 'number'" v-model="formData[formItem.prop]"
                 controls-position="right" :min="0" :max="100000000000" :precision="0" :step="1">
               </el-input-number>
