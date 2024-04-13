@@ -157,11 +157,6 @@
                         </el-col>
                     </el-row>
 
-
-
-
-
-
                 </el-main>
             </el-container>
         </el-container>
@@ -243,13 +238,6 @@ const data = reactive({
 });
 
 const { form, rules } = toRefs(data);
-//获取参数 webName,themeName,articleId
-
-//只有webName,themeName为添加
-
-//只有webName,themeName,articleId为添加
-
-//判断文章是否支持当前类型
 
 //查询文章
 function selectArticle() {
@@ -434,26 +422,6 @@ function chooseOk() {
     }
     openImgDialog.value = false;
 }
-
-function check(value) {
-    const c = imgCheck.value;
-    let f = imgCheck.value.length;
-    if (form.value.articleImg != undefined) {
-        //合并
-        let o = form.value.articleImg.split(",").concat(imgCheck.value);
-        //过滤
-        o = o.filter((item, index, arr) => {
-            return o.indexOf(item, 0) === index; //当前元素，在原始数组中的第一个索引==当前索引值，否则返回当前元素
-        });
-        f = o.length;
-    }
-    if (f > maxImg.value) {
-        proxy.$modal.msgError("请确保图集数不大于" + maxImg.value);
-        c.splice(c.length - 1, 1);
-    }
-}
-
-
 
 function chooseImg(str) {
     const data = [];

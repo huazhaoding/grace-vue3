@@ -147,11 +147,7 @@ function handleExceed() {
 // 上传成功回调
 function handleUploadSuccess(res, file) {
   if (res.code === 200) {
-    if ("native" === res.data.ossType) {
-      uploadList.value.push({ name: res.data.fileName,url: res.data.domain + res.data.fk });
-  } else if ("qiniu" === res.data.ossType) {
-      uploadList.value.push({ name: res.data.fileName, url: res.data.domain + res.data.fk });
-  }
+    uploadList.value.push({ name: res.data.fileName,url: res.data.domain + res.data.fk });
     uploadedSuccessfully();
   } else {
     number.value--;
