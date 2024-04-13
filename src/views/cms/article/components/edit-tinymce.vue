@@ -2,34 +2,34 @@
     <el-form ref="articleRef" :model="form" :rules="rules" class="article-form" label-width="100px">
         <el-container>
             <el-header>
-                    <el-tooltip content="草稿" placement="top">
-                        <el-button type="primary" size="large" icon="Edit" @click="saveForm" >草稿</el-button>
-                    </el-tooltip>
-                    <el-tooltip  content="发布"  placement="top">
-                        <el-button type="warning" size="large" icon="Position" @click="submitForm">发布</el-button>
-                    </el-tooltip>
-                    <el-tooltip  content="定时发布" placement="top">
-                        <el-button type="success" size="large" icon="Clock">定时发布</el-button>
-                    </el-tooltip>
-                    <el-tooltip  content="预览" placement="top">
-                        <el-button type="info" size="large" icon="View">预览</el-button>
-                    </el-tooltip>
+                <el-tooltip content="草稿" placement="top">
+                    <el-button type="primary" size="large" icon="Edit" @click="saveForm">草稿</el-button>
+                </el-tooltip>
+                <el-tooltip content="发布" placement="top">
+                    <el-button type="warning" size="large" icon="Position" @click="submitForm">发布</el-button>
+                </el-tooltip>
+                <el-tooltip content="定时发布" placement="top">
+                    <el-button type="success" size="large" icon="Clock">定时发布</el-button>
+                </el-tooltip>
+                <el-tooltip content="预览" placement="top">
+                    <el-button type="info" size="large" icon="View">预览</el-button>
+                </el-tooltip>
             </el-header>
             <el-container>
                 <left :maxWidth="'25vw'">
                     <el-tabs v-model="activeTab">
                         <el-tab-pane label="基本属性" name="basic">
                             <el-form-item label="内容标签" prop="tagIds">
-                                <el-select  size="large" v-model="form.tagIds" multiple placeholder="请选择标签" style="width: 240px"
-                                    :multiple-limit="maxTag">
+                                <el-select size="large" v-model="form.tagIds" multiple placeholder="请选择标签"
+                                    style="width: 240px" :multiple-limit="maxTag">
                                     <el-option v-for="item in tagOptions" :key="item.categoryId" :label="item.categoryName"
                                         :disabled="
                                             Boolean(item.visible) && form.tagIds.indexOf(item.categoryId) == -1
                                         " :value="item.categoryId" />
-                               </el-select>
-                            </el-form-item> 
+                                </el-select>
+                            </el-form-item>
 
-                            <el-form-item  prop="pageType">
+                            <el-form-item prop="pageType">
                                 <template #label>
                                     <span>
                                         <el-tooltip content="需要搭配主题使用" placement="top">
@@ -37,14 +37,14 @@
                                                 <question-filled />
                                             </el-icon>
                                         </el-tooltip>
-                                       页面类型
+                                        页面类型
                                     </span>
                                 </template>
-                                <el-select  size="large" v-model="form.pageType" placeholder="请选择页面类型" style="width: 240px"
+                                <el-select size="large" v-model="form.pageType" placeholder="请选择页面类型" style="width: 240px"
                                     :multiple-limit="maxTag">
                                     <el-option v-for="dict in cms_page_type" :key="dict.value" :label="dict.label"
-                                       :value="dict.value" />
-                               </el-select>
+                                        :value="dict.value" />
+                                </el-select>
                             </el-form-item>
 
                             <el-form-item label="评论开关" prop="allowComment">
@@ -55,7 +55,7 @@
                                     </el-radio>
                                 </el-radio-group>
                             </el-form-item>
-                            <el-form-item  prop="articleUrl">
+                            <el-form-item prop="articleUrl">
                                 <template #label>
                                     <span>
                                         <el-tooltip content="不为空则需要保持唯一" placement="top">
@@ -66,9 +66,10 @@
                                         固定链接
                                     </span>
                                 </template>
-                                <el-input size="large"  v-model="form.articleUrl" maxlength="64" placeholder="请输入文章固定链接" show-word-limit />
+                                <el-input size="large" v-model="form.articleUrl" maxlength="64" placeholder="请输入文章固定链接"
+                                    show-word-limit />
                             </el-form-item>
-                            <el-form-item    prop="reprintUrl">
+                            <el-form-item prop="reprintUrl">
                                 <template #label>
                                     <span>
                                         <el-tooltip content="为空为原创" placement="top">
@@ -76,10 +77,11 @@
                                                 <question-filled />
                                             </el-icon>
                                         </el-tooltip>
-                                       转载连接
+                                        转载连接
                                     </span>
                                 </template>
-                                <el-input size="large" v-model="form.reprintUrl" maxlength="64" placeholder="请输入转载url" show-word-limit />
+                                <el-input size="large" v-model="form.reprintUrl" maxlength="64" placeholder="请输入转载url"
+                                    show-word-limit />
                             </el-form-item>
                             <el-tooltip content="从本地选择图片" placement="top">
                                 <el-button size="small" type="primary" icon="Plus" @click="chooseImgDialog"
@@ -105,7 +107,8 @@
                                 <keys-tag v-model="form.keywords" :limit="maxKey" :min-length="2" :max-length="5" />
                             </el-form-item>
                             <el-form-item label="内容描述" prop="description">
-                                <el-input v-model="form.description" type="textarea" :rows="4" placeholder="请输入描述" maxlength="256" show-word-limit />
+                                <el-input v-model="form.description" type="textarea" :rows="4" placeholder="请输入描述"
+                                    maxlength="256" show-word-limit />
                             </el-form-item>
                         </el-tab-pane>
                         <el-tab-pane label="扩展字段" name="extra">Role</el-tab-pane>
@@ -125,7 +128,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item  size="large" label="文章分类" prop="categoryIds">
+                            <el-form-item size="large" label="文章分类" prop="categoryIds">
                                 <el-tree-select v-model="form.categoryIds" :data="categoryOptions" node-key="id" :props="{
                                     value: 'id',
                                     label: 'label',
@@ -136,7 +139,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item  size="large" label="文章类型" prop="articleType">
+                            <el-form-item size="large" label="文章类型" prop="articleType">
                                 <el-select v-model="form.articleType" placeholder="请选择文章类型">
                                     <el-option v-for="dict in cms_article_type" :key="dict.value" :label="dict.label"
                                         :value="Number(dict.value)">
@@ -145,7 +148,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item  size="large" label="文章标题" prop="articleTitle">
+                            <el-form-item size="large" label="文章标题" prop="articleTitle">
                                 <el-input v-model="form.articleTitle" placeholder="请输入文章标题" maxlength="128"
                                     show-word-limit />
                             </el-form-item>
@@ -162,7 +165,7 @@
         </el-container>
     </el-form>
     <el-dialog title="选择图片" v-model="openImgDialog" lock-scroll width="705px" append-to-body>
-        <el-checkbox-group class="dialog-box" v-model="imgCheck" @change="check">
+        <el-checkbox-group class="dialog-box" v-model="imgCheck">
             <div class="dialog-li" v-for="(item, index) in imgSrcs">
                 <el-checkbox class="dialog-check" :key="index" :label="item" size="large">
                     &nbsp
@@ -193,7 +196,7 @@ import { getTheme } from "@/api/cms/theme";
 const route = useRoute();
 const activeTab = ref('basic')
 const { proxy } = getCurrentInstance();
-const { sys_true_false, cms_article_type,cms_page_type } = proxy.useDict(
+const { sys_true_false, cms_article_type, cms_page_type } = proxy.useDict(
     "sys_true_false",
     "cms_article_type",
     "cms_page_type"
@@ -245,24 +248,24 @@ function selectArticle() {
     if (route.params && route.params.articleId) {
         getArticle(route.params.articleId).then((response) => {
             form.value = response.data;
-            let theme=response.theme;
+            let theme = response.theme;
             let themeName = theme.webName + "_" + theme.themeName;
             activeTheme.value = theme;
-            form.value.syncThemeName =themeName;
+            form.value.syncThemeName = themeName;
             getCategoryTree(themeName);
             getListTag(themeName);
 
         });
     }
     //添加文章
-   else if (route.query && route.query.webName && route.query.themeName) {
+    else if (route.query && route.query.webName && route.query.themeName) {
         let themeName = route.query.webName + "_" + route.query.themeName;
         echoTheme(route.query.webName, route.query.themeName);
         getCategoryTree(themeName);
         getListTag(themeName);
         autoComplateUrl()
     }
-    else{
+    else {
 
     }
 }
@@ -344,7 +347,7 @@ function setConfig() {
 setConfig();
 
 function submitForm() {
-    
+
     proxy.$refs["articleRef"].validate((valid) => {
         if (valid) {
             // 关闭当前tab页签，打开新页签
@@ -370,7 +373,7 @@ function submitForm() {
 }
 
 //保存文章
-function saveForm(){
+function saveForm() {
     form.value.visible = 1;
     submitForm();
 }
@@ -384,7 +387,12 @@ function deleteChoose(value) {
         imgCheck.value.forEach((item, index) => {
             if (item == value) {
                 imgCheck.value.splice(index, 1);
-                return false;
+                if (imgCheck.value.length > 0) {
+                    form.value.articleImg = imgCheck.value.join(",");
+                }
+                else {
+                    form.value.articleImg = undefined;
+                }
             }
         });
     }
@@ -462,8 +470,8 @@ function chooseImg(str) {
         }
 
         .dialog-check {
+            margin-left: 5px;
             position: absolute;
         }
     }
-}
-</style>
+}</style>

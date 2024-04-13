@@ -203,6 +203,8 @@ function listToString(list, separator) {
   }
   return strs != "" ? strs.substr(0, strs.length - 1) : "";
 }
+
+
 </script>
 
 <style scoped lang="scss">

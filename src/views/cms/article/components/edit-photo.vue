@@ -268,17 +268,17 @@
     width="705px"
     append-to-body
   >
-    <el-checkbox-group class="dialog-box" v-model="imgCheck" @change="check">
-      <div class="dialog-li" v-for="(item, index) in imgSrcs">
+    <el-checkbox-group class="dialog-box" v-model="imgCheck">
+      <div class="dialog-li" v-for="(item, index) in contentData.photoData">
         <el-checkbox
           class="dialog-check"
           :key="index"
-          :label="item"
+          :label="item.url"
           size="large"
         >
           &nbsp
         </el-checkbox>
-        <img :src="item" class="dialog-img" />
+        <img :src="item.url" class="dialog-img" />
       </div>
     </el-checkbox-group>
     <template #footer>
@@ -317,7 +317,6 @@ const maxImg = ref(undefined);
 const maxKey = ref(undefined);
 const activeTheme = ref({});
 // 文章截取的图片
-const imgSrcs = ref([]);
 const imgCheck = ref([]);
 const openImgDialog = ref(false);
 
@@ -522,11 +521,18 @@ function getCategoryDisabled(da, node) {
 function deleteChoose(value) {
   if (imgCheck.value.length > 0) {
     imgCheck.value.forEach((item, index) => {
-      if (item == value) {
+      if (item === value) {
         imgCheck.value.splice(index, 1);
-        return false;
+        if (imgCheck.value.length > 0) {
+          form.value.articleImg = imgCheck.value.join(",");
+        }
+        else{
+          form.value.articleImg = undefined;
+        }
       }
     });
+  }
+  if (form.value.articleImg) {
   }
 }
 
@@ -539,9 +545,10 @@ function chooseImgDialog() {
     proxy.$modal.msgError("请确保图集数不大于" + maxImg.value);
   } else {
     openImgDialog.value = true;
-    imgSrcs.value = chooseImg(form.value.articleContent);
     //过滤选择不存在的
-    imgCheck.value = imgCheck.value.filter((v) => imgSrcs.value.include(v));
+    imgCheck.value = imgCheck.value.filter((v) =>
+      contentData.value.photoData.value.include(v)
+    );
   }
 }
 
@@ -562,22 +569,6 @@ function chooseOk() {
     form.value.articleImg = f.join(",");
   }
   openImgDialog.value = false;
-}
-
-function chooseImg(str) {
-  const data = [];
-  var arr = str.match(/<img.*?(?:>|\/>)/gi);
-  if (arr == null) {
-    return data;
-  }
-  for (var i = 0; i < arr.length; i++) {
-    var src = arr[i].match(/src=[\'\"]?([^\'\"]*)[\'\"]?/i);
-    //获取图片地址
-    if (src[1]) {
-      data.push(src[1]);
-    }
-  }
-  return data;
 }
 </script>
 
@@ -603,6 +594,7 @@ function chooseImg(str) {
     }
 
     .dialog-check {
+      margin-left: 5px;
       position: absolute;
     }
   }
