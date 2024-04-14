@@ -418,7 +418,7 @@ function chooseImgDialog() {
         openImgDialog.value = true;
         imgSrcs.value = chooseImg(form.value.articleContent);
         //过滤选择不存在的
-        imgCheck.value = imgCheck.value.filter((v) => imgSrcs.value.include(v));
+        imgCheck.value = imgCheck.value.filter((v) => imgSrcs.value.includes(v));
     }
 }
 

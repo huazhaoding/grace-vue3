@@ -547,7 +547,7 @@ function chooseImgDialog() {
     openImgDialog.value = true;
     //过滤选择不存在的
     imgCheck.value = imgCheck.value.filter((v) =>
-      contentData.value.photoData.value.include(v)
+      contentData.value.photoData.value.includes(v)
     );
   }
 }
