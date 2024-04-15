@@ -93,11 +93,7 @@ watch(() => props.modelValue, val => {
     // 然后将数组转为图像列表对象数组
     fileListRef.value = list.map(item => {
       if (typeof item === "string") {
-        if (item.indexOf(baseUrl) === -1 && item.indexOf('http:')=== -1 && item.indexOf('https:')=== -1) {
-          item = { name: item, url: baseUrl + item };
-        } else {
           item = { name: item, url: item };
-        }
       }
       return item;
     });

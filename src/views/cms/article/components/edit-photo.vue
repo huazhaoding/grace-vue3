@@ -151,6 +151,7 @@
                   :limit="maxImg"
                 />
               </el-form-item>
+              <textarea>{{form.articleImg}}</textarea>
             </el-tab-pane>
             <el-tab-pane label="SEO" name="seo">
               <el-form-item prop="keywords">
@@ -557,8 +558,9 @@ function chooseOk() {
   let f = imgCheck.value;
   if (form.value.articleImg != undefined) {
     f = form.value.articleImg.split(",").concat(imgCheck.value);
+    // 去重去空
     f = f.filter((item, index, arr) => {
-      return f.indexOf(item, 0) === index; //当前元素，在原始数组中的第一个索引==当前索引值，否则返回当前元素
+      return f.indexOf(item, 0) === index&&item !== ''; //当前元素，在原始数组中的第一个索引==当前索引值，否则返回当前元素
     });
   }
   if (f.length > maxImg.value) {
