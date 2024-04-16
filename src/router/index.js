@@ -203,6 +203,20 @@ export const dynamicRoutes = [
     ]
   },
   {
+    path: '/cms/web/theme/themeSetting',
+    component: Layout,
+    hidden: true,
+    permissions: ['cms:theme:setting'],
+    children: [
+      {
+        path: ':webName(\\w+)/:themeName(\\w+)',
+        component: () => import('@/views/cms/web/theme/themeSetting'),
+        name: 'ThemeSetting',
+        meta: { title: '主题配置', activeMenu: '/cms/web/theme' }
+      }
+    ]
+  },
+  {
     path: '/cms/web/theme/themeConfig',
     component: Layout,
     hidden: true,

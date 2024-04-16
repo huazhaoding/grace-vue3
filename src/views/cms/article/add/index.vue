@@ -7,7 +7,6 @@
 <script setup name="AddArticle">
 import { defineAsyncComponent } from 'vue'
 const route = useRoute();
-
 let componentName = reactive({});
 const active=ref('tinymce');
 if (route.params && route.params.editType) {

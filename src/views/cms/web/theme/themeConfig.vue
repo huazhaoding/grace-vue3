@@ -1,4 +1,5 @@
 <template>
+  <div class="app-container">
   <el-row :gutter="20">
     <el-col :span="16">
       <el-card class="box-card">
@@ -267,7 +268,18 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="主题类型：">
-            {{ themeData.themeType }}
+            <el-select
+                  v-model="themeData.themeType"
+                  placeholder="请选择主题类型"
+                  style="width: 240px"
+                >
+                  <el-option
+                    v-for="dict in cms_theme_type"
+                    :key="dict.value"
+                    :label="dict.label"
+                    :value="Number(dict.value)"
+                  ></el-option>
+                </el-select>
           </el-form-item>
           <el-form-item
                 label="支持类型："
@@ -334,6 +346,7 @@
       </el-card>
     </el-col>
   </el-row>
+</div>
 </template>
 
 <script setup name="ThemeConfig">
