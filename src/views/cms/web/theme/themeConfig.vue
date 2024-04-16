@@ -140,24 +140,7 @@
               </el-form-item>
             </el-tab-pane>
             <el-tab-pane name="tab-3" label="主题设置">
-              <el-form-item
-                label="支持类型："
-                prop="oly.web.article.supportType"
-              >
-                <el-select
-                  v-model="formData['oly.web.article.supportType']"
-                  multiple
-                  placeholder="请选择类型"
-                  style="width: 240px"
-                >
-                  <el-option
-                    v-for="dict in cms_support_type"
-                    :key="dict.value"
-                    :label="dict.label"
-                    :value="String(dict.value)"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
+        
               <el-form-item label="评论开关：" prop="oly.web.comment.enable">
                 <el-switch
                   v-model="formData['oly.web.comment.enable']"
@@ -286,6 +269,24 @@
           <el-form-item label="主题类型：">
             {{ themeData.themeType }}
           </el-form-item>
+          <el-form-item
+                label="支持类型："
+                prop="supportArticleType"
+              >
+                <el-select
+                  v-model="themeData.supportArticleType"
+                  multiple
+                  placeholder="请选择类型"
+                  style="width: 240px"
+                >
+                  <el-option
+                    v-for="dict in cms_article_type"
+                    :key="dict.value"
+                    :label="dict.label"
+                    :value="dict.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
           <el-form-item label="主题状态：">
             <el-radio-group v-model="themeData.themeEnabled">
                 <el-radio v-for="dict in cms_theme_enabled" :key="dict.value" :label="Number(dict.dictSort)">{{ dict.label }}
@@ -344,7 +345,7 @@ import {
 import { ref } from "vue";
 const route = useRoute();
 const { proxy } = getCurrentInstance();
-const { cms_support_type,cms_theme_enabled,cms_theme_type } = proxy.useDict("cms_support_type","cms_theme_enabled","cms_theme_type");
+const { cms_article_type,cms_theme_enabled,cms_theme_type } = proxy.useDict("cms_article_type","cms_theme_enabled","cms_theme_type");
 const emit = defineEmits(["update:modelValue"]);
 const activeTab = ref("tab-1");
 const themeData = ref({});
@@ -365,17 +366,18 @@ function getConfig() {
       .getConfigValueMap(webName.value + "_" + themeName.value)
       .then((response) => {
         formData.value = response.data;
-        formData.value["oly.web.article.supportType"] = formData.value[
-          "oly.web.article.supportType"
-        ]
-          ? formData.value["oly.web.article.supportType"].split(",")
-          : [];
       });
   } catch (error) {}
 }
 
 getTheme(webName.value, themeName.value).then((response) => {
+
   themeData.value = response.data;
+  if (response.data.supportArticleType) {
+    themeData.value.supportArticleType = response.data.supportArticleType.split(
+      ","
+    );
+  }
 });
 
 listCategory({nodeType:1}).then(
@@ -385,6 +387,9 @@ listCategory({nodeType:1}).then(
   );
 
 function updateHandel(){
+  themeData.value.supportArticleType = themeData.value.supportArticleType.join(
+    ","
+  );
   updateTheme(themeData.value).then((response) => {
     proxy.$modal.msgSuccess("修改成功");
 });
