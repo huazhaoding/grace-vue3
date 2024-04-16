@@ -38,7 +38,7 @@ import request from '@/utils/request';
 import configSelect from "@/components/ConfigSelect";
 import ConfigCheckbox from "@/components/ConfigCheckbox";
 const { proxy } = getCurrentInstance();
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["submit"]);
 const activeTab = ref("tab_0");
 const props = defineProps({
   /* 配置表单 */
@@ -82,9 +82,12 @@ function submitForm() {
     data: formData.value
   }).then((response) => {
     proxy.$modal.msgSuccess("修改成功");
+    proxy.$emit("submit", true);
   }
-  );
-
+  ).catch(()=>{
+    proxy.$modal.msgError("修改失败");
+    proxy.$emit("submit", false);
+  });
 }
 
 </script>

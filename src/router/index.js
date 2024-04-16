@@ -197,7 +197,7 @@ export const dynamicRoutes = [
       {
         path: ':webName(\\w+)',
         component: () => import('@/views/cms/web/theme/index'),
-        name: 'theme',
+        name: 'Theme',
         meta: { title: '主题列表', activeMenu: '/cms/web' }
       }
     ]

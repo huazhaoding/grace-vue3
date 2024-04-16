@@ -90,7 +90,7 @@
 
   </div>
 </template>
-<script setup name="theme">
+<script setup name="Theme">
 import { getToken } from "@/utils/auth"; // 自己存储token的文件
 import { listTheme, delTheme, syncTheme } from "@/api/cms/theme";
 const { proxy } = getCurrentInstance();
