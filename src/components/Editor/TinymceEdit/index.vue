@@ -38,15 +38,14 @@ const data = reactive({
   content: props.modelValue,
   tinySetting: {
     height: 600,
-    toolbar:
-      "undo redo | fullscreen | blocks alignleft aligncenter alignright alignjustify | link unlink | numlist bullist | image media table | fontsize forecolor backcolor | bold italic underline strikethrough | indent outdent | superscript subscript | removeformat |",
-    toolbar_mode: "sliding",
-    quickbars_selection_toolbar:
-      "removeformat | bold italic underline strikethrough | fontsize forecolor backcolor",
-    plugins: "link image media table lists fullscreen quickbars",
-    font_size_formats: "12px 14px 16px 18px",
-    link_default_target: "_blank",
-    link_title: false,
+  plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+  menubar: 'file edit view insert format tools table help',
+  toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+  autosave_ask_before_unload: true,
+  autosave_interval: '30s',
+  autosave_restore_when_empty: false,
+  autosave_retention: '2m',
+  image_advtab: true,
     // 自定义 图片上传模式
     custom_images_upload: true,
     // 上传文件地址
