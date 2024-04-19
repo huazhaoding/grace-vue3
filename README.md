@@ -11,8 +11,8 @@
 这里需要注意的是分离后端已经包含展示服务，需要独立部署，主题需要手动安装。
 
 * [X] 添加代码编辑器codemirror
-* [X] tinymce
-* [X] md-editor-v3(markdown)编辑器
+* [X] tinymce  （源码未高亮）
+* [X] md-editor-v3(markdown)编辑器 （源码已经添加高亮）
 
 ### 原有修改
 
