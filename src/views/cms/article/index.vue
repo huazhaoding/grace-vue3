@@ -498,15 +498,16 @@ function handleDelete(row) {
     .confirm('是否确认删除文章编号为"' + _articleIds + '"的数据项？')
     .then(function () {
       return delArticle(_articleIds);
-    })
-    .then(() => {
+    }).then(() => {
       getList();
       proxy.$modal.msgSuccess("删除成功");
     })
     .catch(() => {});
 }
 
-getCategoryTree({});
+onMounted(async () => {
+  await getCategoryTree({});
+});
 </script>
 
 
