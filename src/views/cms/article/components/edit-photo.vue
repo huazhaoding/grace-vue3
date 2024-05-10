@@ -151,7 +151,6 @@
                   :limit="maxImg"
                 />
               </el-form-item>
-              <textarea>{{form.articleImg}}</textarea>
             </el-tab-pane>
             <el-tab-pane label="SEO" name="seo">
               <el-form-item prop="keywords">
