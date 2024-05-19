@@ -49,9 +49,9 @@ export function clearCacheKey(cacheKey) {
 }
 
 // 清理全部缓存
-export function clearCacheAll() {
+export function clearCacheAll(type) {
   return request({
-    url: '/monitor/cache/clearCacheAll',
+    url: '/monitor/cache/clearCacheAll/'+type,
     method: 'delete'
   })
 }

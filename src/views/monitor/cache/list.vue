@@ -4,39 +4,51 @@
       <el-col :span="8">
         <el-card style="height: calc(100vh - 125px)">
           <template #header>
-            <Collection style="width: 1em; height: 1em; vertical-align: middle;" /> <span style="vertical-align: middle;">缓存列表</span>
-            <el-button style="float: right; padding: 3px 0" link type="primary" icon="Refresh"
-              @click="refreshCacheNames()"></el-button>
+            <Collection style="width: 1em; height: 1em; vertical-align: middle;" /> <span
+              style="vertical-align: middle;">缓存列表</span>
+            <el-tooltip content="刷新列表" placement="top">
+              <el-button style="float: right; padding: 3px 0" link type="primary" icon="Refresh"
+                @click="refreshCacheNames()"></el-button>
+            </el-tooltip>
           </template>
           <el-tabs v-model="activeTabName">
-            <el-tab-pane label="系统缓存" name="sysTab">  <el-table v-loading="loading" :data="sysCaches" :height="tableHeight" highlight-current-row
-            @row-click="getCacheKeys" style="width: 100%">
-            <el-table-column label="序号" width="60" type="index"></el-table-column>
+            <el-tab-pane label="系统缓存" name="sysTab"> 
+              <el-button   link type="primary" style="margin-bottom: 6px;" icon="Refresh"
+                  @click="handleClearCacheAll('system')">删除所有系统缓存</el-button>
+              <el-table v-loading="loading" :data="sysCaches"
+                :height="tableHeight" highlight-current-row @row-click="getCacheKeys" style="width: 100%">
+                <el-table-column label="序号" width="60" type="index"></el-table-column>
 
-            <el-table-column label="缓存名称" align="center" prop="cacheName" :show-overflow-tooltip="true"
-              :formatter="nameFormatter"></el-table-column>
+                <el-table-column label="缓存名称" align="center" prop="cacheName" :show-overflow-tooltip="true"
+                  :formatter="nameFormatter"></el-table-column>
 
-            <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-            <el-table-column label="操作" width="60" align="center" class-name="small-padding fixed-width">
-              <template #default="scope">
-                <el-button link type="primary" icon="Delete" @click="handleClearCacheName(scope.row)"></el-button>
-              </template>
-            </el-table-column>
-          </el-table></el-tab-pane>
-            <el-tab-pane label="内容缓存" name="cmsTab">  <el-table v-loading="loading" :data="cmsCaches" :height="tableHeight" highlight-current-row
-            @row-click="getCacheKeys" style="width: 100%">
-            <el-table-column label="序号" width="60" type="index"></el-table-column>
+                <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
+                <el-table-column label="操作" width="60" align="center" class-name="small-padding fixed-width">
+                  <template #default="scope">
+                    <el-button link type="primary" icon="Delete" @click="handleClearCacheName(scope.row)"></el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
 
-            <el-table-column label="缓存名称" align="center" prop="cacheName" :show-overflow-tooltip="true"
-              :formatter="nameFormatter"></el-table-column>
+            <el-tab-pane label="内容缓存" name="cmsTab">
+                <el-button link type="primary" style="margin-bottom: 6px;" icon="Refresh"
+                  @click="handleClearCacheAll('cms')">清除所有内容缓存</el-button>
+              <el-table v-loading="loading" :data="cmsCaches" :height="tableHeight" highlight-current-row
+                @row-click="getCacheKeys" style="width: 100%">
+                <el-table-column label="序号" width="60" type="index"></el-table-column>
 
-            <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-            <el-table-column label="操作" width="60" align="center" class-name="small-padding fixed-width">
-              <template #default="scope">
-                <el-button link type="primary" icon="Delete" @click="handleClearCacheName(scope.row)"></el-button>
-              </template>
-            </el-table-column>
-          </el-table></el-tab-pane>
+                <el-table-column label="缓存名称" align="center" prop="cacheName" :show-overflow-tooltip="true"
+                  :formatter="nameFormatter"></el-table-column>
+
+                <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
+                <el-table-column label="操作" width="60" align="center" class-name="small-padding fixed-width">
+                  <template #default="scope">
+                    <el-button link type="primary" icon="Delete" @click="handleClearCacheName(scope.row)"></el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
           </el-tabs>
 
         </el-card>
@@ -45,9 +57,12 @@
       <el-col :span="8">
         <el-card style="height: calc(100vh - 125px)">
           <template #header>
-            <Key style="width: 1em; height: 1em; vertical-align: middle;" /> <span style="vertical-align: middle;">键名列表</span>
-            <el-button style="float: right; padding: 3px 0" link type="primary" icon="Refresh"
-              @click="refreshCacheKeys()"></el-button>
+            <Key style="width: 1em; height: 1em; vertical-align: middle;" /> <span
+              style="vertical-align: middle;">键名列表</span>
+            <el-tooltip content="刷新列表" placement="top">
+              <el-button style="float: right; padding: 3px 0" link type="primary" icon="Refresh"
+                @click="refreshCacheKeys()"></el-button>
+            </el-tooltip>
           </template>
           <el-table v-loading="subLoading" :data="cacheKeys" :height="tableHeight" highlight-current-row
             @row-click="handleCacheValue" style="width: 100%">
@@ -66,9 +81,8 @@
       <el-col :span="8">
         <el-card :bordered="false" style="height: calc(100vh - 125px)">
           <template #header>
-            <Document style="width: 1em; height: 1em; vertical-align: middle;" /> <span style="vertical-align: middle;">缓存内容</span>
-            <el-button style="float: right; padding: 3px 0" link type="primary" icon="Refresh"
-              @click="handleClearCacheAll()">清理全部</el-button>
+            <Document style="width: 1em; height: 1em; vertical-align: middle;" /> <span
+              style="vertical-align: middle;">缓存内容</span>
           </template>
           <el-form :model="cacheForm">
             <el-row :gutter="32">
@@ -100,7 +114,7 @@ import { listCacheName, listCacheKey, getCacheValue, clearCacheName, clearCacheK
 const { proxy } = getCurrentInstance();
 const sysCaches = ref([]);
 const cmsCaches = ref([]);
-const activeTabName=ref("sysTab");
+const activeTabName = ref("sysTab");
 const cacheKeys = ref([]);
 const cacheForm = ref({});
 const loading = ref(true);
@@ -168,9 +182,11 @@ function handleCacheValue(cacheKey) {
   });
 }
 /** 清理全部缓存 */
-function handleClearCacheAll() {
-  clearCacheAll().then(response => {
-    proxy.$modal.msgSuccess("清理全部缓存成功");
+function handleClearCacheAll(type) {
+  clearCacheAll(type).then(response => {
+    cacheForm.value =[];
+    cacheKeys.value=[];
+    proxy.$modal.msgSuccess("指定缓存清理成功");
   });
 }
 getCacheNames();
