@@ -179,6 +179,7 @@
             label="文章标题"
             align="center"
             prop="articleTitle"
+            :show-overflow-tooltip="true"
           />
           <el-table-column
             label="创建时间"

@@ -24,7 +24,7 @@
       <el-table :select-on-indeterminate="false" v-loading="loading" :data="nastyList">
         <el-table-column label="记录ID" align="center" prop="recordId" />
         <el-table-column label="文章ID" align="center" prop="articleId" />
-        <el-table-column label="文章标题" align="center" prop="articleTitle" />
+        <el-table-column label="文章标题" :show-overflow-tooltip="true" align="center" prop="articleTitle" />
         <el-table-column label="发布用户" align="center" prop="createBy" />
         <el-table-column label="记录IP" align="center" prop="ip" />
         <el-table-column label="状态" align="center" prop="visible" />

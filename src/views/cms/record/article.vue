@@ -20,7 +20,7 @@
     </el-row>
     <el-table :select-on-indeterminate="false" v-loading="loading" :data="articleList">
       <el-table-column label="文章ID" align="center" prop="articleId" />
-      <el-table-column label="文章标题" align="center" prop="articleTitle" />
+      <el-table-column label="文章标题" align="center" prop="articleTitle" :show-overflow-tooltip="true" />
       <el-table-column label="发布用户" align="center" prop="createBy" />
       <el-table-column label="浏览浏览" align="center" prop="articleLook" />
       <el-table-column label="内容点赞" align="center" prop="articleLike" />
