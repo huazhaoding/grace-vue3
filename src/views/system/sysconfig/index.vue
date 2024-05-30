@@ -163,8 +163,17 @@
                   clearable
                 ></el-input>
               </el-form-item>
+              <el-form-item
+              label="IP黑名单"
+              prop="sys.login.blackIPList"
+            >
+            <keys-tag v-model="formData['sys.login.blackIPList']" :limit="100" :min-length="7" :max-length="16" />
+            
+            </el-form-item>
             </el-col>
           </el-row>
+        </el-tab-pane>
+        <el-tab-pane name="sysConfog" label="系统设置">
         </el-tab-pane>
       </el-tabs>
     </el-form>
@@ -179,6 +188,7 @@
 
 <script setup name="sysConfig">
 import { updateConfig, selectOptions } from "@/api/system/setting";
+import KeysTag from "@/components/KeysTag";
 const { proxy } = getCurrentInstance();
 const { sys_true_false } = proxy.useDict("sys_true_false");
 const activeTab = ref("sysWeb");
