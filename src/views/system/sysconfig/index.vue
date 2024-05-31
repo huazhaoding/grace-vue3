@@ -173,8 +173,6 @@
             </el-col>
           </el-row>
         </el-tab-pane>
-        <el-tab-pane name="sysConfog" label="系统设置">
-        </el-tab-pane>
       </el-tabs>
     </el-form>
     <el-button
@@ -220,4 +218,3 @@ function initData() {
 initData();
 </script>
 
-<style lang="scss" scoped></style>
