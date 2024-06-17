@@ -141,14 +141,13 @@
               </el-form-item>
             </el-tab-pane>
             <el-tab-pane name="tab-3" label="主题设置">
-        
               <el-form-item label="评论开关：" prop="oly.web.comment.enable">
                 <el-switch
                   v-model="formData['oly.web.comment.enable']"
                 ></el-switch>
               </el-form-item>
-              <el-form-item label="重建索引：">
-                <el-button>重建</el-button>
+              <el-form-item label="重建索引文件：">
+                <el-button @click="reBulidSiteMapIndex">重建</el-button>
               </el-form-item>
             </el-tab-pane>
             <el-tab-pane name="tab-4" label="站点相关">
@@ -350,7 +349,7 @@
 </template>
 
 <script setup name="ThemeConfig">
-import { updateConfig, getTheme,updateTheme } from "@/api/cms/theme";
+import { updateConfig, getTheme,updateTheme,updateSiteMapIndex } from "@/api/cms/theme";
 import JsonTag from "@/components/JsonTag";
 import {
   listCategory
@@ -423,6 +422,20 @@ function submitForm() {
       proxy.$modal.msgError("修改失败");
     });
 }
+
+function reBulidSiteMapIndex(){
+  proxy.$modal.confirm('是否要重建站点地图索引？').then(() => {
+    updateSiteMapIndex(webName.value, themeName.value).then((response) => {
+      proxy.$modal.msgSuccess("重建成功");
+    }).catch(() => {
+      proxy.$modal.msgError("重建异常");
+      
+  });
+  }).catch(() => {
+    proxy.$modal.msgError("取消重建");
+  });
+}
+
 </script>
 
 <style>
