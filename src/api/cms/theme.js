@@ -63,7 +63,7 @@ export function getThemeConfigForm(webName,themeName) {
 // 重建SiteMap索引
 export function  updateSiteMapIndex(webName,themeName) {
   return request({
-    url: '/cms/theme/ updateSiteMapIndex/'+webName+"/"+themeName,
+    url: '/cms/theme/updateSiteMapIndex/'+webName+"/"+themeName,
     method: 'post'
   })
 }
