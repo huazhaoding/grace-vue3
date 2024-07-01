@@ -9,7 +9,7 @@
     <el-button type="primary">上传文件</el-button>
     <template #tip>
       <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
+        上传文件不能大于10M
       </div>
     </template>
   </el-upload>
