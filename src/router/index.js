@@ -147,6 +147,34 @@ export const dynamicRoutes = [
     ]
   },
   {
+    path: '/server/mail',
+    component: Layout,
+    hidden: true,
+    permissions: ['server:mail:add'],
+    children: [
+      {
+        path: 'add',
+        component: () => import('@/views/server/mail/add/index'),
+        name: 'AddMail',
+        meta: { title: '添加邮件', activeMenu: '/server/mail' }
+      },
+    ]
+  },
+  {
+    path: '/server/mail',
+    component: Layout,
+    hidden: true,
+    permissions: ['cms:article:edit'],
+    children: [
+      {
+        path: 'update/:mailId(\\d+)',
+        component: () => import('@/views/server/mail/update/index'),
+        name: 'UpdateMail',
+        meta: { title: '邮件详情', activeMenu: '/server/mail' }
+      }
+    ]
+  },
+  {
     path: '/tool/gen-edit',
     component: Layout,
     hidden: true,
