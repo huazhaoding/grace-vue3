@@ -46,9 +46,8 @@
     <el-table v-loading="loading" :data="mailList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="mailId" />
-      <el-table-column label="接收者邮箱" align="center" prop="toMail" />
+      <el-table-column label="接收者" align="center" prop="toMail" />
       <el-table-column label="主题" align="center" prop="subject" />
-      <el-table-column label="内容" align="center" prop="content" />
       <el-table-column label="邮件类型" align="center" prop="mailType">
         <template #default="scope">
           <dict-tag :options="sys_server_mail_type" :value="scope.row.mailType" />
@@ -73,9 +72,12 @@
         </template>
       </el-table-column>
       <el-table-column label="附件地址" align="center" prop="attachKeys" v-if="columns[3].visible" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" >
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['server:mail:edit']">修改
+          <!-- 邮件未发送,并且非系统邮件可修改 -->
+          <el-button link type="primary" v-if="(scope.row.visible==0||scope.row.visible==2)&&scope.row.mailUsed==0" icon="Edit" @click="handleUpdate(scope.row)">修改
+          </el-button>
+          <el-button link type="primary" icon="View" @click="handleView(scope.row)" v-hasPermi="['server:mail:view']">查看
           </el-button>
           <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
             v-hasPermi="['server:mail:remove']">删除
@@ -201,7 +203,7 @@ import {
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
 import uploadAttach from "@/views/server/mail/components/uploadAttach";
 const { proxy } = getCurrentInstance();
-
+const router = useRouter();
 const {
   sys_true_false,
   sys_server_mail_type,
@@ -335,20 +337,13 @@ function handleSelectionChange(selection) {
 
 /** 新增按钮操作 */
 function handleAdd() {
-  reset();
-  open.value = true;
-  title.value = "添加邮件";
+  router.push({ path: "/server/mail/handle/add" });
 }
 
 /** 修改按钮操作 */
 function handleUpdate(row) {
-  reset();
   const _mailId = row.mailId || ids.value;
-  getMail(_mailId).then((response) => {
-    form.value = response.data;
-    open.value = true;
-    title.value = "修改邮件";
-  });
+  router.push({ path: "/server/mail/handle/update/"+_mailId });
 }
 
 // 选择时间

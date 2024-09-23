@@ -1,35 +1,13 @@
 <template>
-  <el-tag
-    v-for="tag in dynamicTags"
-    :key="tag"
-    class="mx-1"
-    closable
-    :disable-transitions="false"
-    @close="handleClose(tag)"
-  >
+  <el-tag v-for="tag in dynamicTags" :key="tag" class="mx-1" closable :disable-transitions="false"
+    @close="handleClose(tag)">
     {{ tag }}
   </el-tag>
 
   <span v-if="addVisible">
-    <el-input
-      v-if="inputVisible"
-      ref="InputRef"
-      v-model="inputValue"
-      class="ml-1 w-20"
-      size="small"
-      :maxlength="maxLength"
-      :minlength="minLength"
-      @keyup.enter="handleInputConfirm"
-      @blur="handleInputConfirm"
-    />
-    <el-button
-      v-else
-      class="button-new-tag ml-1"
-      size="small"
-      type="primary"
-      circle
-      @click="showInput"
-      >+
+    <el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" class="ml-1 w-20" size="small"
+      :maxlength="maxLength" :minlength="minLength" @keyup.enter="handleInputConfirm" />
+    <el-button v-else class="button-new-tag ml-1" size="small" type="primary" circle @click="showInput">+
     </el-button>
   </span>
 </template>
@@ -39,11 +17,11 @@ import { nextTick } from "vue";
 const emit = defineEmits();
 const inputValue = ref("");
 const dynamicTags = ref([]);
+//是否展示输入框 默认不展示
 const inputVisible = ref(false);
 const InputRef = ref();
 const addVisible = ref(true);
 const { proxy } = getCurrentInstance();
-
 const props = defineProps({
   /* 关键词字符 */
   modelValue: {
@@ -63,13 +41,17 @@ const props = defineProps({
   /* 关键长度 */
   maxLength: {
     type: Number,
-    default: 8,
+    default: 32,
   },
   /* 关键长度 */
   minLength: {
     type: Number,
-    default: 2,
+    default: 1,
   },
+  validType:{
+    type: String,
+    default: "str",
+  }
 });
 
 watch(
@@ -94,7 +76,6 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
 const handleClose = (tag) => {
   dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1);
   emit("update:modelValue", dynamicTags.value.join(props.splitString));
@@ -106,16 +87,17 @@ const handleClose = (tag) => {
     addVisible.value = false;
   }
 };
-
+// 展示输入框
 const showInput = () => {
   inputVisible.value = true;
   nextTick(() => {
     InputRef.value.input.focus();
   });
 };
-
+// 输入框提示
 const handleInputConfirm = () => {
   const v = inputValue.value;
+  //输入框是否为空
   if (inputValue.value == "") {
     inputVisible.value = false;
     return false;
@@ -128,7 +110,16 @@ const handleInputConfirm = () => {
     return false;
   }
 
-  if (inputValue.value && dynamicTags.value.indexOf(inputValue.value)) {
+  if(validValue(props.validType,v)){
+    inputVisible.value = false;
+    return false;
+  }
+  if (dynamicTags.value.indexOf(v) != -1) {
+    proxy.$modal.msgError('当前输入已经存在');
+    inputVisible.value = false;
+    return false;
+  }
+  else {
     dynamicTags.value.push(inputValue.value);
     emit("update:modelValue", dynamicTags.value.join(props.splitString));
   }
@@ -139,10 +130,58 @@ const handleInputConfirm = () => {
   inputValue.value = "";
 }
 
-function sendArray(){
-  return dynamicTags.value;
+// 字段验证 邮件 电话 数值
+
+const validValue = (vType,value) => {
+  let reValue = false;
+  switch (vType) {
+    case 'mail':
+      if (/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)) {
+        reValue = true;
+      }
+      else {
+        proxy.$modal.msgError('邮箱验证未通过');
+        reValue = false;
+      }
+      break;
+    case 'phone':
+      if (/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(value)) {
+        reValue = true;
+      }
+      else {
+        proxy.$modal.msgError('手机号验证未通过');
+        reValue = false;
+      }
+      break;
+    case 'number':
+      if (/^[-+]?\d*$/.test(value)) {
+        reValue = true;
+      }
+      else {
+        proxy.$modal.msgError('数字验证未通过');
+        reValue = false;
+      }
+      break;
+    case 'floatNum':
+      if (/^[-\+]?\d+(\.\d+)?$/.test(value)) {
+        reValue = true;
+      }
+      else {
+        proxy.$modal.msgError('小数验证未通过');
+        reValue = false;
+      }
+      break;
+    default:
+      break;
+  }
+  return reValue;
+
 }
 
+function sendArray() {
+  return dynamicTags.value;
+}
+// 组件回调方法
 defineExpose({
   sendArray
 });

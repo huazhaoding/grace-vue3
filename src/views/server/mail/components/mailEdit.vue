@@ -15,9 +15,20 @@
     修改 保存，发送 定时发送
     查看 -->
     <div class="app-container">
-        <el-form ref="mailRef" :model="form" :rules="rules" label-width="80px" :disabled="false">
+        <el-form ref="mailRef" :model="form" :rules="rules" :disabled="formDisabled">
             <el-form-item label="邮件类型" prop="mailType">
-                <el-input v-model="form.toMail" placeholder="邮件类型" />
+                <el-radio-group v-model="form.mailType">
+                    <el-radio v-for="dict in sys_server_mail_type" disabled :key="dict.dictSort"
+                        :label="dict.dictSort">{{ dict.label }}
+                    </el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="邮件用途" prop="mailUsed">
+                <el-radio-group v-model="form.mailUsed">
+                    <el-radio v-for="dict in sys_server_mail_used" disabled :key="dict.dictSort"
+                        :label="dict.dictSort">{{ dict.label }}
+                    </el-radio>
+                </el-radio-group>
             </el-form-item>
             <el-form-item label="收者邮箱" prop="toMail">
                 <el-input v-model="form.toMail" placeholder="请输入接收者邮箱" />
@@ -32,41 +43,81 @@
                 <el-date-picker clearable v-model="form.sendTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"
                     @change="changeTime" placeholder="请选择发送时间" />
             </el-form-item>
-            <el-form-item label="抄送用户" prop="copyTo">
-                <el-input v-model="form.copyTo" placeholder="请输入抄送用户" />
+            <el-form-item prop="copyTo">
+                <template #label>
+                    <span>
+                        <el-tooltip content="请输入正确的邮箱" placement="top">
+                            <el-icon>
+                                <question-filled />
+                            </el-icon>
+                        </el-tooltip>
+                        抄送用户
+                    </span>
+                </template>
+                <keys-tag v-model="form.copyTo" :limit="3" :min-length="1" :max-length="8" />
             </el-form-item>
-            <el-form-item label="密送用户" prop="bccTo">
-                <el-input v-model="form.bccTo" placeholder="请输入密送用户" />
+            <el-form-item prop="bccTo">
+                <template #label>
+                    <span>
+                        <el-tooltip content="请输入正确的邮箱" placement="top">
+                            <el-icon>
+                                <question-filled />
+                            </el-icon>
+                        </el-tooltip>
+                        密送用户
+                    </span>
+                </template>
+                <keys-tag v-model="form.bccTo" :limit="3" :min-length="1" :validType="'mail'" :max-length="8" />
             </el-form-item>
             <el-form-item label="添加附件" prop="attachKeys">
                 <upload-attach v-model="form.attachKeys" />
             </el-form-item>
             <el-form-item label="备注" prop="remark">
-                <el-input v-model="form.remark" placeholder="请输入备注" />
+                <el-input type="textarea" v-model="form.remark" placeholder="请输入备注" />
             </el-form-item>
-            
-            <el-form-item >
-                <el-button type="primary" @click="mailSave">保存</el-button>
-                <el-button type="primary" @click="mailSend">{{ mailType }}</el-button>
+
+            <el-form-item v-if="handleCode != 'viewMail'">
+                <el-button type="primary" @click="saveMail">保存</el-button>
+                <el-button type="primary" @click="sendMail">{{ mailType }}</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
-<script setup name="Mail">
+<script setup name="EditMail">
 import {
-    listMail,
     getMail,
-    delMail,
     addMail,
-    updateMail,
-    sendMail,
-    updateConfig,
+    updateMail
 } from "@/api/server/mail";
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
 import uploadAttach from "@/views/server/mail/components/uploadAttach";
-const { proxy } = getCurrentInstance();
+import KeysTag from "@/components/KeysTag";
 
+const { proxy } = getCurrentInstance();
+const props = defineProps({
+    handleCode: {
+        type: String,
+        default: 'addMail'
+    },
+    mailId: {
+        type: String,
+        default: null
+    },
+    mailType: {
+        type: Number,
+        default: 0
+    },
+    formDisabled: {
+        type: Boolean,
+        default: false
+    }
+    ,
+    mailUsed: {
+        type: Number,
+        default: 0
+    }
+});
 const {
     sys_true_false,
     sys_server_mail_type,
@@ -78,144 +129,25 @@ const {
     "sys_server_mail_used",
     "sys_server_mail_visible"
 );
-
-const mailList = ref([]);
-const open = ref(false);
-const title = ref("");
-const loading = ref(true);
-const showSearch = ref(true);
-const ids = ref([]);
-const single = ref(true);
-const multiple = ref(true);
-const total = ref(0);
+// 表单状态
+const formDisabled = ref(false);
+// 邮件状态 已发送 待发送 发送失败 草稿(保存)
 const mailStatus = ref("立即发送");
 const mailType = ref("立即发送");
-const activeTab = ref("mailConfig");
-const configOpen = ref(false);
-const configTitle = ref("");
-
-// 列显隐信息
-const columns = ref([
-    { key: 0, label: `抄送用户`, visible: false },
-    { key: 1, label: `密送用户`, visible: false },
-    { key: 2, label: `描述`, visible: false },
-    { key: 3, label: `附件地址`, visible: false },
-]);
-
 const data = reactive({
-    form: {},
-    configForm: {},
-    queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        toMail: null,
-        subject: null,
-        mailType: null,
-        sendTime: null,
-        mailUsed: null,
-        visible: null,
+    form: {
+
     },
-    rules: {},
+    rules: {
+    toMail: [{ required: true, message: "接收邮箱不能为空", trigger: "blur" }],
+    subject: [{ required: true, message: "主题不能为空", trigger: "blur" }],
+    content: [{ required: true, message: "内容不能为空", trigger: "blur" }],
+
+    },
 });
 
-const { queryParams, form, configForm, rules } = toRefs(data);
+const { form, rules } = toRefs(data);
 
-/** 修改配置 */
-function configUpdate() {
-    proxy.getConfigValueMap("mailConfig").then((response) => {
-        configForm.value = response.data;
-        configOpen.value = true;
-        configTitle.value = "邮件配置";
-    });
-}
-
-/** 提交按钮 */
-function submitConfigForm() {
-    updateConfig(configForm.value).then((response) => {
-        proxy.$modal.msgSuccess("修改成功");
-        configOpen.value = false;
-    });
-}
-
-// 取消按钮
-function configCancel() {
-    configOpen.value = false;
-}
-
-/** 查询邮件列表 */
-function getList() {
-    loading.value = true;
-    listMail(queryParams.value).then((response) => {
-        mailList.value = response.rows;
-        total.value = response.total;
-        loading.value = false;
-    });
-}
-
-// 取消按钮
-function cancel() {
-    open.value = false;
-    reset();
-}
-
-// 表单重置
-function reset() {
-    form.value = {
-        mailId: null,
-        fromMail: null,
-        createBy: null,
-        createTime: null,
-        toMail: null,
-        subject: null,
-        content: null,
-        mailType: null,
-        sendTime: null,
-        copyTo: null,
-        remark: null,
-        mailUsed: null,
-        bccTo: null,
-        visible: null,
-        attachKeys: [],
-    };
-    proxy.resetForm("mailRef");
-}
-
-/** 搜索按钮操作 */
-function handleQuery() {
-    queryParams.value.pageNum = 1;
-    getList();
-}
-
-/** 重置按钮操作 */
-function resetQuery() {
-    proxy.resetForm("queryRef");
-    handleQuery();
-}
-
-// 多选框选中数据
-function handleSelectionChange(selection) {
-    ids.value = selection.map((item) => item.mailId);
-    single.value = selection.length != 1;
-    multiple.value = !selection.length;
-}
-
-/** 新增按钮操作 */
-function handleAdd() {
-    reset();
-    open.value = true;
-    title.value = "添加邮件";
-}
-
-/** 修改按钮操作 */
-function handleUpdate(row) {
-    reset();
-    const _mailId = row.mailId || ids.value;
-    getMail(_mailId).then((response) => {
-        form.value = response.data;
-        open.value = true;
-        title.value = "修改邮件";
-    });
-}
 
 // 选择时间
 function changeTime(value) {
@@ -226,9 +158,8 @@ function changeTime(value) {
     }
 }
 
-/** 提交按钮 */
-function mailSave() {
-    console.log(form.value.attachKeys);
+/** 保存邮件 */
+function saveMail() {
     proxy.$refs["mailRef"].validate((valid) => {
         if (valid) {
             if (form.value.mailId != null) {
@@ -248,7 +179,10 @@ function mailSave() {
     });
 }
 
-function mailSend() {
+/**
+ * 发送邮件
+ */
+function sendMail() {
     proxy.$refs["mailRef"].validate((valid) => {
         if (valid) {
             proxy.$modal
@@ -267,31 +201,29 @@ function mailSend() {
     });
 }
 
-/** 删除按钮操作 */
-function handleDelete(row) {
-    const _mailIds = row.mailId || ids.value;
-    proxy.$modal
-        .confirm('是否确认删除邮件编号为"' + _mailIds + '"的数据项？')
-        .then(function () {
-            return delMail(_mailIds);
-        })
-        .then(() => {
-            getList();
-            proxy.$modal.msgSuccess("删除成功");
-        })
-        .catch(() => { });
+/** 定时发送 */
+function sendTimeMail(row) {
+    reset();
+    const _mailId = row.mailId || ids.value;
+    getMail(_mailId).then((response) => {
+        form.value = response.data;
+        open.value = true;
+        title.value = "修改邮件";
+    });
 }
 
-/** 导出按钮操作 */
-function handleExport() {
-    proxy.download(
-        "system/mail/export",
-        {
-            ...queryParams.value,
-        },
-        `mail_${new Date().getTime()}.xlsx`
-    );
+function initForm() {
+    if (props.mailId != null) {
+        getMail(props.mailId).then((response) => {
+            form.value = response.data;
+        }).catch(err => {
+            console.log("获取数据失败");
+        });
+    }
+    else {
+        form.value.mailUsed = props.mailUsed;
+        form.value.mailType = props.mailType;
+    }
 }
-
-getList();
+initForm();
 </script>
