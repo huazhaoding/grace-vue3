@@ -90,6 +90,11 @@
       <el-table v-loading="loading" :data="jobList" @selection-change="handleSelectionChange">
          <el-table-column type="selection" width="55" align="center" />
          <el-table-column label="任务编号" width="100" align="center" prop="jobId" />
+         <el-table-column label="手动添加" width="100" align="center" prop="byHand" >
+            <template #default="scope">
+               <dict-tag :options="sys_yes_no" :dictSort="true" :value="scope.row.byHand" />
+            </template>
+         </el-table-column>
          <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" />
          <el-table-column label="任务组名" align="center" prop="jobGroup">
             <template #default="scope">
@@ -110,6 +115,7 @@
          </el-table-column>
          <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
             <template #default="scope">
+               <span v-show="scope.row.byHand===0">
                <el-tooltip content="修改" placement="top">
                   <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['monitor:job:edit']"></el-button>
                </el-tooltip>
@@ -119,6 +125,7 @@
                <el-tooltip content="执行一次" placement="top">
                   <el-button link type="primary" icon="CaretRight" @click="handleRun(scope.row)" v-hasPermi="['monitor:job:changeStatus']"></el-button>
                </el-tooltip>
+            </span>
                <el-tooltip content="任务详细" placement="top">
                   <el-button link type="primary" icon="View" @click="handleView(scope.row)" v-hasPermi="['monitor:job:query']"></el-button>
                </el-tooltip>
@@ -128,7 +135,6 @@
             </template>
          </el-table-column>
       </el-table>
-
       <pagination
          v-show="total > 0"
          :total="total"
@@ -289,7 +295,7 @@ import { listJob, getJob, delJob, addJob, updateJob, runJob, changeJobStatus } f
 import Crontab from '@/components/Crontab'
 const router = useRouter();
 const { proxy } = getCurrentInstance();
-const { sys_job_group, sys_job_status } = proxy.useDict("sys_job_group", "sys_job_status");
+const { sys_job_group, sys_job_status,sys_yes_no } = proxy.useDict("sys_job_group", "sys_job_status","sys_yes_no");
 const jobList = ref([]);
 const open = ref(false);
 const loading = ref(true);

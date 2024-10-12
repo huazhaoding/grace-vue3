@@ -53,6 +53,11 @@
           <dict-tag :options="sys_server_mail_type" :value="scope.row.mailType" />
         </template>
       </el-table-column>
+      <el-table-column label="定时发送" align="center" prop="byTime">
+        <template #default="scope">
+          <dict-tag :options="sys_yes_no" :dictSort="true" :value="scope.row.byTime" />
+        </template>
+      </el-table-column>
       <el-table-column label="发送时间" align="center" prop="sendTime" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.sendTime, "{y}-{m}-{d}") }}</span>
@@ -72,60 +77,33 @@
         </template>
       </el-table-column>
       <el-table-column label="附件地址" align="center" prop="attachKeys" v-if="columns[3].visible" />
-      <el-table-column label="操作" align="center" >
+      <el-table-column label="操作" align="center">
         <template #default="scope">
           <!-- 邮件未发送,并且非系统邮件可修改 -->
-          <el-button link type="primary" v-if="(scope.row.visible==0||scope.row.visible==2)&&scope.row.mailUsed==0" icon="Edit" @click="handleUpdate(scope.row)">修改
-          </el-button>
-          <el-button link type="primary" icon="View" @click="handleView(scope.row)" v-hasPermi="['server:mail:view']">查看
-          </el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['server:mail:remove']">删除
-          </el-button>
+          <el-tooltip content="修改" placement="top" >
+            <el-button link type="primary" v-show="(scope.row.visible == 0 || scope.row.visible == 2|| scope.row.visible == 3) && scope.row.mailUsed == 0"
+              icon="Edit" @click="handleUpdate(scope.row)">
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="查看" placement="top">
+            <el-button link type="primary" icon="View" @click="handleView(scope.row)"
+              v-hasPermi="['server:mail:view']">
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="删除" placement="top">
+            <!-- 如果是定时邮件,且未发送,需先取消 -->
+            <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
+              v-hasPermi="['server:mail:remove']">
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
-      @pagination="getList" />
+    <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize" @pagination="getList" />
 
-    <!-- 添加或修改邮件对话框 -->
-    <el-dialog :title="title" v-model="open" width="40%" append-to-body>
-      <el-form ref="mailRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="收者邮箱" prop="toMail">
-          <el-input v-model="form.toMail" placeholder="请输入接收者邮箱" />
-        </el-form-item>
-        <el-form-item label="主题" prop="subject">
-          <el-input v-model="form.subject" placeholder="请输入主题" />
-        </el-form-item>
-        <el-form-item label="内容" :width="'80%'" prop="content">
-          <vue3-tinymce v-model="form.content" />
-        </el-form-item>
-        <el-form-item label="发送时间" prop="sendTime">
-          <el-date-picker clearable v-model="form.sendTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"
-            @change="changeTime" placeholder="请选择发送时间" />
-        </el-form-item>
-        <el-form-item label="抄送用户" prop="copyTo">
-          <el-input v-model="form.copyTo" placeholder="请输入抄送用户" />
-        </el-form-item>
-        <el-form-item label="密送用户" prop="bccTo">
-          <el-input v-model="form.bccTo" placeholder="请输入密送用户" />
-        </el-form-item>
-        <el-form-item label="添加附件" prop="attachKeys">
-          <upload-attach  v-model="form.attachKeys" />
-        </el-form-item>
-        <el-form-item label="描述" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入描述" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="mailSave">保存</el-button>
-          <el-button type="primary" @click="mailSend">{{ mailType }}</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+
 
     <!-- 邮件配置 -->
     <el-dialog :title="configTitle" v-model="configOpen" width="600px" append-to-body draggable>
@@ -134,7 +112,8 @@
           <el-tab-pane label="邮箱配置" name="mailConfig">
             <el-form-item label="邮件开关" prop="oly.mail.enabled">
               <el-radio-group v-model="configForm['oly.mail.enabled']">
-                <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label }}
+                <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label
+                  }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
@@ -172,7 +151,8 @@
               </el-alert>
               <el-form-item label="starttls" prop="oly.mail.starttls">
                 <el-radio-group v-model="configForm['oly.mail.starttls']">
-                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label }}
+                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label
+                    }}
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
@@ -193,24 +173,25 @@
 <script setup name="Mail">
 import {
   listMail,
-  getMail,
+  stopOnTimeMail,
   delMail,
   addMail,
   updateMail,
   sendMail,
   updateConfig,
 } from "@/api/server/mail";
-import Vue3Tinymce from "@/components/Editor/TinymceEdit";
-import uploadAttach from "@/views/server/mail/components/uploadAttach";
+
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const {
   sys_true_false,
+  sys_yes_no,
   sys_server_mail_type,
   sys_server_mail_used,
   sys_server_mail_visible,
 } = proxy.useDict(
   "sys_true_false",
+  "sys_yes_no",
   "sys_server_mail_type",
   "sys_server_mail_used",
   "sys_server_mail_visible"
@@ -239,7 +220,6 @@ const columns = ref([
 ]);
 
 const data = reactive({
-  form: {},
   configForm: {},
   queryParams: {
     pageNum: 1,
@@ -254,7 +234,7 @@ const data = reactive({
   rules: {},
 });
 
-const { queryParams, form, configForm, rules } = toRefs(data);
+const { queryParams, configForm} = toRefs(data);
 
 /** 修改配置 */
 function configUpdate() {
@@ -288,33 +268,9 @@ function getList() {
   });
 }
 
-// 取消按钮
-function cancel() {
-  open.value = false;
-  reset();
-}
 
-// 表单重置
-function reset() {
-  form.value = {
-    mailId: null,
-    fromMail: null,
-    createBy: null,
-    createTime: null,
-    toMail: null,
-    subject: null,
-    content: null,
-    mailType: null,
-    sendTime: null,
-    copyTo: null,
-    remark: null,
-    mailUsed: null,
-    bccTo: null,
-    visible: null,
-    attachKeys: [],
-  };
-  proxy.resetForm("mailRef");
-}
+
+
 
 /** 搜索按钮操作 */
 function handleQuery() {
@@ -343,8 +299,22 @@ function handleAdd() {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   const _mailId = row.mailId || ids.value;
-  router.push({ path: "/server/mail/handle/update/"+_mailId });
+  if (row.byTime === 0)
+    proxy.$modal
+      .confirm('定时邮件需要先取消定时方可修改,需要取消吗?')
+      .then(function () {
+        stopOnTimeMail( _mailId ).then((response) => { });
+      })
+      .then(() => {
+        handleQuery();
+        router.push({ path: "/server/mail/handle/update/" + _mailId });
+      })
+      .catch(() => { });
+  else {
+    router.push({ path: "/server/mail/handle/update/" + _mailId });
+  }
 }
+
 
 // 选择时间
 function changeTime(value) {
@@ -355,46 +325,7 @@ function changeTime(value) {
   }
 }
 
-/** 提交按钮 */
-function mailSave() {
-  console.log(form.value.attachKeys);
-  proxy.$refs["mailRef"].validate((valid) => {
-    if (valid) {
-      if (form.value.mailId != null) {
-        updateMail(form.value).then((response) => {
-          proxy.$modal.msgSuccess("修改成功");
-          open.value = false;
-          getList();
-        });
-      } else {
-        addMail(form.value).then((response) => {
-          proxy.$modal.msgSuccess("新增成功");
-          open.value = false;
-          getList();
-        });
-      }
-    }
-  });
-}
 
-function mailSend() {
-  proxy.$refs["mailRef"].validate((valid) => {
-    if (valid) {
-      proxy.$modal
-        .confirm(mailType.value + "?")
-        .then(function () {
-          sendMail(form.value).then((response) => {
-            proxy.$modal.msgSuccess("邮件已加入发送队列");
-            open.value = false;
-          });
-        })
-        .then(() => {
-          getList();
-        })
-        .catch(() => { });
-    }
-  });
-}
 
 /** 删除按钮操作 */
 function handleDelete(row) {

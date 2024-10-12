@@ -35,6 +35,14 @@ export function updateMail(data) {
   })
 }
 
+// 停止定时任务邮件
+export function stopOnTimeMail(mailId) {
+  return request({
+    url: '/server/mail/stopOnTimeMail/'+mailId,
+    method: 'put'
+  })
+}
+
 // 发送邮件
 export function sendMail(data) {
   return request({

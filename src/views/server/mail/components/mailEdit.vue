@@ -30,23 +30,19 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="收者邮箱" prop="toMail">
-                <el-input v-model="form.toMail" placeholder="请输入接收者邮箱" />
+            <el-form-item label="收件邮箱" prop="toMail">
+                <el-input v-model="form.toMail" type="email" placeholder="请输入接收者邮箱" />
             </el-form-item>
-            <el-form-item label="主题" prop="subject">
+            <el-form-item label="邮件主题" prop="subject">
                 <el-input v-model="form.subject" placeholder="请输入主题" />
             </el-form-item>
-            <el-form-item label="内容" :width="'80%'" prop="content">
+            <el-form-item label="邮件内容" :width="'80%'" prop="content">
                 <vue3-tinymce v-model="form.content" />
-            </el-form-item>
-            <el-form-item label="发送时间" prop="sendTime">
-                <el-date-picker clearable v-model="form.sendTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"
-                    @change="changeTime" placeholder="请选择发送时间" />
             </el-form-item>
             <el-form-item prop="copyTo">
                 <template #label>
                     <span>
-                        <el-tooltip content="请输入正确的邮箱" placement="top">
+                        <el-tooltip content="请输入抄送用户的邮箱" placement="top">
                             <el-icon>
                                 <question-filled />
                             </el-icon>
@@ -59,7 +55,7 @@
             <el-form-item prop="bccTo">
                 <template #label>
                     <span>
-                        <el-tooltip content="请输入正确的邮箱" placement="top">
+                        <el-tooltip content="请输入密送用户的邮箱" placement="top">
                             <el-icon>
                                 <question-filled />
                             </el-icon>
@@ -75,10 +71,14 @@
             <el-form-item label="备注" prop="remark">
                 <el-input type="textarea" v-model="form.remark" placeholder="请输入备注" />
             </el-form-item>
-
+            <!-- 发送中的邮件若要修改,需要先停止任务 -->
+            <el-form-item label="发送时间" prop="sendTime">
+                <el-date-picker clearable v-model="form.sendTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss"
+                    @change="changeTime" placeholder="请选择发送时间" />
+            </el-form-item>
             <el-form-item v-if="handleCode != 'viewMail'">
                 <el-button type="primary" @click="saveMail">保存</el-button>
-                <el-button type="primary" @click="sendMail">{{ mailType }}</el-button>
+                <el-button type="primary" @click="sendMailHandle">{{ mailType }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -88,6 +88,7 @@
 import {
     getMail,
     addMail,
+    sendMail,
     updateMail
 } from "@/api/server/mail";
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
@@ -139,9 +140,9 @@ const data = reactive({
 
     },
     rules: {
-    toMail: [{ required: true, message: "接收邮箱不能为空", trigger: "blur" }],
-    subject: [{ required: true, message: "主题不能为空", trigger: "blur" }],
-    content: [{ required: true, message: "内容不能为空", trigger: "blur" }],
+        toMail: [{ type: 'email', required: true, message: "请输入正确邮箱", trigger: "blur" }, { required: true, message: "接收邮箱不能为空", trigger: "blur" }],
+        subject: [{ required: true, message: "主题不能为空", trigger: "blur" }],
+        content: [{ required: true, message: "内容不能为空", trigger: "blur" }],
 
     },
 });
@@ -165,14 +166,12 @@ function saveMail() {
             if (form.value.mailId != null) {
                 updateMail(form.value).then((response) => {
                     proxy.$modal.msgSuccess("修改成功");
-                    open.value = false;
-                    getList();
+                    backMailPage();
                 });
             } else {
                 addMail(form.value).then((response) => {
                     proxy.$modal.msgSuccess("新增成功");
-                    open.value = false;
-                    getList();
+                    backMailPage();
                 });
             }
         }
@@ -182,7 +181,7 @@ function saveMail() {
 /**
  * 发送邮件
  */
-function sendMail() {
+function sendMailHandle() {
     proxy.$refs["mailRef"].validate((valid) => {
         if (valid) {
             proxy.$modal
@@ -190,25 +189,22 @@ function sendMail() {
                 .then(function () {
                     sendMail(form.value).then((response) => {
                         proxy.$modal.msgSuccess("邮件已加入发送队列");
-                        open.value = false;
+                        backMailPage();
                     });
                 })
                 .then(() => {
-                    getList();
+
                 })
                 .catch(() => { });
         }
     });
 }
 
-/** 定时发送 */
-function sendTimeMail(row) {
-    reset();
-    const _mailId = row.mailId || ids.value;
-    getMail(_mailId).then((response) => {
-        form.value = response.data;
-        open.value = true;
-        title.value = "修改邮件";
+function backMailPage() {
+    // 关闭当前tab页签，打开新页签
+    const obj = { path: "/server/mail", name: "Mail" };
+    proxy.$tab.closeOpenPage(obj).then(() => {
+        proxy.$tab.refreshPage(obj);
     });
 }
 
