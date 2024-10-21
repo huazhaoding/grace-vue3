@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mainEdit :handleCode="'addMail'" :formDisabled="true" :mailId="null" :mailType="1" :mailUsed="0" />
+    <mainEdit :handleCode="'addMail'" :formDisabled="false" :mailId="null" :mailType="1" :mailUsed="0" />
   </div>
 </template>
 

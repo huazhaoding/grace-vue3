@@ -37,7 +37,7 @@
                 <el-input v-model="form.subject" placeholder="请输入主题" />
             </el-form-item>
             <el-form-item label="邮件内容" :width="'80%'" prop="content">
-                <vue3-tinymce v-model="form.content" />
+                <vue3-tinymce v-model="form.content" :readOnly="formDisabled" />
             </el-form-item>
             <el-form-item prop="copyTo">
                 <template #label>
@@ -130,8 +130,7 @@ const {
     "sys_server_mail_used",
     "sys_server_mail_visible"
 );
-// 表单状态
-const formDisabled = ref(false);
+
 // 邮件状态 已发送 待发送 发送失败 草稿(保存)
 const mailStatus = ref("立即发送");
 const mailType = ref("立即发送");
