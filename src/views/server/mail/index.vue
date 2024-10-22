@@ -296,6 +296,14 @@ function handleAdd() {
   router.push({ path: "/server/mail/handle/add" });
 }
 
+function handleView(row) {
+ 
+  const _mailId = row.mailId || ids.value;
+ 
+    router.push({ path: "/server/mail/handle/view/" + _mailId });
+
+}
+
 /** 修改按钮操作 */
 function handleUpdate(row) {
   const _mailId = row.mailId || ids.value;
