@@ -178,7 +178,7 @@ export const dynamicRoutes = [
     path: '/server/mail/handle',
     component: Layout,
     hidden: true,
-    permissions: ['server:mail:update'],
+    permissions: ['server:mail:view'],
     children: [
       {
         path: 'view/:mailId(\\d+)',
