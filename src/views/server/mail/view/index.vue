@@ -4,7 +4,7 @@
     </div>
   </template>
   
-  <script setup name="viedMail">
+  <script setup name="ViedMail">
   import mainEdit from "@/views/server/mail/components/mailEdit";
   const route = useRoute();
   const mailId = ref(route.params.mailId);

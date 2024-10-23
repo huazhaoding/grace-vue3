@@ -34,9 +34,11 @@ watch(
   () => props.modelValue,
   (val) => {
     fileList.value = [];
+    if(val){
     val.forEach((item) => {
       fileList.value.push({ name: item.label, url: item.value });
     });
+  }
   },
   { deep: true, immediate: true }
 );
