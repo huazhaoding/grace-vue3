@@ -17,6 +17,7 @@
 <script setup>
 import { getToken } from "@/utils/auth"; // 自己存储token的文件
 const emit = defineEmits(["update:modelValue"]);
+const { proxy } = getCurrentInstance();
 const headers = ref({ Authorization: "Bearer " + getToken() });
 const props = defineProps({
   modelValue: {
@@ -43,9 +44,21 @@ watch(
   { deep: true, immediate: true }
 );
 
-function handSuccess(res) {
+function handSuccess(res,file) {
+  if(res.code==200){
   props.modelValue.push({ label: res.data.fk, value: res.data.fk });
   emit("update:modelValue", props.modelValue);
+}
+else{
+  proxy.$modal.msgError(res.msg);
+  if (props.modelValue) {
+    emit("update:modelValue", props.modelValue.filter(item =>{return item.label != file.name}));
+  }
+  else {
+    emit("update:modelValue", [].filter(item =>{return item.label != file.name}));
+  }
+  
+}
 }
 
 function handRemove(file, uploadFiles) {
