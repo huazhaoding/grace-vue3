@@ -46,13 +46,13 @@ watch(
 
 function handSuccess(res,file) {
   if(res.code==200){
-  props.modelValue.push({ label: res.data.fk, value: res.data.fk });
-  emit("update:modelValue", props.modelValue);
+    fileList.value.push({ label: res.data.fk, value: res.data.fk });
+  emit("update:modelValue", fileList.value);
 }
 else{
   proxy.$modal.msgError(res.msg);
   if (props.modelValue) {
-    emit("update:modelValue", props.modelValue.filter(item =>{return item.label != file.name}));
+    emit("update:modelValue", fileList.value.filter(item =>{return item.label != file.name}));
   }
   else {
     emit("update:modelValue", [].filter(item =>{return item.label != file.name}));
