@@ -5,11 +5,12 @@
     :headers="headers"
     :on-success="handSuccess"
     :on-remove="handRemove"
+    :before-upload="handleBeforeUpload"
   >
     <el-button type="primary">上传文件</el-button>
     <template #tip>
       <div class="el-upload__tip">
-        上传文件不能大于10M
+        注意发送端和接收端支持文件大小,此服务器限制上传文件最大为{{fileSize}}MB
       </div>
     </template>
   </el-upload>
@@ -24,8 +25,12 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  // 大小限制(MB)
+  fileSize: {
+    type: Number,
+    default: 50,
+  },
 });
-
 const uploadUrl = ref(
   import.meta.env.VITE_APP_BASE_API + "/server/mail/uploadAttach"
 );
@@ -60,6 +65,18 @@ else{
   
 }
 }
+
+function handleBeforeUpload(file) {
+  if (props.fileSize) {
+    const isLt = file.size / 1024 / 1024 < props.fileSize;
+    if (!isLt) {
+      proxy.$modal.msgError(`上传内容不能超过 ${props.fileSize} MB!`);
+      return false;
+    }
+  }
+}
+
+
 
 function handRemove(file, uploadFiles) {
    emit("update:modelValue", props.modelValue.filter(item =>{return item.label != file.name}));
