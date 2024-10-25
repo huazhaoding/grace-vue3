@@ -10,7 +10,9 @@
     <el-button type="primary">上传文件</el-button>
     <template #tip>
       <div class="el-upload__tip">
-        注意发送端和接收端支持文件大小,此服务器限制上传文件最大为{{fileSize}}MB
+        <el-alert type="info" show-icon :closable="false">
+          注意发送端和接收端支持文件大小,此服务器限制上传文件最大为{{fileSize}}MB
+      </el-alert> 
       </div>
     </template>
   </el-upload>
