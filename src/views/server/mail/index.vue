@@ -99,15 +99,11 @@
         </template>
       </el-table-column>
     </el-table>
-
     <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
       v-model:limit="queryParams.pageSize" @pagination="getList" />
-
-
-
     <!-- 邮件配置 -->
-    <el-dialog :title="configTitle" v-model="configOpen" width="600px" append-to-body draggable>
-      <el-form ref="mailConfigRef" :model="configForm" label-width="80px">
+    <el-dialog :title="configTitle" v-model="configOpen" width="650px" append-to-body draggable>
+      <el-form ref="mailConfigRef" :model="configForm" label-width="90px">
         <el-tabs v-model="activeTab">
           <el-tab-pane label="邮箱配置" name="mailConfig">
             <el-form-item label="邮件开关" prop="oly.mail.enabled">
@@ -144,6 +140,20 @@
             </el-form-item>
             <el-form-item label="端口" prop="oly.mail.ssl.port">
               <el-input-number v-model.number="configForm['oly.mail.ssl.port']" controls-position="right" :min="0" />
+            </el-form-item>
+            <el-form-item  prop="oly.mail.attach.size">
+              <el-input-number v-model.number="configForm['oly.mail.attach.size']" controls-position="right" :min="0" />
+              <template #label>
+                        <span>
+                           <el-tooltip content="单位M" placement="top">
+                              <el-icon><question-filled /></el-icon>
+                           </el-tooltip>
+                           附件大小
+                        </span>
+                     </template>
+            </el-form-item>
+            <el-form-item label="附件总数" prop="oly.mail.attach.number">
+              <el-input-number v-model.number="configForm['oly.mail.attach.number']" controls-position="right" :min="0" />
             </el-form-item>
             <el-space fill>
               <el-alert type="info" show-icon :closable="false">
@@ -295,11 +305,9 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   router.push({ path: "/server/mail/handle/add" });
 }
-
+// 查看邮件
 function handleView(row) {
- 
   const _mailId = row.mailId || ids.value;
- 
     router.push({ path: "/server/mail/handle/view/" + _mailId });
 
 }
