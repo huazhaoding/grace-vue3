@@ -185,9 +185,6 @@ import {
   listMail,
   stopOnTimeMail,
   delMail,
-  addMail,
-  updateMail,
-  sendMail,
   updateConfig,
 } from "@/api/server/mail";
 
@@ -208,8 +205,6 @@ const {
 );
 
 const mailList = ref([]);
-const open = ref(false);
-const title = ref("");
 const loading = ref(true);
 const showSearch = ref(true);
 const ids = ref([]);

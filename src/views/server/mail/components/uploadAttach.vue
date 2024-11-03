@@ -11,7 +11,7 @@
     <template #tip>
       <div class="el-upload__tip">
         <el-alert type="info" show-icon :closable="false">
-          注意发送端和接收端支持文件大小,此服务器限制上传文件最大为{{fileSize}}MB
+          注意发送端和接收端支持文件大小,此服务器限制上传文件最大为{{fileSize}}MB且数目最大为{{ fileNum }}
       </el-alert> 
       </div>
     </template>
@@ -26,21 +26,18 @@ const props = defineProps({
   modelValue: {
     type: Array,
     default: [],
-  },
-  // 大小限制(MB)
-  fileSize: {
-    type: Number,
-    default: 50,
-  },
+  }
 });
 const uploadUrl = ref(
   import.meta.env.VITE_APP_BASE_API + "/server/mail/uploadAttach"
 );
-
+const fileSize=ref(5);
+const fileNum=ref(5);
 const fileList = ref([]);
 watch(
   () => props.modelValue,
   (val) => {
+    console.log(props.modelValue)
     fileList.value = [];
     if(val){
     val.forEach((item) => {
@@ -51,36 +48,63 @@ watch(
   { deep: true, immediate: true }
 );
 
+function init(){
+proxy.getConfigValue("mailConfig","oly.mail.attach.size").then((response) => {
+        fileSize.value=response.msg
+    });
+    proxy.getConfigValue("mailConfig","oly.mail.attach.number").then((response) => {
+        fileNum.value=response.msg
+    });
+  }
+
+  init();
 function handSuccess(res,file) {
   if(res.code==200){
-    fileList.value.push({ label: res.data.fk, value: res.data.fk });
-  emit("update:modelValue", fileList.value);
+    fileList.value.push({ name: res.data.fk, url: res.data.fk });
+ changeData()
 }
 else{
   proxy.$modal.msgError(res.msg);
   if (props.modelValue) {
-    emit("update:modelValue", fileList.value.filter(item =>{return item.label != file.name}));
-  }
-  else {
-    emit("update:modelValue", [].filter(item =>{return item.label != file.name}));
-  }
-  
+   fileList.value.filter(item =>{return item.name != file.name})
+   changeData();
+  } 
 }
 }
 
+
+
 function handleBeforeUpload(file) {
-  if (props.fileSize) {
-    const isLt = file.size / 1024 / 1024 < props.fileSize;
+  if (fileSize.value) {
+    const isLt = file.size / 1024 / 1024 < fileSize.value;
     if (!isLt) {
-      proxy.$modal.msgError(`上传内容不能超过 ${props.fileSize} MB!`);
+      proxy.$modal.msgError(`上传内容不能超过 ${fileSize.value} MB!`);
+      return false;
+    }
+  }
+  if (fileNum.value) {
+    const isNum = (fileNum.value<fileList.value.length+1);
+    if (isNum) {
+      proxy.$modal.msgError(`上传数目不能超过 ${fileNum.value}!`);
       return false;
     }
   }
 }
 
+function changeData(){
+   let data=[];
+   if(fileList.value){
+  fileList.value.forEach(element => {
+      data.push({label:element.name,value:element.url});
+  });
+}
+emit("update:modelValue", data);
+}
+
 
 
 function handRemove(file, uploadFiles) {
-   emit("update:modelValue", props.modelValue.filter(item =>{return item.label != file.name}));
+   fileList.value.filter(item =>{return item.name != file.name});
+   changeData();
 }
 </script>
