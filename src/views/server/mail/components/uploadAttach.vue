@@ -60,7 +60,7 @@ proxy.getConfigValue("mailConfig","oly.mail.attach.size").then((response) => {
   init();
 function handSuccess(res,file) {
   if(res.code==200){
-    fileList.value.push({ name: res.data.fk, url: res.data.fk });
+    fileList.value.push({ name: res.data.fileName, url: res.data.fk });
  changeData()
 }
 else{
