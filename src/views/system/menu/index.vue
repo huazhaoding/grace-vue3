@@ -108,7 +108,7 @@
                      </el-radio-group>
                   </el-form-item>
                </el-col>
-               <el-col :span="24" v-if="form.menuType != 'F'">
+               <el-col :span="12" v-if="form.menuType != 'F'">
                   <el-form-item label="菜单图标" prop="icon">
                      <el-popover
                         placement="bottom-start"
@@ -131,6 +131,18 @@
                         <icon-select ref="iconSelectRef" @selected="selected" :active-icon="form.icon" />
                      </el-popover>
                   </el-form-item>
+               </el-col>
+               <el-col :span="12" v-if="form.menuType == 'C'">
+                  <el-form-item prop="routeName">
+                     <template #label>
+                        <span>
+                           <el-tooltip content="默认不填则和路由地址相同：如地址为：`user`，则名称为`User`（注意：因为router会删除名称相同路由，为避免名字的冲突，特殊情况下请自定义，保证唯一性）" placement="top">
+                              <el-icon><question-filled /></el-icon>
+                           </el-tooltip>
+                           路由名称
+                        </span>
+                     </template>
+                     <el-input v-model="form.routeName" placeholder="请输入路由名称" />   </el-form-item>
                </el-col>
                <el-col :span="12">
                   <el-form-item label="菜单名称" prop="menuName">
