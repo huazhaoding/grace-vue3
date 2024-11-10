@@ -1,6 +1,6 @@
 <template>
  <el-checkbox-group v-model="chooseValue"  :max="max" :min="min" @change="checkChange">
-    <el-checkbox v-for="dict in dicts" :key="dict.value" :label="dict.value">{{ dict.label}}</el-checkbox>
+    <el-checkbox v-for="dict in dicts" :key="dict.value" :value="dict.value">{{ dict.label}}</el-checkbox>
   </el-checkbox-group>
 
 </template>

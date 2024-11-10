@@ -24,7 +24,7 @@
           </el-input-number>
           <!-- 单选 -->
           <el-radio-group v-else-if="formItem.type === 'radio'" v-model="formData[formItem.prop]">
-            <el-radio v-for="dict in formItem.dicts" :key="dict.value" :label="dict.value">{{ dict.label
+            <el-radio v-for="dict in formItem.dicts" :key="dict.value" :value="dict.value">{{ dict.label
             }}</el-radio></el-radio-group>
             <!-- 下拉 -->
           <config-select v-else-if="formItem.type === 'select'" v-model="formData[formItem.prop]"

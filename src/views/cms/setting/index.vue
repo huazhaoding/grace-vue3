@@ -26,7 +26,7 @@
               </el-form-item>
               <el-form-item label="默认状态" prop="oly.cms.articleVisible.default">
                 <el-radio-group v-model="formData['oly.cms.articleVisible.default']">
-                  <el-radio v-for="dict in cms_article_visible" :key="dict.value" :label="dict.value">{{ dict.label }}
+                  <el-radio v-for="dict in cms_article_visible" :key="dict.value" :value="dict.value">{{ dict.label }}
                   </el-radio>
                 </el-radio-group>
               </el-form-item>

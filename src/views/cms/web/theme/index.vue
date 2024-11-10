@@ -74,7 +74,7 @@
         </el-form-item>
         <el-form-item label="覆盖上传">
           <el-radio-group v-model="uploadParam.cover">
-            <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value">{{ dict.label }}
+            <el-radio v-for="dict in sys_true_false" :key="dict.value" :value="dict.value">{{ dict.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
