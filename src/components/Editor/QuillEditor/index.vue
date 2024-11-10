@@ -243,9 +243,11 @@ const isAllowFile = (rawFile) => {
     isImg = rawFile.type.indexOf("image") > -1;
   }
   if (!isImg) {
-    proxy.$modal.msgError(
-      `文件格式不正确, 请上传${props.fileType.join("/")}图片格式文件!`
-    );
+     proxy.$modal.msgError(`文件格式不正确，请上传${props.fileType.join("/")}图片格式文件!`);
+    return false;
+  }
+  if (file.name.includes(',')) {
+    proxy.$modal.msgError('文件名不正确，不能包含英文逗号!');
     return false;
   }
   // 校检文件大小
