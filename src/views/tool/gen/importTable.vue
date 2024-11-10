@@ -105,10 +105,8 @@ function handleImportTable() {
   }
   importTable({ tables: tableNames }).then(res => {
     proxy.$modal.msgSuccess(res.msg);
-    if (res.code === 200) {
-      visible.value = false;
-      emit("ok");
-    }
+    visible.value = false;
+    emit("ok");
   });
 }
 

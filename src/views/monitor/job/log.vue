@@ -209,7 +209,7 @@ function getList() {
     loading.value = false;
   });
 }
-// 返回按钮
+/** 返回按钮 */
 function handleClose() {
   const obj = { path: "/monitor/job" };
   proxy.$tab.closeOpenPage(obj);

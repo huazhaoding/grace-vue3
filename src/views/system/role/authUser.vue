@@ -123,7 +123,7 @@ function getList() {
     loading.value = false;
   });
 }
-// 返回按钮
+/** 返回按钮 */
 function handleClose() {
   const obj = { path: "/system/role" };
   proxy.$tab.closeOpenPage(obj);
@@ -138,7 +138,7 @@ function resetQuery() {
   proxy.resetForm("queryRef");
   handleQuery();
 }
-// 多选框选中数据
+/** 多选框选中数据*/
 function handleSelectionChange(selection) {
   userIds.value = selection.map(item => item.userId);
   multiple.value = !selection.length;
