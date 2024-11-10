@@ -15,7 +15,6 @@
         <el-tag
           v-else
           :disable-transitions="true"
-          type="primary"
           :key="item.value + ''"
           :index="index"
           :type="item.elTagType === 'primary' ? '' : item.elTagType"
