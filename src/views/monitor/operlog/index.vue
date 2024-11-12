@@ -10,10 +10,10 @@
                @keyup.enter="handleQuery"
             />
          </el-form-item>
-         <el-form-item label="系统模块" prop="title">
+         <el-form-item label="操作模块" prop="title">
             <el-input
                v-model="queryParams.title"
-               placeholder="请输入系统模块"
+               placeholder="请输入操作模块"
                clearable
                style="width: 240px;"
                @keyup.enter="handleQuery"
@@ -110,7 +110,7 @@
       <el-table ref="operlogRef" v-loading="loading" :data="operlogList" @selection-change="handleSelectionChange" :default-sort="defaultSort" @sort-change="handleSortChange">
          <el-table-column type="selection" width="50" align="center" />
          <el-table-column label="日志编号" align="center" prop="operId" />
-         <el-table-column label="系统模块" align="center" prop="title" :show-overflow-tooltip="true" />
+         <el-table-column label="操作模块" align="center" prop="title" :show-overflow-tooltip="true" />
          <el-table-column label="操作类型" align="center" prop="businessType">
             <template #default="scope">
                <dict-tag :options="sys_oper_type" :value="scope.row.businessType" />
