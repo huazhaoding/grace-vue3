@@ -2,23 +2,23 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="类型ID" prop="typeId">
-        <el-input v-model="queryParams.typeId" placeholder="请输入类型ID" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.typeId" placeholder="请输入类型ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="主楼ID" prop="parentId">
-        <el-input v-model="queryParams.parentId" placeholder="请输入主楼ID" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.parentId" placeholder="请输入主楼ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="发布人" prop="fromBy">
-        <el-input placeholder="请输入发布人" clearable @keyup.enter="handleQuery" />
+        <el-input placeholder="请输入发布人" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
 
       <el-form-item label="状态" prop="visible">
-        <el-select v-model="queryParams.visible" placeholder="请选择状态" clearable>
+        <el-select v-model="queryParams.visible" placeholder="请选择状态" clearable style="width: 240px">
           <el-option v-for="dict in cms_comment_visible" :key="dict.value" :label="dict.label" :value="dict.dictSort" />
         </el-select>
       </el-form-item>
 
       <el-form-item label="类型" prop="commentType">
-        <el-select v-model="queryParams.commentType" placeholder="请选择类型" clearable>
+        <el-select v-model="queryParams.commentType" placeholder="请选择类型" clearable style="width: 240px">
           <el-option v-for="dict in cms_comment_type" :key="dict.value" :label="dict.label" :value="dict.dictSort" />
         </el-select>
       </el-form-item>

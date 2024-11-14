@@ -2,25 +2,25 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="菜单ID" prop="columnId">
-        <el-input v-model="queryParams.catId" placeholder="请输入菜单ID" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.catId" placeholder="请输入菜单ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="菜单名字" prop="columnName">
-        <el-input v-model="queryParams.columnName" placeholder="请输入菜单名字" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.columnName" placeholder="请输入菜单名字" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="父ID" prop="parentId">
-        <el-input v-model="queryParams.parentId" placeholder="请输入父元素ID" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.parentId" placeholder="请输入父元素ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="创建人" prop="createBy">
-        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="菜单状态" prop="visible">
-        <el-select v-model="queryParams.visible" placeholder="请选择菜单状态" clearable>
+        <el-select v-model="queryParams.visible" placeholder="请选择菜单状态" clearable style="width: 240px">
           <el-option v-for="dict in sys_show_hide" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
 
       <el-form-item label="排序" prop="orderNum">
-        <el-input-number v-model="queryParams.articleTop" controls-position="right" clearable />
+        <el-input-number v-model="queryParams.articleTop" controls-position="right" clearable style="width: 240px" />
       </el-form-item>
       <el-form-item label="创建时间" style="width: 308px">
         <el-date-picker v-model="dateRange" value-format="YYYY-MM-DD" type="daterange" range-separator="-"

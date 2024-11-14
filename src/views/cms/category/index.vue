@@ -2,24 +2,24 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="类目ID" prop="categoryId">
-        <el-input v-model="queryParams.categoryId" placeholder="请输入类目ID" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.categoryId" placeholder="请输入类目ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类目名字" prop="categoryName">
-        <el-input v-model="queryParams.categoryName" placeholder="请输入类目名字" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.categoryName" placeholder="请输入类目名字" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="父ID" prop="parentId">
-        <el-input v-model="queryParams.parentId" placeholder="请输入父ID" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.parentId" placeholder="请输入父ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="创建人" prop="createBy">
-        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类目状态" prop="visible">
-        <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable>
+        <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable style="width: 240px">
           <el-option v-for="dict in sys_show_hide" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="节点类型" prop="nodeType">
-        <el-select v-model="queryParams.nodeType" placeholder="请选择节点类型" clearable>
+        <el-select v-model="queryParams.nodeType" placeholder="请选择节点类型" clearable style="width: 240px">
           <el-option v-for="dict in cms_category_node_type" :key="dict.value" :label="dict.label"
             :value="dict.dictSort" />
         </el-select>

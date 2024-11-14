@@ -2,27 +2,27 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="链接地址" prop="linkUrl">
-        <el-input v-model="queryParams.linkUrl" placeholder="请输入链接地址" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.linkUrl" placeholder="请输入链接地址" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="链接名" prop="linkName">
-        <el-input v-model="queryParams.linkName" placeholder="请输入链接名" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.linkName" placeholder="请输入链接名" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="queryParams.keywords" placeholder="请输入关键词" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.keywords" placeholder="请输入关键词" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="链接描述" prop="description">
-        <el-input v-model="queryParams.description" placeholder="请输入链接描述" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.description" placeholder="请输入链接描述" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="状态" prop="visible">
-        <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable>
+        <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable style="width: 240px">
           <el-option v-for="dict in sys_show_hide" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="排序" prop="orderNum">
-        <el-input v-model="queryParams.orderNum" placeholder="请输入排序" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.orderNum" placeholder="请输入排序" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="父元素id" prop="parentId">
-        <el-input v-model="queryParams.parentId" placeholder="请输入父元素id" clearable @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.parentId" placeholder="请输入父元素id" clearable style="width: 240px" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>

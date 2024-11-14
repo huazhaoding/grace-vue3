@@ -36,6 +36,7 @@
               v-model="queryParams.params['supportCategoryId']"
               placeholder="请选择站点"
               clearable
+              style="width: 240px"
             >
               <el-option-group
                 v-for="(themes, key) of themeMapData"
@@ -58,6 +59,7 @@
               v-model="queryParams.articleId"
               placeholder="请输入文章ID"
               clearable
+              style="width: 240px"
               @keyup.enter="handleQuery"
             />
           </el-form-item>
@@ -66,6 +68,7 @@
               v-model="queryParams.articleTitle"
               placeholder="请输入文章标题"
               clearable
+              style="width: 240px"
               @keyup.enter="handleQuery"
             />
           </el-form-item>
@@ -74,6 +77,7 @@
               v-model="queryParams.createBy"
               placeholder="请输入发表人"
               clearable
+              style="width: 240px"
               @keyup.enter="handleQuery"
             />
           </el-form-item>
@@ -82,6 +86,7 @@
               v-model="queryParams.visible"
               placeholder="请选择状态"
               clearable
+              style="width: 240px"
             >
               <el-option
                 v-for="dict in cms_article_visible"
@@ -96,6 +101,7 @@
               v-model="queryParams.articleType"
               placeholder="请选择类型"
               clearable
+              style="width: 240px"
             >
               <el-option
                 v-for="dict in cms_article_type"
@@ -111,6 +117,7 @@
               v-model="queryParams.articleTop"
               controls-position="right"
               clearable
+              style="width: 240px"
             />
           </el-form-item>
 

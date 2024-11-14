@@ -11,7 +11,7 @@
         <el-input
           v-model="queryParams.subject"
           placeholder="请输入主题"
-          clearable
+          clearable style="width: 240px"
           @keyup.enter="handleQuery"
         />
       </el-form-item>
@@ -19,7 +19,7 @@
         <el-input
           v-model="queryParams.handler"
           placeholder="请输入处理人"
-          clearable
+          clearable style="width: 240px"
           @keyup.enter="handleQuery"
         />
       </el-form-item>
@@ -27,7 +27,7 @@
         <el-input
           v-model="queryParams.userCall"
           placeholder="请输入称呼"
-          clearable
+          clearable style="width: 240px"
           @keyup.enter="handleQuery"
         />
       </el-form-item>
@@ -35,7 +35,7 @@
         <el-select
           v-model="queryParams.contactType"
           placeholder="选择类型"
-          clearable
+          clearable style="width: 240px"
         >
           <el-option
             v-for="dict in cms_contact_type"
@@ -49,7 +49,7 @@
         <el-select
           v-model="queryParams.visible"
           placeholder="选择状态"
-          clearable
+          clearable style="width: 240px"
         >
           <el-option
             v-for="dict in cms_contact_visible"
@@ -61,7 +61,7 @@
       </el-form-item>
       <el-form-item label="处理时间" prop="handleTime">
         <el-date-picker
-          clearable
+          clearable style="width: 240px"
           v-model="queryParams.handleTime"
           type="date"
           value-format="YYYY-MM-DD"
