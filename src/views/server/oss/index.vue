@@ -12,6 +12,7 @@
           v-model="queryParams.ossType"
           placeholder="储存选择"
           clearable
+          style="width: 240px"
         >
           <el-option
             v-for="dict in sys_server_oss_list"
@@ -26,6 +27,7 @@
           v-model="queryParams.fileType"
           placeholder="文件类型"
           clearable
+          style="width: 240px"
         >
           <el-option
             v-for="dict in sys_server_oss_types"
