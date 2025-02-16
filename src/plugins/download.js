@@ -7,6 +7,7 @@ import { blobValidate } from '@/utils/ruoyi'
 
 const baseURL = import.meta.env.VITE_APP_BASE_API
 let downloadLoadingInstance;
+
 export default {
   name(name, isDelete = true) {
     var url = baseURL + "/common/download?fileName=" + encodeURIComponent(name) + "&delete=" + isDelete
@@ -15,7 +16,7 @@ export default {
       url: url,
       responseType: 'blob',
       headers: { 'Authorization': 'Bearer ' + getToken() }
-   }).then((res) => {
+    }).then((res) => {
       const isBlob = blobValidate(res.data);
       if (isBlob) {
         const blob = new Blob([res.data])
@@ -32,7 +33,7 @@ export default {
       url: url,
       responseType: 'blob',
       headers: { 'Authorization': 'Bearer ' + getToken() }
-   }).then((res) => {
+    }).then((res) => {
       const isBlob = blobValidate(res.data);
       if (isBlob) {
         const blob = new Blob([res.data])
@@ -43,14 +44,14 @@ export default {
     })
   },
   zip(url, name) {
-    var url = baseURL + url;
+    var url = baseURL + url
     downloadLoadingInstance = ElLoading.service({ text: "正在下载数据，请稍候", background: "rgba(0, 0, 0, 0.7)", })
     axios({
       method: 'get',
       url: url,
       responseType: 'blob',
       headers: { 'Authorization': 'Bearer ' + getToken() }
-   }).then((res) => {
+    }).then((res) => {
       const isBlob = blobValidate(res.data);
       if (isBlob) {
         const blob = new Blob([res.data], { type: 'application/zip' })
