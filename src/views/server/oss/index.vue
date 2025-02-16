@@ -54,9 +54,6 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <img
-        src="http://localhost/dev-api/server/oss/download/image/2025/02/16/16pic_4595496_b_20250216185304A001.jpg"
-      />
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery"
           >搜索</el-button
