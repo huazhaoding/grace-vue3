@@ -152,7 +152,7 @@ export function download(url, params, filename, config) {
 
 // 通用下载方法
 export function downloadFile(url, params, filename, config) {
-  params.responseType = "blob";
+  params.responseType = 'blob';
   downloadLoadingInstance = ElLoading.service({
     text: "正在下载数据，请稍候",
     background: "rgba(0, 0, 0, 0.7)",
@@ -165,10 +165,10 @@ export function downloadFile(url, params, filename, config) {
         },
       ],
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         isToken: false,
       },
-      responseType: "blob",
+      responseType: 'blob',
       ...config,
     })
     .then(async (data) => {
@@ -181,7 +181,7 @@ export function downloadFile(url, params, filename, config) {
         const resText = await data.text();
         const rspObj = JSON.parse(resText);
         const errMsg =
-          errorCode[rspObj.code] || rspObj.msg || errorCode["default"];
+          errorCode[rspObj.code] || rspObj.msg || errorCode['default'];
         ElMessage.error(errMsg);
       }
       downloadLoadingInstance.close();
