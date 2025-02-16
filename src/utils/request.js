@@ -172,7 +172,6 @@ export function downloadFile(url, params, filename, config) {
       ...config,
     })
     .then(async (data) => {
-      console.log(data.type);
       const isBlob = blobValidate(data);
       if (isBlob) {
         const blob = new Blob([data]);
