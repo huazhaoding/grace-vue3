@@ -45,14 +45,14 @@
     <div class="drawer-item">
       <span>开启 Tags-Views</span>
       <span class="comp-style">
-          <el-switch v-model="settingsStore.tagsView" class="drawer-switch" />
+        <el-switch v-model="settingsStore.tagsView" class="drawer-switch" />
       </span>
     </div>
 
     <div class="drawer-item">
       <span>固定 Header</span>
       <span class="comp-style">
-       <el-switch v-model="settingsStore.fixedHeader" class="drawer-switch" />
+        <el-switch v-model="settingsStore.fixedHeader" class="drawer-switch" />
       </span>
     </div>
 
@@ -66,7 +66,7 @@
     <div class="drawer-item">
       <span>动态标题</span>
       <span class="comp-style">
-        <el-switch v-model="storeSettings.dynamicTitle" class="drawer-switch" />
+        <el-switch v-model="settingsStore.dynamicTitle" class="drawer-switch" />
       </span>
     </div>
 
@@ -110,10 +110,12 @@ function themeChange(val) {
   settingsStore.theme = val;
   handleThemeStyle(val);
 }
+
 function handleTheme(val) {
   settingsStore.sideTheme = val;
   sideTheme.value = val;
 }
+
 function saveSetting() {
   proxy.$modal.loading("正在保存到本地，请稍候...");
   let layoutSetting = {
@@ -128,11 +130,13 @@ function saveSetting() {
   localStorage.setItem("layout-setting", JSON.stringify(layoutSetting));
   setTimeout(proxy.$modal.closeLoading(), 1000)
 }
+
 function resetSetting() {
   proxy.$modal.loading("正在清除设置缓存并刷新，请稍候...");
   localStorage.removeItem("layout-setting")
   setTimeout("window.location.reload()", 1000)
 }
+
 function openSetting() {
   showSettings.value = true;
 }
@@ -148,10 +152,12 @@ defineExpose({
   color: var(--el-text-color-primary, rgba(0, 0, 0, 0.85));
   line-height: 22px;
   font-weight: bold;
+
   .drawer-title {
     font-size: 14px;
   }
 }
+
 .setting-drawer-block-checbox {
   display: flex;
   justify-content: flex-start;

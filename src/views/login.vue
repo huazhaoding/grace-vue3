@@ -186,7 +186,7 @@ getCookie();
 
 .login-form {
   border-radius: 6px;
-  background: #ffffffa7;
+  background: #ffffff;
   width: 400px;
   padding: 25px 25px 5px 25px;
   .el-input {
@@ -214,6 +214,18 @@ getCookie();
     cursor: pointer;
     vertical-align: middle;
   }
+}
+.el-login-footer {
+  height: 40px;
+  line-height: 40px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-family: Arial;
+  font-size: 12px;
+  letter-spacing: 1px;
 }
 .login-code-img {
   height: 40px;

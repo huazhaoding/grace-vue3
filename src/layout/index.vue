@@ -2,14 +2,14 @@
   <div :class="classObj" class="app-wrapper" :style="{ '--current-color': theme }">
     <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar v-if="!sidebar.hide" class="sidebar-container" />
-    <div :class="{ hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container" >
+    <div :class="{ hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar @setLayout="setLayout" />
         <tags-view v-if="needTagsView" />
       </div>
       <app-main />
       <settings ref="settingRef" />
-    </div> 
+    </div>
   </div>
 </template>
 
@@ -45,6 +45,7 @@ watch(() => device.value, () => {
     useAppStore().closeSideBar({ withoutAnimation: false })
   }
 })
+
 watchEffect(() => {
   if (width.value - 1 < WIDTH) {
     useAppStore().toggleDevice('mobile')
@@ -73,7 +74,6 @@ function setLayout() {
   position: relative;
   height: 100%;
   width: 100%;
-
 
   &.mobile.openSidebar {
     position: fixed;
