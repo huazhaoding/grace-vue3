@@ -2,8 +2,8 @@
   <table cellspacing="0">
     <tbody>
       <tr v-for="item in dataJson">
-        <td class="el-table__cell is-leaf" align="right">{{ item.label }}</td>
-        <td class="el-table__cell is-leaf">
+        <td class="el-table__cell is-leaf jst">{{ item.label }}</td>
+        <td class="el-table__cell is-leaf jst">
           <el-input v-model="item.value"> </el-input>
         </td>
         <td class="el-table__cell is-leaf">
@@ -131,4 +131,10 @@ function removeJsonData(key) {
 </script>
 
 
-
+<style scoped>
+.jst {
+  text-align: right;
+  vertical-align: middle;
+  padding-right: 5px;
+}
+</style>
