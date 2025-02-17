@@ -60,7 +60,7 @@
           type="danger"
           plain
           icon="Delete"
-          :disabled="single"
+          :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:hold:remove']"
         >删除</el-button>
@@ -90,8 +90,8 @@
         </template>
       </el-table-column>
       <el-table-column label="资源名称" align="center" prop="holdName" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="资源Code" align="center" prop="holdCode" />
+      <el-table-column label="资源备注" align="center" prop="remark" />
+      <el-table-column label="资源CODE" align="center" prop="holdCode" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button
@@ -135,7 +135,7 @@
               v-for="dict in sys_hold_type"
               :key="dict.value"
               :label="dict.label"
-:value="parseInt(dict.value)"
+              :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -157,7 +157,7 @@
           <el-input v-model="form.holdName" placeholder="请输入资源名称" />
         </el-form-item>
         <el-form-item label="资源数据" prop="holdData">
-          <JsonTag labelName="数据名字" valueName="数据类容" v-model="form.holdData"></JsonTag>
+          <JsonTag labelName="数据名字" valueName="数据内容" v-model="form.holdData"></JsonTag>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
@@ -178,7 +178,6 @@ import { listHold, getHold, delHold, addHold, updateHold } from "@/api/system/ho
 import JsonTag from "@/components/JsonTag";
 const { proxy } = getCurrentInstance();
 const { sys_data_type, sys_hold_type } = proxy.useDict('sys_data_type', 'sys_hold_type');
-
 const holdList = ref([]);
 const open = ref(false);
 const loading = ref(true);
@@ -282,7 +281,12 @@ function handleAdd() {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
-  const _row = row || selectData.value
+  let _row;
+  if (typeof row.holdType !== 'undefined') {
+    _row = row 
+    } else {
+    _row =selectData.value[0]
+    }
   getHold(_row.holdType,_row.holdCode).then(response => {
     form.value = response.data;
     open.value = true;
@@ -291,7 +295,8 @@ function handleUpdate(row) {
 }
 
 function handlePrview(row){
-  form.value = row;
+  reset();
+  form.value = JSON.parse(JSON.stringify(row));;
   open.value = true;
   title.value = "查看资源数据映射";
 }

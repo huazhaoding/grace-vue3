@@ -57,7 +57,7 @@ watch(
       emit("update:modelValue", dataJson.value);
     }
   },
-  { deep: true, immediate: true }
+  { deep: true}
 );
 
 //初始化数据

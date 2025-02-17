@@ -74,17 +74,12 @@ const chooseForm=ref({
      articleEdit:null
 });
 
-
-
 function themeChange(theme) {
   supportType.value = (theme.supportArticleType+'').split(",");
   activeTheme.value=theme;
 }
 
-
-
 async function allowDictData(articleType) {
- 
   getHold(3, "articleType_" + articleType).then((response) => {
     if (response.hasOwnProperty("data")) {
       allowDict.value = response.data.holdData;
