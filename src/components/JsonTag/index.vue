@@ -2,7 +2,14 @@
   <table cellspacing="0">
     <tbody>
       <tr v-for="item in dataJson">
-        <td class="el-table__cell is-leaf jst">{{ item.label }}</td>
+        <td class="el-table__cell is-leaf jst">
+          <span>
+              <el-tooltip v-if="item.remark" :content="item.remark" placement="top">
+                        <el-icon><question-filled /></el-icon>
+              </el-tooltip>
+              {{ item.label }}
+          </span>
+        </td>
         <td class="el-table__cell is-leaf jst">
           <el-input v-model="item.value"> </el-input>
         </td>
@@ -22,11 +29,16 @@
     <el-form-item :label="valueName" style="margin-top: 16px;margin-bottom: 5px;" prop="value">
       <el-input v-model="formData.value"  maxlength="256" 
         :placeholder="'请输入' + valueName" clearable>
+    </el-input>
+  </el-form-item>
+    <el-form-item label="数据备注"  style="margin-top: 16px;margin-bottom: 5px;" prop="remark">
+      <el-input v-model="formData.remark"  maxlength="256" 
+        :placeholder="'请输入备注'" clearable>
         <template #append><el-button type="danger" icon="Plus" size="small" circle @click="addJsonData" /></template>
-      </el-input>
+    </el-input>
     </el-form-item>
   </el-form>
-  <el-button type="danger" :icon="iIco" size="small" circle @click="statusJsonForm" />
+  <el-button type="danger" :icon="iIco" style="margin-left: 5px;" size="small" circle @click="statusJsonForm" />
 </template>
 
 <script setup>
@@ -80,12 +92,14 @@ const formData = ref({
   label: "",
   key: "",
   value: "",
+  remark: ""
 });
 
 const formRule = {
   label: [{ required: true, message: "参数名字不能为空", trigger: "blur" }
   ],
   value: [{ required: true, message: "参数内容不能为空", trigger: "blur" }],
+  remark: [{ required: true, message: "参数备注不能为空", trigger: "blur" }]
 }
 
 // 清空表单
@@ -94,6 +108,7 @@ function cleanForm() {
     label: "",
     key: "",
     value: "",
+    remark: ""
   };
 }
 //表单状态
@@ -109,7 +124,6 @@ function statusJsonForm() {
 
 //添加字段
 function addJsonData() {
-
   proxy.$refs["formRef"].validate((valid) => {
     if (valid) {
       formData.value.key = new Date();
