@@ -40,11 +40,13 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login'),
+    meta: { title: '登录'},
     hidden: true
   },
   {
     path: '/register',
     component: () => import('@/views/register'),
+    meta: { title: '注册'},
     hidden: true
   },
   {

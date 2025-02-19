@@ -106,48 +106,49 @@ app.use(ElementPlus, {
 });
 
 let $sysConfig = {};
+
 function initConfig() {
-  getConfigValueMap("sysConfig").then((response) => {
-    $sysConfig.ico= response.data['sys.common.ico'];
-    $sysConfig.logo =response.data['sys.common.logo'];
-    $sysConfig.bgImg =response.data['sys.login.back'];
+  return getConfigValueMap("sysConfig").then((response) => {
+    $sysConfig.ico = response.data['sys.common.ico'];
+    $sysConfig.logo = response.data['sys.common.logo'];
+    $sysConfig.bgImg = response.data['sys.login.back'];
     $sysConfig.title = response.data['sys.common.title'];
     $sysConfig.footer = response.data['sys.common.footer'];
     $sysConfig.description = response.data['sys.common.description'];
     $sysConfig.registerUser = response.data['sys.account.registerUser'];
     $sysConfig.captchaEnabled = response.data['sys.account.captchaEnabled'];
-    
+    // 设置ico和描述
+    if ($sysConfig.ico) {
+      document.getElementById("headIco").href = $sysConfig.ico;
+    }
+    if ($sysConfig.description) {
+      document.getElementById("headDescription").content = $sysConfig.description;
+    }
+    // 设置路由守卫
+    setupRouterGuard();
+    // 设置全局配置
+    app.config.globalProperties.$sysConfig = $sysConfig;
   });
 }
+
+function setupRouterGuard() {
+  router.beforeEach((to, from, next) => {
+    /* 路由发生变化修改页面meta */
+    if (to.meta.content) {
+      let head = document.getElementsByTagName("head");
+      let meta = document.createElement("meta");
+      meta.content = to.meta.content;
+      head[0].appendChild(meta);
+    }
+    /* 路由发生变化修改页面title */
+    if (to.meta.title && $sysConfig.title) {
+      document.title = $sysConfig.title + "_" + to.meta.title;
+    }
+    next();
+  });
+}
+
 initConfig();
 
-setTimeout(function () {
-  //设置ico
-  if ($sysConfig.ico) {
-    document.getElementById("headIco").href = $sysConfig.ico;
-  }
-  //设置描述
-  if ($sysConfig.description) {
-    document.getElementById("headDescription").content = $sysConfig.description;
-  }
-  //main.js里面的代码
-router.beforeEach((to, from, next) => {
-  /* 路由发生变化修改页面meta */
-  if (to.meta.content) {
-    let head = document.getElementsByTagName("head");
-    let meta = document.createElement("meta");
-    meta.content = to.meta.content;
-    head[0].appendChild(meta);
-  }
-  /* 路由发生变化修改页面title */
-  if (to.meta.title) {
-    document.title = $sysConfig.title + "_" + to.meta.title;
-  }
-  next();
-});
-}, 1000);
-
-// 设置全局配置
-app.config.globalProperties.$sysConfig = $sysConfig;
 
 app.mount("#app");
