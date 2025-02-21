@@ -9,7 +9,7 @@ const { proxy } = getCurrentInstance();
 
 const footHtml=ref("");
 setTimeout(function (){
-  footHtml.value=proxy.$settingCobfig.sysConfig.footer;
+  footHtml.value=proxy.$sysConfig.footer;
 },1000);
 
 </script>

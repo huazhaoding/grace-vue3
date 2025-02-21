@@ -8,6 +8,7 @@ import { isRelogin } from '@/utils/request'
 import useUserStore from '@/store/modules/user'
 import useSettingsStore from '@/store/modules/settings'
 import usePermissionStore from '@/store/modules/permission'
+import {getWebConfig} from "./settingsConfig"; 
 
 NProgress.configure({ showSpinner: false })
 
@@ -17,23 +18,25 @@ const isWhiteList = (path) => {
   return whiteList.some(pattern => isPathMatch(pattern, path))
 }
 
-function setWebInfo(){
-  document.title = sysConfig.title + "_" + to.meta.title;
+function setWebInfo(to, from, next){
+  let webConfig=getWebConfig();
+  document.title = webConfig.title + "_" + to.meta.title;
   // 设置ico
-  document.getElementById("headIco").href = sysConfig.ico;
+  document.getElementById("headIco").href = webConfig.ico;
   //设置描述
-  document.getElementById("headDescription").content = sysConfig.description;
-  //设置关键词
-  document.getElementById("headKeywords").content = sysConfig.keywords;
-  //设置头部其它
-  document.getElementById("headOther").content = sysConfig.keywords;
-
+  document.getElementById("headDescription").content = webConfig.description;
+  // //设置关键词
+  // document.getElementById("headKeywords").content = webConfig.keywords;
+  // //设置头部其它
+  // document.getElementById("headOther").content = webConfig.keywords;
+   console.log();
 }
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
+  setWebInfo(to, from, next)
   if (getToken()) {
-    to.meta.title && useSettingsStore().setTitle(to.meta.title)
+    //to.meta.title && useSettingsStore().setTitle(to.meta.title)
     /* has token*/
     if (to.path === '/login') {
       next({ path: '/' })

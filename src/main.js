@@ -25,6 +25,8 @@ import elementIcons from "@/components/SvgIcon/svgicon";
 
 import "./permission"; // permission control
 
+import {getWebConfig} from "@/settingsConfig"; //站点参数
+
 import { useDict } from "@/utils/dict";
 
 import { remote } from "@/utils/remote";
@@ -80,6 +82,9 @@ app.config.globalProperties.getConfigValue = getConfigValue;
 app.config.globalProperties.getConfigGroups = getConfigGroups;
 app.config.globalProperties.getConfigMap = getConfigMap;
 app.config.globalProperties.getConfigValueMap = getConfigValueMap;
+// 挂着全局配置
+app.config.globalProperties.$sysConfig = getWebConfig();
+
 
 // 全局组件挂载
 app.component("DictTag", DictTag);
@@ -105,60 +110,60 @@ app.use(ElementPlus, {
   size: Cookies.get("size") || "default",
 });
 
-let $sysConfig = {};
+// let $sysConfig = {};
 
-function initConfig() {
-  return getConfigValueMap("sysConfig").then((response) => {
-    $sysConfig.ico = response.data['sys.common.ico'];
-    $sysConfig.logo = response.data['sys.common.logo'];
-    $sysConfig.bgImg = response.data['sys.login.back'];
-    $sysConfig.title = response.data['sys.common.title'];
-    $sysConfig.footer = response.data['sys.common.footer'];
-    $sysConfig.description = response.data['sys.common.description'];
-    $sysConfig.registerUser = response.data['sys.account.registerUser'];
-    $sysConfig.captchaEnabled = response.data['sys.account.captchaEnabled'];
-    // 设置ico
-    if ($sysConfig.ico) {
-      document.getElementById("headIco").href = $sysConfig.ico;
-    }
-    //设置描述
-    if ($sysConfig.description) {
-      document.getElementById("headDescription").content = $sysConfig.description;
-    }
-    //设置关键词
-    if ($sysConfig.keywords) {
-      document.getElementById("headKeywords").content = $sysConfig.keywords;
-    }
-    //设置头部其它
-    if ($sysConfig.keywords) {
-      document.getElementById("headOther").content = $sysConfig.keywords;
-    }
+// function initConfig() {
+//   return getConfigValueMap("sysConfig").then((response) => {
+//     $sysConfig.ico = response.data['sys.common.ico'];
+//     $sysConfig.logo = response.data['sys.common.logo'];
+//     $sysConfig.bgImg = response.data['sys.login.back'];
+//     $sysConfig.title = response.data['sys.common.title'];
+//     $sysConfig.footer = response.data['sys.common.footer'];
+//     $sysConfig.description = response.data['sys.common.description'];
+//     $sysConfig.registerUser = response.data['sys.account.registerUser'];
+//     $sysConfig.captchaEnabled = response.data['sys.account.captchaEnabled'];
+//     // 设置ico
+//     if ($sysConfig.ico) {
+//       document.getElementById("headIco").href = $sysConfig.ico;
+//     }
+//     //设置描述
+//     if ($sysConfig.description) {
+//       document.getElementById("headDescription").content = $sysConfig.description;
+//     }
+//     //设置关键词
+//     if ($sysConfig.keywords) {
+//       document.getElementById("headKeywords").content = $sysConfig.keywords;
+//     }
+//     //设置头部其它
+//     if ($sysConfig.keywords) {
+//       document.getElementById("headOther").content = $sysConfig.keywords;
+//     }
 
-    // 设置路由守卫
-    setupRouterGuard();
-    // 设置全局配置
-    app.config.globalProperties.$sysConfig = $sysConfig;
-  });
-}
+//     // 设置路由守卫
+//     setupRouterGuard();
+//     // 设置全局配置
+//     app.config.globalProperties.$sysConfig = $sysConfig;
+//   });
+// }
 
-function setupRouterGuard() {
-  router.beforeEach((to, from, next) => {
-    /* 路由发生变化修改页面meta */
-    if (to.meta.content) {
-      let head = document.getElementsByTagName("head");
-      let meta = document.createElement("meta");
-      meta.content = to.meta.content;
-      head[0].appendChild(meta);
-    }
-    /* 路由发生变化修改页面title */
-    if (to.meta.title && $sysConfig.title) {
-      document.title = $sysConfig.title + "_" + to.meta.title;
-    }
-    next();
-  });
-}
+// function setupRouterGuard() {
+//   router.beforeEach((to, from, next) => {
+//     /* 路由发生变化修改页面meta */
+//     if (to.meta.content) {
+//       let head = document.getElementsByTagName("head");
+//       let meta = document.createElement("meta");
+//       meta.content = to.meta.content;
+//       head[0].appendChild(meta);
+//     }
+//     /* 路由发生变化修改页面title */
+//     if (to.meta.title && $sysConfig.title) {
+//       document.title = $sysConfig.title + "_" + to.meta.title;
+//     }
+//     next();
+//   });
+// }
 
-initConfig();
+// initConfig();
 
 
 app.mount("#app");

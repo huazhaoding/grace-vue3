@@ -1,29 +1,23 @@
+import cache from "@/plugins/cache";
 import {
   getConfigValueMap
 } from "@/api/system/config";
-import { getCurrentInstance } from "vue"
-const proxy=getCurrentInstance()
 let sysConfig;
-function initSystemConfig(){
-  if(!proxy.$cache.local.get('sysConfig'))
-  return getConfigValueMap('sysConfig').then((response) => {
-     proxy.$cache.setJSON('sysConfig',response.data);
-  })
- sysConfig=proxy.$cache.getJSON('sysConfig');  
+function getSystemConfig(){
+  if(!cache.local.getJSON('sysConfig')){
+    flushSettingConfig()
+  }
+ sysConfig=cache.local.getJSON('sysConfig');  
 }
 
-function getSettingConfig(params) {
-  
-}
-
-function flushSettingConfig(params) {
+export function flushSettingConfig() {
   return getConfigValueMap('sysConfig').then((response) => {
-  return  response.data
+    cache.local.setJSON('sysConfig',response.data);
  })
 }
 
-function getWebConfig(params) {
-  initSystemConfig()
+export function getWebConfig() {
+  getSystemConfig()
   const webConfig = {
     'title':  sysConfig['sys.common.title']||'止戈内容管理系统',
     'author': sysConfig['sys.common.author']||'止戈',
