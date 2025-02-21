@@ -117,13 +117,23 @@ function initConfig() {
     $sysConfig.description = response.data['sys.common.description'];
     $sysConfig.registerUser = response.data['sys.account.registerUser'];
     $sysConfig.captchaEnabled = response.data['sys.account.captchaEnabled'];
-    // 设置ico和描述
+    // 设置ico
     if ($sysConfig.ico) {
       document.getElementById("headIco").href = $sysConfig.ico;
     }
+    //设置描述
     if ($sysConfig.description) {
       document.getElementById("headDescription").content = $sysConfig.description;
     }
+    //设置关键词
+    if ($sysConfig.keywords) {
+      document.getElementById("headKeywords").content = $sysConfig.keywords;
+    }
+    //设置头部其它
+    if ($sysConfig.keywords) {
+      document.getElementById("headOther").content = $sysConfig.keywords;
+    }
+
     // 设置路由守卫
     setupRouterGuard();
     // 设置全局配置

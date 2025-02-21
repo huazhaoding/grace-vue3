@@ -17,6 +17,19 @@ const isWhiteList = (path) => {
   return whiteList.some(pattern => isPathMatch(pattern, path))
 }
 
+function setWebInfo(){
+  document.title = sysConfig.title + "_" + to.meta.title;
+  // 设置ico
+  document.getElementById("headIco").href = sysConfig.ico;
+  //设置描述
+  document.getElementById("headDescription").content = sysConfig.description;
+  //设置关键词
+  document.getElementById("headKeywords").content = sysConfig.keywords;
+  //设置头部其它
+  document.getElementById("headOther").content = sysConfig.keywords;
+
+}
+
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
