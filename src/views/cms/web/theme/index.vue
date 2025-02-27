@@ -50,6 +50,7 @@
               <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
                 v-hasPermi="['cms:theme:remove']"></el-button>
             </el-tooltip>
+            
             <el-tooltip content="主题下载" placement="top">
               <el-button link type="primary" icon="Download" v-hasPermi="['cms:theme:back']"
                 @click="themeDownload(scope.row)"></el-button>
