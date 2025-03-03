@@ -251,10 +251,10 @@ const isAllowFile = (rawFile) => {
     return false;
   }
   // 校检文件大小
-  if (proxy.fileSize) {
-    const isLt = rawFile.size / 1024 / 1024 < proxy.fileSize;
+  if (props.fileSize) {
+    const isLt = rawFile.size / 1024 / 1024 < props.fileSize;
     if (!isLt) {
-      proxy.$message.error(`上传文件大小不能超过 ${proxy.fileSize} MB!`);
+      proxy.$message.error(`上传文件大小不能超过 ${props.fileSize} MB!`);
       return false;
     }
   } else if (
