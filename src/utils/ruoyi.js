@@ -183,19 +183,6 @@ export function handleTree(data, id, parentId, children) {
       tree.push(d);
     } else {
       parentObj[config.childrenList].push(d)
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
   }
   return tree;
