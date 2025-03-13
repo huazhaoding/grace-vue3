@@ -68,7 +68,7 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
-});
+}});
 
 const { proxy } = getCurrentInstance();
 const emit = defineEmits();
