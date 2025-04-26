@@ -30,6 +30,7 @@
 
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
+import axios from 'axios';
 import BlotFormatter from "quill-blot-formatter/dist/BlotFormatter";
 import ImageUploader from "quill-image-uploader";
 import request from "@/utils/request";
@@ -139,6 +140,7 @@ onMounted(() => {
         quill.format("image", false);
       }
     });
+    quill.root.addEventListener('paste', handlePasteCapture, true);
   }
 });
 
@@ -267,6 +269,28 @@ const isAllowFile = (rawFile) => {
   }
   return true;
 };
+// 复制粘贴图片处理
+function handlePasteCapture(e) {
+  const clipboard = e.clipboardData || window.clipboardData;
+  if (clipboard && clipboard.items) {
+    for (let i = 0; i < clipboard.items.length; i++) {
+      const item = clipboard.items[i];
+      if (item.type.indexOf('image') !== -1) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        insertImage(file);
+      }
+    }
+  }
+}
+
+function insertImage(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  axios.post(uploadUrl.value, formData, { headers: { "Content-Type": "multipart/form-data", Authorization: headers.value.Authorization } }).then(res => {
+    handleUploadSuccess(res.data);
+  })
+}
 </script>
 
 <style>
