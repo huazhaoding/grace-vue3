@@ -170,10 +170,9 @@ export function handleTree(data, id, parentId, children) {
   for (let d of data) {
     let id = d[config.id];
     childrenListMap[id] = d;
-
-
-
-
+    if (!d[config.childrenList]) {
+      d[config.childrenList] = [];
+    }
   }
 
   for (let d of data) {
@@ -225,7 +224,7 @@ export function getNormalPath(p) {
   if (res[res.length - 1] === '/') {
     return res.slice(0, res.length - 1)
   }
-  return res;
+  return res
 }
 
 // 验证是否为blob格式
@@ -234,7 +233,7 @@ export function blobValidate(data) {
 }
 
 // 是否包含某个字典
-export function includeDict(datas,item){
+export function includeDict(dadas,item){
   let flag=false;
   if (datas) {
     for (let index = 0; index < datas.length; index++) {
