@@ -30,10 +30,10 @@
           v-show="showSearch"
           label-width="68px"
         >
-          <el-form-item label="站点" prop="supportCategoryId">
+          <el-form-item label="站点" prop="mainCategoryId">
             <el-select
               ref="themeSelectRef"
-              v-model="queryParams.params['supportCategoryId']"
+              v-model="queryParams.params['mainCategoryId']"
               placeholder="请选择站点"
               clearable
               style="width: 240px"
@@ -47,7 +47,7 @@
                   v-for="theme in themes"
                   :key="theme.webName + '_' + theme.themeName"
                   :label="theme.themeName"
-                  :value="theme.supportCategoryId"
+                  :value="theme.mainCategoryId"
                   @click="themeChange(theme.webName + '_' + theme.themeName)"
                 />
               </el-option-group>
@@ -380,7 +380,6 @@ const data = reactive({
     articleId: null,
     categoryId:
     route.query && route.query.categoryId ? route.query.categoryId : null,
-    themeCategoryId: null,
     articleTitle: null,
     createBy: null,
     articleType: null,
