@@ -353,6 +353,7 @@ function reset() {
     columnUrl: null,
     ancestors: null,
     keywords: null,
+    remark: null,
     description: null,
     orderNum: 0
   };

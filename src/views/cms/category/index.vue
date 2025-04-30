@@ -242,12 +242,9 @@ const title = ref("");
 const isExpandAll = ref(true);
 const refreshTable = ref(true);
 const dateRange = ref([]);
-
 const themOpen=ref(false);
 const themeTitle=ref("查看关联主题");
 const themeData=ref([]);
-
-
 const data = reactive({
   form: {},
   queryParams: {
@@ -339,6 +336,7 @@ function reset() {
     perms: null,
     keywords: null,
     description: null,
+    remark: null,
     orderNum: 0,
     categoryCount: null,
     nodeType: null,

@@ -235,9 +235,9 @@ export function blobValidate(data) {
 // 是否包含某个字典
 export function includeDict(dadas,item){
   let flag=false;
-  if (datas) {
-    for (let index = 0; index < datas.length; index++) {
-    if(datas[index].value==item+""){
+  if (dadas) {
+    for (let index = 0; index < dadas.length; index++) {
+    if(dadas[index].value==item+""){
       flag= true;
       break;
     } 
