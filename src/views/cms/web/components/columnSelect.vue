@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-select @change="columnIdChange" v-model="columnId" placeholder="选择数据" style="width: 240px">
+        <el-select @change="columnIdChange" v-model.number="columnId" placeholder="选择数据" style="width: 240px">
             <el-option v-for="column in columnDatas" :key="Number(column.columnId)" :label="column.columnName"
-                :value="Number(column.columnId)">
+                :value="+column.columnId">
             </el-option>
         </el-select>
     </div>
@@ -12,11 +12,7 @@
 const emit = defineEmits("update:modelValue");
 const props = defineProps({
     modelValue: {
-        type: String,
-    },
-    columnId: {
         type: Number,
-        default: undefined
     },
     columnDatas: {
         type: Array,
@@ -24,13 +20,15 @@ const props = defineProps({
     }
 })
 
-const columnId = ref(props.modelValue);
+const columnId = ref(undefined);
 
 //初始化数据
 watch(
   () => props.modelValue,
   (v) => {  
-    columnId.value = v; // 初始化columnId的值
+    if (v) {
+      columnId.value = Number(v); // 初始化columnId的值
+    }
   },
   { immediate: true }
 );
