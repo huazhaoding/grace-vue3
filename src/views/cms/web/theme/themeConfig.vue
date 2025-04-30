@@ -39,10 +39,12 @@
                       <column-select v-model="formData['oly.web.pageIndex']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="分类页：" prop="oly.web.pageCategory.classify">
-                      <column-select  v-model="formData['oly.web.pageCategory.classify']" :columnDatas="columnDatas"></column-select>
+                      <column-select v-model="formData['oly.web.pageCategory.classify']"
+                        :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="标签页：" prop="oly.web.pageCategory.tag">
-                        <column-select v-model="formData['oly.web.pageCategory.tag']" :columnDatas="columnDatas"></column-select>
+                      <column-select v-model="formData['oly.web.pageCategory.tag']"
+                        :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="排行榜：" prop="oly.web.pageRank">
                       <column-select v-model="formData['oly.web.pageRank']" :columnDatas="columnDatas"></column-select>
@@ -51,13 +53,15 @@
                       <column-select v-model="formData['oly.web.pageLinks']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="时间线：" prop="oly.web.pageTimeLine">
-                      <column-select v-model="formData['oly.web.pageTimeLine']" :columnDatas="columnDatas"></column-select>
+                      <column-select v-model="formData['oly.web.pageTimeLine']"
+                        :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="关于本站" prop="oly.web.pageAbout">
                       <column-select v-model="formData['oly.web.pageAbout']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="联系页：" prop="oly.web.pageCallMe">
-                      <column-select v-model="formData['oly.web.pageCallMe']" :columnDatas="columnDatas"></column-select>
+                      <column-select v-model="formData['oly.web.pageCallMe']"
+                        :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                   </el-tab-pane>
                   <el-tab-pane name="tab-3" label="主题设置">
@@ -171,10 +175,17 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="主类别ID：">
-              <el-select v-model="themeData.supportCategoryId" class="m-2" placeholder="请选择类别ID" size="large"
+              <el-select v-model="themeData.mainCategoryId" class="m-2" placeholder="请选择主类别" size="large"
                 style="width: 240px">
-                <el-option v-for="item in categoryData" :key="item.categoryName" :label="item.categoryName"
+                <el-option v-for="item in categoryData" :key="item.categoryId" :label="item.categoryName"
                   :value="item.categoryId" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="主菜单ID：">
+              <el-select v-model="themeData.mainColumnId" class="m-2" placeholder="请选择主菜单" size="large"
+                style="width: 240px">
+                <el-option v-for="item in columnMainDatas" :key="item.columnId" :label="item.columnName"
+                  :value="item.columnId" />
               </el-select>
             </el-form-item>
             <el-form-item label="支持更新：">
@@ -213,10 +224,11 @@ import {
   listCategory
 } from "@/api/cms/category";
 import {
-    listColumn
+  listColumn
 } from "@/api/cms/column";
 
 const columnDatas = ref([]);
+const columnMainDatas = ref([]);
 const route = useRoute();
 const { proxy } = getCurrentInstance();
 const { cms_article_type, cms_theme_enabled, cms_theme_type } = proxy.useDict("cms_article_type", "cms_theme_enabled", "cms_theme_type");
@@ -233,10 +245,6 @@ const data = reactive({
 const { formData } = toRefs(data);
 getConfig();
 
-listColumn({ columnId:themeData.supportCategoryId }).then((response) => {
-  columnDatas.value = response.data;
-}); 
-
 /** 修改配置 */
 function getConfig() {
   try {
@@ -249,13 +257,21 @@ function getConfig() {
 }
 
 getTheme(webName.value, themeName.value).then((response) => {
-
   themeData.value = response.data;
+  listColumn({ nodeType:1 }).then((res) => {
+    columnMainDatas.value = res.data;
+  });
+
+  listColumn({ columnId: themeData.value.mainColumnId,nodeType:3 }).then((res) => {
+    columnDatas.value = res.data;
+  });
   if (response.data.supportArticleType) {
     themeData.value.supportArticleType = response.data.supportArticleType.split(
       ","
     );
   }
+
+
 });
 
 listCategory({ nodeType: 1 }).then(

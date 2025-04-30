@@ -20,7 +20,7 @@
                   v-for="theme in themes"
                   :key="theme.webName + '_' + theme.themeName"
                   :label="theme.themeName"
-                  :value="theme.supportCategoryId"
+                  :value="theme.mainCategoryId"
                 />
               </el-option-group>
             </el-select>
