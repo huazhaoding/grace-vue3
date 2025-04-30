@@ -36,44 +36,28 @@
                   </el-tab-pane>
                   <el-tab-pane name="tab-2" label="默认页面">
                     <el-form-item label="首页：" prop="oly.web.pageIndex">
-                      <el-input-number v-model="formData['oly.web.pageIndex']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select v-model="formData['oly.web.pageIndex']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="分类页：" prop="oly.web.pageCategory.classify">
-                      <el-input-number v-model="formData['oly.web.pageCategory.classify']" controls-position="right"
-                        :min="0" :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select  v-model="formData['oly.web.pageCategory.classify']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="标签页：" prop="oly.web.pageCategory.tag">
-                      <el-input-number v-model="formData['oly.web.pageCategory.tag']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                        <column-select v-model="formData['oly.web.pageCategory.tag']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="排行榜：" prop="oly.web.pageRank">
-                      <el-input-number v-model="formData['oly.web.pageRank']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select v-model="formData['oly.web.pageRank']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="导航页：" prop="oly.web.pageLinks">
-                      <el-input-number v-model="formData['oly.web.pageLinks']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select v-model="formData['oly.web.pageLinks']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="时间线：" prop="oly.web.pageTimeLine">
-                      <el-input-number v-model="formData['oly.web.pageTimeLine']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select v-model="formData['oly.web.pageTimeLine']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="关于本站" prop="oly.web.pageAbout">
-                      <el-input-number v-model="formData['oly.web.pageAbout']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select v-model="formData['oly.web.pageAbout']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                     <el-form-item label="联系页：" prop="oly.web.pageCallMe">
-                      <el-input-number v-model="formData['oly.web.pageCallMe']" controls-position="right" :min="0"
-                        :max="100000000000" :precision="0" :step="1">
-                      </el-input-number>
+                      <column-select v-model="formData['oly.web.pageCallMe']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                   </el-tab-pane>
                   <el-tab-pane name="tab-3" label="主题设置">
@@ -224,10 +208,15 @@
 <script setup name="ThemeConfig">
 import { updateConfig, getTheme, updateTheme, updateSiteMapIndex } from "@/api/cms/theme";
 import JsonTag from "@/components/JsonTag";
+import ColumnSelect from "../components/columnSelect.vue";
 import {
   listCategory
 } from "@/api/cms/category";
-import { ref } from "vue";
+import {
+    listColumn
+} from "@/api/cms/column";
+
+const columnDatas = ref([]);
 const route = useRoute();
 const { proxy } = getCurrentInstance();
 const { cms_article_type, cms_theme_enabled, cms_theme_type } = proxy.useDict("cms_article_type", "cms_theme_enabled", "cms_theme_type");
@@ -243,6 +232,10 @@ const data = reactive({
 
 const { formData } = toRefs(data);
 getConfig();
+
+listColumn({ columnId:themeData.supportCategoryId }).then((response) => {
+  columnDatas.value = response.data;
+}); 
 
 /** 修改配置 */
 function getConfig() {

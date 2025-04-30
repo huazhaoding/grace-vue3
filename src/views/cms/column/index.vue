@@ -41,7 +41,6 @@
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
     </el-row>
-
     <el-table v-if="refreshTable" table-layout='auto' v-loading="loading" :data="columnList" row-key="columnId"
       :default-expand-all="isExpandAll" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
       <el-table-column label="栏目ID" prop="columnId" />
