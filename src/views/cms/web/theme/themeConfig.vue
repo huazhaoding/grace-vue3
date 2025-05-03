@@ -286,6 +286,9 @@ function updateHandel() {
   );
   updateTheme(themeData.value).then((response) => {
     proxy.$modal.msgSuccess("修改成功");
+    themeData.value.supportArticleType = themeData.value.supportArticleType.split(
+      ","
+    ); 
   });
 }
 

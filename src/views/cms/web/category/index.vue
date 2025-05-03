@@ -46,6 +46,12 @@
         <el-button-group class="ml-4">
           <el-button
             type="primary"
+            :class="{ chooseTab: queryParams.nodeTypes == '1' }"
+            @click="chooseNode('1')"
+            >网站</el-button
+          >
+          <el-button
+            type="primary"
             :class="{ chooseTab: queryParams.nodeTypes == '2,3' }"
             @click="chooseNode('2,3')"
             >分类</el-button
@@ -192,7 +198,7 @@ const states = reactive({
     categoryName: null,
     themeName: route.params.webName + "_" + route.params.themeName,
     orderNum: null,
-    nodeTypes: "2,3",
+    nodeTypes: "1",
   },
 });
 
