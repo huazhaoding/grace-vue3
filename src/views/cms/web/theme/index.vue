@@ -34,10 +34,6 @@
         <el-table-column label="主题版本号" align="center" prop="themeVersion" />
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-tooltip content="类别配置" placement="top">
-              <el-button link type="primary" icon="Discount" @click="handleCategory(scope.row)"
-                v-hasPermi="['theme:category:config']"></el-button>
-            </el-tooltip>
             <el-tooltip content="站点配置" placement="top">
               <el-button link type="primary" icon="Setting" @click="handleSetting(scope.row)"
                 v-hasPermi="['cms:theme:edit']"></el-button>
@@ -45,6 +41,10 @@
             <el-tooltip content="主题配置" placement="top">
               <el-button link type="primary" icon="Operation" @click="handleTheme(scope.row)"
                 v-hasPermi="['cms:theme:config']"></el-button>
+            </el-tooltip>
+            <el-tooltip content="类别配置" placement="top">
+              <el-button link type="primary" icon="Discount" @click="handleCategory(scope.row)"
+                v-hasPermi="['theme:category:config']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除站点" placement="top">
               <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
