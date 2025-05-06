@@ -48,7 +48,8 @@
 
 <script setup>
 import { getToken } from "@/utils/auth";
-
+//import { isExternal } from "@/utils/validate"
+import Sortable from 'sortablejs'
 const props = defineProps({
   modelValue: [String, Object, Array],
    // 上传接口地址
@@ -63,23 +64,28 @@ const props = defineProps({
   // 图片数量限制
   limit: {
     type: Number,
-    default: 5,
+    default: 5
   },
   // 大小限制(MB)
   fileSize: {
     type: Number,
-    default: 5,
+    default: 5
   },
   // 文件类型, 例如['png', 'jpg', 'jpeg']
   fileType: {
     type: Array,
-    default: () => ["png", "jpg", "jpeg",'ico'],
+    default: () => ["png", "jpg", "jpeg",'ico']
   },
   // 是否显示提示
   isShowTip: {
     type: Boolean,
     default: true
   },
+  // 拖动排序
+  drag: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const { proxy } = getCurrentInstance();
@@ -88,7 +94,6 @@ const number = ref(0);
 const uploadList = ref([]);
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
-const baseUrl = import.meta.env.VITE_APP_BASE_API;
 const uploadImgUrl = ref(import.meta.env.VITE_APP_BASE_API + props.action); // 上传的图片服务器地址
 const headers = ref({ Authorization: "Bearer " + getToken() });
 const fileListRef=ref();
@@ -212,7 +217,21 @@ function listToString(list, separator) {
   return strs != "" ? strs.substr(0, strs.length - 1) : "";
 }
 
-
+// 初始化拖拽排序
+onMounted(() => {
+  if (props.drag) {
+    nextTick(() => {
+      const element = document.querySelector('.el-upload-list')
+      Sortable.create(element, {
+        onEnd: (evt) => {
+          const movedItem = fileList.value.splice(evt.oldIndex, 1)[0]
+          fileList.value.splice(evt.newIndex, 0, movedItem)
+          emit('update:modelValue', listToString(fileList.value))
+        }
+      })
+    })
+  }
+})
 </script>
 
 <style scoped lang="scss">

@@ -42,7 +42,7 @@
 
 <script setup>
 import { getToken } from "@/utils/auth";
-
+import Sortable from 'sortablejs'
 const props = defineProps({
   modelValue: [String, Object, Array],
   // 上传接口地址
@@ -78,7 +78,12 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
-}});
+},
+  // 拖动排序
+  drag: {
+    type: Boolean,
+    default: true}
+});
 
 const { proxy } = getCurrentInstance();
 const emit = defineEmits();
@@ -204,9 +209,28 @@ function listToString(list, separator) {
   }
   return strs != '' ? strs.substr(0, strs.length - 1) : '';
 }
+// 初始化拖拽排序
+onMounted(() => {
+  if (props.drag) {
+    nextTick(() => {
+      const element = document.querySelector('.upload-file-list')
+      Sortable.create(element, {
+        ghostClass: 'file-upload-darg',
+        onEnd: (evt) => {
+          const movedItem = fileList.value.splice(evt.oldIndex, 1)[0]
+          fileList.value.splice(evt.newIndex, 0, movedItem)
+          emit('update:modelValue', listToString(fileList.value))
+        }
+      })
+    })
+  }
+})
 </script>
-
 <style scoped lang="scss">
+.file-upload-darg {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
 .upload-file-uploader {
   margin-bottom: 5px;
 }
