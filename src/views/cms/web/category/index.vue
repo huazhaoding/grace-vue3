@@ -68,12 +68,6 @@
             @click="chooseNode('6,7')"
             >轮播</el-button
           >
-          <el-button
-            type="primary"
-            :class="{ chooseTab: queryParams.nodeTypes == '8,9' }"
-            @click="chooseNode('8,9')"
-            >推荐</el-button
-          >
         </el-button-group>
       </el-col>
     </el-row>

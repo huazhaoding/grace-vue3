@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="资源类型" prop="holdType">
-        <el-select v-model="queryParams.holdType" placeholder="请选择资源类型" clearable  style="width: 160px">
+        <el-select v-model="queryParams.holdType"  @change="handleQuery" placeholder="请选择资源类型" clearable  style="width: 160px">
           <el-option
             v-for="dict in sys_hold_type"
             :key="dict.value"

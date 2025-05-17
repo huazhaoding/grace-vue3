@@ -87,14 +87,6 @@ export function batchArticleTop(articleIds,articleTop){
 }
 
 
-// 批量修改标签
-export function batchArticleTag(articleIds,tagIds) {
-  return request({
-    url: '/cms/article/batchArticleTag/'+articleIds+"/"+tagIds,
-    method: 'put'
-  })
-}
-
 // 批量修改分类
 export function batchArticleCategory(articleIds,categoryIds) {
   return request({

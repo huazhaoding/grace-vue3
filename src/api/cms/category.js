@@ -84,3 +84,12 @@ export function listCategoryTheme(categoryId) {
     method: 'get'
   })
 }
+
+// 查询分类详细
+export function listCategoryByArticleId(articleId,data) {
+  return request({
+    url: '/cms/category/listCategoryByArticleId/' + articleId,
+    method: 'get',
+    data: data
+  })
+}

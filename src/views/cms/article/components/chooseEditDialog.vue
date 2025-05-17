@@ -64,7 +64,7 @@ const props = defineProps({
 });
 const { proxy } = getCurrentInstance();
 
-const emit = defineEmits(["update:modelValue", "closeBatchDialog"]);
+const emit = defineEmits(["update:modelValue"]);
 const supportType = ref([]);
 const chooseOpen=ref(false);
 const allowDict=ref([]);
@@ -130,8 +130,4 @@ function chooseCancel() {
   supportType.value=[];
   allowDict.value=[];
 }
-
-
-
-
 </script>
