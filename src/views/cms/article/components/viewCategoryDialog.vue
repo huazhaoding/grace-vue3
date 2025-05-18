@@ -2,19 +2,22 @@
     <el-dialog title="查看关联" v-model="dialogOpen" width="500px" @close="dialogCancel" append-to-body>
         <div class="itm">
             <span>分类</span>
-            <el-tag v-for="item in categoryData" :key="item.categoryId" v-show="3 == item.nodeType" effect="success">
+            <el-tag v-for="item in categoryData" :key="item.categoryId"
+                v-show="3 == item.nodeType || 2 == item.nodeType">
                 {{ item.categoryName }}
             </el-tag>
         </div>
         <div class="itm">
             <span>标签</span>
-            <el-tag v-for="item in categoryData" :key="item.categoryId" v-show="5 == item.nodeType" effect="warning">
+            <el-tag v-for="item in categoryData" :key="item.categoryId" v-show="5 == item.nodeType || 4 == item.nodeType"
+                effect="warning">
                 {{ item.categoryName }}
             </el-tag>
         </div>
         <div class="itm">
             <span>自定</span>
-            <el-tag v-for="item in categoryData" closable :key="item.categoryId" v-show="7 == item.nodeType" @close="handleClose(item.categoryId)" effect="plain">
+            <el-tag v-for="item in categoryData" closable :key="item.categoryId"
+                v-show="7 == item.nodeType || 6 == item.nodeType" @close="handleClose(item.categoryId)" effect="plain">
                 {{ item.categoryName }}
             </el-tag>
         </div>
@@ -28,6 +31,8 @@
 
 <script setup>
 import { listCategoryByArticleId } from '@/api/cms/category';
+import { deleteArticleCategory } from '@/api/cms/article';
+const { proxy } = getCurrentInstance();
 const categoryData = ref(undefined);
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
@@ -47,12 +52,10 @@ watch(
     () => props.modelValue,
     (val) => {
         dialogOpen.value = val;
-        if(val){
-            listCategoryByArticleId(props.articleId, {}).then((res) => {
-            categoryData.value = res.data;
-        })
+        if (val) {
+            getData();
         }
-        
+
     },
     { deep: true, immediate: true }
 )
@@ -70,17 +73,29 @@ function dialogCancel() {
     dialogOpen.value = false;
 }
 
-function handleClose(categoryId){
-
+function handleClose(categoryId) {
+    deleteArticleCategory(props.articleId, categoryId).then((res) => {
+        proxy.$modal.msgSuccess("移除成功");
+        getData();
+    })
 }
+
+function getData() {
+    listCategoryByArticleId(props.articleId, {}).then((res) => {
+        categoryData.value = res.data;
+    })
+}
+
+
 
 </script>
 
 <style>
-.itm{
-  margin: 5px;
+.itm {
+    margin: 5px;
 }
-.itm>span{
-  margin-right: 15px;
+
+.itm>span {
+    margin-right: 15px;
 }
 </style>

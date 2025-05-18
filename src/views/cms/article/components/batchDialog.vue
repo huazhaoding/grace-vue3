@@ -39,7 +39,7 @@
 import {
   batchArticleVisible,
   batchArticleTop,
-  batchArticleCategory,
+  batchAddArticleCategory,
   categoryTree
 } from "@/api/cms/article";
 const { proxy } = getCurrentInstance();
@@ -130,7 +130,7 @@ function batchCategory() {
   const _categoryIds = batchForm.value.categoryIds; 
   _categoryIds.push(props.categoryId);
   if (batchForm.value.categoryIds && batchForm.value.categoryIds.length > 0) {
-    batchArticleCategory(props.articleIds, _categoryIds).then((response) => {
+    batchAddArticleCategory(props.articleIds, _categoryIds).then((response) => {
       proxy.$modal.msgSuccess("修改成功");
     });
   }

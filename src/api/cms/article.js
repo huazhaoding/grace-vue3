@@ -88,12 +88,19 @@ export function batchArticleTop(articleIds,articleTop){
 
 
 // 批量修改分类
-export function batchArticleCategory(articleIds,categoryIds) {
+export function batchAddArticleCategory(articleIds,categoryIds) {
   return request({
-    url: '/cms/article/batchArticleCategory/'+articleIds+"/"+categoryIds,
+    url: '/cms/article/batchAddArticleCategory/'+articleIds+"/"+categoryIds,
     method: 'put'
   })
 }
 
+// 批量修改分类
+export function deleteArticleCategory(articleId,categoryId) {
+  return request({
+    url: '/cms/article/deleteArticleCategory/'+articleId+"/"+categoryId,
+    method: 'put'
+  })
+}
 
 
