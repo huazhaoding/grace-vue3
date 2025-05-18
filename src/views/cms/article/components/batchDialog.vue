@@ -10,11 +10,11 @@
             }}
           </el-radio>
         </el-radio-group>
-        <el-button type="primary" @click="batchVisible">更新状态</el-button>
+        <el-button type="primary" @click="batchVisible" style="margin-top: 10px;">更新状态</el-button>
       </el-form-item>
       <el-form-item label="顶置" prop="articleTop">
         <el-input-number v-model="batchForm.articleTop" :min="1" />
-        <el-button type="primary" @click="batchTop">更新顶置</el-button>
+        <el-button type="primary" @click="batchTop" style="margin-left: 10px;">更新顶置</el-button>
       </el-form-item>
       <el-form-item label="自定分类" prop="categoryIds">
         <el-tree-select v-model="batchForm.categoryIds" :data="categoryOptions" node-key="id" :props="{
@@ -23,8 +23,8 @@
           children: 'children',
           disabled: getCategoryDisabled,
         }" value-key="id" placeholder="请选择分类" check-strictly multiple :multiple-limit="maxCat" />
-        <br/>
-        <el-button type="primary" @click="batchCategory">更新分类</el-button>
+  
+        <el-button type="primary" @click="batchCategory" style="margin-top: 10px;">更新分类</el-button>
       </el-form-item>
     </el-form>
     <template #footer>
