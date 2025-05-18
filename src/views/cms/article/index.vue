@@ -116,15 +116,18 @@
           <el-table-column label="更新人" align="center" prop="updateBy" v-if="columns[10].visible" />
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
-                v-hasPermi="['cms:article:edit']">修改
+              <el-tooltip class="box-item" effect="dark" content="修改" placement="bottom">
+                <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
+                v-hasPermi="['cms:article:edit']">
               </el-button>
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
-                v-hasPermi="['cms:article:remove']">
-                删除</el-button>
-                <el-button link type="primary" icon="Eye" @click="openViewCategoryHand(scope.row)"
-                v-hasPermi="['cms:article:remove']">
-                查看关联</el-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="dark" content="删除" placement="bottom">
+                <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
+                v-hasPermi="['cms:article:remove']"/>
+              </el-tooltip><el-tooltip class="box-item" effect="dark" content="查看关联" placement="bottom">
+                <el-button link type="primary" icon="View" @click="openViewCategoryHand(scope.row)"
+                v-hasPermi="['cms:article:remove']"/>
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -171,8 +174,8 @@ const batchOpen = ref(false);
 const dateRange = ref([]);
 const themeMapData = ref({});
 const chooseOpen = ref(false);
-const activeArticleId=ref(undefined);
-const openViewCategory=ref(false);
+const activeArticleId = ref(undefined);
+const openViewCategory = ref(false);
 const { sys_true_false, cms_article_type, cms_article_visible, cms_article_edit } = proxy.useDict(
   "sys_true_false",
   "cms_article_type",
@@ -234,9 +237,9 @@ function handleBatch() {
   batchOpen.value = true;
 }
 
-function openViewCategoryHand(row){
-  activeArticleId.value=row.articleId;
-  openViewCategory.value=true;
+function openViewCategoryHand(row) {
+  activeArticleId.value = row.articleId;
+  openViewCategory.value = true;
 }
 
 /** 查询树下拉树结构 {themeName:'',nodeType:1} */

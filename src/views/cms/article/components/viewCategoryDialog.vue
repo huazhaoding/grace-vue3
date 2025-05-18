@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="查看关联" v-model="dialogOpen" width="500px" @close="dialogCancel" append-to-body>
+    <el-dialog title="查看关联" v-model="dialogOpen" width="500"   @close="dialogCancel">
         <div class="itm">
             <span>分类</span>
             <el-tag v-for="item in categoryData" :key="item.categoryId"
@@ -21,6 +21,7 @@
                 {{ item.categoryName }}
             </el-tag>
         </div>
+  
         <template #footer>
             <div class="dialog-footer">
                 <el-button @click="dialogCancel">取 消</el-button>
