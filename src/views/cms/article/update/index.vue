@@ -14,6 +14,6 @@ if (route.params && route.params.editType) {
     active.value = route.params.editType;
 }
 componentName = defineAsyncComponent(() =>
-    import(`../components/edit-${active.value}.vue`)
+    import(`../components/edit/edit-${active.value}.vue`)
 );
 </script>
