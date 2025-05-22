@@ -127,7 +127,6 @@ watch(
   () => props.modelValue,
   (val) => {
     if (val) {
-      console.log(val);
       formData.value = JSON.parse(val);
     } else {
       formData.value = { info: "", photoData: [] };

@@ -2,13 +2,13 @@
   <edit-share :articleContent="articleContentActive" :articleImg="articleImgActive" :articleBuild="2">
       <template #thumbnailChoose="{ formData, maxImg }">
       <div style="display: none;"> {{ articleImgActive=formData.articleImg }}</div>
-      <thumbnail-choose :articleImg="articleImgActive" :articleContent="formData.articleContent" :maxImg="maxImg"
+      <thumbnail-choose v-model="articleImgActive" :articleContent="formData.articleContent" :maxImg="maxImg"
         :isPhoto="true" />
      </template>
       <template #editContent="{ formData }">
         <div style="display: none;">{{articleContentActive=formData.articleContent }}</div>
         <photo-choose
-          v-modeValue="articleContentActive"
+        v-model="articleContentActive"
         />
       </template>
   </edit-share>

@@ -301,7 +301,9 @@ const maxImg = ref(undefined);
 const maxKey = ref(undefined);
 const activeTheme = ref({});
 const data = reactive({
-  form: { allowComment: true },
+  form: { allowComment: true,
+          articleBuild:props.articleBuild,  
+   },
   rules: {
     articleTitle: [
       { required: true, message: "文章标题不能为空", trigger: "blur" },

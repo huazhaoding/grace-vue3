@@ -1,8 +1,8 @@
 <template>
-  <edit-share :articleContent="articleContentActive" :articleImg="articleImgActive" :articleBuild="2">
+  <edit-share :articleContent="articleContentActive" :articleImg="articleImgActive" :articleBuild="0">
     <template #thumbnailChoose="{ formData, maxImg }">
       <div style="display: none;"> {{ articleImgActive=formData.articleImg }}</div>
-      <thumbnail-choose :articleImg="articleImgActive" :articleContent="formData.articleContent" :maxImg="maxImg"
+      <thumbnail-choose v-model="articleImgActive" :articleContent="formData.articleContent" :maxImg="maxImg"
         :isPhoto="true" />
     </template>
 

@@ -46,6 +46,7 @@
 </template>
 
 <script setup>
+const { proxy } = getCurrentInstance();
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
    modelValue: {
@@ -80,7 +81,6 @@ watch(
   (val) => {
     if (val) {
       activeArticleImg.value = val; 
-      console.log(value);
       imgChoose.value = val.split(",");
     }
   },
