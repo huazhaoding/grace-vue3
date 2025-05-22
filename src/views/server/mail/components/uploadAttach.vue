@@ -37,7 +37,6 @@ const fileList = ref([]);
 watch(
   () => props.modelValue,
   (val) => {
-    console.log(props.modelValue)
     fileList.value = [];
     if(val){
     val.forEach((item) => {

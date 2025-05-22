@@ -6,6 +6,7 @@
       :setting="tinySetting"
       @init="onTinymceInit"
       @change="editChange"
+      script-src="/tinymce/tinymce.min.js"
     />
   </div>
 
@@ -71,6 +72,9 @@ function getDefaultTinySetting() {
   };
 }
 
+onMounted(() => {
+  console.log("文章内容编辑器加载完成");
+});
 // 封装获取token的方法，增加异常处理
 function getTokenSafe() {
   try {

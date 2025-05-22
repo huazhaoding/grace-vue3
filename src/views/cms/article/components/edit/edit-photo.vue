@@ -1,34 +1,25 @@
 <template>
-  <edit-share :articleContent="articleContent" :articleImg="articleImg" :articleBuild="2">
-      <template #thumbnailChoose="{ articleContent,articleImg, maxImg }">
-        <thumbnail-choose
-          :articleImg="articleImg"
-          :articleContent="articleContent"
-          :maxImg="maxImg"
-          :isPhoto="true"
-          @update:articleImg="handleUpdateArticleImg"
-        />
-      </template>
-
-      <template #editContent="{ articleContent }">
+  <edit-share :articleContent="articleContentActive" :articleImg="articleImgActive" :articleBuild="2">
+      <template #thumbnailChoose="{ formData, maxImg }">
+      <div style="display: none;"> {{ articleImgActive=formData.articleImg }}</div>
+      <thumbnail-choose :articleImg="articleImgActive" :articleContent="formData.articleContent" :maxImg="maxImg"
+        :isPhoto="true" />
+     </template>
+      <template #editContent="{ formData }">
+        <div style="display: none;">{{articleContentActive=formData.articleContent }}</div>
         <photo-choose
-          :articleContent="articleContent"
-          @update:articleContent="handleUpdateArticleContent"
+          v-modeValue="articleContentActive"
         />
       </template>
   </edit-share>
 </template>
 
-<script setup name="editPhoto777">
+<script setup name="editPhoto">
 import editShare from "@/views/cms/article/components/common/editShare";
 import photoChoose from "@/views/cms/article/components/photoChoose";
 import thumbnailChoose from "@/views/cms/article/components/common/thumbnailChoose";
-const articleContent = ref("");
-const articleImg = ref("");
-function handleUpdateArticleContent(newValue) {
-  articleContent.value = newValue;
-}
-function handleUpdateArticleImg(newValue) {
-  articleImg.value = newValue;
-}
+const articleContentActive = ref("");
+const articleImgActive = ref("");
+
+
 </script>

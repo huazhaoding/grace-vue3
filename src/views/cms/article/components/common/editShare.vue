@@ -58,7 +58,6 @@
                   />
                 </el-select>
               </el-form-item>
-
               <el-form-item prop="pageType">
                 <template #label>
                   <span>
@@ -91,7 +90,7 @@
                   <el-radio
                     v-for="dict in sys_true_false"
                     :key="dict.value"
-                    :label="dict.value == 'true' ? true : false"
+                    :value="dict.value == 'true' ? true : false"
                     >{{ dict.label }}
                   </el-radio>
                 </el-radio-group>
@@ -138,8 +137,7 @@
               <el-form-item label="缩略图" prop="articleImg">
                 <slot
                   name="thumbnailChoose"
-                  :articleImg="form.articleImg"
-                  :articleContent="form.articleContent"
+                  :formData="form"
                   :maxImg="maxImg"
                 >
                 </slot>
@@ -249,7 +247,7 @@
               <el-form-item label="内容编辑" prop="articleContent">
                 <slot
                   name="editContent"
-                  :articleContent="form.articleContent"
+                  :formData="form"
                 ></slot>
               </el-form-item>
             </el-col>
@@ -271,6 +269,7 @@ import {
 } from "@/api/cms/article";
 import left from "@/components/Left";
 import { getTheme } from "@/api/cms/theme";
+
 const props = defineProps({
   articleContent: {
     type: String,
@@ -350,10 +349,10 @@ watch(
   () => props.articleImg,
   (val) => {
     form.value.articleImg = val ;
-    form.value.articleImg = form.value.articleImg ? val : '';
   },
   { deep: true, immediate: true }
 );
+
 
 //查询文章
 function selectArticle() {

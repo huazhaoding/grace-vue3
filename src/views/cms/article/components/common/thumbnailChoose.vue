@@ -46,13 +46,13 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["update:articleImg"]);
+const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
-  articleContent: {
+   modelValue: {
     type: String,
     default: "",
   },
-  articleImg: {
+  articleContent: {
     type: String,
     default: "",
   },
@@ -76,10 +76,11 @@ const imgSrcList = ref([]);
 const activeArticleImg = ref("");
 
 watch(
-  () => props.articleImg,
+  () => props.modelValue,
   (val) => {
     if (val) {
       activeArticleImg.value = val; 
+      console.log(value);
       imgChoose.value = val.split(",");
     }
   },
@@ -90,7 +91,8 @@ watch(
   () => activeArticleImg,
   (val) => {
     if (val) {
-      emit("update:articleImg", val);
+      emit("update:modelValue", val);
+      emit("update:", val);
     }
   },
   { deep: true, immediate: true }
@@ -105,11 +107,12 @@ function deleteImgChoose(value) {
         if (imgChoose.value.length > 0) {
           activeArticleImg.value = imgChoose.value.join(",");
         } else {
-          activeArticleImg.value = undefined;
+          activeArticleImg.value = '';
         }
       }
     });
   }
+  emit("update:modelValue",activeArticleImg.value );
 }
 
 // 选择图片
@@ -167,7 +170,9 @@ function imgChooseHandle() {
     f.splice(f.length - 1, 1);
   } else {
     activeArticleImg.value = f.join(",");
+    emit("update:modelValue",activeArticleImg.value );
   }
+ 
   openImgDialog.value = false;
 }
 </script>

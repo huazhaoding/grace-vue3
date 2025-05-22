@@ -102,7 +102,7 @@
 <script setup>
 import { getToken } from "@/utils/auth";
 const props = defineProps({
-  articleContent: {
+  modelValue: {
     type: String,
     default: "",
   },
@@ -121,13 +121,14 @@ const { proxy } = getCurrentInstance();
 const baseUrl = import.meta.env.VITE_APP_BASE_API;
 const uploadImgUrl = ref(baseUrl + "/server/oss/upload"); // 上传的图片服务器地址
 const headers = ref({ Authorization: "Bearer " + getToken() });
-const emit = defineEmits(["update:articleContent"]);
+const emit = defineEmits(["update:modelValue"]);
 const formData = ref({});
 watch(
-  () => props.articleContent,
+  () => props.modelValue,
   (val) => {
     if (val) {
-      formData.value = JSON.parse(props.articleContent);
+      console.log(val);
+      formData.value = JSON.parse(val);
     } else {
       formData.value = { info: "", photoData: [] };
     }
@@ -138,7 +139,7 @@ watch(
 watch(
   () => formData.value,
   (val) => {
-    emit("update:articleContent",JSON.stringify(val) );
+    emit("update:modelValue",JSON.stringify(val) );
   },
   { deep: true, immediate: true }
 );

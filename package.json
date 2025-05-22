@@ -23,6 +23,7 @@
     "@codemirror/theme-one-dark": "^6.1.2",
     "@element-plus/icons-vue": "2.3.1",
     "@jsdawn/vue3-tinymce": "^2.0.4",
+    "@tinymce/tinymce-vue": "^6.1.0",
     "@vueup/vue-quill": "1.2.0",
     "@vueuse/core": "10.11.0",
     "axios": "0.28.1",
