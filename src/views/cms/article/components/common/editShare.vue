@@ -275,6 +275,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  articleMd: {
+    type: String,
+    default: "",
+  },
   articleImg: {
     type: String,
     default: "",
@@ -342,6 +346,15 @@ watch(
     if (val) {
       form.value.articleContent = val;
     }
+  },
+  { deep: true, immediate: true }
+);
+
+// 监听Md内容变化
+watch(
+  () => props.articleMd,
+  (val) => {
+    form.value.articleMd = val ;
   },
   { deep: true, immediate: true }
 );
