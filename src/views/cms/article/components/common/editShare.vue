@@ -133,6 +133,25 @@
                   show-word-limit
                 />
               </el-form-item>
+              <el-form-item prop="articleSummary">
+                 <template #label>
+                  <span>
+                    <el-tooltip content="文章描述" placement="top">
+                      <el-icon>
+                        <question-filled />
+                      </el-icon>
+                    </el-tooltip>
+                    文章摘要
+                  </span>
+                </template>
+                <el-input
+                  size="large"
+                  v-model="form.articleSummary"
+                  maxlength="256"
+                  placeholder="请输入文章描述"
+                  show-word-limit
+                />
+              </el-form-item>
               <!-- 缩略图 -->
               <el-form-item label="缩略图" prop="articleImg">
                 <slot
