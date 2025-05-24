@@ -194,7 +194,7 @@
                 />
               </el-form-item>
             </el-tab-pane>
-            <el-tab-pane label="扩展字段" name="extra">Role</el-tab-pane>
+            <el-tab-pane label="扩展字段" name="extra">R</el-tab-pane>
           </el-tabs>
         </left>
         <el-main>
