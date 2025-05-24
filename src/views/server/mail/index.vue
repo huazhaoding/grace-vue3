@@ -279,12 +279,10 @@ onActivated(() => {
   if (time != null && time != uniqueId.value) {
     uniqueId.value = time;
     queryParams.value.pageNum = Number(route.query.pageNum);
-    proxy.resetForm("queryForm");
+    proxy.resetForm("queryRef");
     getList();
   }
 })
-
-
 
 /** 搜索按钮操作 */
 function handleQuery() {

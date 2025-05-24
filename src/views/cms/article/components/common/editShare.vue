@@ -324,6 +324,7 @@ const maxCategory = ref(undefined);
 const maxImg = ref(undefined);
 const maxKey = ref(undefined);
 const activeTheme = ref({});
+const uniqueId = ref("");
 const data = reactive({
   form: { allowComment: true,
           articleBuild:props.articleBuild,  
@@ -520,10 +521,10 @@ function submitForm() {
           if (response.code == 200) {
             proxy.$modal.msgSuccess("修改成功");
             if(route.query.pageNum){
-              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,articleId:route.query.categoryId}, name: "Article" });
+              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,articleId:route.query.categoryId,t: Date.now(),}, name: "Article" });
             }
             else{
-              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum}, name: "Article" });
+              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,t: Date.now(),}, name: "Article" });
             }
             
           } else {

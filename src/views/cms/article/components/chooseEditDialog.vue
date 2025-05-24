@@ -95,7 +95,7 @@ function chooseEditLink(editType){
 setTimeout(function() {
   chooseCancel();
 }, 1000); 
-  router.push({path:"/cms/article/edit/"+editType,query:{webName:activeTheme.value.webName,themeName:activeTheme.value.themeName}});
+  router.push({path:"/cms/article/edit/"+editType,query:{webName:activeTheme.value.webName,themeName:activeTheme.value.themeName,pageNum:1}});
 }
 
 watch(
@@ -115,8 +115,6 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
-
 
 function chooseCancel() {
   chooseOpen.value = false;

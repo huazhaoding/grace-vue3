@@ -160,6 +160,7 @@ import left from "@/components/Left";
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const route = useRoute();
+const uniqueId = ref("");
 const articleList = ref([]);
 const loading = ref(true);
 const showSearch = ref(true);
@@ -267,14 +268,15 @@ function getList() {
 }
 
 onActivated(() => {
+  const time = route.query.t;
+  if (time != null && time != uniqueId.value) {
+    uniqueId.value = time;
     queryParams.value.pageNum = Number(route.query.pageNum);
-    if(route.query.categoryId){
     queryParams.value.categoryId = Number(route.query.categoryId);
-  }
-    dateRange.value = [];
-    proxy.resetForm("queryForm");
+    proxy.resetForm("queryRef");
     getList();
-});
+  }
+})
 
 
 themeMap().then((response) => {
