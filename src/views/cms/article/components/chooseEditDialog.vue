@@ -98,12 +98,6 @@ setTimeout(function() {
   router.push({path:"/cms/article/edit/"+editType,query:{webName:activeTheme.value.webName,themeName:activeTheme.value.themeName}});
 }
 
-//或类型字典
-
-//依据主题获取支持类型
-
-//依据类型选择编辑器
-
 watch(
   () => props.modelValue,
   (val) => {

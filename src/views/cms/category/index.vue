@@ -322,7 +322,6 @@ function themeDialogCancel() {
   themOpen.value = false;
 }
 
-
 /** 查询类目列表 */
 function getList() {
   loading.value = true;
@@ -442,9 +441,9 @@ async function allowDictData(nodeType) {
   });
 }
 
+// 查看关联文章
 function handleArticleList(row) {
-  router.push({ path: "/cms/article", query: { categoryId: row.categoryId } });
-
+  proxy.$tab.refreshPage({path:"/cms/article",query: { categoryId: row.categoryId},name: "Article"});
 }
 
 

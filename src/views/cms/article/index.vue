@@ -61,10 +61,10 @@
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAddArticle">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAddArticleDialog">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Aim" :disabled="benchMultiple" @click="handleBatch"
+            <el-button type="danger" plain icon="Aim" :disabled="benchMultiple" @click="handleBatchDialog"
               v-hasPermi="['cms:article:edit']">批量操作</el-button>
           </el-col>
 
@@ -125,7 +125,7 @@
                 <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
                 v-hasPermi="['cms:article:remove']"/>
               </el-tooltip><el-tooltip class="box-item" effect="dark" content="查看关联" placement="bottom">
-                <el-button link type="primary" icon="View" @click="openViewCategoryHand(scope.row)"
+                <el-button link type="primary" icon="View" @click="openViewCategoryHandDialog(scope.row)"
                 v-hasPermi="['cms:article:remove']"/>
               </el-tooltip>
             </template>
@@ -157,7 +157,6 @@ import batchDialog from "@/views/cms/article/components/batchDialog";
 import viewCategoryDialog from "@/views/cms/article/components/viewCategoryDialog.vue";
 import chooseEditDialog from "@/views/cms/article/components/chooseEditDialog";
 import left from "@/components/Left";
-import { ref } from "vue";
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const route = useRoute();
@@ -182,16 +181,13 @@ const { sys_true_false, cms_article_type, cms_article_visible, cms_article_edit 
   "cms_article_visible",
   "cms_article_edit"
 );
-
-
 const data = reactive({
   form: {},
   queryParams: {
     pageNum: 1,
     pageSize: 10,
     articleId: null,
-    categoryId:
-      route.query && route.query.categoryId ? route.query.categoryId : null,
+    categoryId:null,
     articleTitle: null,
     createBy: null,
     articleType: null,
@@ -228,16 +224,18 @@ watch(categoryName, (val) => {
   proxy.$refs["categoryTreeRef"].filter(val);
 });
 
-/**初始化执行一次 */
-function closeBatchDialog(val) {
+/**关闭批量弹窗  回调 页面首次进入会回调*/
+function closeBatchDialog() {
   getList();
 }
 
-function handleBatch() {
+// 批量操作弹窗
+function handleBatchDialog() {
   batchOpen.value = true;
 }
 
-function openViewCategoryHand(row) {
+// 查看关联
+function openViewCategoryHandDialog(row) {
   activeArticleId.value = row.articleId;
   openViewCategory.value = true;
 }
@@ -252,6 +250,7 @@ function getCategoryTree(data) {
 /** 节点单击事件 */
 function handleNodeClick(data) {
   queryParams.value.categoryId = data.id;
+  router.replace({ path: '/cms/article',query: { categoryId: data.id } });
   handleQuery();
 }
 
@@ -267,10 +266,22 @@ function getList() {
   );
 }
 
+onActivated(() => {
+    queryParams.value.pageNum = Number(route.query.pageNum);
+    if(route.query.categoryId){
+    queryParams.value.categoryId = Number(route.query.categoryId);
+  }
+    dateRange.value = [];
+    proxy.resetForm("queryForm");
+    getList();
+});
+
+
 themeMap().then((response) => {
   themeMapData.value = response.data;
 });
 
+// 站点切换
 function themeChange(themeName) {
   getCategoryTree({ themeName: themeName });
   handleQuery();
@@ -283,9 +294,9 @@ function handleQuery() {
   getList();
 }
 
-function handleAddArticle() {
+/** 新增按钮弹窗 */
+function handleAddArticleDialog() {
   chooseOpen.value = true;
-
 }
 
 /** 重置按钮操作 */
@@ -315,17 +326,23 @@ function handleSelectionChange(selection) {
   }
 }
 
-
 /** 修改按钮操作 */
 function handleUpdate(row) {
   const _articleIds = row.articleId;
   cms_article_edit.value.forEach((item, key) => {
     if (item.value == row.articleBuild + '') {
-      router.push({ path: "/cms/article/edit/" + item.label + "/" + _articleIds });
-      return;
+      setTimeout(() => {
+        if(route.query.categoryId)
+        {
+          router.push({ path: "/cms/article/edit/" + item.label + "/" + _articleIds,query: { categoryId: route.query.categoryId,pageNum: queryParams.value.pageNum } });
+        }
+        else
+        {
+          router.push({ path: "/cms/article/edit/" + item.label + "/" + _articleIds,query: { pageNum: queryParams.value.pageNum } });
+        }
+       }, 100);
     }
   })
-
 }
 
 /** 删除按钮操作 */

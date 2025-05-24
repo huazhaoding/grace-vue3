@@ -515,14 +515,17 @@ function submitForm() {
 
     if (valid) {
       // 关闭当前tab页签，打开新页签
-      const obj = { path: "/cms/article", name: "Article" };
       if (form.value.articleId != null) {
         updateArticle(form.value).then((response) => {
           if (response.code == 200) {
             proxy.$modal.msgSuccess("修改成功");
-            proxy.$tab.closeOpenPage(obj).then(() => {
-              proxy.$tab.refreshPage(obj);
-            });
+            if(route.query.pageNum){
+              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,articleId:route.query.categoryId}, name: "Article" });
+            }
+            else{
+              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum}, name: "Article" });
+            }
+            
           } else {
             proxy.$modal.msgError("修改失败!");
           }
@@ -531,9 +534,7 @@ function submitForm() {
         addArticle(form.value).then((response) => {
           if (response.code == 200) {
             proxy.$modal.msgSuccess("新增成功");
-            proxy.$tab.closeOpenPage(obj).then(() => {
-              proxy.$tab.refreshPage(obj);
-            });
+            proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum}, name: "Article" });
           } else {
             proxy.$modal.msgError("添加失败!");
           }

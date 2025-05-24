@@ -295,7 +295,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _webNames = row.webName || webNames.value;
-  proxy.$modal.confirm('是否确认删除站点编号为"' + _webNames + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除站点编号为"' + _webNames + '"的数据项?').then(function() {
     return delWeb(_webNames);
   }).then(() => {
     getList();
@@ -306,7 +306,6 @@ function handleDelete(row) {
 function handleThemeList(row){
   const _webName = row.webName || webNames.value;
   router.push({path: "/cms/web/theme/"+ _webName});
-
 }
 
 /** 导出按钮操作 */
