@@ -149,6 +149,8 @@
                   v-model="form.articleSummary"
                   maxlength="256"
                   placeholder="请输入文章描述"
+                  type="textarea"
+                  rows="5"
                   show-word-limit
                 />
               </el-form-item>
