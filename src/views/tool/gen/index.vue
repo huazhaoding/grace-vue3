@@ -191,7 +191,7 @@ onActivated(() => {
     uniqueId.value = time;
     queryParams.value.pageNum = Number(route.query.pageNum);
     dateRange.value = [];
-    proxy.resetForm("queryForm");
+    proxy.resetForm("queryRef");
     getList();
   }
 })
