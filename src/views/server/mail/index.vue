@@ -305,7 +305,6 @@ function handleSelectionChange(selection) {
 
 /** 新增按钮操作 */
 function handleAdd() {
-  router.push({ path: "/server/mail/handle/add" });
   proxy.$tab.openPage("添加邮件", "/server/mail/handle/add", { pageNum: queryParams.value.pageNum })
 }
 // 查看邮件

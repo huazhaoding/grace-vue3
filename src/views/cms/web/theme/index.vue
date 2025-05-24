@@ -127,19 +127,20 @@ function getList() {
   }
 }
 
-//主题弹窗
+//上传主题弹窗
 function openUploadDialog() {
   isChoose.value = false;
   openDialog.value = true;
 }
 
-// 主题设置Link
+// 主题通用设置
 function handleSetting(row) {
   router.push({
     path: "/cms/web/theme/themeConfig/" + row.webName + "/" + row.themeName,
   });
 }
 
+// 主题编辑
 function themeEditLink() {
   router.push({
     path: "/cms/web/theme/themeEdit/" + route.params.webName,
@@ -154,12 +155,14 @@ function handleTheme(row) {
 
 }
 
+// 主题关联分类
 function handleCategory(row) {
   router.push({
     path: "/cms/web/theme/category/" + row.webName + "/" + row.themeName,
   });
 }
 
+// 同步配置
 function syncThemeHandle() {
   syncTheme(route.params.webName, {}).then((response) => {
     proxy.$modal.msgSuccess(response.msg);
@@ -174,6 +177,7 @@ function cancel() {
   proxy.$refs["uploadRef"].clearFiles();
 }
 
+// 删除主题
 function handleDelete(row) {
   delTheme(row.webName, row.themeName).then((response) => {
     proxy.$modal.msgSuccess("删除成功");
@@ -231,8 +235,6 @@ function uploadRemove(file, files) {
   isChoose.value = false;
   return true;
 }
-
-
 
 function uploadTheme() {
   proxy.$refs["uploadRef"].submit();
