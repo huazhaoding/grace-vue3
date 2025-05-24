@@ -148,7 +148,6 @@ function themeEditLink() {
 
 // 主题个性配置弹窗
 function handleTheme(row) {
-
   router.push({
     path: "/cms/web/theme/themeSetting/" + row.webName + "/" + row.themeName,
   });

@@ -306,11 +306,12 @@ function handleSelectionChange(selection) {
 /** 新增按钮操作 */
 function handleAdd() {
   router.push({ path: "/server/mail/handle/add" });
+  proxy.$tab.openPage("添加邮件", "/server/mail/handle/add", { pageNum: queryParams.value.pageNum })
 }
 // 查看邮件
 function handleView(row) {
   const _mailId = row.mailId || ids.value;
-    router.push({ path: "/server/mail/handle/view/" + _mailId });
+    proxy.$tab.openPage("查看["+_mailId+"]邮件", "/server/mail/handle/view/" + _mailId)
 }
 
 /** 修改按钮操作 */

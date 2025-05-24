@@ -124,7 +124,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="visible">
           <el-radio-group v-model="form.visible">
-                <el-radio v-for="dict in sys_show_hide" :key="dict.value" :label="parseInt(dict.value)">{{ dict.label }}
+                <el-radio v-for="dict in sys_show_hide" :key="dict.value" :value="parseInt(dict.value)">{{ dict.label }}
                 </el-radio>
           </el-radio-group>
         </el-form-item>

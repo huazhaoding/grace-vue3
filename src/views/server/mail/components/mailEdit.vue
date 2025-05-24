@@ -19,14 +19,14 @@
             <el-form-item label="邮件类型" prop="mailType">
                 <el-radio-group v-model="form.mailType">
                     <el-radio v-for="dict in sys_server_mail_type" disabled :key="dict.dictSort"
-                        :label="dict.dictSort">{{ dict.label }}
+                        :value="dict.dictSort">{{ dict.label }}
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="邮件用途" prop="mailUsed">
                 <el-radio-group v-model="form.mailUsed">
                     <el-radio v-for="dict in sys_server_mail_used" disabled :key="dict.dictSort"
-                        :label="dict.dictSort">{{ dict.label }}
+                        :value="dict.dictSort">{{ dict.label }}
                     </el-radio>
                 </el-radio-group>
             </el-form-item>

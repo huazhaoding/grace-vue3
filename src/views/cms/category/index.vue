@@ -137,7 +137,7 @@
             <el-form-item label="节点类型" prop="nodeType">
               <el-radio-group v-model="form.nodeType">
                 <el-radio v-for="dict in cms_category_node_type" :key="dict.dictSort"
-                  v-show="proxy.includeDict(allowNodeTypeDict, dict.dictSort)" :label="dict.dictSort">{{ dict.label }}
+                  v-show="proxy.includeDict(allowNodeTypeDict, dict.dictSort)" :value="dict.dictSort">{{ dict.label }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
@@ -171,7 +171,7 @@
           <el-col :span="12">
             <el-form-item label="类目状态" prop="visible">
               <el-radio-group v-model="form.visible">
-                <el-radio v-for="dict in sys_show_hide" :key="dict.value" :label="parseInt(dict.value)">{{ dict.label }}
+                <el-radio v-for="dict in sys_show_hide" :key="dict.value" :value="parseInt(dict.value)">{{ dict.label }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>

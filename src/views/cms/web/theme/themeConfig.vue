@@ -169,7 +169,7 @@
             </el-form-item>
             <el-form-item label="主题状态：">
               <el-radio-group v-model="themeData.themeEnabled">
-                <el-radio v-for="dict in cms_theme_enabled" :key="dict.value" :label="Number(dict.dictSort)">{{
+                <el-radio v-for="dict in cms_theme_enabled" :key="dict.value" :value="Number(dict.dictSort)">{{
                   dict.label }}
                 </el-radio>
               </el-radio-group>

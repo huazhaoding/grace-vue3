@@ -6,7 +6,7 @@
         <el-select ref="themeSelect"   v-model="chooseForm.themeName" placeholder="请选择站点" clearable>
           <el-option-group v-for="(themes, key) of themeMapData" :key="key" :label="key">
             <el-option v-for="theme in themes" :key="theme.webName + '_' + theme.themeName" :label="theme.themeName"
-              :value="theme.webName + '_' + theme.themeName" @click="themeChange(theme)" />
+            :value="theme.webName + '_' + theme.themeName" @click="themeChange(theme)" />
           </el-option-group>
         </el-select>
       </el-form-item>
@@ -14,7 +14,7 @@
       <el-form-item label="发布类型" prop="articleType">
         <el-radio-group v-model="chooseForm.articleType"  @change="allowDictData">
           <el-radio v-for="dict in articleTypes" v-show="supportType.includes(dict.dictSort+'')" :key="dict.value"
-            :label="Number(dict.value)">{{
+            :value="Number(dict.value)">{{
               dict.label
             }}</el-radio>
         </el-radio-group>
@@ -22,7 +22,7 @@
       <el-form-item label="编辑器" prop="articleEdit">
         <el-radio-group v-model="chooseForm.articleEdit" @change="chooseEditLink">
           <el-radio v-for="dict in articleEdits" :key="dict.dictSort"
-            v-show="proxy.includeDict(allowDict, dict.dictSort)" :label="dict.label">{{ dict.label }}
+            v-show="proxy.includeDict(allowDict, dict.dictSort)" :value="dict.label">{{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>

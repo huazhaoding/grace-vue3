@@ -255,7 +255,7 @@
                 <el-radio :disabled="isHand"
                   v-for="dict in cms_contact_type"
                   :key="dict.value"
-                  :label="Number(dict.value)"
+                  :value="Number(dict.value)"
                   >{{ dict.label }}</el-radio
                 >
               </el-radio-group>
@@ -297,7 +297,7 @@
                 <el-radio
                   v-for="dict in cms_contact_visible"
                   :key="dict.value"
-                  :label="Number(dict.value)"
+                  :value="Number(dict.value)"
                   >{{ dict.label }}</el-radio
                 >
               </el-radio-group>
