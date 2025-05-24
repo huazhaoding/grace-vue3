@@ -94,7 +94,7 @@ import {
 import Vue3Tinymce from "@/components/Editor/TinymceEdit";
 import uploadAttach from "@/views/server/mail/components/uploadAttach";
 import KeysTag from "@/components/KeysTag";
-
+const route = useRoute();
 const { proxy } = getCurrentInstance();
 const props = defineProps({
     handleCode: {
@@ -120,7 +120,6 @@ const props = defineProps({
     }
 });
 const {
-    sys_true_false,
     sys_server_mail_type,
     sys_server_mail_used,
     sys_server_mail_visible,
@@ -201,10 +200,8 @@ function sendMailHandle() {
 
 function backMailPage() {
     // 关闭当前tab页签，打开新页签
-    const obj = { path: "/server/mail", name: "Mail" };
-    proxy.$tab.closeOpenPage(obj).then(() => {
-        proxy.$tab.refreshPage(obj);
-    });
+    const obj = {  path: "/server/mail", query: { t: Date.now(), pageNum: route.query.pageNum },name: "Mail" }
+    proxy.$tab.closeOpenPage(obj);
 }
 
 function initForm() {

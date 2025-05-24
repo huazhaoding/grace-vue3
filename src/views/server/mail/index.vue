@@ -187,7 +187,8 @@ import {
   delMail,
   updateConfig,
 } from "@/api/server/mail";
-
+const route = useRoute();
+const uniqueId = ref("");
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const {
@@ -273,7 +274,15 @@ function getList() {
   });
 }
 
-
+onActivated(() => {
+  const time = route.query.t;
+  if (time != null && time != uniqueId.value) {
+    uniqueId.value = time;
+    queryParams.value.pageNum = Number(route.query.pageNum);
+    proxy.resetForm("queryForm");
+    getList();
+  }
+})
 
 
 
@@ -304,7 +313,6 @@ function handleAdd() {
 function handleView(row) {
   const _mailId = row.mailId || ids.value;
     router.push({ path: "/server/mail/handle/view/" + _mailId });
-
 }
 
 /** 修改按钮操作 */
@@ -318,14 +326,13 @@ function handleUpdate(row) {
       })
       .then(() => {
         handleQuery();
-        router.push({ path: "/server/mail/handle/update/" + _mailId });
+        proxy.$tab.openPage("修改[" + _mailId + "]内容", "/server/mail/handle/update/" + _mailId, { pageNum: queryParams.value.pageNum })
       })
       .catch(() => { });
   else {
-    router.push({ path: "/server/mail/handle/update/" + _mailId });
+      proxy.$tab.openPage("修改[" + _mailId + "]内容", "/server/mail/handle/update/" + _mailId, { pageNum: queryParams.value.pageNum })
   }
 }
-
 
 // 选择时间
 function changeTime(value) {
