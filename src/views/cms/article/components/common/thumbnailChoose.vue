@@ -92,7 +92,6 @@ watch(
   (val) => {
     if (val) {
       emit("update:modelValue", val);
-      emit("update:", val);
     }
   },
   { deep: true, immediate: true }
