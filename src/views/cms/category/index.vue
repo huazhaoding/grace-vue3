@@ -2,16 +2,20 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="类目ID" prop="categoryId">
-        <el-input v-model="queryParams.categoryId" placeholder="请输入类目ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.categoryId" placeholder="请输入类目ID" clearable style="width: 240px"
+          @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类目名字" prop="categoryName">
-        <el-input v-model="queryParams.categoryName" placeholder="请输入类目名字" clearable style="width: 240px" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.categoryName" placeholder="请输入类目名字" clearable style="width: 240px"
+          @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="父ID" prop="parentId">
-        <el-input v-model="queryParams.parentId" placeholder="请输入父ID" clearable style="width: 240px" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.parentId" placeholder="请输入父ID" clearable style="width: 240px"
+          @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="创建人" prop="createBy">
-        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable style="width: 240px" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.createBy" placeholder="请输入创建人" clearable style="width: 240px"
+          @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类目状态" prop="visible">
         <el-select v-model="queryParams.visible" placeholder="请选择类目状态" clearable style="width: 240px">
@@ -36,18 +40,15 @@
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['cms:category:add']">新增</el-button>
       </el-col>
-
       <el-col :span="1.5">
         <el-button type="info" plain icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
     </el-row>
-
     <el-table v-if="refreshTable" v-loading="loading" :data="categoryList" row-key="categoryId"
       :default-expand-all="isExpandAll" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
       <el-table-column label="类目ID" prop="categoryId" />
@@ -122,11 +123,12 @@
 
     <!-- 添加或修改类目对话框 -->
     <el-dialog :title="title" v-model="open" width="600px" append-to-body>
-      <el-form ref="categoryRef" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="categoryRef" :model="form" :rules="rules" label-width="90px">
         <el-row>
           <el-col :span="24">
             <el-form-item label="上层元素" prop="parentId">
-              <el-tree-select :disabled="title!='添加类目'" v-model="form.parentId" :data="categoryOptions" @node-click="clickCategoryTree"
+              <el-tree-select :disabled="title != '添加类目'" v-model="form.parentId" :data="categoryOptions"
+                @node-click="clickCategoryTree"
                 :props="{ value: 'categoryId', label: 'categoryName', children: 'children' }" value-key="categoryId"
                 placeholder="请选择父元素" check-strictly />
             </el-form-item>
@@ -152,7 +154,8 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="栏目图标" prop="categoryIcon">
-              <image-upload v-model="form.categoryIcon" :fileSize="1" :fileType='["png", "jpg", "jpeg","ico"]' :limit="1" />
+              <image-upload v-model="form.categoryIcon" :fileSize="1" :fileType='["png", "jpg", "jpeg", "ico"]'
+                :limit="1" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -172,7 +175,32 @@
                 </el-radio>
               </el-radio-group>
             </el-form-item>
-          </el-col>
+          </el-col :span="24">
+          <el-form-item prop="pageType">
+                <template #label>
+                  <span>
+                    <el-tooltip content="需要搭配主题使用" placement="top">
+                      <el-icon>
+                        <question-filled />
+                      </el-icon>
+                    </el-tooltip>
+                    页面类型
+                  </span>
+                </template>
+                <el-select
+                  size="large"
+                  v-model="form.pageType"
+                  placeholder="请选择页面类型"
+                  style="width: 240px"
+                >
+                  <el-option
+                    v-for="dict in cms_page_type"
+                    :key="dict.value"
+                    :label="dict.label"
+                    :value="dict.value"
+                  />
+                </el-select>
+            </el-form-item>
           <el-col :span="24">
             <el-form-item prop="keywords">
               <template #label>
@@ -207,11 +235,11 @@
         </div>
       </template>
     </el-dialog>
-     <!-- 查看关联主题对话框 -->
-     <el-dialog :title="themeTitle" v-model="themOpen" width="500px" append-to-body>
+    <!-- 查看关联主题对话框 -->
+    <el-dialog :title="themeTitle" v-model="themOpen" width="500px" append-to-body>
       <el-table :data="themeData" style="width: 100%">
-        <el-table-column prop="themeName" label="主题名"  />
-        <el-table-column prop="categoryId" label="类目ID"  />
+        <el-table-column prop="themeName" label="主题名" />
+        <el-table-column prop="categoryId" label="类目ID" />
       </el-table>
       <template #footer>
         <div class="dialog-footer">
@@ -223,14 +251,15 @@
 </template>
 
 <script setup name="Category">
-import { listCategory, getCategory, delCategory, addCategory, updateCategory,listCategoryTheme } from "@/api/cms/category";
+import { listCategory, getCategory, delCategory, addCategory, updateCategory, listCategoryTheme } from "@/api/cms/category";
 import KeysTag from "@/components/KeysTag";
 import { getHold } from "@/api/system/hold";
 const router = useRouter();
 const { proxy } = getCurrentInstance();
-const { cms_category_node_type, sys_show_hide } = proxy.useDict(
+const { cms_category_node_type, sys_show_hide,cms_page_type } = proxy.useDict(
   "cms_category_node_type",
-  "sys_show_hide"
+  "sys_show_hide",
+  "cms_page_type"
 );
 const allowNodeTypeDict = ref([]);
 const categoryList = ref([]);
@@ -242,9 +271,9 @@ const title = ref("");
 const isExpandAll = ref(true);
 const refreshTable = ref(true);
 const dateRange = ref([]);
-const themOpen=ref(false);
-const themeTitle=ref("查看关联主题");
-const themeData=ref([]);
+const themOpen = ref(false);
+const themeTitle = ref("查看关联主题");
+const themeData = ref([]);
 const data = reactive({
   form: {},
   queryParams: {
@@ -281,15 +310,15 @@ const columns = ref([
   { key: 10, label: `类目路径`, visible: false },
 ]);
 
-function handleThemeDialog(row){
+function handleThemeDialog(row) {
   listCategoryTheme(row.categoryId).then((response) => {
-    themeData.value=response.data;
+    themeData.value = response.data;
     themOpen.value = true;
-});
+  });
 
 }
 
-function themeDialogCancel(){
+function themeDialogCancel() {
   themOpen.value = false;
 }
 
@@ -403,7 +432,7 @@ async function getAllowDict(parentId) {
 }
 
 async function allowDictData(nodeType) {
-  getHold(2,"nodeType_" + nodeType).then((response) => {
+  getHold(2, "nodeType_" + nodeType).then((response) => {
     if (response.hasOwnProperty("data")) {
       allowNodeTypeDict.value = response.data.holdData;
     }
@@ -413,14 +442,14 @@ async function allowDictData(nodeType) {
   });
 }
 
-function handleArticleList(row){
-  router.push({path: "/cms/article",query:{categoryId:row.categoryId}});
+function handleArticleList(row) {
+  router.push({ path: "/cms/article", query: { categoryId: row.categoryId } });
 
 }
 
 
 function clickCategoryTree(item, data) {
-  form.value.nodeType=null;
+  form.value.nodeType = null;
   if (item.columnId == 0) {
     allowDictData(-1);
   }

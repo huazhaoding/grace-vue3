@@ -74,7 +74,6 @@
                   v-model="form.pageType"
                   placeholder="请选择页面类型"
                   style="width: 240px"
-                  :multiple-limit="maxTag"
                 >
                   <el-option
                     v-for="dict in cms_page_type"
