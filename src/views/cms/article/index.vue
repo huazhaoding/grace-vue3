@@ -251,7 +251,6 @@ function getCategoryTree(data) {
 /** 节点单击事件 */
 function handleNodeClick(data) {
   queryParams.value.categoryId = data.id;
-  router.replace({ path: '/cms/article',query: { categoryId: data.id } });
   handleQuery();
 }
 
@@ -267,6 +266,7 @@ function getList() {
   );
 }
 
+// 检测路由参数的变化并重新加载数据
 onActivated(() => {
   const time = route.query.t;
   if (time != null && time != uniqueId.value) {
@@ -277,7 +277,6 @@ onActivated(() => {
     getList();
   }
 })
-
 
 themeMap().then((response) => {
   themeMapData.value = response.data;

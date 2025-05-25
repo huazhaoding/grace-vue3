@@ -443,7 +443,7 @@ async function allowDictData(nodeType) {
 
 // 查看关联文章
 function handleArticleList(row) {
-  proxy.$tab.refreshPage({path:"/cms/article",query: { categoryId: row.categoryId},name: "Article"});
+  proxy.$tab.refreshPage({path:"/cms/article",query: { categoryId: row.categoryId,t: Date.now()},name: "Article"});
 }
 
 

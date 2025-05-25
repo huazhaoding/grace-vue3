@@ -289,7 +289,6 @@ import {
 } from "@/api/cms/article";
 import left from "@/components/Left";
 import { getTheme } from "@/api/cms/theme";
-
 const props = defineProps({
   articleContent: {
     type: String,
@@ -308,7 +307,6 @@ const props = defineProps({
     default: 1,
   },
 });
-
 const route = useRoute();
 const activeTab = ref("basic");
 const { proxy } = getCurrentInstance();
@@ -357,7 +355,6 @@ const data = reactive({
     ],
   },
 });
-
 const { form, rules } = toRefs(data);
 
 // 监听编辑器内容变化
@@ -370,7 +367,6 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
 // 监听Md内容变化
 watch(
   () => props.articleMd,
@@ -388,8 +384,6 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
-
 //查询文章
 function selectArticle() {
   //修改文章
@@ -521,10 +515,10 @@ function submitForm() {
           if (response.code == 200) {
             proxy.$modal.msgSuccess("修改成功");
             if(route.query.pageNum){
-              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,articleId:route.query.categoryId,t: Date.now(),}, name: "Article" });
+              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,articleId:route.query.categoryId,t: Date.now()}, name: "Article" });
             }
             else{
-              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,t: Date.now(),}, name: "Article" });
+              proxy.$tab.closeOpenPage({ path: "/cms/article",query:{pageNum: route.query.pageNum,t: Date.now()}, name: "Article" });
             }
             
           } else {
