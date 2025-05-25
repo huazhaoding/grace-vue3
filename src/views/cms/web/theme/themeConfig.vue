@@ -13,10 +13,10 @@
               <div class="tab-container">
                 <el-tabs v-model="activeTab" type="border-card">
                   <el-tab-pane name="tab-1" label="网站设置">
-                    <el-form-item label="网站标题：" prop="oly.web.title">
+                    <el-form-item label="网站标题:" prop="oly.web.title">
                       <el-input v-model="formData['oly.web.title']" type="text" placeholder="请输入网站标题"></el-input>
                     </el-form-item>
-                    <el-form-item label="站点域名：" prop="oly.web.domain">
+                    <el-form-item label="站点域名:" prop="oly.web.domain">
                       <el-input v-model="formData['oly.web.domain']" type="text" placeholder="请输入网站域名"></el-input>
                     </el-form-item>
                     <el-form-item label="LOGO: " prop="oly.web.logo">
@@ -25,73 +25,73 @@
                     <el-form-item label="ICO: " prop="oly.web.ico">
                       <image-upload v-model="formData['oly.web.ico']" :limit="1" />
                     </el-form-item>
-                    <el-form-item label="网站版权：" prop="oly.web.copyright">
+                    <el-form-item label="网站版权:" prop="oly.web.copyright">
                       <el-input type="textarea" v-model.number="formData['oly.web.copyright']" rows="3"
                         placeholder="请输入网站版权"></el-input>
                     </el-form-item>
-                    <el-form-item label="页脚设置：" prop="oly.web.footer">
+                    <el-form-item label="页脚设置:" prop="oly.web.footer">
                       <el-input type="textarea" v-model.number="formData['oly.web.footer']" rows="3"
                         placeholder="请输入页脚设置"></el-input>
                     </el-form-item>
                   </el-tab-pane>
                   <el-tab-pane name="tab-2" label="默认页面">
-                    <el-form-item label="首页：" prop="oly.web.pageIndex">
+                    <el-form-item label="首页:" prop="oly.web.pageIndex">
                       <column-select v-model="formData['oly.web.pageIndex']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="分类页：" prop="oly.web.pageCategory.classify">
+                    <el-form-item label="分类页:" prop="oly.web.pageCategory.classify">
                       <column-select v-model="formData['oly.web.pageCategory.classify']"
                         :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="标签页：" prop="oly.web.pageCategory.tag">
+                    <el-form-item label="标签页:" prop="oly.web.pageCategory.tag">
                       <column-select v-model="formData['oly.web.pageCategory.tag']"
                         :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="排行榜：" prop="oly.web.pageRank">
+                    <el-form-item label="排行榜:" prop="oly.web.pageRank">
                       <column-select v-model="formData['oly.web.pageRank']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="导航页：" prop="oly.web.pageLinks">
+                    <el-form-item label="导航页:" prop="oly.web.pageLinks">
                       <column-select v-model="formData['oly.web.pageLinks']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="时间线：" prop="oly.web.pageTimeLine">
+                    <el-form-item label="时间线:" prop="oly.web.pageTimeLine">
                       <column-select v-model="formData['oly.web.pageTimeLine']"
                         :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="关于本站" prop="oly.web.pageAbout">
+                    <el-form-item label="关于本站:" prop="oly.web.pageAbout">
                       <column-select v-model="formData['oly.web.pageAbout']" :columnDatas="columnDatas"></column-select>
                     </el-form-item>
-                    <el-form-item label="联系页：" prop="oly.web.pageCallMe">
+                    <el-form-item label="联系页:" prop="oly.web.pageCallMe">
                       <column-select v-model="formData['oly.web.pageCallMe']"
                         :columnDatas="columnDatas"></column-select>
                     </el-form-item>
                   </el-tab-pane>
                   <el-tab-pane name="tab-3" label="主题设置">
-                    <el-form-item label="评论开关：" prop="oly.web.comment.enable">
+                    <el-form-item label="评论开关:" prop="oly.web.comment.enable">
                       <el-switch v-model="formData['oly.web.comment.enable']"></el-switch>
                     </el-form-item>
-                    <el-form-item label="重建索引文件：">
+                    <el-form-item label="重建索引文件:">
                       <el-button @click="reBulidSiteMapIndex">重建</el-button>
                     </el-form-item>
                   </el-tab-pane>
                   <el-tab-pane name="tab-4" label="站点相关">
-                    <el-form-item label="作者：" prop="oly.web.author">
+                    <el-form-item label="作者:" prop="oly.web.author">
                       <el-input v-model="formData['oly.web.author']" type="text" placeholder="请输入作者"></el-input>
                     </el-form-item>
-                    <el-form-item label="关于作者：" prop="oly.web.aboutAuthor">
+                    <el-form-item label="关于作者:" prop="oly.web.aboutAuthor">
                       <el-input type="textarea" v-model="formData['oly.web.aboutAuthor']" rows="3"></el-input>
                     </el-form-item>
-                    <el-form-item label="关于站点：" prop="oly.web.aboutSite">
+                    <el-form-item label="关于站点:" prop="oly.web.aboutSite">
                       <el-input type="textarea" v-model="formData['oly.web.aboutSite']" rows="3"></el-input>
                     </el-form-item>
-                    <el-form-item label="联系方式" prop="oly.web.authorCall">
+                    <el-form-item label="联系方式:" prop="oly.web.authorCall">
                       <el-input type="textarea" v-model="formData['oly.web.authorCall']" rows="3"></el-input>
                     </el-form-item>
                   </el-tab-pane>
                   <el-tab-pane name="tab-5" label="其他设置">
-                    <el-form-item label="自定义头部：" prop="oly.web.head">
+                    <el-form-item label="自定义头部:" prop="oly.web.head">
                       <el-input type="textarea" v-model="formData['oly.web.head']" rows="3"
                         placeholder="请输入自定义标题"></el-input>
                     </el-form-item>
-                    <el-form-item label="自定义脚本：" prop="oly.web.script">
+                    <el-form-item label="自定义脚本:" prop="oly.web.script">
                       <el-input type="textarea" v-model="formData['oly.web.script']" rows="3"
                         placeholder="请输入自定义脚本"></el-input>
                     </el-form-item>
@@ -100,7 +100,7 @@
                     <el-form-item prop="oly.web.hand.back">
                       <template #label>
                         <span>
-                          背景：
+                          背景:
                           <el-tooltip placement="top">
                             <template #content>
                               <div>
@@ -116,7 +116,7 @@
                     <el-form-item prop="oly.web.hand.logo">
                       <template #label>
                         <span>
-                          LOGO：
+                          LOGO:
                           <el-tooltip placement="top">
                             <template #content>
                               <div>
@@ -133,7 +133,11 @@
                 </el-tabs>
               </div>
             </el-form>
-            <el-button style="margin-left: 40%; margin-top: 10px" type="primary" @click="submitForm">确 定</el-button>
+            <el-button-group style="margin-left: 40%; margin-top: 10px"> 
+              <el-button  type="success" @click="submitForm">确 定</el-button>
+              <el-button style="margin-left:10px;" type="primary" @click="close">返回</el-button>
+            </el-button-group>
+          
           </div>
         </el-card>
       </el-col>
@@ -142,71 +146,74 @@
           <template #header>
             <div class="card-header">
               <span>主题信息</span>
-              <el-button type="primary" class="o" @click="updateHandel()">保存修改</el-button>
+              <el-button-group class="o">
+                <el-button type="success"  @click="updateHandel()">保存</el-button>
+                <el-button type="primary" style="margin-left:10px;" @click="close">返回</el-button>
+              </el-button-group>
             </div>
           </template>
           <div>
-            <el-form-item label="所属站点：">
+            <el-form-item label="所属站点:">
               {{ themeData.webName }}
             </el-form-item>
-            <el-form-item label="主题编号：">
+            <el-form-item label="主题编号:">
               {{ themeData.themeName }}
             </el-form-item>
-            <el-form-item label="主题名字：">
+            <el-form-item label="主题名字:">
               <el-input v-model="themeData.siteName" type="text" placeholder="请输入主题名字"></el-input>
             </el-form-item>
-            <el-form-item label="主题类型：">
+            <el-form-item label="主题类型:">
               <el-select v-model="themeData.themeType" placeholder="请选择主题类型" style="width: 240px">
                 <el-option v-for="dict in cms_theme_type" :key="dict.value" :label="dict.label"
                   :value="Number(dict.value)"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="支持类型：" prop="supportArticleType">
+            <el-form-item label="支持类型:" prop="supportArticleType">
               <el-select v-model="themeData.supportArticleType" multiple placeholder="请选择类型" style="width: 240px">
                 <el-option v-for="dict in cms_article_type" :key="dict.value" :label="dict.label"
                   :value="dict.value"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="主题状态：">
+            <el-form-item label="主题状态:">
               <el-radio-group v-model="themeData.themeEnabled">
                 <el-radio v-for="dict in cms_theme_enabled" :key="dict.value" :value="Number(dict.dictSort)">{{
                   dict.label }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="主类别ID：">
+            <el-form-item label="主类别ID:">
               <el-select v-model="themeData.mainCategoryId" class="m-2" placeholder="请选择主类别" size="large"
                 style="width: 240px">
                 <el-option v-for="item in categoryData" :key="item.categoryId" :label="item.categoryName"
                   :value="item.categoryId" />
               </el-select>
             </el-form-item>
-            <el-form-item label="主菜单ID：">
+            <el-form-item label="主菜单ID:">
               <el-select v-model="themeData.mainColumnId" class="m-2" placeholder="请选择主菜单" size="large"
                 style="width: 240px">
                 <el-option v-for="item in columnMainDatas" :key="item.columnId" :label="item.columnName"
                   :value="item.columnId" />
               </el-select>
             </el-form-item>
-            <el-form-item label="支持更新：">
+            <el-form-item label="支持更新:">
               <el-switch disabled v-model="themeData.themeUpdate"></el-switch>
             </el-form-item>
-            <el-form-item label="主题地址：">
+            <el-form-item label="主题地址:">
               {{ themeData.themeUrl }}
             </el-form-item>
-            <el-form-item label="创建人：">
+            <el-form-item label="创建人:">
               {{ themeData.createBy }}
             </el-form-item>
-            <el-form-item label="联系方式：">
+            <el-form-item label="联系方式:">
               <JsonTag labelName="社交平台" valueName="账号" v-model="themeData.themeTouch"></JsonTag>
             </el-form-item>
-            <el-form-item label="主题作者：">
+            <el-form-item label="主题作者:">
               {{ themeData.themeAuthor }}
             </el-form-item>
-            <el-form-item label="创建时间：">
+            <el-form-item label="创建时间:">
               {{ themeData.createTime }}
             </el-form-item>
-            <el-form-item label="主题介绍：">
+            <el-form-item label="主题介绍:">
               {{ themeData.themeInfo }}
             </el-form-item>
           </div>
@@ -261,7 +268,7 @@ getTheme(webName.value, themeName.value).then((response) => {
   listColumn({ nodeType:1 }).then((res) => {
     columnMainDatas.value = res.data;
   });
-
+   // 栏目列表
   listColumn({ columnId: themeData.value.mainColumnId,nodeType:3 }).then((res) => {
     columnDatas.value = res.data;
   });
@@ -270,16 +277,16 @@ getTheme(webName.value, themeName.value).then((response) => {
       ","
     );
   }
-
-
 });
 
+//分类列表
 listCategory({ nodeType: 1 }).then(
   (response) => {
     categoryData.value = response.data;
   }
 );
 
+// 表单更新
 function updateHandel() {
   themeData.value.supportArticleType = themeData.value.supportArticleType.join(
     ","
@@ -308,6 +315,12 @@ function submitForm() {
     });
 }
 
+function close(){
+  const obj = { path: "/cms/web/theme/"+webName.value, query: { t: Date.now()}};
+  proxy.$tab.closeOpenPage(obj);
+}
+
+// 重建索引
 function reBulidSiteMapIndex() {
   proxy.$modal.confirm('是否要重建站点地图索引？').then(() => {
     updateSiteMapIndex(webName.value, themeName.value).then((response) => {

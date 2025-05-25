@@ -14,8 +14,9 @@
           @click="syncThemeHandle">同步主题</el-button>
       </el-col>
       <el-table :data="themeList">
-        <el-table-column label="站点名" align="center" prop="webName" />
-        <el-table-column label="主题名" align="center" prop="themeName" />
+        <el-table-column label="站点名字" align="center" prop="webName" />
+        <el-table-column label="主题名字" align="center" prop="siteName" />
+        <el-table-column label="主题编号" align="center" prop="themeName" />
         <el-table-column label="创建者" align="center" prop="createBy" />
         <el-table-column label="主题作者" align="center" prop="themeAuthor" />
         <el-table-column label="上传时间" align="center" prop="createTime" width="180">
@@ -96,9 +97,11 @@ import { getToken } from "@/utils/auth"; // 自己存储token的文件
 import { listTheme, delTheme, syncTheme } from "@/api/cms/theme";
 const { proxy } = getCurrentInstance();
 const router = useRouter();
+const route = useRoute();
+const uniqueId = ref("");
 const data = reactive({
   //附带参数
-  uploadParam: {
+uploadParam: {
     cover: "false",
     coverConfig: "false",
     webName: null,
@@ -115,7 +118,6 @@ const uploadUrl = ref(
 );
 const openDialog = ref(false);
 const headers = ref({ Authorization: "Bearer " + getToken() });
-const route = useRoute();
 const themeList = ref([]);
 /** 查询主题列表 */
 function getList() {
@@ -132,6 +134,16 @@ function openUploadDialog() {
   isChoose.value = false;
   openDialog.value = true;
 }
+
+// 检测路由参数的变化并重新加载数据
+onActivated(() => {
+  const time = route.query.t;
+  if (time != null && time != uniqueId.value) {
+    uniqueId.value = time;
+    proxy.resetForm("queryRef");
+    getList();
+  }
+})
 
 // 主题通用设置
 function handleSetting(row) {
