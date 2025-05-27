@@ -495,6 +495,14 @@
      form.value.password = initPassword.value;
    });
  };
+
+ onMounted(() => {
+  getDeptTree()
+  getList()
+  proxy.getConfigValue("userConfig","sys.user.initPassword").then(response => {
+    initPassword.value = response.msg
+  })
+})
  
  /** 修改按钮操作 */
  function handleUpdate(row) {
