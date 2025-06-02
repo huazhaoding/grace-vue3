@@ -164,6 +164,16 @@
                 ></el-input>
               </el-form-item>
               <el-form-item
+                label="更新周期"
+                prop="sys.account.passwordValidateDays"
+              >
+                <el-input
+                  v-model="formData['sys.account.passwordValidateDays']"
+                  type="text"
+                  clearable
+                ></el-input>
+              </el-form-item>
+              <el-form-item
               label="IP黑名单"
               prop="sys.login.blackIPList"
             >
