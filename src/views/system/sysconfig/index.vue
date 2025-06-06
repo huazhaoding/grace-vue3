@@ -19,18 +19,18 @@
                   :rows="2"></el-input>
               </el-form-item>
               <el-form-item prop="sys.common.description.keywords">
-              <template #label>
-                <span>
-                  <el-tooltip content="关键词限制1-8个字符" placement="top">
-                    <el-icon>
-                      <question-filled />
-                    </el-icon>
-                  </el-tooltip>
-                  关键词
-                </span>
-              </template>
-              <keys-tag v-model="formData['sys.common.keywords']" :limit="5" :min-length="1" :max-length="8" />
-            </el-form-item>
+                <template #label>
+                  <span>
+                    <el-tooltip content="关键词限制1-8个字符" placement="top">
+                      <el-icon>
+                        <question-filled />
+                      </el-icon>
+                    </el-tooltip>
+                    关键词
+                  </span>
+                </template>
+                <keys-tag v-model="formData['sys.common.keywords']" :limit="5" :min-length="1" :max-length="8" />
+              </el-form-item>
               <el-form-item label="底部" prop="sys.common.footer">
                 <el-input v-model="formData['sys.common.footer']" type="textarea" :rows="4" placeholder="请输入底部代码" />
               </el-form-item>
@@ -48,8 +48,8 @@
               </el-form-item>
               <el-form-item label="公告开关" prop="sys.login.msg">
                 <el-radio-group v-model="formData['sys.login.msg']">
-                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label
-                    }}
+                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :value="dict.value == 'true'">{{ dict.label
+                  }}
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
@@ -61,15 +61,15 @@
             <el-col :span="8">
               <el-form-item label="验证开关" prop="sys.account.captchaEnabled">
                 <el-radio-group v-model="formData['sys.account.captchaEnabled']">
-                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label
-                    }}
+                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :value="dict.value == 'true'">{{ dict.label
+                  }}
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="用户注册" prop="sys.account.registerUser">
                 <el-radio-group v-model="formData['sys.account.registerUser']">
-                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label
-                    }}
+                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :value="dict.value == 'true'">{{ dict.label
+                  }}
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
@@ -95,8 +95,8 @@
               </el-form-item>
               <el-form-item label="密码更新" prop="sys.account.passwordValidateDays">
                 <el-radio-group v-model="formData['sys.account.passwordValidateDays']">
-                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :label="dict.value == 'true'">{{ dict.label
-                    }}
+                  <el-radio v-for="dict in sys_true_false" :key="dict.value" :value="dict.value == 'true'">{{ dict.label
+                  }}
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
@@ -108,7 +108,6 @@
               </el-form-item>
               <el-form-item label="IP黑名单" prop="sys.login.blackIPList">
                 <keys-tag v-model="formData['sys.login.blackIPList']" :limit="100" :min-length="7" :max-length="16" />
-
               </el-form-item>
             </el-col>
           </el-row>
@@ -132,13 +131,22 @@ const data = reactive({
   formData: {},
   rules: {},
 });
+let oldFormData = {};
 const { formData, rules, deptTreeList, roleList, postList } = toRefs(data);
 proxy.getConfigValueMap("sysConfig").then((response) => {
+  oldFormData=JSON.parse(JSON.stringify(response.data));
   formData.value = response.data;
 });
 /** 提交按钮 */
 function submitConfigForm() {
-  updateConfig(formData.value).then((response) => {
+  let data = {};
+  for (const key in formData.value) {
+    if (formData.value[key] != oldFormData[key]) {
+      data[key] = formData.value[key];
+    }
+  }
+
+  updateConfig(data).then((response) => {
     proxy.$modal.msgSuccess("修改成功");
   });
 }
