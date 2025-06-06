@@ -6,7 +6,7 @@
 
   <span v-if="addVisible">
     <el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" class="ml-1 w-20" size="small"
-      :maxlength="maxLength" :minlength="minLength" @keyup.enter="handleInputConfirm" />
+      :maxlength="maxLength" :minlength="minLength" @blur="handleInputConfirm" />
     <el-button v-else class="button-new-tag ml-1" size="small" type="primary" circle @click="showInput">+
     </el-button>
   </span>
