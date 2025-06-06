@@ -143,6 +143,7 @@ function submitConfigForm() {
   });
 }
 
+// 数据初始化
 function initData() {
   selectOptions().then((response) => {
     deptTreeList.value = response.deptTreeList;
