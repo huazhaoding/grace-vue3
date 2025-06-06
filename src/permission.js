@@ -21,15 +21,12 @@ const isWhiteList = (path) => {
 function setWebInfo(to, from, next){
   let webConfig=getWebConfig();
   document.title = webConfig.title + "_" + to.meta.title;
-  // 设置ico
+  //设置ico
   document.getElementById("headIco").href = webConfig.ico;
   //设置描述
   document.getElementById("headDescription").content = webConfig.description;
-  // //设置关键词
-  // document.getElementById("headKeywords").content = webConfig.keywords;
-  // //设置头部其它
-  // document.getElementById("headOther").content = webConfig.keywords;
-   console.log();
+  //设置关键词
+  document.getElementById("headKeywords").content = webConfig.keywords;
 }
 
 router.beforeEach((to, from, next) => {
