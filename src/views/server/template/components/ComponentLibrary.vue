@@ -19,6 +19,34 @@
  * {
  * }
  * 
+ * 表单类型 普通表单 tab表单
+ * 
+ * 普通表单格式
+ * 
+ * {
+ *   formStyle:{}
+ *   formItems:[]
+ *   formRules:[]
+ *   formMethods:[]
+ * }
+ * 
+ * tab表单格式
+ * 
+ * {
+ *   formStyle:{}
+ *   formTabs:{
+ *        tabStyle:{}
+ *        tabs:[ {tabName:'tab1',tabTitle:'选项卡1',formItems:[]},{tabName:'tab2',tabTitle:'选项卡2',formItems:[]} },
+ *        activeName:'tab1'
+ *   }
+ *   }
+ *    }
+ *   formRules:[]
+ *   formMethods:[]
+ * }
+ * 
+ * 
+ * 
  * 
  * 
  * 
