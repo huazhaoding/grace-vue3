@@ -24,83 +24,78 @@
     </el-dialog>
   </template>
   
-  <script>
-  export default {
-    name: "PreviewDialog",
-    props: {
-      modelValue: Boolean,
-      formTemplate: {
-        type: String,
-        default: "",
-      },
-      jsonData: {
-        type: Object,
-        default: () => ({}),
-      },
-    },
-    emits: ["update:modelValue"],
-    data() {
-      return {
-        activeTab: "formPreview",
-      };
-    },
-    computed: {
-      visible: {
-        get() {
-          return this.modelValue;
-        },
-        set(val) {
-          this.$emit("update:modelValue", val);
-        },
-      },
-    },
-    methods: {
-      // 复制表单内容
-      copyFormContent() {
-        navigator.clipboard.writeText(this.formTemplate).then(() => {
-          this.$message.success("表单内容已复制到剪贴板");
-        });
-      },
-      // 导出表单为 Vue 文件
-      exportFormAsVue() {
-        const blob = new Blob([this.formTemplate], { type: "text/plain" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "form-template.vue";
-        link.click();
-        this.$message.success("表单模板已导出");
-      },
-      // 复制 JSON 内容
-      copyJsonContent() {
-        const jsonString = JSON.stringify(this.jsonData, null, 2);
-        navigator.clipboard.writeText(jsonString).then(() => {
-          this.$message.success("JSON 内容已复制到剪贴板");
-        });
-      },
-      // 导出 JSON 文件
-      exportJsonFile() {
-        const jsonString = JSON.stringify(this.jsonData, null, 2);
-        const blob = new Blob([jsonString], { type: "application/json" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "data.json";
-        link.click();
-        this.$message.success("JSON 文件已导出");
-      },
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .preview-content {
-    padding: 16px;
-    border: 1px solid #ebeef5;
-    border-radius: 4px;
-    background-color: #f9fafc;
-  }
-  .actions {
-    margin-top: 16px;
-    display: flex;
-    gap: 8px;
-  }
-  </style>
+<script setup>
+import { ref, computed } from 'vue';
+
+// Props 定义
+const props = defineProps({
+  modelValue: Boolean,
+  formTemplate: {
+    type: String,
+    default: "",
+  },
+  jsonData: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+// Emits 定义
+const emit = defineEmits(["update:modelValue"]);
+
+// 状态管理
+const activeTab = ref("formPreview");
+
+// 计算属性
+const visible = computed({
+  get: () => props.modelValue,
+  set: (val) => emit("update:modelValue", val),
+});
+
+// 方法定义
+const copyFormContent = () => {
+  navigator.clipboard.writeText(props.formTemplate).then(() => {
+    alert("表单内容已复制到剪贴板");
+  });
+};
+
+const exportFormAsVue = () => {
+  const blob = new Blob([props.formTemplate], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "form-template.vue";
+  link.click();
+  alert("表单模板已导出");
+};
+
+const copyJsonContent = () => {
+  const jsonString = JSON.stringify(props.jsonData, null, 2);
+  navigator.clipboard.writeText(jsonString).then(() => {
+    alert("JSON 内容已复制到剪贴板");
+  });
+};
+
+const exportJsonFile = () => {
+  const jsonString = JSON.stringify(props.jsonData, null, 2);
+  const blob = new Blob([jsonString], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "data.json";
+  link.click();
+  alert("JSON 文件已导出");
+};
+</script>
+
+<style scoped>
+.preview-content {
+  padding: 16px;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  background-color: #f9fafc;
+}
+.actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+</style>
