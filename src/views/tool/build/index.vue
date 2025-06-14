@@ -222,12 +222,8 @@ const dialogVisible = ref(false);
 const showFileName = ref(false);
 const operationType = ref("");
 const previewDialogVisible = ref(false);
-const jsonData = ref({
-        name: "example",
-        value: 123,
-      });
-const formTemplate = ref("<template>\n  <div>这是一个表单模板</div>\n</template>");
-
+const formTemplate = ref("");
+const jsonData = ref({});
 const idGlobal = ref(100);
 const activeData = ref(drawingDefalut[0]);
 const activeId = ref(drawingDefalut[0].formId);
@@ -242,9 +238,9 @@ function  openPreview() {
     fileName: undefined,
     type: 'file'
   };
-
-  formTemplate.value = generateCode();
-   AssembleFormData();
+  AssembleFormData();
+   formTemplate.value = generateCode();
+    
    jsonData.value =formData.value;  
     previewDialogVisible.value = true;
 }

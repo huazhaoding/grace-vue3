@@ -3,21 +3,21 @@
       <!-- Tab 标签 -->
       <el-tabs v-model="activeTab">
         <el-tab-pane label="表单模板预览" name="formPreview">
-          <div class="preview-content">
-            <pre>{{ formTemplate }}</pre>
-            <div class="actions">
+          <div class="actions">
               <el-button type="primary" @click="copyFormContent">复制表单内容</el-button>
               <el-button type="success" @click="exportFormAsVue">导出为 Vue 文件</el-button>
             </div>
+          <div class="preview-content">
+            <Codemirror ref="jsonPreviewRef" v-model="formTemplate" :extensions="[vue(), oneDark]" :disabled="true" :options="codeOperate" basic />
           </div>
         </el-tab-pane>
         <el-tab-pane label="JSON 数据预览" name="jsonPreview">
-          <div class="preview-content">
-            <pre>{{ jsonData }}</pre>
-            <div class="actions">
+          <div class="actions">
               <el-button type="primary" @click="copyJsonContent">复制 JSON 内容</el-button>
               <el-button type="success" @click="exportJsonFile">导出为 JSON 文件</el-button>
             </div>
+          <div class="preview-content">
+            <Codemirror ref="templatePreviewRef" v-model="jsonData" :extensions="[json(), oneDark]" :disabled="true" :options="codeOperate" basic />
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -25,7 +25,11 @@
   </template>
   
 <script setup>
-import { ref, computed } from 'vue';
+import Codemirror from "vue-codemirror6";
+import { vue } from "@codemirror/lang-vue";
+import { json } from "@codemirror/lang-json";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { ref, watch } from "vue";
 
 // Props 定义
 const props = defineProps({
@@ -39,6 +43,9 @@ const props = defineProps({
     default: () => ({}),
   },
 });
+const codeOperate=ref({
+      lineNumbers: true
+    })
 
 // Emits 定义
 const emit = defineEmits(["update:modelValue"]);
@@ -51,6 +58,19 @@ const visible = computed({
   get: () => props.modelValue,
   set: (val) => emit("update:modelValue", val),
 });
+
+
+const jsonData=ref({});
+
+const formTemplate=ref(props.formTemplate);
+
+watch(() => props.jsonData, (val) => { 
+  jsonData.value=JSON.stringify(val, null, 2)
+});
+
+watch(() => props.formTemplate, (val) => {  
+  formTemplate.value=val;
+})
 
 // 方法定义
 const copyFormContent = () => {
@@ -94,8 +114,8 @@ const exportJsonFile = () => {
   background-color: #f9fafc;
 }
 .actions {
-  margin-top: 16px;
   display: flex;
   gap: 8px;
+  justify-content: flex-end;
 }
 </style>
