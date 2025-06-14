@@ -238,7 +238,15 @@ let oldActiveId;
 let tempActiveData;
 
 function  openPreview() {
-      previewDialogVisible.value = true;
+  generateConf.value = {
+    fileName: undefined,
+    type: 'file'
+  };
+
+  formTemplate.value = generateCode();
+   AssembleFormData();
+   jsonData.value =formData.value;  
+    previewDialogVisible.value = true;
 }
 
 function activeFormItem(element) {
