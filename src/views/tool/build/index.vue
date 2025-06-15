@@ -327,22 +327,6 @@ function updateDrawingList(newTag, list) {
     });
   }
 }
-function generate(data) {
-  generateConf.value = data;
-  nextTick(() => {
-    switch (operationType.value) {
-      case "copy":
-        execCopy(data);
-        break;
-      case "exportVue":
-        execDownload(data);
-        break;
-      default:
-        break;
-    }
-  });
-}
-
 
 
 function AssembleFormData() {
