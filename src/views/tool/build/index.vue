@@ -4,6 +4,7 @@
       <div class="logo-wrapper">
         <div class="logo"><img :src="logo" alt="logo" /> Form Generator</div>
       </div>
+      <!-- 左边组件库 -->
       <el-scrollbar class="left-scrollbar">
         <el-tabs v-model="leftActiveTab">
           <el-tab-pane label="组件库" name="componentLibrary">
@@ -97,6 +98,7 @@
       </el-scrollbar>
     </div>
     <div class="center-board">
+      <!-- 编辑器工具栏 -->
       <div class="action-bar">
         <el-button icon="topRight" type="primary"  @click="importJson">
           导入模板
@@ -114,6 +116,7 @@
           清空模板
         </el-button>
       </div>
+      <!-- 编辑器 -->
       <el-scrollbar class="center-scrollbar">
         <el-row class="center-board-row" :gutter="formConf.gutter">
           <el-form
@@ -150,6 +153,7 @@
         </el-row>
       </el-scrollbar>
     </div>
+    <!-- 右边属性库 -->
     <right-panel
       :active-data="activeData"
       :form-conf="formConf"

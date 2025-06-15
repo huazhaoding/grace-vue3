@@ -43,9 +43,9 @@ const componentChild = {
   'el-radio-group': {
     options(h, conf, key) {
       return conf.optionType === 'button' ? conf.options.map(item => h(resolveComponent('el-checkbox-button'), {
-        label: item.value,
+        value: item.value,
       }, () => item.label)) : conf.options.map(item => h(resolveComponent('el-radio'), {
-        label: item.value,
+        value: item.value,
         border: conf.border,
       }, () => item.label))
     }
@@ -53,9 +53,9 @@ const componentChild = {
   'el-checkbox-group': {
     options(h, conf, key) {
       return conf.optionType === 'button' ? conf.options.map(item => h(resolveComponent('el-checkbox-button'), {
-        label: item.value,
+        value: item.value,
       }, () => item.label)) : conf.options.map(item => h(resolveComponent('el-checkbox'), {
-        label: item.value,
+        value: item.value,
         border: conf.border,
       }, () => item.label))
     }
