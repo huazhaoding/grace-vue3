@@ -101,23 +101,8 @@
         <el-button icon="topRight" type="primary"  @click="importJson">
           导入模板
         </el-button>
-        <el-button icon="Eye" type="primary" @click="openPreview">
+        <el-button icon="View" type="primary" @click="openPreview">
           预览模板
-        </el-button>
-        <el-button icon="Download" type="primary"  @click="exportVue">
-          导出vue
-        </el-button>
-        <el-button icon="Memo" type="primary"  @click="exportJson">
-          导出JSON
-        </el-button>
-        <el-button
-          class="copy-btn-main"
-          icon="DocumentCopy"
-          type="primary"
-          text
-          @click="copy"
-        >
-          复制代码
         </el-button>
         <el-button
           class="delete-btn"
@@ -171,14 +156,7 @@
       :show-field="!!drawingList.length"
       @tag-change="tagChange"
     />
-
-    <code-type-dialog
-      v-model="dialogVisible"
-      title="选择生成类型"
-      :showFileName="showFileName"
-      @confirm="generate"
-    />
-    <input id="copyNode" type="hidden" />
+    
   </div>
    <preview-dialog v-model="previewDialogVisible"
       :formTemplate="formTemplate"
@@ -189,7 +167,6 @@
 
 <script setup>
 import draggable from "vuedraggable/dist/vuedraggable.common";
-import ClipboardJS from "clipboard";
 import PreviewDialog from "./PreviewDialog";
 import beautifier from "js-beautify";
 import logo from "@/assets/logo/logo.png";
@@ -209,18 +186,11 @@ import {
 } from "@/utils/generator/html";
 import { makeUpJs } from "@/utils/generator/js";
 import { makeUpCss } from "@/utils/generator/css";
-import Download from "@/plugins/download";
-import { ElNotification } from "element-plus";
 import DraggableItem from "./DraggableItem";
 import RightPanel from "./RightPanel";
-import CodeTypeDialog from "./CodeTypeDialog";
-import { onMounted, watch } from "vue";
 const leftActiveTab=ref("componentLibrary");  
 const drawingList = ref(drawingDefalut);
 const { proxy } = getCurrentInstance();
-const dialogVisible = ref(false);
-const showFileName = ref(false);
-const operationType = ref("");
 const previewDialogVisible = ref(false);
 const formTemplate = ref("");
 const jsonData = ref({});
@@ -249,16 +219,7 @@ function activeFormItem(element) {
   activeData.value = element;
   activeId.value = element.formId;
 }
-function copy() {
-  dialogVisible.value = true;
-  showFileName.value = false;
-  operationType.value = "copy";
-}
-function exportVue() {
-  dialogVisible.value = true;
-  showFileName.value = true;
-  operationType.value = "exportVue";
-}
+
 function empty() {
   proxy.$modal
     .confirm("确定要清空所有组件吗？", "提示", { type: "warning" })
@@ -378,16 +339,8 @@ function generate(data) {
   });
 }
 
-function execDownload(data) {
-  const codeStr = generateCode();
-  const blob = new Blob([codeStr], { type: "text/plain;charset=utf-8" });
-  console.log(proxy.download);
-  Download.saveAs(blob, data.fileName);
-}
 
-function execCopy(data) {
-  document.getElementById("copyNode").click();
-}
+
 function AssembleFormData() {
   formData.value = {
     fields: JSON.parse(JSON.stringify(drawingList.value)),
@@ -426,23 +379,6 @@ watch(
   }
 );
 
-onMounted(() => {
-  const clipboard = new ClipboardJS("#copyNode", {
-    text: (trigger) => {
-      const codeStr = generateCode();
-      ElNotification({
-        title: "成功",
-        message: "代码已复制到剪切板，可粘贴。",
-        type: "success",
-      });
-
-      return codeStr;
-    },
-  });
-  clipboard.on("error", (e) => {
-    ElMessage.error("代码复制失败");
-  });
-});
 </script>
 
 <style lang="scss">
