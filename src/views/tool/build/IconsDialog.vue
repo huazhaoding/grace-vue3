@@ -33,7 +33,6 @@ for (const [key] of Object.entries(ElementPlusIconsVue)) {
   iconList.value.push(key)
   originList.push(key)
 }
-
 function onOpen() {
 
 }

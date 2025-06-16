@@ -89,7 +89,6 @@
               </draggable>
             </div>
           </el-tab-pane>
-
           <el-tab-pane label="模板库" name="templateLibrary"> 
 
 
@@ -155,10 +154,11 @@
     </div>
     <!-- 右边属性库 -->
     <right-panel
-      :active-data="activeData"
+      :active-data-property="activeData"
       :form-conf="formConf"
       :show-field="!!drawingList.length"
       @tag-change="tagChange"
+      @activeDataChange="fieldsAttributeChange"
     />
     
   </div>
@@ -218,6 +218,11 @@ function  openPreview() {
    jsonData.value =formData.value;  
     previewDialogVisible.value = true;
 }
+
+function fieldsAttributeChange(data) {
+  console.log(data);
+  activeData.value = data;
+} 
 
 function activeFormItem(element) {
   activeData.value = element;

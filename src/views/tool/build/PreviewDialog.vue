@@ -25,10 +25,10 @@
       <el-tab-pane label="JSON 数据预览" name="jsonPreview">
         <div class="actions">
           <el-button type="primary" @click="copyJsonContent"
-            >复制 JSON 内容</el-button
+            >复制JSON内容</el-button
           >
           <el-button type="success" @click="exportJsonFile"
-            >导出为 JSON 文件</el-button
+            >导出JSON文件</el-button
           >
         </div>
         <div class="preview-content">

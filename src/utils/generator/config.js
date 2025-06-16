@@ -51,7 +51,7 @@ export const inputComponents = [
     },
     style: { width: '100%' },
     maxlength: null,
-    'show-word-limit': false,
+    'show-word-limit': true,
     readonly: false,
     disabled: false,
     required: true,

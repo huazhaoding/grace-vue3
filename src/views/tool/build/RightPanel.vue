@@ -68,8 +68,7 @@
             <el-input v-model="activeData.style.width" placeholder="请输入组件宽度" clearable />
           </el-form-item>
           <el-form-item v-if="activeData.vModel !== undefined" label="默认值">
-            <el-input :value="setDefaultValue(activeData.defaultValue)" placeholder="请输入默认值"
-              @input="onDefaultValueInput" />
+            <el-input v-model="activeData.defaultValue" placeholder="请输入默认值" />
           </el-form-item>
           <el-form-item v-if="activeData.tag === 'el-checkbox-group'" label="至少应选">
             <el-input-number :value="activeData.min" :min="0" placeholder="至少应选"
@@ -486,9 +485,14 @@ const dateTimeFormat = {
 }
 const props = defineProps({
   showField: Boolean,
-  activeData: Object,
+  activeDataProperty: Object,
   formConf: Object
-})
+});
+const activeData = ref(props.activeDataProperty);
+
+watch(() => props.activeDataProperty, (val) => {
+  activeData.value = val
+}, { immediate: true })
 
 const data = reactive({
   currentTab: 'field',
@@ -585,15 +589,15 @@ const data = reactive({
 
 const { currentTab, currentNode, dialogVisible, iconsVisible, currentIconModel, dateTypeOptions, dateRangeTypeOptions, colorFormatOptions, justifyOptions, layoutTreeProps } = toRefs(data)
 
-const documentLink = computed(() => props.activeData.document
+const documentLink = computed(() => activeData.value?.document
   || 'https://element-plus.org/zh-CN/guide/installation')
 
 const dateOptions = computed(() => {
   if (
-    props.activeData.type !== undefined
-    && props.activeData.tag === 'el-date-picker'
+    activeData.value.type !== undefined
+    && activeData.value.tag === 'el-date-picker'
   ) {
-    if (props.activeData['start-placeholder'] === undefined) {
+    if (activeData.value['start-placeholder'] === undefined) {
       return dateTypeOptions.value
     }
     return dateRangeTypeOptions.value
@@ -612,16 +616,22 @@ const tagList = ref([
   }
 ])
 
-const emit = defineEmits(['tag-change'])
+const emit = defineEmits(['tag-change','activeDataChange'])
+
+watch(() => activeData, (val) => {
+   console.log('activeDataChange', val)
+   emit('activeDataChange', val)
+},
+{ immediate: true })
 
 function addReg() {
-  props.activeData.regList.push({
+  activeData.value.regList.push({
     pattern: '',
     message: ''
   })
 }
 function addSelectItem() {
-  props.activeData.options.push({
+  activeData.value.options.push({
     label: '',
     value: ''
   })
@@ -630,7 +640,7 @@ function addSelectItem() {
 function addTreeItem() {
   ++proxy.idGlobal
   dialogVisible.value = true
-  currentNode.value = props.activeData.options
+  currentNode.value = activeData.value.options
 }
 
 function renderContent(h, { node, data, store }) {
@@ -706,31 +716,33 @@ function setDefaultValue(val) {
 }
 
 function onDefaultValueInput(str) {
-  if (Array.isArray(props.activeData.defaultValue)) {
+
+  if (Array.isArray(activeData.value.defaultValue)) {
     // 数组
-    props.activeData.defaultValue = str.split(',').map(val => (isNumberStr(val) ? +val : val))
+    activeData.value.defaultValue = str.split(',').map(val => (isNumberStr(val) ? +val : val))
   } else if (['true', 'false'].indexOf(str) > -1) {
     // 布尔
-    props.activeData.defaultValue = JSON.parse(str)
+    activeData.value.defaultValue = JSON.parse(str)
   } else {
     // 字符串和数字
-    props.activeData.defaultValue = isNumberStr(str) ? +str : str
+    activeData.value.defaultValue = isNumberStr(str) ? +str : str
   }
+  console.log('defaultValue', activeData.value.defaultValue)
 }
 
 function onSwitchValueInput(val, name) {
   if (['true', 'false'].indexOf(val) > -1) {
-    props.activeData[name] = JSON.parse(val)
+    activeData.value[name] = JSON.parse(val)
   } else {
-    props.activeData[name] = isNumberStr(val) ? +val : val
+    activeData.value[name] = isNumberStr(val) ? +val : val
   }
 }
 
 function setTimeValue(val, type) {
   const valueFormat = type === 'week' ? dateTimeFormat.date : val
-  props.activeData.defaultValue = null
-  props.activeData['value-format'] = valueFormat
-  props.activeData.format = val
+  activeData.value.defaultValue = null
+  activeData.value['value-format'] = valueFormat
+  activeData.value.format = val
 }
 
 function spanChange(val) {
@@ -738,7 +750,7 @@ function spanChange(val) {
 }
 
 function multipleChange(val) {
-  props.activeData.defaultValue = val ? [] : ''
+  activeData.value.defaultValue = val ? [] : ''
 }
 
 function dateTypeChange(val) {
@@ -746,21 +758,21 @@ function dateTypeChange(val) {
 }
 
 function rangeChange(val) {
-  props.activeData.defaultValue = val ? [props.activeData.min, props.activeData.max] : props.activeData.min
+  activeData.value.defaultValue = val ? [activeData.value.min, activeData.value.max] : activeData.value.min
 }
 
 function rateTextChange(val) {
-  if (val) props.activeData['show-score'] = false
+  if (val) activeData.value['show-score'] = false
 }
 
 function rateScoreChange(val) {
-  if (val) props.activeData['show-text'] = false
+  if (val) activeData.value['show-text'] = false
 }
 
 function colorFormatChange(val) {
-  props.activeData.defaultValue = null
-  props.activeData['show-alpha'] = val.indexOf('a') > -1
-  props.activeData.renderKey = +new Date() // 更新renderKey,重新渲染该组件
+  activeData.value.defaultValue = null
+  activeData.value['show-alpha'] = val.indexOf('a') > -1
+  activeData.value.renderKey = +new Date() // 更新renderKey,重新渲染该组件
 }
 
 function openIconsDialog(model) {
@@ -769,7 +781,7 @@ function openIconsDialog(model) {
 }
 
 function setIcon(val) {
-  props.activeData[currentIconModel.value] = val
+  activeData.value[currentIconModel.value] = val
 }
 
 function tagChange(tagIcon) {

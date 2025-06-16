@@ -4,6 +4,7 @@ import { trigger } from './config'
 let confGlobal
 let someSpanIsNot24
 
+// 弹窗
 export function dialogWrapper(str) {
   return `<el-dialog v-model="dialogVisible"  @open="onOpen" @close="onClose" title="Dialog Titile">
     ${str}
@@ -13,7 +14,7 @@ export function dialogWrapper(str) {
     </template>
   </el-dialog>`
 }
-
+//模板
 export function vueTemplate(str) {
   return `<template>
     <div class="app-container">
@@ -21,19 +22,21 @@ export function vueTemplate(str) {
     </div>
   </template>`
 }
-
+// 脚本
 export function vueScript(str) {
   return `<script setup>
     ${str}
   </script>`
 }
 
+// 样式
 export function cssStyle(cssStr) {
   return `<style>
     ${cssStr}
   </style>`
 }
 
+// 构建模板
 function buildFormTemplate(conf, child, type) {
   let labelPosition = ''
   if (conf.labelPosition !== 'right') {
@@ -52,6 +55,7 @@ function buildFormTemplate(conf, child, type) {
   return str
 }
 
+//构建表单按钮
 function buildFromBtns(conf, type) {
   let str = ''
   if (conf.formBtns && type === 'file') {
@@ -78,6 +82,7 @@ function colWrapper(element, str) {
   return str
 }
 
+// 布局
 const layouts = {
   colFormItem(element) {
     let labelWidth = ''
