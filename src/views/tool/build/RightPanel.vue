@@ -2,6 +2,7 @@
   <div class="right-board">
     <el-tabs v-model="currentTab" stretch class="center-tabs">
       <el-tab-pane label="组件属性" name="field" />
+      <el-tab-pane label="包围属性" name="hedge" />
       <el-tab-pane label="表单属性" name="form" />
     </el-tabs>
     <div class="field-box">
@@ -12,10 +13,10 @@
       </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
-        <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top"
-          style="">
+        <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top">
           <el-form-item v-if="activeData.changeTag" label="组件类型">
-            <el-select v-model="activeData.tagIcon" placeholder="请选择组件类型" :style="{ width: '100%' }" @change="tagChange">
+            <el-select v-model="activeData.tagIcon" placeholder="请选择组件类型" :style="{ width: '100%' }"
+              @change="tagChange">
               <el-option-group v-for="group in tagList" :key="group.label" :label="group.label">
                 <el-option v-for="item in group.options" :key="item.label" :label="item.label" :value="item.tagIcon">
                   <svg-icon class="node-icon" :icon-class="item.tagIcon" style="margin-right: 10px;" />
@@ -413,6 +414,82 @@
             </div>
           </template>
         </el-form>
+
+        <!-- 包围属性 -->
+        <!-- export const defaultItemHedge= {
+    model: {}, // 表单数据  
+    rules: {}, // 表单验证规则
+    inline: false, // 是否行内表单
+    labelPosition: "right", // 标签位置：left / right / top
+    labelWidth: "100px", // 标签宽度
+    labelSuffix: ":", // 标签后缀
+    hideRequiredAsterisk: false, // 是否隐藏必填字段的红色星号
+    showMessage: true, // 是否显示校验错误信息
+    inlineMessage: false, // 是否以行内形式展示校验信息
+    statusIcon: false, // 是否在输入框中显示校验结果反馈图标
+    validateOnRuleChange: true, // 是否在 rules 属性改变时重新触发校验
+    size: "default", // 尺寸：large / default / small
+    disabled: false, // 是否禁用该表单内的所有组件。 如果设置为 true, 它将覆盖内部组件的 disabled 属性
+    scrollToError: false, // 当校验失败时，是否滚动到第一个错误表单项
+    scrollToErrorOffset: 0, // 滚动到错误表单项时的偏移量
+    requireAsteriskPosition: "left", // 必填星号的位置：left / right
+  } -->
+        <!-- <el-form v-show="currentTab === 'hedge'" label-width="90px" label-position="top">
+          <el-form-item label="标签名称" v-if="hedgeConf.label !== undefined">
+            <el-input v-model="hedgeConf.label" placeholder="请输入标签名称" />
+          </el-form-item>
+          <el-form-item label="标签宽度" v-if="hedgeConf.labelWidth !== undefined">
+            <el-input v-model="hedgeConf.labelWidth" placeholder="请输入标签宽度" />
+          </el-form-item>
+          <el-form-item label="表单尺寸" v-if="hedgeConf.size !== undefined">
+            <el-radio-group>
+              <el-radio-button value="large" label="大" />
+              <el-radio-button value="default" label="中" />
+              <el-radio-button value="small" label="小" />
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="标签位置" v-if="hedgeConf.labelPosition !== undefined">
+            <el-radio-group>
+              <el-radio-button value="left" label="左边" />
+              <el-radio-button value="right" label="右边" />
+              <el-radio-button value="top" label="上边" />
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item v-if="hedgeConf.span !== undefined" label="表单栅格">
+            <el-slider v-model="hedgeConf.span" :max="24" :min="1" :marks="{ 12: '' }" @change="spanChange" />
+          </el-form-item>
+          <el-form-item label="是否必填" v-if="activeData.required !== undefined">
+            <el-switch v-model="activeData.required" />
+          </el-form-item>
+          <el-form-item label="错误提示" v-if="hedgeConf.error !== undefined">
+             <el-input v-model="hedgeConf.error" placeholder="请输入错误提示" />
+          </el-form-item>
+          <el--form-item label="显示校验信息" v-if="hedgeConf.showMessage !== undefined">
+          <el-switch v-model="hedgeConf.showMessage" />
+          </el--form-item>
+          <el-form-item label="是否行内显示校验信息" v-if="hedgeConf.inlineMessage !== undefined">
+            <el-switch v-model="hedgeConf.inlineMessage" />
+          </el-form-item> -->
+          <!--resetFields prop 必填
+              for,prop 均对应表单属性
+              validateStatus 表单验证状态 此处不可选  这是动态的
+          <el-form-item label="绑定属性" v-if="hedgeConf.prop !== undefined">
+            <el-input v-model="hedgeConf.prop" placeholder="请输入绑定属性" />
+          </el-form-item>
+           <el-form-item label="绑定元素" v-if="hedgeConf.for !== undefined">
+             <el-input v-model="hedgeConf.for" />
+          </el-form-item> 
+           <el-form-item label="校验状态" v-if="hedgeConf.validateStatus !== undefined">
+               <el-radio-group v-model="hedgeConf.validateStatus"> 
+                <el-radio label="success"></el-radio>
+                <el-radio label="error"></el-radio>
+                <el-radio label=""></el-radio>
+                <el-radio label="validating"></el-radio>
+               </el-radio-group>
+          </el-form-item> 
+
+        </el-form>
+-->
         <!-- 表单属性 -->
         <el-form v-show="currentTab === 'form'" label-width="90px" label-position="top">
           <el-form-item label="表单名">
@@ -616,13 +693,13 @@ const tagList = ref([
   }
 ])
 
-const emit = defineEmits(['tag-change','activeDataChange'])
+const emit = defineEmits(['tag-change', 'activeDataChange'])
 
 watch(() => activeData, (val) => {
-   console.log('activeDataChange', val)
-   emit('activeDataChange', val)
+  console.log('activeDataChange', val)
+  emit('activeDataChange', val)
 },
-{ immediate: true })
+  { immediate: true })
 
 function addReg() {
   activeData.value.regList.push({

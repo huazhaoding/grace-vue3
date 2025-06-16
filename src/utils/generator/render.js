@@ -1,4 +1,4 @@
-// render.js - 支持 show-word-limit 和 maxlength 动态处理
+// render.js - 支持生成字符串形式的 HTML 并修复 vnode.children 类型问题
 import { defineComponent, h } from 'vue'
 import { makeMap } from '@/utils/index'
 
@@ -49,6 +49,16 @@ export default defineComponent({
     if (confClone['show-word-limit'] && !confClone.maxlength) {
       confClone.maxlength = 100 // 设置一个默认值
     }
+
+    // 区分 label 和 aria-label
+    // if (confClone.label) {
+    //   if (['el-input'].includes(confClone.tag)) {
+    //     confClone['aria-label'] = confClone.label
+    //     delete confClone.label
+    //   } else {
+    //     dataObject.props.label = confClone.label
+    //   }
+    // }
 
     // 子元素 & 插槽处理
     const children = []
@@ -104,13 +114,62 @@ export default defineComponent({
       }
     })
 
-    return h(resolveComponent(this.conf.tag), {
+    // 打印调试日志
+    console.groupCollapsed('Render Debug Log')
+    console.log('原始配置对象:', this.conf)
+    console.log('克隆后的配置对象:', confClone)
+    console.log('最终传递的 props:', dataObject.props)
+    console.log('最终传递的 attrs:', dataObject.attrs)
+    console.log('插槽内容:', slot)
+    console.groupEnd()
+
+    // 生成虚拟 DOM
+    const vnode = h(resolveComponent(this.conf.tag), {
       modelValue: this.modelValue,
       'onUpdate:modelValue': (val) => this.$emit('update:modelValue', val),
       ...dataObject.props,
       ...dataObject.attrs,
       style: { ...dataObject.style }
     }, slot ?? null)
+
+    // 将虚拟 DOM 转换为字符串形式的 HTML
+    function vnodeToHtml(vnode) {
+      const propsStr = Object.entries(vnode.props || {})
+        .map(([key, value]) => {
+          if (typeof value === 'boolean') {
+            return value ? key : ''
+          }
+          return `${key}="${value}"`
+        })
+        .filter(Boolean)
+        .join(' ')
+
+      const attrsStr = Object.entries(vnode.attrs || {})
+        .map(([key, value]) => `${key}="${value}"`)
+        .join(' ')
+
+      const styleStr = Object.entries(vnode.style || {})
+        .map(([key, value]) => `${key}: ${value}`)
+        .join('; ')
+
+      const tag = vnode.type
+
+      // 处理 children
+      let innerHTML = ''
+      if (Array.isArray(vnode.children)) {
+        innerHTML = vnode.children.map(child => vnodeToHtml(child)).join('')
+      } else if (typeof vnode.children === 'string') {
+        innerHTML = vnode.children
+      } else if (typeof vnode.children === 'function') {
+        innerHTML = '[Function]'
+      }
+
+      return `<${tag} ${propsStr} ${attrsStr} style="${styleStr}">${innerHTML}</${tag}>`
+    }
+
+    console.log('生成的 HTML 字符串:', vnodeToHtml(vnode))
+
+    return vnode
   }
 })
 
