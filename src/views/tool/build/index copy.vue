@@ -14,32 +14,6 @@
               </div>
               <draggable
                 class="components-draggable"
-                :list="inputFormItems"
-                :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
-                :clone="cloneComponent"
-                draggable=".components-item"
-                :sort="false"
-                @end="onEnd"
-                item-key="label"
-              >
-                <template #item="{ element, index }">
-                  <div
-                    :key="index"
-                    class="components-item"
-                    @click="addComponent(element)"
-                  >
-                    <div class="components-body">
-                      <svg-icon :icon-class="element.formItemAttr.tagIcon" />
-                      {{ element.formItemAttr.ariaLabel }}
-                    </div>
-                  </div>
-                </template>
-              </draggable>
-              <div class="components-title">
-                <svg-icon icon-class="component" />输入型组件
-              </div>
-              <draggable
-                class="components-draggable"
                 :list="inputComponents"
                 :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
                 :clone="cloneComponent"
@@ -148,7 +122,7 @@
             :size="formConf.size"
             :label-position="formConf.labelPosition"
             :disabled="formConf.disabled"
-            :label-width="formConf.labelWidth + 'px'"    
+            :label-width="formConf.labelWidth + 'px'"
           >
             <draggable
               class="drawing-board"
@@ -201,7 +175,6 @@ import PreviewDialog from "./PreviewDialog"; // 导入预览对话框组件
 import beautifier from "js-beautify"; // 用于格式化生成的代码
 import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
 import {
-  inputFormItems, // 输入型组件配置项
   inputComponents, // 输入型组件配置
   selectComponents, // 选择型组件配置 
   layoutComponents, // 布局型组件配置
@@ -220,17 +193,16 @@ import { makeUpJs } from "@/utils/generator/js"; // 生成 JS 脚本
 import { makeUpCss } from "@/utils/generator/css"; // 生成 CSS 样式
 import DraggableItem from "./DraggableItem"; // 导入可拖拽表单项组件
 import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
-import { watch } from "vue";
 
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
-const drawingList = ref([]); // 当前表单项列表
+const drawingList = ref(drawingDefalut); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
 const previewDialogVisible = ref(false); // 控制预览对话框显示状态
 const formTemplate = ref(""); // 存储生成的表单模板
 const jsonData = ref({}); // 存储生成的 JSON 数据
 const idGlobal = ref(100); // 全局唯一 ID 生成器
-const activeData = ref([]); // 当前激活的表单项数据
-const activeId = ref(null); // 当前激活的表单项 ID
+const activeData = ref(drawingDefalut[0]); // 当前激活的表单项数据
+const activeId = ref(drawingDefalut[0].formId); // 当前激活的表单项 ID
 const generateConf = ref(null); // 生成配置
 const formData = ref({}); // 表单数据对象
 const formConf = ref(formConfData); // 表单全局配置
@@ -251,8 +223,7 @@ function openPreview() {
 
 // 更新字段属性
 function fieldsAttributeChange(data) {
-  activeData.value.formItemAttribute = data.formItemAttribute;
-  activeData.value.formItemHedge = data.formItemHedge;
+  console.log(data);
   activeData.value = data; // 更新当前激活的表单项数据
 }
 
@@ -274,7 +245,6 @@ function empty() {
 
 // 拖拽结束时触发
 function onEnd(obj, a) {
-
   if (obj.from !== obj.to) {
     activeData.value = tempActiveData; // 更新当前激活的表单项数据
     activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
@@ -283,7 +253,6 @@ function onEnd(obj, a) {
 
 // 添加组件到表单
 function addComponent(item) {
-  console.log("addComponent",item);
   const clone = cloneComponent(item); // 克隆组件
   drawingList.value.push(clone); // 将克隆的组件添加到表单项列表
   activeFormItem(clone); // 激活新添加的组件
@@ -297,7 +266,7 @@ function cloneComponent(origin) {
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   if (!clone.layout) clone.layout = "colFormItem"; // 如果未定义 layout，默认为 colFormItem
   if (clone.layout === "colFormItem") {
-    clone.formItemAttr.vModel = `field${idGlobal.value}`; // 动态生成 vModel
+    clone.vModel = `field${idGlobal.value}`; // 动态生成 vModel
     clone.placeholder !== undefined && (clone.placeholder += clone.label); // 动态生成 placeholder
     tempActiveData = clone; // 临时存储克隆的组件
   } else if (clone.layout === "rowFormItem") {
@@ -306,7 +275,6 @@ function cloneComponent(origin) {
     clone.gutter = formConf.value.gutter; // 设置 gutter 属性
     tempActiveData = clone; // 临时存储克隆的组件
   }
-
   return tempActiveData; // 返回克隆的组件
 }
 
@@ -411,10 +379,6 @@ watch(
       activeData.value.placeholder.replace(oldVal, "") + val; // 动态更新 placeholder
   }
 );
-
-watch(formConf,(val)=>{ 
-  console.log(val)
-})
 
 // 监听激活表单项 ID 变化
 watch(

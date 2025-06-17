@@ -15,34 +15,34 @@ export const formConf = {
 // 默认表单包围参数
 export const defaultItemHedge = {
   // 表单项的标签文字
-  label: '用户名',
+  label: "",
   // 表单域字段名，用于验证、重置等操作
-  prop: 'username',
-  // 是否内联显示
-  inline: false,
+  prop: "",
   // 是否必填
   required: true,
   // 表单验证规则
-  rules: [
-  ],
+  rules: [],
   // 手动设置的错误提示信息
-  errorMessage: '',
+  errorMessage: "",
   // 是否显示校验错误信息
   showMessage: true,
   // 是否以行内形式展示校验信息
   inlineMessage: false,
   // 尺寸：large / default / small
-  size: 'default',
+  size: "default",
   // 标签宽度
-  labelWidth: '100px',
+  labelWidth: "100",
   // 标签位置：left / right / top
-  labelPosition: 'right',
+  labelPosition: "right",
   // 原生 label 的 for 属性
-  for: '',
+  for: "",
+  // 表单域验证错误时的提示信息。设置该值会导致表单验证状态变为 error，并显示该错误信息。
+  error: "",  
   // 表单项的校验状态（success/error/validating）
-  validateStatus: ''
+  validateStatus: "",
 };
 
+// 默认表单配置
 export const defaultConf = {
   // 表单数据对象，用于绑定表单输入的值
   model: {},
@@ -50,8 +50,8 @@ export const defaultConf = {
   rules: {},
   // 是否为行内表单，设置为 true 时表单项水平排列
   inline: false,
-  // 标签对齐位置，可选值：'left', 'right', 'top'
-  labelPosition: "right",
+  // 标签对齐位置，可选值：'left', 'right', 'top',''
+  labelPosition: "",
   // 标签宽度，可以是像素值或百分比或者'auto'
   labelWidth: "100px",
   // 标签后缀，通常为冒号（:）
@@ -78,51 +78,40 @@ export const defaultConf = {
   scrollIntoViewOptions: true,
 };
 
-export const formItem = {
-  "el-input": {
-    itemHedge: {
-      model: {}, // 表单数据
-      rules: {}, // 表单验证规则
-      inline: false, // 是否行内表单
-      labelPosition: "right", // 标签位置：left / right / top
-      labelWidth: "100px", // 标签宽度
-      labelSuffix: ":", // 标签后缀
-      hideRequiredAsterisk: false, // 是否隐藏必填字段的红色星号
-      showMessage: true, // 是否显示校验错误信息
-      inlineMessage: false, // 是否以行内形式展示校验信息
-      statusIcon: false, // 是否在输入框中显示校验结果反馈图标
-      validateOnRuleChange: true, // 是否在 rules 属性改变时重新触发校验
-      size: "default", // 尺寸：large / default / small
-      disabled: false, // 是否禁用该表单内的所有组件。 如果设置为 true, 它将覆盖内部组件的 disabled 属性
-      scrollToError: false, // 当校验失败时，是否滚动到第一个错误表单项
-      scrollToErrorOffset: 0, // 滚动到错误表单项时的偏移量
-      requireAsteriskPosition: "left", // 必填星号的位置：left / right
-    },
+export const inputFormItems = [
+  {
+    formItemHedge: Object.assign(
+      defaultItemHedge,{
+        // 表单项的标签文字
+        label: "输入框",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }
+    ),
     formItemAttr: {
-      tag: "el-input",
-      tagIcon: "input",
-      type: "text",
-      placeholder: "请输入",
-      defaultValue: undefined,
-      span: 24,
-      labelWidth: null,
-      style: { width: "100%" },
-      clearable: true,
-      prepend: "",
-      append: "",
-      prefixIIcon: "",
-      suffixIcon: "",
-      maxlength: null,
-      showWordLimit: false,
-      readonly: false,
-      disabled: false,
-      required: true,
-      regList: [],
-      changeTag: true,
-      document: "https://element-plus.org/zh-CN/component/input",
+    ariaLabel: "单行文本",
+    tag: "el-input",
+    tagIcon: "input",
+    type: "text",
+    placeholder: "请输入",
+    defaultValue: undefined,
+    style: { width: "100%" },
+    clearable: true,
+    prepend: "",
+    append: "",
+    "prefix-icon": "",
+    "suffix-icon": "",
+    maxlength: null,
+    "show-word-limit": false,
+    readonly: false,
+    disabled: false,
+    required: true,
+    regList: [],
+    changeTag: true,
+    document: "https://element-plus.org/zh-CN/component/input",
     },
   },
-};
+];
 
 export const inputComponents = [
   {

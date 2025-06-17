@@ -1,14 +1,8 @@
 <template>
   <el-col :span="element.span" :class="className" @click.stop="activeItem(element)">
-    <el-form-item :label="element.formItemHedge.label" 
-      :label-width="element.formItemHedge.labelWidth ? element.formItemHedge.labelWidth + 'px' : null"
-      :size="element.formItemHedge.size"
-      :show-message="element.formItemHedge.showMessage" 
-      :inline-message="element.formItemHedge.inlineMessage"
-      :error="element.formItemHedge.error"
-      :label-position="element.formItemHedge.labelPosition"
-      :required="element.formItemHedge.required" v-if="element.layout === 'colFormItem'">
-       <render :key="element.formItemAttr.tag" :conf="element.formItemAttr" v-model="element.formItemAttr.defaultValue" />
+    <el-form-item :label="element.label" :label-width="element.labelWidth ? element.labelWidth + 'px' : null"
+      :required="element.required" v-if="element.layout === 'colFormItem'">
+      <render :key="element.tag" :conf="element" v-model="element.defaultValue" />
     </el-form-item>
     <el-row :gutter="element.gutter" :class="element.class" @click.stop="activeItem(element)" v-else>
       <span class="component-name"> {{ element.componentName }} </span>
@@ -37,7 +31,6 @@
 <script setup name="DraggableItem">
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import render from '@/utils/generator/render'
-import { watch } from "vue";
 const props = defineProps({
   element: Object,
   index: Number,
@@ -47,14 +40,9 @@ const props = defineProps({
   },
   formConf: Object
 })
-
-
 const className = ref('')
 const draggableItemRef = ref(null)
 const emits = defineEmits(['activeItem', 'copyItem', 'deleteItem'])
-watch(() => props.element, (val) => {
- console.log(val.formItemHedge);
-},{immediate: true,deep:true})
 function activeItem(item) {
   emits('activeItem', item)
 }

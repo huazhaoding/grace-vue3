@@ -114,14 +114,6 @@ export default defineComponent({
       }
     })
 
-    // 打印调试日志
-    console.groupCollapsed('Render Debug Log')
-    console.log('原始配置对象:', this.conf)
-    console.log('克隆后的配置对象:', confClone)
-    console.log('最终传递的 props:', dataObject.props)
-    console.log('最终传递的 attrs:', dataObject.attrs)
-    console.log('插槽内容:', slot)
-    console.groupEnd()
 
     // 生成虚拟 DOM
     const vnode = h(resolveComponent(this.conf.tag), {
@@ -166,8 +158,6 @@ export default defineComponent({
 
       return `<${tag} ${propsStr} ${attrsStr} style="${styleStr}">${innerHTML}</${tag}>`
     }
-
-    console.log('生成的 HTML 字符串:', vnodeToHtml(vnode))
 
     return vnode
   }
