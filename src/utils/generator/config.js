@@ -12,6 +12,220 @@ export const formConf = {
   formBtns: true,
 };
 
+//基本组件
+export const basicFormItems = {
+  elCol: "el-col",
+  elRow: "el-row",
+  elInput: "el-input",
+  elInputNumber: "el-input-number",
+  elSelect: "el-select",
+  elOption: "el-option",
+  elCascader: "el-cascader",
+  elDatePicker: "el-date-picker",
+  elTimePicker: "el-time-picker",
+}
+
+//输入组件
+export const inputFormItems = [
+  {
+    formItemHedge: Object.assign(
+      defaultItemHedge, {
+      // 表单项的标签文字
+      label: "单行文本",
+      // 表单域字段名，用于验证、重置等操作
+      prop: "",
+    }
+    ),
+    formItemAttr: {
+      ariaLabel: "单行文本",
+      tag: "el-input",
+      tagIcon: "input",
+      type: "text",
+      placeholder: "请输入",
+      defaultValue: undefined,
+      style: { width: "100%" },
+      clearable: true,
+      prepend: "",
+      append: "",
+      "prefix-icon": "",
+      "suffix-icon": "",
+      maxlength: null,
+      "show-word-limit": false,
+      readonly: false,
+      disabled: false,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: "https://element-plus.org/zh-CN/component/input",
+    },
+  },
+  {
+    formItemHedge: Object.assign(
+      defaultItemHedge, {
+      // 表单项的标签文字
+      label: "多行文本",
+      // 表单域字段名，用于验证、重置等操作
+      prop: "",
+    }
+    ),
+    formItemAttr: {
+      ariaLabel: "多行文本",
+      tag: "el-input",
+      tagIcon: "textarea",
+      type: "textarea",
+      placeholder: "请输入",
+      defaultValue: undefined,
+      span: 24,
+      labelWidth: null,
+      autosize: {
+        minRows: 4,
+        maxRows: 4,
+      },
+      style: { width: "100%" },
+      maxlength: null,
+      "show-word-limit": true,
+      readonly: false,
+      disabled: false,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: "https://element-plus.org/zh-CN/component/input",
+    },
+  },
+  {
+    formItemHedge: Object.assign(
+      defaultItemHedge, {
+      // 表单项的标签文字
+      label: "密码",
+      // 表单域字段名，用于验证、重置等操作
+      prop: "",
+    }
+    ),
+    formItemAttr: {
+      ariaLabel: "密码",
+      tag: "el-input",
+      tagIcon: "password",
+      type: "password",
+      placeholder: "请输入",
+      defaultValue: undefined,
+      span: 24,
+      "show-password": true,
+      labelWidth: null,
+      style: { width: "100%" },
+      clearable: true,
+      prepend: "",
+      append: "",
+      "prefix-icon": "",
+      "suffix-icon": "",
+      maxlength: null,
+      "show-word-limit": false,
+      readonly: false,
+      disabled: false,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: "https://element-plus.org/zh-CN/component/input",
+    },
+  },
+  {
+    formItemHedge: Object.assign(
+      defaultItemHedge, {
+      // 表单项的标签文字
+      label: "计数器",
+      // 表单域字段名，用于验证、重置等操作
+      prop: "",
+    }
+    ),
+    formItemAttr: {
+      ariaLabel: "计数器",
+      tag: "el-input-number",
+      tagIcon: "number",
+      placeholder: "",
+      defaultValue: undefined,
+      span: 24,
+      labelWidth: null,
+      min: undefined,
+      max: undefined,
+      step: undefined,
+      "step-strictly": false,
+      precision: undefined,
+      "controls-position": "",
+      disabled: false,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: "https://element-plus.org/zh-CN/component/input-number",
+    },
+  },
+];
+
+// 布局组件
+export const layoutFormItems = [
+  // layout布局
+  {
+  tagIcon: "el-row",
+  tag: "el-row",
+  justify: "start",
+  align: "top",
+  customTag: '',
+  children: 
+    {
+      tagIcon: "el-col",
+      tag: "el-col",
+      xs: { span: 24, offset: 0, pull: 0, push: 0 },
+      sm: { span: 24, offset: 0, pull: 0, push: 0 },
+      md: { span: 24, offset: 0, pull: 0, push: 0 },
+      lg: { span: 24, offset: 0, pull: 0, push: 0 },
+      xl: { span: 24, offset: 0, pull: 0, push: 0 },
+      customTag: ''
+    }
+},
+//卡片布局
+
+//轮播布局
+
+//描述列表
+
+//图片列表
+  ]
+
+//基础组件
+export const basicComponents=[
+
+] 
+
+//基础组件
+export const formComponents=[
+
+] 
+
+//反馈组件
+export const  feedbackCompoents=[
+
+]
+
+//其他组件
+export const  otherCompoents=[
+
+]
+
+//数据组件
+export const  dataCompoents=[
+
+]
+
+// 高级组件
+export const advancedFormItems = {
+  elCol: "el-col",
+  elRow: "el-row",
+};
+
+// 自定义组件
+export const customFormItems = {
+  elCol: "el-col",
+  elRow: "el-row",
+};
+
 // 默认表单包围参数
 export const defaultItemHedge = {
   // 表单项的标签文字
@@ -37,7 +251,7 @@ export const defaultItemHedge = {
   // 原生 label 的 for 属性
   for: "",
   // 表单域验证错误时的提示信息。设置该值会导致表单验证状态变为 error，并显示该错误信息。
-  error: "",  
+  error: "",
   // 表单项的校验状态（success/error/validating）
   validateStatus: "",
 };
@@ -78,66 +292,7 @@ export const defaultConf = {
   scrollIntoViewOptions: true,
 };
 
-export const inputFormItems = [
-  {
-    formItemHedge: Object.assign(
-      defaultItemHedge,{
-        // 表单项的标签文字
-        label: "输入框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
-      }
-    ),
-    formItemAttr: {
-    ariaLabel: "单行文本",
-    tag: "el-input",
-    tagIcon: "input",
-    type: "text",
-    placeholder: "请输入",
-    defaultValue: undefined,
-    style: { width: "100%" },
-    clearable: true,
-    prepend: "",
-    append: "",
-    "prefix-icon": "",
-    "suffix-icon": "",
-    maxlength: null,
-    "show-word-limit": false,
-    readonly: false,
-    disabled: false,
-    required: true,
-    regList: [],
-    changeTag: true,
-    document: "https://element-plus.org/zh-CN/component/input",
-    },
-  },
-];
-
 export const inputComponents = [
-  {
-    label: "单行文本",
-    tag: "el-input",
-    tagIcon: "input",
-    type: "text",
-    placeholder: "请输入",
-    defaultValue: undefined,
-    span: 24,
-    labelWidth: null,
-    style: { width: "100%" },
-    clearable: true,
-    prepend: "",
-    append: "",
-    "prefix-icon": "",
-    "suffix-icon": "",
-    maxlength: null,
-    "show-word-limit": false,
-    readonly: false,
-    disabled: false,
-    required: true,
-    regList: [],
-    changeTag: true,
-    document: "https://element-plus.org/zh-CN/component/input",
-  },
   {
     label: "多行文本",
     tag: "el-input",
