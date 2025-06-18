@@ -160,7 +160,7 @@ export const inputFormItems = [
 ];
 
 // 布局组件
-export const layoutComponents = [
+export const layoutFormItems = [
   // layout布局
   {
   tagIcon: "el-row",
@@ -194,23 +194,23 @@ export const basicComponents=[
 
 ] 
 
-//表单组件
+//基础组件
 export const formComponents=[
 
 ] 
 
 //反馈组件
-export const  feedbackComponents=[
-
-]
-
-//数据组件
-export const  dataComponents=[
+export const  feedbackCompoents=[
 
 ]
 
 //其他组件
-export const  otherComponents=[
+export const  otherCompoents=[
+
+]
+
+//数据组件
+export const  dataCompoents=[
 
 ]
 
@@ -666,6 +666,34 @@ export const selectComponents = [
   },
 ];
 
+export const layoutComponents = [
+  {
+    layout: "rowFormItem",
+    tagIcon: "row",
+    type: "default",
+    justify: "start",
+    align: "top",
+    label: "行容器",
+    layoutTree: true,
+    children: [],
+    document: "https://element-plus.org/zh-CN/component/layout",
+  },
+  {
+    layout: "colFormItem",
+    label: "按钮",
+    changeTag: true,
+    labelWidth: null,
+    tag: "el-button",
+    tagIcon: "button",
+    span: 24,
+    default: "主要按钮",
+    type: "primary",
+    icon: "Search",
+    size: "default",
+    disabled: false,
+    document: "https://element-plus.org/zh-CN/component/button",
+  },
+];
 
 // 组件rule的触发方式，无触发方式的组件不生成rule
 export const trigger = {
