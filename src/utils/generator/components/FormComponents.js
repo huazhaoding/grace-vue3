@@ -1,6 +1,6 @@
 export const FormComponents = [
   {
-    el: "el-autocomplete",
+    tag: "el-autocomplete",
     tagLabel: "自动补全",
     tagIcon: "icon-autocomplete",
     document: "https://element.eleme.cn/#/zh-CN/component/autocomplete",
@@ -28,7 +28,7 @@ export const FormComponents = [
   {    // 表单项的标签文字
     taglabel: "多选框组",
     // 组件标签名
-    el: "el-checkbox-group",
+    tag: "el-checkbox-group",
     // 图标名称，用于可视化展示
     tagIcon: "checkbox",
     // 文档链接
@@ -90,4 +90,53 @@ export const FormComponents = [
       },
     ],
     // 是否显示边框
-  }]
+  },
+{ 
+  tag: "el-radio-group",
+  taglabel: "单选框组",
+  tagIcon: "radio",
+  document: "https://element-plus.org/zh-CN/component/radio",
+  attr: {
+    defaultValue: null,
+    type: "radio",
+    disabled: false,
+    required: true,
+    size: "default",
+    min: undefined,
+    max: undefined,
+    name: undefined,
+    "aria-label": undefined,
+    "text-color": "#ffffff",
+    fill: "#409eff",
+    tag: "div",
+    "validate-event": true,
+    options: [
+      {
+        label: "选项一",
+        value: 1,
+        disabled: false,
+        border: false,
+        size: "default",
+        name: undefined,
+        id: undefined,
+        fill :undefined,
+      }
+    ]
+  },
+},
+ {  
+    tag: "el-color-picker",
+    tagLabel: "颜色选择",
+    tagIcon: "color",
+    document: "https://element-plus.org/zh-CN/component/color-picker",
+    attr: {
+    defaultValue: null,
+    "show-alpha": false,
+    "color-format": "",
+    disabled: false,
+    required: true,
+    size: "default",
+    regList: [],
+    changeTag: true,
+  },},
+]
