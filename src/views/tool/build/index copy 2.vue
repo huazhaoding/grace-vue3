@@ -23,8 +23,6 @@
                 item-key="label"
               >
                 <template #item="{ element, index }">
-
-                  123
                   <div
                     :key="index"
                     class="components-item"
@@ -283,7 +281,7 @@ function onEnd(obj, a) {
   }
 }
 
-// 添加组件到表单
+// 添加组件到表单 直接添加到末尾
 function addComponent(item) {
   console.log("addComponent",item);
   const clone = cloneComponent(item); // 克隆组件
