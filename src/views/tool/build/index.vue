@@ -8,10 +8,9 @@
       <el-scrollbar class="left-scrollbar">
         <el-tabs v-model="leftActiveTab">
           <el-tab-pane label="组件库" name="componentLibrary">
-            <components-library />
+            <components-library :idGroup="idGlobal" @updateCloneComponent="updateCloneComponent" />
           </el-tab-pane>
           <el-tab-pane label="模板库" name="templateLibrary"> 
-
 
           </el-tab-pane>
         </el-tabs>
@@ -138,6 +137,18 @@ function openPreview() {
   formTemplate.value = generateCode(); // 生成代码模板
   jsonData.value = formData.value; // 生成 JSON 数据
   previewDialogVisible.value = true; // 显示预览对话框
+}
+
+function updateCloneComponent(element,from){
+    if(from === 'click'){
+     drawingList.value.push(clone); // 将克隆的组件添加到表单项列表
+     activeFormItem(clone); // 激活新添加的组件
+    }else{
+    activeData.value = element; // 更新当前激活的表单项数据
+    idGlobal.value=element.id;
+    activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
+    }
+
 }
 
 // 更新字段属性
