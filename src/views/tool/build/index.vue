@@ -17,33 +17,8 @@
       </el-scrollbar>
     </div>
     <div class="center-board">
-      <!-- 编辑器工具栏 -->
-      <div class="action-bar">
-        <el-button icon="topRight" type="primary"  @click="importJson">
-          导入模板
-        </el-button>
-        <el-button icon="View" type="primary" @click="openPreview">
-          预览模板
-        </el-button>
-        <el-button
-          class="delete-btn"
-          icon="Delete"
-          text
-          @click="empty"
-          type="danger"
-        >
-          清空模板
-        </el-button>
-      </div>
       <!-- 编辑器 -->
-      <el-scrollbar class="center-scrollbar">
-        <el-row class="center-board-row" :gutter="formConf.gutter">
-          <el-form
-            :size="formConf.size"
-            :label-position="formConf.labelPosition"
-            :disabled="formConf.disabled"
-            :label-width="formConf.labelWidth + 'px'"    
-          >
+      <el-scrollbar class="center-scrollbar">   
             <draggable
               class="drawing-board"
               :list="drawingList"
@@ -58,7 +33,6 @@
                   :element="element"
                   :index="index"
                   :active-id="activeId"
-                  :form-conf="formConf"
                   @activeItem="activeFormItem"
                   @copyItem="drawingItemCopy"
                   @deleteItem="drawingItemDelete"
@@ -68,24 +42,12 @@
             <div v-show="!drawingList.length" class="empty-info">
               从左侧拖入或点选组件进行表单设计
             </div>
-          </el-form>
-        </el-row>
       </el-scrollbar>
     </div>
-    <!-- 右边属性库 -->
-    <right-panel
-      :active-data-property="activeData"
-      :form-conf="formConf"
-      :show-field="!!drawingList.length"
-      @tag-change="tagChange"
-      @activeDataChange="fieldsAttributeChange"
-    />
+ 
     
   </div>
-   <preview-dialog v-model="previewDialogVisible"
-      :formTemplate="formTemplate"
-      :jsonData="jsonData"
-    />
+
 
 </template>
 
@@ -93,70 +55,34 @@
 
 import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
-import PreviewDialog from "./PreviewDialog"; // 导入预览对话框组件
-import beautifier from "js-beautify"; // 用于格式化生成的代码
 import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
-
-
-import { beautifierConf } from "@/utils/index"; // 导入代码美化配置
-import drawingDefalut from "@/utils/generator/drawingDefalut"; // 默认表单项数据
-import {
-  makeUpHtml, // 生成 HTML 模板
-  vueTemplate, // Vue 模板生成器
-  vueScript, // Vue 脚本生成器
-  cssStyle, // CSS 样式生成器
-} from "@/utils/generator/html";
-import { makeUpJs } from "@/utils/generator/js"; // 生成 JS 脚本
-import { makeUpCss } from "@/utils/generator/css"; // 生成 CSS 样式
-import DraggableItem from "./DraggableItem"; // 导入可拖拽表单项组件
-import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
-import { watch } from "vue";
+import DraggableItem from "./components/DraggableItem"; // 导入可拖拽表单项组件
 
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
-const previewDialogVisible = ref(false); // 控制预览对话框显示状态
-const formTemplate = ref(""); // 存储生成的表单模板
-const jsonData = ref({}); // 存储生成的 JSON 数据
+
 const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref([]); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
 const generateConf = ref(null); // 生成配置
-const formData = ref({}); // 表单数据对象
-const formConf = ref(formConfData); // 表单全局配置
-let oldActiveId; // 上一个激活的表单项 ID
-let tempActiveData; // 临时存储克隆的表单项数据
 
-// 打开预览对话框并生成代码
-function openPreview() {
-  generateConf.value = {
-    fileName: undefined,
-    type: 'file'
-  };
-  AssembleFormData(); // 汇总表单数据
-  formTemplate.value = generateCode(); // 生成代码模板
-  jsonData.value = formData.value; // 生成 JSON 数据
-  previewDialogVisible.value = true; // 显示预览对话框
-}
+
+
 
 function updateCloneComponent(element,from){
+  console.log("updateCloneComponent",element,from);
     if(from === 'click'){
-     drawingList.value.push(clone); // 将克隆的组件添加到表单项列表
-     activeFormItem(clone); // 激活新添加的组件
+     drawingList.value.push(element); // 将克隆的组件添加到表单项列表
+     activeFormItem(element); // 激活新添加的组件
     }else{
     activeData.value = element; // 更新当前激活的表单项数据
     idGlobal.value=element.id;
     activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
     }
-
+  console.log("drawingList",drawingList.value);
 }
 
-// 更新字段属性
-function fieldsAttributeChange(data) {
-  activeData.value.formItemAttribute = data.formItemAttribute;
-  activeData.value.formItemHedge = data.formItemHedge;
-  activeData.value = data; // 更新当前激活的表单项数据
-}
 
 // 激活表单项
 function activeFormItem(element) {
@@ -164,170 +90,7 @@ function activeFormItem(element) {
   activeId.value = element.formId; // 设置当前激活的表单项 ID
 }
 
-// 清空所有表单项
-function empty() {
-  proxy.$modal
-    .confirm("确定要清空所有组件吗？", "提示", { type: "warning" }) // 弹出确认对话框
-    .then(() => {
-      idGlobal.value = 100; // 重置全局 ID
-      drawingList.value = []; // 清空表单项列表
-    });
-}
 
-// 拖拽结束时触发
-function onEnd(obj, a) {
-
-  if (obj.from !== obj.to) {
-    activeData.value = tempActiveData; // 更新当前激活的表单项数据
-    activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
-  }
-}
-
-// 添加组件到表单 直接添加到末尾
-function addComponent(item) {
-  console.log("addComponent",item);
-  const clone = cloneComponent(item); // 克隆组件
-  drawingList.value.push(clone); // 将克隆的组件添加到表单项列表
-  activeFormItem(clone); // 激活新添加的组件
-}
-
-// 克隆组件
-function cloneComponent(origin) {
-  const clone = JSON.parse(JSON.stringify(origin)); // 深拷贝原始组件
-  clone.formId = ++idGlobal.value; // 为克隆的组件生成唯一的 formId
-  clone.span = formConf.value.span; // 设置组件的 span 属性
-  clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
-  if (!clone.layout) clone.layout = "colFormItem"; // 如果未定义 layout，默认为 colFormItem
-  if (clone.layout === "colFormItem") {
-    clone.formItemAttr.vModel = `field${idGlobal.value}`; // 动态生成 vModel
-    clone.placeholder !== undefined && (clone.placeholder += clone.label); // 动态生成 placeholder
-    tempActiveData = clone; // 临时存储克隆的组件
-  } else if (clone.layout === "rowFormItem") {
-    delete clone.label; // 删除 label 属性
-    clone.componentName = `row${idGlobal.value}`; // 动态生成 componentName
-    clone.gutter = formConf.value.gutter; // 设置 gutter 属性
-    tempActiveData = clone; // 临时存储克隆的组件
-  }
-
-  return tempActiveData; // 返回克隆的组件
-}
-
-// 复制表单项
-function drawingItemCopy(item, parent) {
-  let clone = JSON.parse(JSON.stringify(item)); // 深拷贝表单项
-  clone = createIdAndKey(clone); // 为克隆的表单项生成唯一的 ID 和 key
-  parent.push(clone); // 将克隆的表单项添加到父级列表
-  activeFormItem(clone); // 激活新复制的表单项
-}
-
-// 为表单项生成唯一的 ID 和 key
-function createIdAndKey(item) {
-  item.formId = ++idGlobal.value; // 生成唯一的 formId
-  item.renderKey = +new Date(); // 生成唯一的 renderKey
-  if (item.layout === "colFormItem") {
-    item.vModel = `field${idGlobal.value}`; // 动态生成 vModel
-  } else if (item.layout === "rowFormItem") {
-    item.componentName = `row${idGlobal.value}`; // 动态生成 componentName
-  }
-  if (Array.isArray(item.children)) {
-    item.children = item.children.map((childItem) => createIdAndKey(childItem)); // 递归处理子项
-  }
-  return item; // 返回更新后的表单项
-}
-
-// 删除表单项
-function drawingItemDelete(index, parent) {
-  parent.splice(index, 1); // 从父级列表中删除表单项
-  nextTick(() => {
-    const len = drawingList.value.length; // 获取剩余表单项数量
-    if (len) {
-      activeFormItem(drawingList.value[len - 1]); // 激活最后一个表单项
-    }
-  });
-}
-
-// 切换表单项类型
-function tagChange(newTag) {
-  newTag = cloneComponent(newTag); // 克隆新的表单项
-  newTag.vModel = activeData.value.vModel; // 保留原表单项的 vModel
-  newTag.formId = activeId.value; // 保留原表单项的 formId
-  newTag.span = activeData.value.span; // 保留原表单项的 span
-  delete activeData.value.tag; // 删除旧表单项的 tag 属性
-  delete activeData.value.tagIcon; // 删除旧表单项的 tagIcon 属性
-  delete activeData.value.document; // 删除旧表单项的 document 属性
-  Object.keys(newTag).forEach((key) => {
-    if (
-      activeData.value[key] !== undefined &&
-      typeof activeData.value[key] === typeof newTag[key]
-    ) {
-      newTag[key] = activeData.value[key]; // 合并旧表单项的属性
-    }
-  });
-  activeData.value = newTag; // 更新当前激活的表单项
-  updateDrawingList(newTag, drawingList.value); // 更新表单项列表
-}
-
-// 更新表单项列表
-function updateDrawingList(newTag, list) {
-  const index = list.findIndex((item) => item.formId === activeId.value); // 查找表单项索引
-  if (index > -1) {
-    list.splice(index, 1, newTag); // 替换表单项
-  } else {
-    list.forEach((item) => {
-      if (Array.isArray(item.children))
-        updateDrawingList(newTag, item.children); // 递归处理子项
-    });
-  }
-}
-
-// 汇总表单数据
-function AssembleFormData() {
-  formData.value = {
-    fields: JSON.parse(JSON.stringify(drawingList.value)), // 深拷贝表单项列表
-    ...formConf.value, // 合并表单全局配置
-  };
-}
-
-// 生成代码
-function generateCode() {
-  const { type } = generateConf.value; // 获取生成配置的类型
-  AssembleFormData(); // 汇总表单数据
-  const script = vueScript(makeUpJs(formData.value, type)); // 生成 JS 脚本
-  const html = vueTemplate(makeUpHtml(formData.value, type)); // 生成 HTML 模板
-  const css = cssStyle(makeUpCss(formData.value)); // 生成 CSS 样式
-  return beautifier.html(html + script + css, beautifierConf.html); // 格式化并返回生成的代码
-}
-
-// 监听表单项标签变化
-watch(
-  () => activeData.value.label,
-  (val, oldVal) => {
-    if (
-      activeData.value.placeholder === undefined ||
-      !activeData.value.tag ||
-      oldActiveId !== activeId.value
-    ) {
-      return;
-    }
-    activeData.value.placeholder =
-      activeData.value.placeholder.replace(oldVal, "") + val; // 动态更新 placeholder
-  }
-);
-
-watch(formConf,(val)=>{ 
-  console.log(val)
-})
-
-// 监听激活表单项 ID 变化
-watch(
-  activeId,
-  (val) => {
-    oldActiveId = val; // 更新上一个激活的表单项 ID
-  },
-  {
-    immediate: true, // 立即执行一次
-  }
-);
 </script>
 <style lang="scss">
 

@@ -46,8 +46,10 @@ import { BaseComponents } from '@/utils/generator/components/BaseComponents'
 let tempActiveData; // 临时存储克隆的表单项数据
 const emits = defineEmits(['updateCloneComponent'])
 const props = defineProps({
-  idGlobal: Number ,
-  defaultValue: 0
+  idGlobal: {
+    type: Number,
+    default: 0
+  }
 })
 
 
@@ -66,8 +68,8 @@ function addComponent(item) {
 // 克隆组件
 function cloneComponent(origin) {
   const clone = JSON.parse(JSON.stringify(origin)); // 深拷贝原始组件
-  clone.id=++props.idGlobal; // 为克隆的组件生成唯一的 id
-  clone.attr.vModel = `field${clone.id}`; // 动态生成 vModel
+  clone.id=props.idGlobal+1; // 为克隆的组件生成唯一的 id
+  clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   return clone;
 }

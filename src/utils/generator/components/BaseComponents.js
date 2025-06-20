@@ -8,8 +8,9 @@
       tagIcon: "button", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
       attr: {
-        size: null, // 按钮尺寸 (large/default/small)
-        type: null, // 按钮类型 (primary/success/warning/danger/info/text)
+        size: undefined, // 按钮尺寸 (large/default/small)
+        type: undefined, // 按钮类型 (primary/success/warning/danger/info/text)
+        defaultLabel: "主要按钮",
         plain: false, // 是否为朴素按钮样式
         text: false, // 是否为文字按钮样式
         bg: false, // 文字按钮是否有背景色
@@ -62,6 +63,7 @@
         disabled: false, // 是否禁用链接
         href: null, // 链接地址
         icon: null, // 图标组件
+        defaultLabel: "我是链接",
         tag: "a", // 自定义元素标签
       },
     },
@@ -75,6 +77,7 @@
         size: "small", // 文本尺寸
         truncated: true, // 是否截断文本
         "line-clamp": 2, // 最多显示几行
+        defaultLabel: "我是文本",
         tag: "div", // 自定义元素标签
       },
     },

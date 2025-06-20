@@ -2,6 +2,9 @@
 import { defineComponent, h } from 'vue'
 import { makeMap } from '@/utils/index'
 
+
+// <render :key="element.tag" :conf="element.attr" v-model="element.attr.defaultValue" />
+
 const isAttr = makeMap(
   'accept,accept-charset,accesskey,action,align,alt,async,autocomplete,' +
   'autofocus,autoplay,autosave,bgcolor,border,buffered,challenge,charset,' +
@@ -43,20 +46,32 @@ export default defineComponent({
       style: {}
     }
 
-    const confClone = { ...this.conf }
+    const component={...this.conf}
+    
+    const cloneAttr=component.attr
+
+    const cloneTag=component.tag;
+    
+    //const componentChild = component.children
+
+
+
+
+
+  
 
     // 动态处理 maxlength 和 show-word-limit
-    if (confClone['show-word-limit'] && !confClone.maxlength) {
-      confClone.maxlength = 100 // 设置一个默认值
+    if (cloneAttr['show-word-limit'] && !cloneAttr.maxlength) {
+      cloneAttr.maxlength = 100 // 设置一个默认值
     }
 
     // 区分 label 和 aria-label
-    // if (confClone.label) {
-    //   if (['el-input'].includes(confClone.tag)) {
-    //     confClone['aria-label'] = confClone.label
-    //     delete confClone.label
+    // if (cloneAttr.label) {
+    //   if (['el-input'].includes(cloneTag)) {
+    //     cloneAttr['aria-label'] = cloneAttr.label
+    //     delete cloneAttr.label
     //   } else {
-    //     dataObject.props.label = confClone.label
+    //     dataObject.props.label = cloneAttr.label
     //   }
     // }
 
@@ -64,33 +79,34 @@ export default defineComponent({
     const children = []
     const slot = {}
 
-    const childObjs = componentChild[confClone.tag]
+    const childObjs = componentChild[cloneTag]
+
     if (childObjs) {
       Object.keys(childObjs).forEach(key => {
         const childFunc = childObjs[key]
-        if (confClone[key]) {
-          children.push(childFunc(h, confClone, key))
+        if (cloneAttr[key]) {
+          children.push(childFunc(h, cloneAttr, key))
         }
       })
     }
 
-    const slotObjs = componentSlot[confClone.tag]
+    const slotObjs = componentSlot[cloneTag]
     if (slotObjs) {
       Object.keys(slotObjs).forEach(key => {
         const childFunc = slotObjs[key]
-        if (confClone[key]) {
-          slot[key] = childFunc(h, confClone, key)
+        if (cloneAttr[key]) {
+          slot[key] = childFunc(h, cloneAttr, key)
         }
       })
     }
 
     // 插槽：处理 prepend / append
-    if (confClone.prepend || confClone.append) {
-      if (confClone.prepend) {
-        slot.prepend = () => confClone.prepend
+    if (cloneAttr.prepend || cloneAttr.append) {
+      if (cloneAttr.prepend) {
+        slot.prepend = () => cloneAttr.prepend
       }
-      if (confClone.append) {
-        slot.append = () => confClone.append
+      if (cloneAttr.append) {
+        slot.append = () => cloneAttr.append
       }
     }
 
@@ -99,9 +115,8 @@ export default defineComponent({
     }
 
     // 属性分类
-    Object.keys(confClone).forEach(key => {
-      const val = confClone[key]
-
+    Object.keys(cloneAttr).forEach(key => {
+      const val = cloneAttr[key]
       // 特殊处理布尔值属性
       if (['show-word-limit', 'clearable', 'readonly', 'disabled'].includes(key)) {
         dataObject.props[key] = typeof val === 'string' ? JSON.parse(val) : !!val
@@ -114,6 +129,9 @@ export default defineComponent({
       }
     })
 
+if (this.conf.attr.defaultLabel) {
+  slot.default = () => this.conf.attr.defaultLabel // 设置默认插槽内容
+}
 
     // 生成虚拟 DOM
     const vnode = h(resolveComponent(this.conf.tag), {
@@ -123,41 +141,6 @@ export default defineComponent({
       ...dataObject.attrs,
       style: { ...dataObject.style }
     }, slot ?? null)
-
-    // 将虚拟 DOM 转换为字符串形式的 HTML
-    function vnodeToHtml(vnode) {
-      const propsStr = Object.entries(vnode.props || {})
-        .map(([key, value]) => {
-          if (typeof value === 'boolean') {
-            return value ? key : ''
-          }
-          return `${key}="${value}"`
-        })
-        .filter(Boolean)
-        .join(' ')
-
-      const attrsStr = Object.entries(vnode.attrs || {})
-        .map(([key, value]) => `${key}="${value}"`)
-        .join(' ')
-
-      const styleStr = Object.entries(vnode.style || {})
-        .map(([key, value]) => `${key}: ${value}`)
-        .join('; ')
-
-      const tag = vnode.type
-
-      // 处理 children
-      let innerHTML = ''
-      if (Array.isArray(vnode.children)) {
-        innerHTML = vnode.children.map(child => vnodeToHtml(child)).join('')
-      } else if (typeof vnode.children === 'string') {
-        innerHTML = vnode.children
-      } else if (typeof vnode.children === 'function') {
-        innerHTML = '[Function]'
-      }
-
-      return `<${tag} ${propsStr} ${attrsStr} style="${styleStr}">${innerHTML}</${tag}>`
-    }
 
     return vnode
   }
