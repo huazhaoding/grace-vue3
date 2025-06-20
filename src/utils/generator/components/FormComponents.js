@@ -3,6 +3,45 @@ export const FormComponents = {
   icon: "",
   list: [
     {
+      tag: "el-form",
+      tagLabel: "表单",
+      tagIcon: "form",
+      document: "https://element.eleme.cn/#/zh-CN/component/form",
+      attr: {   // 表单数据对象，用于绑定表单输入的值
+        model: {},
+        // 表单验证规则对象，定义各个字段的验证逻辑
+        rules: {},
+        // 是否为行内表单，设置为 true 时表单项水平排列
+        inline: false,
+        // 标签对齐位置，可选值：'left', 'right', 'top',''
+        labelPosition: "",
+        // 标签宽度，可以是像素值或百分比或者'auto'
+        labelWidth: "100px",
+        // 标签后缀，通常为冒号（:）
+        labelSuffix: "",
+        // 是否隐藏必填字段前的红色星号
+        hideRequiredAsterisk: false,
+        // 必填星号的位置，可选值：'left' 或 'right'
+        requireAsteriskPosition: "left",
+        // 是否显示校验错误信息
+        showMessage: true,
+        // 是否以行内形式展示校验信息
+        inlineMessage: false,
+        // 是否在输入框中显示状态图标（如成功或错误图标）
+        statusIcon: false,
+        // 当 rules 属性改变时是否重新触发校验
+        validateOnRuleChange: true,
+        // 表单组件尺寸，可选值：'large', 'default', 'small'
+        size: "default",
+        // 是否禁用整个表单内的所有组件
+        disabled: false,
+        // 当校验失败时是否自动滚动到第一个错误表单项
+        scrollToError: false,
+        // 滚动到错误项时的配置选项（例如偏移量等）
+        scrollIntoViewOptions: true
+      },
+    },
+    {
       tag: "el-autocomplete",
       tagLabel: "自动补全",
       tagIcon: "monitor",
