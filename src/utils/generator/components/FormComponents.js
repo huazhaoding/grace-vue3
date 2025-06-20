@@ -1,6 +1,6 @@
 export const FormComponents = {
   title: "表单组件",
-  icon:"",
+  icon: "",
   list: [
     {
       tag: "el-autocomplete",
@@ -37,6 +37,7 @@ export const FormComponents = {
       tagIcon: "checkbox",
       // 文档链接
       document: "https://element-plus.org/zh-CN/component/checkbox",
+      optionType: "button",
       attr: {
         // 默认值
         defaultValue: [],
@@ -84,12 +85,30 @@ export const FormComponents = {
           name: undefined,
         },
         {
-          label: "选项二",
-          value: 2,
-        },
-        {
-          label: "选项三",
-          value: 3,
+          label: "选项二", // 显示的标签
+          value: 2, // 选项值
+          "true-value": undefined,
+          "false-value": undefined,
+          // 是否禁用
+          disabled: false,
+          // 是否选中
+          checked: false,
+          // 是否半选中
+          indeterminate: false,
+          // 是否触发表单验证
+          "validate-event": true,
+          //与 aria-control一致, 当 indeterminate为 true时生效
+          "aria-controls": undefined,
+          // 输入框的 tabindex
+          tabindex: 0,
+          // checkbox 的 id
+          id: undefined,
+          // checkbox是否显示边框
+          border: false,
+          // checkbox 的尺寸
+          size: "default",
+          // checkbox 的 name 属性
+          name: undefined,
         },
       ],
       // 是否显示边框
@@ -99,6 +118,7 @@ export const FormComponents = {
       tagLabel: "单选框组",
       tagIcon: "radio",
       document: "https://element-plus.org/zh-CN/component/radio",
+      optionType: "radio",
       attr: {
         defaultValue: null,
         type: "radio",
@@ -113,19 +133,29 @@ export const FormComponents = {
         fill: "#409eff",
         tag: "div",
         "validate-event": true,
-        options: [
-          {
-            label: "选项一",
-            value: 1,
-            disabled: false,
-            border: false,
-            size: "default",
-            name: undefined,
-            id: undefined,
-            fill: undefined,
-          },
-        ],
       },
+      options: [
+        {
+          label: "选项一",
+          value: 1,
+          disabled: false,
+          border: false,
+          size: "default",
+          name: undefined,
+          id: undefined,
+          fill: undefined,
+        },
+        {
+          label: "选项二",
+          value: 2,
+          disabled: false,
+          border: false,
+          size: "default",
+          name: undefined,
+          id: undefined,
+          fill: undefined,
+        },
+      ],
     },
     {
       tag: "el-color-picker",

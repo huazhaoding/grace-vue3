@@ -40,7 +40,7 @@
         align: "top", // 交叉轴对齐方式 (top/middle/bottom)
         customTag: "", // 自定义标签名
       },
-      children: {
+      options: {
         tagIcon: "el-col", // 子组件图标名称
         tagLabel: "列配置", // 子组件标签名
         tag: "el-col", // 子组件标签类型
@@ -98,7 +98,7 @@
         fill: false, // 是否填充父容器
         "fill-radio": 100, // 填充比例
       },
-      children: [], // 子组件列表
+      options: [], // 子组件列表
     },
     {
       tag: "el-splitter", // 定义组件类型为分割面板
@@ -110,7 +110,7 @@
         "resize-end": undefined, // 调整结束事件
         resize: undefined, // 调整事件
       },
-      children: {
+      options: {
         tag: "el-splitter-panel", // 子组件标签类型
         tagLabel: "子分割面板", // 子组件标签名
         tagIcon: "icon-splitter-panel", // 子组件图标名称
