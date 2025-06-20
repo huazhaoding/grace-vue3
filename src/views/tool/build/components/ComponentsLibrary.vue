@@ -54,7 +54,7 @@ const props = defineProps({
 
 
 function onEnd(obj) {
-if (obj.from !== obj.to) {
+if (obj.from !== obj.to) { 
    emits('updateCloneComponent', tempActiveData,"drag");
   }
 }
@@ -71,6 +71,7 @@ function cloneComponent(origin) {
   clone.id=props.idGlobal+1; // 为克隆的组件生成唯一的 id
   clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
+  tempActiveData = clone;
   return clone;
 }
 

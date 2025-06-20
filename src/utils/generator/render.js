@@ -66,19 +66,14 @@ const componentChild = {
         ? conf.options.map((item) =>
             h(
               resolveComponent("el-checkbox-button"),
-              {
-                value: item.value,
-              },
+              item,
               () => item.label
             )
           )
         : conf.options.map((item) =>
             h(
               resolveComponent("el-checkbox"),
-              {
-                value: item.value,
-                border: conf.border,
-              },
+              item,
               () => item.label
             )
           );

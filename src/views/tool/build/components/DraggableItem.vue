@@ -8,15 +8,6 @@
 
 
   
-    
-  
-
-
-
-
-
-
-  
 </template>
 <script setup name="DraggableItem">
 import draggable from "vuedraggable/dist/vuedraggable.common";

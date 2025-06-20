@@ -18,9 +18,10 @@
     </div>
     <div class="center-board">
       <!-- 编辑器 -->
-      <el-scrollbar class="center-scrollbar">   
+      <el-scrollbar class="center-scrollbar" >   
             <draggable
               class="drawing-board"
+              style="height: 1000px;background-color: azure;"
               :list="drawingList"
               :animation="340"
               group="componentsGroup"
