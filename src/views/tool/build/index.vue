@@ -48,7 +48,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
