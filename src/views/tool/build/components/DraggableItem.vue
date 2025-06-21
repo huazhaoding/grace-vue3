@@ -20,7 +20,7 @@
               :key="element.renderKey"
               :drawing-list="item.data"
               :element="element"
-              :index="'child-'+index"
+              :index="index"
             />
         </template>
       </draggable>
@@ -29,7 +29,7 @@
 
 </div>
 
-  <render :key="element.tag" :conf="element" v-model="element.attr.defaultValue" />
+
 
 
   <!-- <div class="drawing-item-operate">
