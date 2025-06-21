@@ -29,12 +29,26 @@
 
 </div>
 
-  
+  <render :key="element.tag" :conf="element" v-model="element.attr.defaultValue" />
+
+
+  <!-- <div class="drawing-item-operate">
+    <span class="drawing-item-copy" title="复制" @click.stop="copyItem(element)">
+      <el-icon>
+        <CopyDocument />
+      </el-icon>
+    </span>
+    <span class="drawing-item-delete" title="删除" @click.stop="deleteItem(index)">
+      <el-icon>
+        <Delete />
+      </el-icon>
+    </span>
+  </div> -->
 </template>
 <script setup name="DraggableItem">
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import render from '@/utils/generator/render'
-import { watch } from "vue";
+const emits = defineEmits(['activeItem', 'copyItem', 'deleteItem'])
 const props = defineProps({
   element: Object,
   index: Number,
@@ -48,7 +62,6 @@ const props = defineProps({
 
 const className = ref('')
 const draggableItemRef = ref(null)
-const emits = defineEmits(['activeItem', 'copyItem', 'deleteItem'])
 watch(() => props.drawingList, (val) => {
   console.log(val)
 },{deep:true})

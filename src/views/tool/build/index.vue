@@ -167,7 +167,6 @@ $lighterBlue: #409eff;
         font-weight: 600;
         font-size: 17px;
         white-space: nowrap;
-
         > img {
           width: 30px;
           height: 30px;
