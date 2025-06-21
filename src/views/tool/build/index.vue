@@ -8,52 +8,48 @@
       <el-scrollbar class="left-scrollbar">
         <el-tabs v-model="leftActiveTab">
           <el-tab-pane label="组件库" name="componentLibrary">
-            <components-library :idGroup="idGlobal" @updateCloneComponent="updateCloneComponent" />
+            <components-library
+              :idGlobal="idGlobal"
+              @updateCloneComponent="updateCloneComponent"
+            />
           </el-tab-pane>
-          <el-tab-pane label="模板库" name="templateLibrary"> 
-
-          </el-tab-pane>
+          <el-tab-pane label="模板库" name="templateLibrary"> </el-tab-pane>
         </el-tabs>
       </el-scrollbar>
     </div>
     <div class="center-board">
       <!-- 编辑器 -->
-      <el-scrollbar class="center-scrollbar" >   
-            <draggable
-              class="drawing-board"
-              style="height: 1000px;background-color: azure;"
-              :list="drawingList"
-              :animation="340"
-              group="componentsGroup"
-              item-key="label"
-            >
-              <template #item="{ element, index }">
-                <draggable-item
-                  :key="element.renderKey"
-                  :drawing-list="drawingList"
-                  :element="element"
-                  :index="index"
-                  :active-id="activeId"
-                  @activeItem="activeFormItem"
-                  @copyItem="drawingItemCopy"
-                  @deleteItem="drawingItemDelete"
-                />
-              </template>
-            </draggable>
-            <div v-show="!drawingList.length" class="empty-info">
-              从左侧拖入或点选组件进行表单设计
-            </div>
+      <el-scrollbar class="center-scrollbar">
+        <draggable
+          class="drawing-board"
+          style="height: 1000px; background-color: azure"
+          :list="drawingList"
+          :animation="340"
+          group="componentsGroup"
+          item-key="renderKey"
+          @start="onDragStart"
+          @change="onDragChange"
+        >
+          <template #item="{ element, index }">
+            <draggable-item
+              :key="element.renderKey"
+              :drawing-list="drawingList"
+              :element="element"
+              :index="index"
+              :active-id="activeId"
+              @activeItem="activeFormItem"
+            />
+          </template>
+        </draggable>
+        <div v-show="!drawingList.length" class="empty-info">
+          从左侧拖入或点选组件进行表单设计
+        </div>
       </el-scrollbar>
     </div>
- 
-    
   </div>
-
-
 </template>
 
 <script setup>
-
 import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
 import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
@@ -68,34 +64,58 @@ const activeData = ref([]); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
 const generateConf = ref(null); // 生成配置
 
-
-
-
-function updateCloneComponent(element,from){
-  console.log("updateCloneComponent",element,from);
-    if(from === 'click'){
-     drawingList.value.push(element); // 将克隆的组件添加到表单项列表
-     activeFormItem(element); // 激活新添加的组件
-    }else{
-    activeData.value = element; // 更新当前激活的表单项数据
-    idGlobal.value=element.id;
-    activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
-    }
-  console.log("drawingList",drawingList.value);
+// 拖拽开始事件
+function onDragStart(event) {
+  console.log("拖拽开始:", event);
+  if (!event.item || !event.oldIndex) {
+    console.error("Error: Invalid drag start event data");
+  }
 }
 
+// 监听 change 事件
+function onDragChange(event) {
+  console.log("拖拽变化事件:", event);
+  const { added, moved, removed } = event;
+
+  if (added) {
+    console.log("新增项目:", added.element, "索引:", added.newIndex);
+  }
+  if (moved) {
+    console.log(
+      "移动项目:",
+      moved.element,
+      "旧索引:",
+      moved.oldIndex,
+      "新索引:",
+      moved.newIndex
+    );
+  }
+  if (removed) {
+    console.log("删除项目:", removed.element, "索引:", removed.oldIndex);
+  }
+
+  console.log("拖动后的 drawingList:", drawingList.value);
+}
+
+function updateCloneComponent(element, from) {
+  if (from === "click") {
+    drawingList.value.push(element); // 将克隆的组件添加到表单项列表
+    idGlobal.value = element.id;
+    activeFormItem(element); // 激活新添加的组件
+  } else {
+    activeData.value = element; // 更新当前激活的表单项数据
+    idGlobal.value = element.id;
+    activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
+  }
+}
 
 // 激活表单项
 function activeFormItem(element) {
   activeData.value = element; // 设置当前激活的表单项数据
   activeId.value = element.formId; // 设置当前激活的表单项 ID
 }
-
-
 </script>
 <style lang="scss">
-
-
 .el-tabs__nav-wrap {
   display: flex;
   justify-content: space-around;

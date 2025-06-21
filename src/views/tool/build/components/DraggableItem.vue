@@ -1,11 +1,33 @@
 <template>
-  <!-- 是表单组件 -->
-    
-  <!-- 不是表单组件 -->
+  <div>
+   <el-form-item v-if="element?.hedge" :label="element.hedge.label" 
+      :label-width="element.hedge.labelWidth ? element.hedge.labelWidth + 'px' : null"
+      :size="element.hedge.size"
+      :show-message="element.hedge.showMessage" 
+      :inline-message="element.hedge.inlineMessage"
+      :error="element.hedge.error"
+      :label-position="element.hedge.labelPosition"
+      :required="element.hedge.required">
+       <render :key="element.tag" :conf="element" v-model="element.attr.defaultValue" />
+    </el-form-item>
 
-  
-<render :key="element.tag" :conf="element" v-model="element.attr.defaultValue" />
+    <el-row v-else-if="element.tag === 'el-row'" :gutter="element.attr.gutter" :justify="element.attr.justify" :align="element.attr.align"  :customTag="element.attr.customTag" > 
+      <el-col :xl="item.xl" :lg="item.lg" :md="item.md" :sm="item.sm" :xs="item.xs" v-for="(item, index) in element.optionChild.attr">
+      <draggable group="componentsGroup" :animation="340" :list="item.data" class="drag-wrapper" item-key="renderKey" style="width: 100px;height:100px;border: 1px solid red;"
+        >
+        <template #item="{element,index}">
+          <draggable-item
+              :key="element.renderKey"
+              :drawing-list="item.data"
+              :element="element"
+              :index="'child-'+index"
+            />
+        </template>
+      </draggable>
+      </el-col>
+    </el-row> 
 
+</div>
 
   
 </template>
@@ -27,9 +49,11 @@ const props = defineProps({
 const className = ref('')
 const draggableItemRef = ref(null)
 const emits = defineEmits(['activeItem', 'copyItem', 'deleteItem'])
-watch(() => props.element, (val) => {
-},{immediate: true,deep:true})
+watch(() => props.drawingList, (val) => {
+  console.log(val)
+},{deep:true})
 function activeItem(item) {
+  alert("stop")
   emits('activeItem', item)
 }
 
@@ -40,14 +64,5 @@ function copyItem(item, parent) {
 function deleteItem(item, parent) {
   emits('deleteItem', item, parent ?? props.drawingList)
 }
-
-function getComponentData() {
-  return {
-    gutter: props.element.gutter,
-    justify: props.element.justify,
-    align: props.element.align
-  };
-}
-
 
 </script>

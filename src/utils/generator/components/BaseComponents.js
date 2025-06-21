@@ -1,6 +1,6 @@
- export  const  BaseComponents = {
+export const BaseComponents = {
   title: "基础组件",
-  icon:"",
+  icon: "",
   list: [
     {
       tag: "el-button", // 定义组件类型为按钮
@@ -35,22 +35,48 @@
       tagIcon: "row", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/layout", // 组件文档链接
       attr: {
-        gutter: 0, // 栅格间隔
+        gutter: 10, // 栅格间隔
         justify: "start", // 主轴对齐方式 (start/end/center/space-around/space-between)
         align: "top", // 交叉轴对齐方式 (top/middle/bottom)
         customTag: "", // 自定义标签名
       },
-      options: {
-        tagIcon: "el-col", // 子组件图标名称
-        tagLabel: "列配置", // 子组件标签名
-        tag: "el-col", // 子组件标签类型
-        xs: { span: 24, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
-        sm: { span: 24, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
-        md: { span: 24, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
-        lg: { span: 24, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
-        xl: { span: 24, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置
-        customTag: "", // 自定义标签名
-      },
+      optionChild: 
+        {
+          tagIcon: "el-col", // 子组件图标名称
+          tagLabel: "列配置", // 子组件标签名
+          tag: "el-col", // 子组件标签类型
+          attr: [
+            {
+              renderKey: "col-3", // 添加唯一标识符
+              xs: { span: 24, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
+              sm: { span: 24, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
+              md: { span: 24, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
+              lg: { span: 24, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
+              xl: { span: 24, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置],
+              tag:'div' //自定义默认内容
+            },
+            {renderKey: "col-32", // 添加唯一标识符
+              xs: { span: 12, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
+              sm: { span: 12, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
+              md: { span: 12, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
+              lg: { span: 12, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
+              xl: { span: 12, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置],
+              tag:'div' //自定义默认内容
+            },
+            {
+              renderKey: "col-6", // 添加唯一标识符
+              xs: { span: 24, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
+              sm: { span: 24, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
+              md: { span: 24, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
+              lg: { span: 24, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
+              xl: { span: 24, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置],
+              data:[],
+              tag:'div' //自定义默认内容
+            }
+           
+          ],
+        },
+       
     },
     {
       tag: "el-link", // 定义组件类型为链接
@@ -123,6 +149,5 @@
         },
       },
     },
-  
   ],
-}
+};

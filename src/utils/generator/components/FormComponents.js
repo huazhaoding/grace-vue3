@@ -1,3 +1,33 @@
+// 默认表单包围参数
+export const defaultHedge = {
+  // 表单项的标签文字
+  label: "",
+  // 表单域字段名，用于验证、重置等操作
+  prop: "",
+  // 是否必填
+  required: true,
+  // 表单验证规则
+  rules: [],
+  // 手动设置的错误提示信息
+  errorMessage: "",
+  // 是否显示校验错误信息
+  showMessage: true,
+  // 是否以行内形式展示校验信息
+  inlineMessage: false,
+  // 尺寸：large / default / small
+  size: "default",
+  // 标签宽度
+  labelWidth: "100",
+  // 标签位置：left / right / top
+  labelPosition: "right",
+  // 原生 label 的 for 属性
+  for: "",
+  // 表单域验证错误时的提示信息。设置该值会导致表单验证状态变为 error，并显示该错误信息。
+  error: "",
+  // 表单项的校验状态（success/error/validating）
+  validateStatus: "",
+};
+
 export const FormComponents = {
   title: "表单组件",
   icon: "",
@@ -27,6 +57,12 @@ export const FormComponents = {
         "highlight-first-item": false, // 是否默认高亮远程搜索结果的第一项
         "fit-input-width": false, // 下拉框的宽度是否与输入框相同
       },
+      hedge: Object.assign(defaultHedge, {
+        // 表单项的标签文字
+        label: "计数器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
     },
     {
       // 表单项的标签文字
@@ -56,6 +92,12 @@ export const FormComponents = {
         tag: "div", //多选框组的标签类型
         "validate-event": true, //是否触发表单验证
       },
+      hedge: Object.assign(defaultHedge, {
+        // 表单项的标签文字
+        label: "计数器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
       // 多选框组的选项
       options: [
         {
@@ -134,6 +176,12 @@ export const FormComponents = {
         tag: "div",
         "validate-event": true,
       },
+      hedge: Object.assign(defaultHedge, {
+        // 表单项的标签文字
+        label: "计数器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
       options: [
         {
           label: "选项一",
@@ -172,6 +220,12 @@ export const FormComponents = {
         regList: [],
         changeTag: true,
       },
+      hedge: Object.assign(defaultHedge, {
+        // 表单项的标签文字
+        label: "计数器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
     },
   ],
 };

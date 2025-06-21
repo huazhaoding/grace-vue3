@@ -92,23 +92,7 @@ const componentChild = {
         return h(resolveComponent("el-button"), option, () => conf.buttonText);
       }
     },
-  },
-  "el-row": {
-    options(h, conf, key) {
-      // 动态生成 el-col 子组件
-      const childElements = conf.children || [];
-      return childElements.map((child) =>
-        h(resolveComponent(child.tag), {
-          xs: child.xs,
-          sm: child.sm,
-          md: child.md,
-          lg: child.lg,
-          xl: child.xl,
-          customTag: child.customTag,
-        })
-      );
-    },
-  },
+  }
 };
 
 export default defineComponent({
