@@ -1,51 +1,57 @@
 <template>
   <div class="container">
-    <div class="left-board">
-      <div class="logo-wrapper">
-        <div class="logo"><img :src="logo" alt="logo" /> Form Generator</div>
-      </div>
-      <!-- 左边组件库 -->
-      <el-scrollbar class="left-scrollbar">
-        <el-tabs v-model="leftActiveTab">
-          <el-tab-pane label="组件库" name="componentLibrary">
-            <components-library
-              :idGlobal="idGlobal"
-              @updateCloneComponent="updateCloneComponent"
-            />
-          </el-tab-pane>
-          <el-tab-pane label="模板库" name="templateLibrary"> </el-tab-pane>
-        </el-tabs>
-      </el-scrollbar>
-    </div>
-    <div class="center-board">
-      <!-- 编辑器 -->
-      <el-scrollbar class="center-scrollbar">
-        <draggable
-          class="drawing-board"
-          style="height: 1000px; background-color: azure"
-          :list="drawingList"
-          :animation="340"
-          group="componentsGroup"
-          item-key="renderKey"
-          @start="onDragStart"
-          @change="onDragChange"
-        >
-          <template #item="{ element, index }">
-            <draggable-item
-              :key="element.renderKey"
-              :drawing-list="drawingList"
-              :elementData="element"
-              :index="index"
-              :active-id="activeId"
-              @activeItem="activeFormItem"
-            />
-          </template>
-        </draggable>
-        <div v-show="!drawingList.length" class="empty-info">
-          从左侧拖入或点选组件进行表单设计
+    <el-container>
+      <el-aside width="300px" style="background-color: white; overflow: hidden">
+        <div class="left-board">
+          <div class="logo-wrapper">
+            <div class="logo">
+              <img :src="logo" alt="logo" /> Form Generator
+            </div>
+          </div>
+          <!-- 左边组件库 -->
+          <el-scrollbar class="left-scrollbar" height="90vh">
+            <el-tabs v-model="leftActiveTab">
+              <el-tab-pane label="组件库" name="componentLibrary">
+                <components-library
+                  :idGlobal="idGlobal"
+                  @updateCloneComponent="updateCloneComponent"
+                />
+              </el-tab-pane>
+              <el-tab-pane label="模板库" name="templateLibrary"> </el-tab-pane>
+            </el-tabs>
+          </el-scrollbar>
         </div>
-      </el-scrollbar>
-    </div>
+      </el-aside>
+      <el-main style="padding: 5px"
+        ><div class="center-board">
+          <!-- 编辑器 -->
+          <draggable
+            class="drawing-board"
+            :list="drawingList"
+            :animation="340"
+            group="componentsGroup"
+            item-key="renderKey"
+            @start="onDragStart"
+            @change="onDragChange"
+          >
+            <template #item="{ element, index }">
+              <draggable-item
+                :key="element.renderKey"
+                :drawing-list="drawingList"
+                :elementData="element"
+                :index="index"
+                :active-id="activeId"
+                @activeItem="activeFormItem"
+              />
+            </template>
+          </draggable>
+          <div v-show="!drawingList.length" class="empty-info">
+            从左侧拖入或点选组件进行表单设计
+          </div>
+        </div></el-main
+      >
+      <el-aside width="300px">Aside</el-aside>
+    </el-container>
   </div>
 </template>
 <script setup>
@@ -53,11 +59,9 @@ import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
 import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
 import DraggableItem from "./components/DraggableItem"; // 导入可拖拽表单项组件
-
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
-
 const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref([]); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
@@ -114,31 +118,11 @@ function activeFormItem(element) {
   activeId.value = element.formId; // 设置当前激活的表单项 ID
 }
 </script>
+
 <style lang="scss">
-.el-tabs__nav-wrap {
-  display: flex;
-  justify-content: space-around;
-}
-// body,
-// html {
-//   margin: 0;
-//   padding: 0;
-//   background: #fff;
-//   -moz-osx-font-smoothing: grayscale;
-//   -webkit-font-smoothing: antialiased;
-//   text-rendering: optimizeLegibility;
-//   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-// }
-
-// input,
-// textarea {
-//   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-// }
-
 $lighterBlue: #409eff;
 
 .container {
-  position: relative;
   width: 100%;
   background-color: var(--el-bg-color-overlay);
   height: calc(100vh - 50px - 40px);
@@ -146,9 +130,6 @@ $lighterBlue: #409eff;
 
   .left-board {
     width: 260px;
-    position: absolute;
-    left: 0;
-    top: 0;
     height: calc(100vh - 50px - 40px);
 
     .logo-wrapper {
@@ -166,6 +147,7 @@ $lighterBlue: #409eff;
         font-weight: 600;
         font-size: 17px;
         white-space: nowrap;
+
         > img {
           width: 30px;
           height: 30px;
@@ -185,11 +167,15 @@ $lighterBlue: #409eff;
     }
 
     .left-scrollbar {
+      .el-tabs__nav-scroll {
+        display: flex;
+        justify-content: center;
+      }
+
       .el-scrollbar__wrap {
         box-sizing: border-box;
         overflow-x: hidden !important;
         margin-bottom: 0 !important;
-
         .components-list {
           padding: 8px;
           box-sizing: border-box;
@@ -247,229 +233,67 @@ $lighterBlue: #409eff;
   }
 
   .center-board {
-    height: calc(100vh - 50px - 40px);
-    width: auto;
-    margin: 0 350px 0 260px;
-    box-sizing: border-box;
-
-    .action-bar {
-      position: relative;
-      height: 42px;
-      padding: 0 15px;
-      box-sizing: border-box;
-      border: 1px solid var(--el-border-color-extra-light);
-      border-top: none;
-      border-left: none;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-
-      u .delete-btn {
-        color: #f56c6c;
-      }
-    }
-
-    .center-scrollbar {
-      height: calc(100vh - 50px - 40px - 42px);
-      overflow: hidden;
-      border-left: 1px solid var(--el-border-color-extra-light);
-      border-right: 1px solid var(--el-border-color-extra-light);
-      box-sizing: border-box;
-
-      .el-scrollbar__view {
-        overflow-x: hidden;
-      }
-
-      .center-board-row {
-        padding: 12px 12px 15px 12px;
-        box-sizing: border-box;
-
-        & > .el-form {
-          // 69 = 12+15+42
-          height: calc(100vh - 50px - 40px - 69px);
-          flex: 1;
-
-          .drawing-board {
-            height: 100%;
-            position: relative;
-
-            .components-body {
-              padding: 0;
-              margin: 0;
-              font-size: 0;
-            }
-
-            .sortable-ghost {
-              position: relative;
-              display: block;
-              overflow: hidden;
-
-              &::before {
-                content: " ";
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                height: 3px;
-                background: rgb(89, 89, 223);
-                z-index: 2;
-              }
-            }
-
-            .components-item.sortable-ghost {
-              width: 100%;
-              height: 60px;
-              background: var(--el-border-color-extra-light);
-            }
-
-            .active-from-item {
-              & > .el-form-item {
-                background: var(--el-border-color-extra-light);
-                border-radius: 6px;
-              }
-
-              & > .drawing-item-copy,
-              & > .drawing-item-delete {
-                display: initial;
-              }
-
-              & > .component-name {
-                color: $lighterBlue;
-              }
-
-              .el-input__wrapper {
-                box-shadow: 0 0 0 1px var(--el-input-hover-border-color) inset;
-              }
-            }
-
-            .el-form-item {
-              margin-bottom: 15px;
-            }
+    position: relative;
+    width: 100%;
+    min-height: 800px;
+    .drawing-board {
+      position: absolute;
+      width: 100%;
+      min-height: 800px;
+      padding: 10px;
+      background-color: aquamarine;
+      .draggable-item {
+        border: 1px solid red;
+        cursor: move;
+        position: relative;
+        .drag-wrapper {
+          background-color: #787be8;
+          height: auto;
+          min-height: 200px;
+        }
+        .field-wrapper {
+          margin: 0;
+        }
+        .draggable-item-mark {
+          z-index: 9999;
+          color:aliceblue;
+          position: absolute;
+          background-color: #409eff;
+          text-align: center;
+          font-size: 12px;
+          font-style: normal;
+          padding: 4px;
+          opacity: 0.6;
+          .draggable-item-name{
+            padding-left: 10px;
+            padding-bottom: 20px;
           }
-
-          .drawing-item {
-            position: relative;
-            cursor: move;
-
-            &.unfocus-bordered:not(.activeFromItem) > div:first-child {
-              border: 1px dashed #ccc;
-            }
-
-            .el-form-item {
-              padding: 12px 10px;
-            }
-          }
-
-          .drawing-row-item {
-            position: relative;
-            cursor: move;
-            box-sizing: border-box;
-            border: 1px dashed #ccc;
-            border-radius: 3px;
-            padding: 0 2px;
-            margin-bottom: 15px;
-
-            .drawing-row-item {
-              margin-bottom: 2px;
-            }
-
-            .el-col {
-              margin-top: 22px;
-            }
-
-            .el-form-item {
-              margin-bottom: 0;
-            }
-
-            .drag-wrapper {
-              min-height: 80px;
-              flex: 1;
-              display: flex;
-              flex-wrap: wrap;
-            }
-
-            &.active-from-item {
-              border: 1px dashed $lighterBlue;
-            }
-
-            .component-name {
-              position: absolute;
-              top: 0;
-              left: 0;
-              font-size: 12px;
-              color: #bbb;
-              display: inline-block;
-              padding: 0 6px;
-            }
-          }
-
-          .drawing-item,
-          .drawing-row-item {
-            &:hover {
-              & > .el-form-item {
-                background: var(--el-border-color-extra-light);
-                border-radius: 6px;
-              }
-
-              & > .drawing-item-copy,
-              & > .drawing-item-delete {
-                display: initial;
-              }
-            }
-
-            & > .drawing-item-copy,
-            & > .drawing-item-delete {
-              display: none;
-              position: absolute;
-              top: -10px;
-              width: 22px;
-              height: 22px;
-              line-height: 22px;
-              text-align: center;
-              border-radius: 50%;
-              font-size: 12px;
-              border: 1px solid;
-              cursor: pointer;
-              z-index: 1;
-            }
-
-            & > .drawing-item-copy {
-              right: 56px;
-              border-color: $lighterBlue;
-              color: $lighterBlue;
-              background: #fff;
-
-              &:hover {
-                background: $lighterBlue;
-                color: #fff;
-              }
-            }
-
-            & > .drawing-item-delete {
-              right: 24px;
-              border-color: #f56c6c;
-              color: #f56c6c;
-              background: #fff;
-
-              &:hover {
-                background: #f56c6c;
-                color: #fff;
-              }
-            }
-          }
-
-          .empty-info {
-            position: absolute;
-            top: 46%;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 18px;
-            color: #ccb1ea;
-            letter-spacing: 4px;
+        }
+        .drawing-item-tool {
+          position: absolute;
+          color:aliceblue;
+          left: calc(100% - 48px);
+          bottom: 3px;
+          font-size: 12px;
+          font-style: normal;
+          .drawing-item-copy,
+          .drawing-item-delete {
+            background-color: #409eff;
+            padding: 7px 6px 3px 6px;
+            cursor: pointer;
           }
         }
       }
+    }
+    .empty-info {
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      height: 25px;
+      text-align: center;
+      font-size: 18px;
+      color: #ccb1ea;
+      letter-spacing: 4px;
     }
   }
 }
