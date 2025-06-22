@@ -34,7 +34,7 @@
             <draggable-item
               :key="element.renderKey"
               :drawing-list="drawingList"
-              :element="element"
+              :elementData="element"
               :index="index"
               :active-id="activeId"
               @activeItem="activeFormItem"

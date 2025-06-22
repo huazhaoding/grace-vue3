@@ -1,72 +1,44 @@
 <template>
   <div>
-    {{element.tag}}
-    <el-form-item
-      v-if="element?.hedge"
-      :label="element.hedge.label"
-      :label-width="
-        element.hedge.labelWidth ? element.hedge.labelWidth + 'px' : null
-      "
-      :size="element.hedge.size"
-      :show-message="element.hedge.showMessage"
-      :inline-message="element.hedge.inlineMessage"
-      :error="element.hedge.error"
-      :label-position="element.hedge.labelPosition"
-      :required="element.hedge.required"
-    >
-      <render
-        :key="element.tag"
-        :conf="element"
-        v-model="element.attr.defaultValue"
-      />
+    <el-form-item v-if="elementData?.hedge" :label="elementData.hedge.label" :label-width="elementData.hedge.labelWidth ? elementData.hedge.labelWidth + 'px' : null
+      " :size="elementData.hedge.size" :show-message="elementData.hedge.showMessage"
+      :inline-message="elementData.hedge.inlineMessage" :error="elementData.hedge.error"
+      :label-position="elementData.hedge.labelPosition" :required="elementData.hedge.required">
+      <render :key="elementData.tag" :conf="elementData" v-model="elementData.attr.defaultValue" />
     </el-form-item>
-
-    <el-row
-      v-else-if="element.tag === 'el-row'"
-      :gutter="element.attr.gutter"
-      :justify="element.attr.justify"
-      :align="element.attr.align"
-      :customTag="element.attr.customTag"
-    >
-      <el-col
-        :xl="item.xl"
-        :lg="item.lg"
-        :md="item.md"
-        :sm="item.sm"
-        :xs="item.xs"
-        v-for="(item, index) in element.optionChild.attr"
-      >
-        <draggable
-          group="componentsGroup"
-          :animation="340"
-          :list="item.data"
-          class="drag-wrapper"
-          item-key="renderKey"
-          @start="drag = true"
-          @end="drag = false"
-          style="
+    <el-row v-else-if="elementData.tag === 'el-row'" :gutter="elementData.attr.gutter" :justify="elementData.attr.justify"
+      :align="elementData.attr.align" :customTag="elementData.attr.customTag">
+      <el-col :xl="item.xl" :lg="item.lg" :md="item.md" :sm="item.sm" :xs="item.xs"
+        v-for="(item, index) in elementData.optionChild.attr">
+        <draggable group="componentsGroup" :animation="340" :list="item.data" class="drag-wrapper" item-key="renderKey"
+          @start="drag = true" @end="drag = false" style="
             width: 100%;
             height: auto;
             border: 1px solid red;
             min-height: 100px;
-          "
-        >
+          ">
           <template #item="{ element, index }">
-            <draggable-item
-              :key="element.renderKey"
-              :drawing-list="item.data"
-              :element="element"
-              :index="index"
-            />
+            <draggable-item :key="element.renderKey" :drawing-list="item.data" :elementData="element" :index="index" />
           </template>
         </draggable>
       </el-col>
     </el-row>
-    <render v-else
-      :key="element.tag"
-      :conf="element"
-      v-model="element.attr.defaultValue"
-    />
+    <el-form v-else-if="elementData.tag === 'el-form'" :model="elementData.attr.model" :rules="elementData.attr.rules"
+      :inline="elementData.attr.inline" :label-width="elementData.attr.labelWidth"
+      :hide-required-asterisk="elementData.attr.hideRequiredAsterisk" :label-position="elementData.attr.labelPosition">
+      <draggable group="componentsGroup" :animation="340" :list="elementData.data" class="drag-wrapper" item-key="renderKey"
+        @start="drag = true" @end="drag = false" style="
+            width: 100%;
+            height: auto;
+            border: 1px solid red;
+            min-height: 100px;
+          ">
+        <template #item="{element, index }">
+          <draggable-item :key="element.renderKey" :drawing-list="elementData.data" :elementData="element" :index="index" />
+        </template>
+      </draggable>
+    </el-form>
+    <render v-else :key="elementData.tag" :conf="elementData" v-model="elementData.attr.defaultValue" />
 
   </div>
 </template>
@@ -75,7 +47,7 @@ import draggable from "vuedraggable/dist/vuedraggable.common";
 import render from "@/utils/generator/render";
 const emits = defineEmits(["activeItem", "copyItem", "deleteItem"]);
 const props = defineProps({
-  element: Object,
+  elementData: Object,
   index: Number,
   drawingList: Array,
   activeId: {
@@ -86,8 +58,10 @@ const props = defineProps({
 
 const className = ref("");
 const draggableItemRef = ref(null);
+
+
 watch(
-  () => props.drawingList,
+  () => props.elementData,
   (val) => {
     console.log(val);
   },

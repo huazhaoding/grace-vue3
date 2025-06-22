@@ -70,6 +70,7 @@ export const FormComponents = {
         // 滚动到错误项时的配置选项（例如偏移量等）
         scrollIntoViewOptions: true
       },
+      data:[]
     },
     {
       tag: "el-autocomplete",
