@@ -44,7 +44,7 @@ export const FormComponents = {
         // 是否为行内表单，设置为 true 时表单项水平排列
         inline: false,
         // 标签对齐位置，可选值：'left', 'right', 'top',''
-        labelPosition: "",
+        labelPosition: "left",
         // 标签宽度，可以是像素值或百分比或者'auto'
         labelWidth: "100px",
         // 标签后缀，通常为冒号（:）
