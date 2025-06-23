@@ -1,5 +1,5 @@
 // 默认表单包围参数
-export const defaultHedge = {
+ const defaultHedge = {
   // 表单项的标签文字
   label: "",
   // 表单域字段名，用于验证、重置等操作
@@ -37,7 +37,8 @@ export const FormComponents = {
       tagLabel: "表单",
       tagIcon: "form",
       document: "https://element.eleme.cn/#/zh-CN/component/form",
-      attr: {   // 表单数据对象，用于绑定表单输入的值
+      attr: {
+        // 表单数据对象，用于绑定表单输入的值
         model: {},
         // 表单验证规则对象，定义各个字段的验证逻辑
         rules: {},
@@ -68,9 +69,71 @@ export const FormComponents = {
         // 当校验失败时是否自动滚动到第一个错误表单项
         scrollToError: false,
         // 滚动到错误项时的配置选项（例如偏移量等）
-        scrollIntoViewOptions: true
+        scrollIntoViewOptions: true,
       },
-      data:[]
+      data: [],
+    },
+    {
+      tag: "el-input",
+      tagLabel: "输入框",
+      tagIcon: "input",
+      document: "https://element.eleme.cn/#/zh-CN/component/input",
+      attr: {
+        // 类型，等同于原生 input 的 type 属性
+        type: "text", // string
+        // 绑定值
+        modelValue: "", // string / number
+        // 最大输入长度
+        maxlength: null, // string / number
+        // 最小输入长度
+        minlength: null, // string / number
+        // 是否显示统计字数，仅在 type 为 'text' 或 'textarea' 时生效
+        "show-word-limit": false, // boolean
+        // 输入框占位文本
+        placeholder: "请输入", // string
+        // 是否显示清除按钮，仅当 type 不是 textarea 时生效
+        clearable: false, // boolean
+        // 指定输入值的格式（仅当 type 为 'text' 时生效）
+        formatter: null, // Function
+        // 指定从格式化器中提取的值（仅当 type 为 'text' 时生效）
+        parser: null, // Function
+        // 是否禁用
+        disabled: false, // boolean
+        // 输入框尺寸，仅当 type 不为 'textarea' 时有效
+        size: "default", // enum
+        // 自定义前缀图标
+        "prefix-icon": null, // string / Component
+        // 自定义后缀图标
+        "suffix-icon": null, // string / Component
+        // 原生 autocomplete 属性
+        autocomplete: "off", // string
+        // 等价于原生 input name 属性
+        name: "", // string
+        // 原生 readonly 属性，是否只读
+        readonly: false, // boolean
+        // 控制是否能被用户缩放
+        resize: null, // enum
+        // 原生 autofocus 属性，自动获取焦点
+        autofocus: false, // boolean
+        // 原生 form 属性
+        form: "", // string
+        // 等价于原生 input aria-label 属性
+        "aria-label": "", // string
+        // 输入框的 tabindex
+        tabindex: null, // string / number
+        // 输入时是否触发表单的校验
+        validateEvent: true, // boolean
+        // input 元素或 textarea 元素的 style
+        inputStyle: {}, // string / object
+        changeTag: true,
+      },
+      hedge: Object.assign({},defaultHedge, {
+        // 表单项的标签文字
+        label: "输入框",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+      
     },
     {
       tag: "el-autocomplete",
@@ -97,9 +160,9 @@ export const FormComponents = {
         "highlight-first-item": false, // 是否默认高亮远程搜索结果的第一项
         "fit-input-width": false, // 下拉框的宽度是否与输入框相同
       },
-      hedge: Object.assign(defaultHedge, {
+      hedge: Object.assign({},defaultHedge, {
         // 表单项的标签文字
-        label: "计数器",
+        label: "自动补全",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
       }),
@@ -132,9 +195,9 @@ export const FormComponents = {
         tag: "div", //多选框组的标签类型
         "validate-event": true, //是否触发表单验证
       },
-      hedge: Object.assign(defaultHedge, {
+      hedge: Object.assign({},defaultHedge, {
         // 表单项的标签文字
-        label: "计数器",
+        label: "多选框",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
       }),
@@ -216,9 +279,9 @@ export const FormComponents = {
         tag: "div",
         "validate-event": true,
       },
-      hedge: Object.assign(defaultHedge, {
+      hedge: Object.assign({},defaultHedge, {
         // 表单项的标签文字
-        label: "计数器",
+        label: "单选框",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
       }),
@@ -260,9 +323,9 @@ export const FormComponents = {
         regList: [],
         changeTag: true,
       },
-      hedge: Object.assign(defaultHedge, {
+      hedge: Object.assign({},defaultHedge, {
         // 表单项的标签文字
-        label: "计数器",
+        label: "颜色选择",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
       }),

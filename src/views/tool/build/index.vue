@@ -42,15 +42,26 @@
                 :index="index"
                 :active-id="activeId"
                 @activeItem="activeFormItem"
+                @copyItem="drawingItemCopy"
+                @deleteItem="drawingItemDelete"
               />
             </template>
           </draggable>
           <div v-show="!drawingList.length" class="empty-info">
             从左侧拖入或点选组件进行表单设计
           </div>
-        </div></el-main
-      >
-      <el-aside width="300px">Aside</el-aside>
+        </div>
+      </el-main>
+      <el-aside width="350px">
+        <!-- 右边属性库 -->
+        <right-panel
+          :active-data-property="activeData"
+          :form-conf="{}"
+          :show-field="!!drawingList.length"
+         
+          @activeDataChange="fieldsAttributeChange"
+        />
+      </el-aside>
     </el-container>
   </div>
 </template>
@@ -59,6 +70,7 @@ import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
 import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
 import DraggableItem from "./components/DraggableItem"; // 导入可拖拽表单项组件
+import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
@@ -66,39 +78,6 @@ const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref([]); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
 const generateConf = ref(null); // 生成配置
-
-// 拖拽开始事件
-function onDragStart(event) {
-  console.log("拖拽开始:", event);
-  if (!event.item || !event.oldIndex) {
-    console.error("Error: Invalid drag start event data");
-  }
-}
-
-// 监听 change 事件
-function onDragChange(event) {
-  console.log("拖拽变化事件:", event);
-  const { added, moved, removed } = event;
-
-  if (added) {
-    console.log("新增项目:", added.element, "索引:", added.newIndex);
-  }
-  if (moved) {
-    console.log(
-      "移动项目:",
-      moved.element,
-      "旧索引:",
-      moved.oldIndex,
-      "新索引:",
-      moved.newIndex
-    );
-  }
-  if (removed) {
-    console.log("删除项目:", removed.element, "索引:", removed.oldIndex);
-  }
-
-  console.log("拖动后的 drawingList:", drawingList.value);
-}
 
 function updateCloneComponent(element, from) {
   if (from === "click") {
@@ -110,6 +89,36 @@ function updateCloneComponent(element, from) {
     idGlobal.value = element.id;
     activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
   }
+}
+
+// 复制表单项
+function drawingItemCopy(item, parent) {
+  let clone = JSON.parse(JSON.stringify(item)); // 深拷贝表单项
+  clone = createIdAndKey(clone); // 为克隆的表单项生成唯一的 ID 和 key
+  parent.push(clone); // 将克隆的表单项添加到父级列表
+  activeFormItem(clone); // 激活新复制的表单项
+}
+
+// 为表单项生成唯一的 ID 和 key
+function createIdAndKey(clone) {
+  clone.id = ++idGlobal.value; // 为克隆的组件生成唯一的 id
+  clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
+  clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
+  if (Array.isArray(clone.data)) {
+    clone.data = clone.data.map((childItem) => createIdAndKey(childItem)); // 递归处理子项
+  }
+  return clone; // 返回更新后的表单项
+}
+
+// 删除表单项
+function drawingItemDelete(index, parent) {
+  parent.splice(index, 1); // 从父级列表中删除表单项
+  nextTick(() => {
+    const len = drawingList.value.length; // 获取剩余表单项数量
+    if (len) {
+      activeFormItem(drawingList.value[len - 1]); // 激活最后一个表单项
+    }
+  });
 }
 
 // 激活表单项
@@ -246,6 +255,7 @@ $lighterBlue: #409eff;
         border: 1px solid red;
         cursor: move;
         position: relative;
+        margin-bottom: 10px;
         .drag-wrapper {
           background-color: #787be8;
           height: auto;
@@ -256,7 +266,7 @@ $lighterBlue: #409eff;
         }
         .draggable-item-mark {
           z-index: 9999;
-          color:aliceblue;
+          color: aliceblue;
           position: absolute;
           background-color: #409eff;
           text-align: center;
@@ -264,14 +274,14 @@ $lighterBlue: #409eff;
           font-style: normal;
           padding: 4px;
           opacity: 0.6;
-          .draggable-item-name{
+          .draggable-item-name {
             padding-left: 10px;
             padding-bottom: 20px;
           }
         }
         .drawing-item-tool {
           position: absolute;
-          color:aliceblue;
+          color: aliceblue;
           left: calc(100% - 48px);
           bottom: 3px;
           font-size: 12px;

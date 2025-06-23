@@ -107,7 +107,7 @@
       <span
         class="drawing-item-copy"
         title="复制"
-        @click.stop="copyItem(element)"
+        @click.stop="copyItem(elementData)"
       >
         <el-icon>
           <CopyDocument />
@@ -155,9 +155,11 @@ function activeItem(item) {
 }
 
 function copyItem(item, parent) {
+
   emits("copyItem", item, parent ?? props.drawingList);
 }
 function deleteItem(item, parent) {
+
   emits("deleteItem", item, parent ?? props.drawingList);
 }
 </script>

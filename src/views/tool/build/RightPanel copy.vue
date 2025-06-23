@@ -14,7 +14,17 @@
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
         <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top">
-       
+          <el-form-item v-if="formItemAttr.changeTag" label="组件类型">
+            <el-select v-model="formItemAttr.tagIcon" placeholder="请选择组件类型" :style="{ width: '100%' }"
+              @change="tagChange">
+              <el-option-group v-for="group in tagList" :key="group.label" :label="group.label">
+                <el-option v-for="item in group.options" :key="item.label" :label="item.label" :value="item.tagIcon">
+                  <svg-icon class="node-icon" :icon-class="item.tagIcon" style="margin-right: 10px;" />
+                  <span> {{ item.label }}</span>
+                </el-option>
+              </el-option-group>
+            </el-select>
+          </el-form-item>
           <el-form-item v-if="formItemAttr.vModel !== undefined" label="字段名">
             <el-input v-model="formItemAttr.vModel" placeholder="请输入字段名（v-model）" />
           </el-form-item>
@@ -535,7 +545,10 @@ import draggable from "vuedraggable/dist/vuedraggable.common";
 import { isNumberStr } from '@/utils/index'
 import IconsDialog from './IconsDialog'
 import TreeNodeDialog from './TreeNodeDialog'
-
+import {
+  inputComponents,
+  selectComponents
+} from '@/utils/generator/config'
 
 const { proxy } = getCurrentInstance()
 const dateTimeFormat = {
@@ -559,8 +572,8 @@ const formItemAttr = ref([]);
 
 
 watch(() => props.activeDataProperty, (val) => {
-  formItemAttr.value=val.attr;
-  formItemHedge.value=val.hedge
+  formItemAttr.value=val.formItemAttr;
+  formItemHedge.value=val.formItemHedge
 })
 watch(() => formItemAttr, (val) => {
   console.log(val);
@@ -689,7 +702,16 @@ const dateOptions = computed(() => {
   return []
 })
 
-
+const tagList = ref([
+  {
+    label: '输入型组件',
+    options: inputComponents
+  },
+  {
+    label: '选择型组件',
+    options: selectComponents
+  }
+])
 
 const emit = defineEmits(['tag-change', 'formItemChange'])
 
@@ -854,7 +876,11 @@ function setIcon(val) {
   formItemAttr.value[currentIconModel.value] = val
 }
 
-
+function tagChange(tagIcon) {
+  let target = inputComponents.find(item => item.tagIcon === tagIcon)
+  if (!target) target = selectComponents.find(item => item.tagIcon === tagIcon)
+  emit('tag-change', target)
+}
 </script>
 
 <style lang="scss" scoped>

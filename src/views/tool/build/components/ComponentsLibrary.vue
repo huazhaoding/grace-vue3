@@ -52,7 +52,6 @@ const props = defineProps({
   }
 })
 
-
 function onEnd(obj) {
 if (obj.from !== obj.to) { 
    emits('updateCloneComponent', tempActiveData,"drag");
