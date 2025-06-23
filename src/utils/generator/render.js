@@ -184,9 +184,9 @@ export default defineComponent({
       slot.default = () => children;
     }
 
-    // 属性分类
+    // 属性分类 处理组件的attr
     Object.keys(cloneAttr).forEach((key) => {
-      const val = cloneAttr[key];
+      const val = cloneAttr[key].value;
       // 特殊处理布尔值属性
       if (
         ["show-word-limit", "clearable", "readonly", "disabled"].includes(key)
@@ -203,7 +203,7 @@ export default defineComponent({
     });
 
     if (this.conf.attr.defaultLabel) {
-      slot.default = () => this.conf.attr.defaultLabel; // 设置默认插槽内容
+      slot.default = () => this.conf.attr.defaultLabel.value; // 设置默认插槽内容
     }
 
     // 生成虚拟 DOM
