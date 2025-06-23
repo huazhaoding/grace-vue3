@@ -125,7 +125,7 @@
     <!-- 添加或修改站点对话框 -->
     <el-dialog :title="title" v-model="open" width="600px" append-to-body>
       <el-form ref="webRef" :model="form" :rules="rules" label-width="120px">
-        <el-form-item  prop="webName">
+        <el-form-item  prop="webName" >
           <template #label>
                 <span>
                   <el-tooltip content="请填写启动服务唯一olyCode" placement="top">
@@ -136,7 +136,7 @@
                   站点名
                 </span>
               </template>
-          <el-input v-model="form.webName" placeholder="请输入站点名" />
+          <el-input v-model="form.webName" placeholder="请输入站点名" :disabled="title==='修改站点'" />
         </el-form-item>
         <el-form-item label="站点地址" prop="webUrl">
           <el-input v-model="form.webUrl" placeholder="请输入站点地址" />
