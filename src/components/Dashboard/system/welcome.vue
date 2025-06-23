@@ -20,7 +20,7 @@
           <el-col :span="8" style="text-align: center;">
             <h6>地址</h6>
             <el-tooltip effect="dark" content="后端地址" placement="top-start">
-              <el-link href="https://gitee.com/Getawy/zg-admin" type="success" :underline="false"><svg class="icon"
+              <el-link href="https://gitee.com/Getawy/zg-admin" type="success" underline="never"><svg class="icon"
                   style="width: 25px;height: 25px;vertical-align: middle;fill: currentColor;overflow: hidden;"
                   viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504">
                   <path
@@ -30,7 +30,7 @@
             </el-tooltip>
             <el-divider direction="vertical" />
             <el-tooltip effect="dark" content="前端地址" placement="top-start">
-              <el-link href="https://gitee.com/Getawy/zg-vue3" :underline="false"><svg class="icon"
+              <el-link href="https://gitee.com/Getawy/zg-vue3" underline="never"><svg class="icon"
                   style="width: 25px;height: 25px;vertical-align: middle;fill: currentColor;overflow: hidden;"
                   viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504">
                   <path
@@ -42,7 +42,7 @@
           <el-col :span="8" style="text-align: center;">
             <h6>地址</h6>
             <el-tooltip effect="dark" content="后端地址" placement="top-start">
-              <el-link href="https://gitee.com/Getawy/zg-admin" type="success" :underline="false"><svg class="icon"
+              <el-link href="https://gitee.com/Getawy/zg-admin" type="success" underline="never"><svg class="icon"
                   style="width: 25px;height: 25px;vertical-align: middle;fill: currentColor;overflow: hidden;"
                   viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504">
                   <path
@@ -52,7 +52,7 @@
             </el-tooltip>
             <el-divider direction="vertical" />
             <el-tooltip effect="dark" content="前端地址" placement="top-start">
-              <el-link href="https://gitee.com/Getawy/zg-vue3" :underline="false"><svg class="icon"
+              <el-link href="https://gitee.com/Getawy/zg-vue3" underline="never"><svg class="icon"
                   style="width: 25px;height: 25px;vertical-align: middle;fill: currentColor;overflow: hidden;"
                   viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504">
                   <path
@@ -64,7 +64,7 @@
           <el-col :span="8" style="text-align: center;">
             <h6>地址</h6>
             <el-tooltip effect="dark" content="后端地址" placement="top-start">
-              <el-link href="https://gitee.com/Getawy/zg-admin" type="success" :underline="false"><svg class="icon"
+              <el-link href="https://gitee.com/Getawy/zg-admin" type="success" underline="never"><svg class="icon"
                   style="width: 25px;height: 25px;vertical-align: middle;fill: currentColor;overflow: hidden;"
                   viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504">
                   <path
@@ -74,7 +74,7 @@
             </el-tooltip>
             <el-divider direction="vertical" />
             <el-tooltip effect="dark" content="前端地址" placement="top-start">
-              <el-link href="https://gitee.com/Getawy/zg-vue3" :underline="false"><svg class="icon"
+              <el-link href="https://gitee.com/Getawy/zg-vue3" underline="never"><svg class="icon"
                   style="width: 25px;height: 25px;vertical-align: middle;fill: currentColor;overflow: hidden;"
                   viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1504">
                   <path
