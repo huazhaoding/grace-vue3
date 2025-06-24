@@ -155,9 +155,8 @@ export const BaseComponents = {
             { value: "end", label: "右对齐" },
             { value: "center", label: "居中" },
             { value: "space-around", label: "均等分布" },
-            { value: "space-between", label: "两端对齐" }
-          ]
-
+            { value: "space-between", label: "两端对齐" },
+          ],
         }, // 主轴对齐方式 (start/end/center/space-around/space-between)
         align: {
           value: "top",
@@ -166,70 +165,86 @@ export const BaseComponents = {
           options: [
             { label: "顶部对齐", value: "top" },
             { label: "居中对齐", value: "middle" },
-            { label: "底部对齐", value: "bottom" }
-          ]
+            { label: "底部对齐", value: "bottom" },
+          ],
         }, // 交叉轴对齐方式 (top/middle/bottom)
         tag: {
           value: "div",
           type: "input",
           label: "自定义标签名",
-          placeholder: "请输入自定义标签名"
+          placeholder: "请输入自定义标签名",
         }, // 自定义标签名
       },
       optionChild: {
         tagIcon: "el-col", // 子组件图标名称
         tagLabel: "列配置", // 子组件标签名
         tag: "el-col", // 子组件标签类型
-        options: [{
-          attr: {
-            xs: { span: 24, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
-            sm: { span: 24, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
-            md: { span: 24, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
-            lg: { span: 24, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
-            xl: { span: 24, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置,
-            tag: {
-              value: 'div',
-              label: '自定义标签',
-              type: "input",
-              placeholder: '请输入自定义标签'
-            }
-          },
-          data:[]
-        }
-          ,
-        {
-
-          data: [
-            {
-              tag: "el-button", // 定义组件类型为按钮
-              tagLabel: "按钮", // 标签名，用于标识组件
-              tagIcon: "button", // 图标名称，用于可视化展示
-              document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
-              attr: {
-                size: undefined, // 按钮尺寸 (large/default/small)
-                type: undefined, // 按钮类型 (primary/success/warning/danger/info/text)
-                defaultLabel: "主要按钮",
-                plain: false, // 是否为朴素按钮样式
-                text: false, // 是否为文字按钮样式
-                bg: false, // 文字按钮是否有背景色
-                link: false, // 是否为链接按钮样式
-                round: false, // 是否为圆角按钮
-                circle: false, // 是否为圆形按钮
-                loading: false, // 是否显示加载状态
-                "loading-icon": "Loading", // 自定义加载图标
-                disabled: false, // 是否禁用按钮
-                icon: null, // 按钮上的图标组件
-                autofocus: false, // 是否自动获取焦点
-                "native-type": "button", // 原生 type 属性 (button/submit/reset)
-                "auto-insert-space": false, // 中文字符间是否自动加空格
-                color: null, // 自定义按钮颜色
-                dark: false, // 是否启用 dark 模式
-                tag: "button", // 自定义元素标签
+        options: [
+          {
+            attr: {
+              span: {
+                value: 24,
+                label: "栅格占据的列数",
+                type: "slider",
+                min: 0,
+                max: 24,
+              },
+              offset: {
+                value: 0,
+                label: "栅格左侧的间隔格数",
+                type: "slider",
+                min: 0,
+                max: 24,
+              },
+              pull: {
+                value: 0,
+                label: "栅格向左移动格数",
+                type: "slider",
+                min: 0,
+                max: 24,
+              },
+              push: {
+                value: 0,
+                label: "栅格向右移动格数",
+                type: "slider",
+                min: 0,
+                max: 24,
+              },
+              xs: {
+                value: { span: 24, offset: 0, pull: 0, push: 0 },
+                label: "小屏幕下的栅格配置",
+                type: "object",
+              }, // 超小屏幕下的栅格配置
+              sm: {
+                value: { span: 24, offset: 0, pull: 0, push: 0 },
+                label: "小屏幕下的栅格配置",
+                type: "object",
+              }, // 小屏幕下的栅格配置
+              md: {
+                value: { span: 24, offset: 0, pull: 0, push: 0 },
+                label: "小屏幕下的栅格配置",
+                type: "object",
+              },
+              // 中等屏幕下的栅格配置
+              lg: {
+                value: { span: 24, offset: 0, pull: 0, push: 0 },
+                label: "小屏幕下的栅格配置",
+                type: "object",
+              }, // 大屏幕下的栅格配置
+              xl: {
+                value: { span: 24, offset: 0, pull: 0, push: 0 },
+                label: "小屏幕下的栅格配置",
+                type: "object",
+              }, // 超大屏幕下的栅格配置,
+              tag: {
+                value: "div",
+                label: "自定义标签",
+                type: "input",
+                placeholder: "请输入自定义标签",
               },
             },
-          ],
-          tag: "div", //自定义默认内容
-        }
+            data: [],
+          }
         ],
       },
     },
@@ -249,7 +264,7 @@ export const BaseComponents = {
             { value: "danger", label: "危险" },
             { value: "info", label: "信息" },
           ],
-          type: "radio"
+          type: "radio",
         }, // 链接类型 (primary/success/warning/danger/info)
         underline: {
           value: "never",
@@ -259,18 +274,18 @@ export const BaseComponents = {
             { value: "hover", label: "悬停" },
             { value: "never", label: "从不" },
           ],
-          type: "radio"
+          type: "radio",
         }, // 是否显示下划线
         disabled: {
           value: false,
           label: "是否禁用",
-          type: "switch"
+          type: "switch",
         }, // 是否禁用链接
         href: {
           value: "",
           label: "链接地址",
           type: "input",
-          placeholder: "请输入链接地址"
+          placeholder: "请输入链接地址",
         }, // 链接地址
         icon: {
           value: "",
@@ -286,16 +301,14 @@ export const BaseComponents = {
             { label: "新窗口", value: "_blank" },
             { label: "父窗口", value: "_parent" },
             { label: "框架", value: "_top" },
-          ]
+          ],
         },
-        defaultLabel:
-        {
+        defaultLabel: {
           value: "链接",
           label: "链接名字",
           type: "input",
-          placeholder: "请输入连接名字"
-
-        }
+          placeholder: "请输入连接名字",
+        },
       },
     },
     {
@@ -335,14 +348,14 @@ export const BaseComponents = {
           value: 1,
           label: "最多显示几行",
           type: "inputNumber",
-          min: 1
+          min: 1,
         }, // 最多显示几行
         defaultLabel: {
           value: "我是文本，请修改我",
           label: "文本内容",
           type: "textarea",
           rows: 3,
-          placeholder: "请输入内容"
+          placeholder: "请输入内容",
         },
         tag: {
           value: "span",
@@ -367,13 +380,12 @@ export const BaseComponents = {
             { label: "底部对齐", value: "bottom" },
             { label: "伸展", value: "stretch" },
           ],
-        }
-        , // 对齐方式
+        }, // 对齐方式
         class: {
           value: "",
           label: "自定义类名",
           type: "input",
-          placeholder: "请输入自定义类名"
+          placeholder: "请输入自定义类名",
         }, // 自定义类名
         direction: {
           value: "horizontal",
@@ -401,30 +413,29 @@ export const BaseComponents = {
           value: "",
           label: "分隔符",
           type: "input",
-          placeholder: "请输入分隔符"
+          placeholder: "请输入分隔符",
         }, // 分隔符
-        size:
-        {
+        size: {
           label: "间距大小",
           value: 10,
-          type: "slider"
+          type: "slider",
         }, // 间距大小
         wrap: {
           value: false,
           label: "是否换行",
-          type: "switch"
+          type: "switch",
         }, // 是否换行
         fill: {
           value: false,
           label: "是否填充父容器",
-          type: "switch"
+          type: "switch",
         }, // 是否填充父容器
         "fill-radio": {
           value: 100,
           label: "填充比例",
           type: "number",
           min: 0,
-          max: 100
+          max: 100,
         }, // 填充比例
       },
       options: [], // 子组件列表
@@ -435,21 +446,54 @@ export const BaseComponents = {
       tagIcon: "nested", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/splitter", // 组件文档链接
       attr: {
-        "resize-start": undefined, // 调整开始事件
-        "resize-end": undefined, // 调整结束事件
-        resize: undefined, // 调整事件
+        "resize-start": {
+          value: undefined,
+          type:"function",
+          label: "调整开始事件"
+        }, // 调整开始事件
+        "resize-end": {
+          value: undefined,
+          type:"function",
+          label: "调整结束事件"
+        }, // 调整结束事件
+        resize: {
+          value: undefined,
+          type:"function",
+          label: "调整事件"
+        }, // 调整事件
       },
       options: {
         tag: "el-splitter-panel", // 子组件标签类型
         tagLabel: "子分割面板", // 子组件标签名
         tagIcon: "icon-splitter-panel", // 子组件图标名称
         attr: {
-          size: undefined, // 面板尺寸
-          min: undefined, // 最小尺寸
-          max: undefined, // 最大尺寸
-          resizable: true, // 是否可调整大小
-          collapsible: false, // 是否可折叠
+          size: {
+            value: undefined,
+            type:"number",
+            label: "面板尺寸"
+          }, // 面板尺寸
+          min:{
+            value: undefined,
+            type:"number",
+            label: "最小尺寸"
+          }, // 最小尺寸
+          max: {
+            value: undefined,
+            type:"number",
+            label: "最大尺寸"
+          }, // 最大尺寸
+          resizable: {
+            value: true,
+            type:"switch",
+            label: "是否可调整"
+          }, // 是否可调整大小
+          collapsible: {
+            value: false,
+            type:"switch",
+            label: "是否可折叠" 
+          }, // 是否可折叠
         },
+        data:[]
       },
     },
   ],
