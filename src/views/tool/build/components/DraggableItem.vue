@@ -30,10 +30,10 @@
     </el-form-item>
     <el-row
       v-else-if="elementData.tag === 'el-row'"
-      :gutter="elementData.attr.gutter"
-      :justify="elementData.attr.justify"
-      :align="elementData.attr.align"
-      :customTag="elementData.attr.customTag"
+      :gutter="elementData.attr.gutter.value"
+      :justify="elementData.attr.justify.value"
+      :align="elementData.attr.align.value"
+      :customTag="elementData.attr.tag.value"
     >
       <el-col
         :xl="item.xl"

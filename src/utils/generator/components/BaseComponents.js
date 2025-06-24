@@ -140,127 +140,96 @@ export const BaseComponents = {
       tagIcon: "row", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/layout", // 组件文档链接
       attr: {
-        gutter: 10, // 栅格间隔
-        justify: "start", // 主轴对齐方式 (start/end/center/space-around/space-between)
-        align: "top", // 交叉轴对齐方式 (top/middle/bottom)
-        customTag: "", // 自定义标签名
+        gutter: {
+          value: 0,
+          label: "栅格间隔",
+          type: "number",
+          min: 0,
+        }, // 栅格间隔
+        justify: {
+          value: "start", // 默认值
+          label: "对齐方式",
+          type: "radio",
+          options: [
+            { value: "start", label: "左对齐" },
+            { value: "end", label: "右对齐" },
+            { value: "center", label: "居中" },
+            { value: "space-around", label: "均等分布" },
+            { value: "space-between", label: "两端对齐" }
+          ]
+
+        }, // 主轴对齐方式 (start/end/center/space-around/space-between)
+        align: {
+          value: "top",
+          type: "radio",
+          label: "侧轴对齐方式",
+          options: [
+            { label: "顶部对齐", value: "top" },
+            { label: "居中对齐", value: "middle" },
+            { label: "底部对齐", value: "bottom" }
+          ]
+        }, // 交叉轴对齐方式 (top/middle/bottom)
+        tag: {
+          value: "div",
+          type: "input",
+          label: "自定义标签名",
+          placeholder: "请输入自定义标签名"
+        }, // 自定义标签名
       },
       optionChild: {
         tagIcon: "el-col", // 子组件图标名称
         tagLabel: "列配置", // 子组件标签名
         tag: "el-col", // 子组件标签类型
-        attr: [
-          {
+        options: [{
+          attr: {
             xs: { span: 24, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
             sm: { span: 24, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
             md: { span: 24, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
             lg: { span: 24, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
             xl: { span: 24, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置,
-            data: [
-              {
-                tag: "el-button", // 定义组件类型为按钮
-                tagLabel: "按钮", // 标签名，用于标识组件
-                tagIcon: "button", // 图标名称，用于可视化展示
-                document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
-                attr: {
-                  size: undefined, // 按钮尺寸 (large/default/small)
-                  type: undefined, // 按钮类型 (primary/success/warning/danger/info/text)
-                  defaultLabel: "主要按钮",
-                  plain: false, // 是否为朴素按钮样式
-                  text: false, // 是否为文字按钮样式
-                  bg: false, // 文字按钮是否有背景色
-                  link: false, // 是否为链接按钮样式
-                  round: false, // 是否为圆角按钮
-                  circle: false, // 是否为圆形按钮
-                  loading: false, // 是否显示加载状态
-                  "loading-icon": "Loading", // 自定义加载图标
-                  disabled: false, // 是否禁用按钮
-                  icon: null, // 按钮上的图标组件
-                  autofocus: false, // 是否自动获取焦点
-                  "native-type": "button", // 原生 type 属性 (button/submit/reset)
-                  "auto-insert-space": false, // 中文字符间是否自动加空格
-                  color: null, // 自定义按钮颜色
-                  dark: false, // 是否启用 dark 模式
-                  tag: "button", // 自定义元素标签
-                },
-              },
-            ],
-            tag: "div", //自定义默认内容
+            tag: {
+              value: 'div',
+              label: '自定义标签',
+              type: "input",
+              placeholder: '请输入自定义标签'
+            }
           },
-          {
-            xs: { span: 12, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
-            sm: { span: 12, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
-            md: { span: 12, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
-            lg: { span: 12, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
-            xl: { span: 12, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置],
-            data: [
-              {
-                tag: "el-button", // 定义组件类型为按钮
-                tagLabel: "按钮", // 标签名，用于标识组件
-                tagIcon: "button", // 图标名称，用于可视化展示
-                document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
-                attr: {
-                  size: undefined, // 按钮尺寸 (large/default/small)
-                  type: undefined, // 按钮类型 (primary/success/warning/danger/info/text)
-                  defaultLabel: "主要按钮",
-                  plain: false, // 是否为朴素按钮样式
-                  text: false, // 是否为文字按钮样式
-                  bg: false, // 文字按钮是否有背景色
-                  link: false, // 是否为链接按钮样式
-                  round: false, // 是否为圆角按钮
-                  circle: false, // 是否为圆形按钮
-                  loading: false, // 是否显示加载状态
-                  "loading-icon": "Loading", // 自定义加载图标
-                  disabled: false, // 是否禁用按钮
-                  icon: null, // 按钮上的图标组件
-                  autofocus: false, // 是否自动获取焦点
-                  "native-type": "button", // 原生 type 属性 (button/submit/reset)
-                  "auto-insert-space": false, // 中文字符间是否自动加空格
-                  color: null, // 自定义按钮颜色
-                  dark: false, // 是否启用 dark 模式
-                  tag: "button", // 自定义元素标签
-                },
+          data:[]
+        }
+          ,
+        {
+
+          data: [
+            {
+              tag: "el-button", // 定义组件类型为按钮
+              tagLabel: "按钮", // 标签名，用于标识组件
+              tagIcon: "button", // 图标名称，用于可视化展示
+              document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
+              attr: {
+                size: undefined, // 按钮尺寸 (large/default/small)
+                type: undefined, // 按钮类型 (primary/success/warning/danger/info/text)
+                defaultLabel: "主要按钮",
+                plain: false, // 是否为朴素按钮样式
+                text: false, // 是否为文字按钮样式
+                bg: false, // 文字按钮是否有背景色
+                link: false, // 是否为链接按钮样式
+                round: false, // 是否为圆角按钮
+                circle: false, // 是否为圆形按钮
+                loading: false, // 是否显示加载状态
+                "loading-icon": "Loading", // 自定义加载图标
+                disabled: false, // 是否禁用按钮
+                icon: null, // 按钮上的图标组件
+                autofocus: false, // 是否自动获取焦点
+                "native-type": "button", // 原生 type 属性 (button/submit/reset)
+                "auto-insert-space": false, // 中文字符间是否自动加空格
+                color: null, // 自定义按钮颜色
+                dark: false, // 是否启用 dark 模式
+                tag: "button", // 自定义元素标签
               },
-            ],
-            tag: "div", //自定义默认内容
-          },
-          {
-            xs: { span: 24, offset: 0, pull: 0, push: 0 }, // 超小屏幕下的栅格配置
-            sm: { span: 24, offset: 0, pull: 0, push: 0 }, // 小屏幕下的栅格配置
-            md: { span: 24, offset: 0, pull: 0, push: 0 }, // 中等屏幕下的栅格配置
-            lg: { span: 24, offset: 0, pull: 0, push: 0 }, // 大屏幕下的栅格配置
-            xl: { span: 24, offset: 0, pull: 0, push: 0 }, // 超大屏幕下的栅格配置],
-            data: [
-              {
-                tag: "el-button", // 定义组件类型为按钮
-                tagLabel: "按钮", // 标签名，用于标识组件
-                tagIcon: "button", // 图标名称，用于可视化展示
-                document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
-                attr: {
-                  size: undefined, // 按钮尺寸 (large/default/small)
-                  type: undefined, // 按钮类型 (primary/success/warning/danger/info/text)
-                  defaultLabel: "主要按钮",
-                  plain: false, // 是否为朴素按钮样式
-                  text: false, // 是否为文字按钮样式
-                  bg: false, // 文字按钮是否有背景色
-                  link: false, // 是否为链接按钮样式
-                  round: false, // 是否为圆角按钮
-                  circle: false, // 是否为圆形按钮
-                  loading: false, // 是否显示加载状态
-                  "loading-icon": "Loading", // 自定义加载图标
-                  disabled: false, // 是否禁用按钮
-                  icon: null, // 按钮上的图标组件
-                  autofocus: false, // 是否自动获取焦点
-                  "native-type": "button", // 原生 type 属性 (button/submit/reset)
-                  "auto-insert-space": false, // 中文字符间是否自动加空格
-                  color: null, // 自定义按钮颜色
-                  dark: false, // 是否启用 dark 模式
-                  tag: "button", // 自定义元素标签
-                },
-              },
-            ],
-            tag: "div", //自定义默认内容
-          },
+            },
+          ],
+          tag: "div", //自定义默认内容
+        }
         ],
       },
     },
@@ -270,13 +239,63 @@ export const BaseComponents = {
       tagIcon: "link", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/link", // 组件文档链接
       attr: {
-        type: null, // 链接类型 (primary/success/warning/danger/info)
-        underline: true, // 是否显示下划线
-        disabled: false, // 是否禁用链接
-        href: null, // 链接地址
-        icon: null, // 图标组件
-        defaultLabel: "我是链接",
-        tag: "a", // 自定义元素标签
+        type: {
+          value: "primary",
+          label: "类型",
+          options: [
+            { value: "primary", label: "主要" },
+            { value: "success", label: "成功" },
+            { value: "warning", label: "警告" },
+            { value: "danger", label: "危险" },
+            { value: "info", label: "信息" },
+          ],
+          type: "radio"
+        }, // 链接类型 (primary/success/warning/danger/info)
+        underline: {
+          value: "never",
+          label: "是否显示下划线",
+          options: [
+            { value: "always", label: "总是" },
+            { value: "hover", label: "悬停" },
+            { value: "never", label: "从不" },
+          ],
+          type: "radio"
+        }, // 是否显示下划线
+        disabled: {
+          value: false,
+          label: "是否禁用",
+          type: "switch"
+        }, // 是否禁用链接
+        href: {
+          value: "",
+          label: "链接地址",
+          type: "input",
+          placeholder: "请输入链接地址"
+        }, // 链接地址
+        icon: {
+          value: "",
+          label: "图标组件",
+          type: "icon",
+        }, // 图标组件
+        target: {
+          value: "",
+          label: "打开方式",
+          type: "radio",
+          options: [
+            { label: "当前窗口", value: "_self" },
+            { label: "新窗口", value: "_blank" },
+            { label: "父窗口", value: "_parent" },
+            { label: "框架", value: "_top" },
+          ]
+        },
+        defaultLabel:
+        {
+          value: "链接",
+          label: "链接名字",
+          type: "input",
+          placeholder: "请输入连接名字"
+
+        }
       },
     },
     {
@@ -285,12 +304,52 @@ export const BaseComponents = {
       tagIcon: "language", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/text", // 组件文档链接
       attr: {
-        type: "warning", // 文本类型
-        size: "small", // 文本尺寸
-        truncated: true, // 是否截断文本
-        "line-clamp": 2, // 最多显示几行
-        defaultLabel: "我是文本",
-        tag: "div", // 自定义元素标签
+        type: {
+          value: "primary",
+          label: "文本类型",
+          type: "radio",
+          options: [
+            { value: "primary", label: "主要" },
+            { value: "success", label: "成功" },
+            { value: "warning", label: "警告" },
+            { value: "danger", label: "危险" },
+            { value: "info", label: "信息" },
+          ],
+        }, // 文本类型
+        size: {
+          value: "default",
+          label: "文本尺寸",
+          type: "radio",
+          options: [
+            { value: "default", label: "默认" },
+            { value: "small", label: "小" },
+            { value: "large", label: "大" },
+          ],
+        }, // 文本尺寸
+        truncated: {
+          value: false,
+          label: "是否截断文本",
+          type: "switch",
+        }, // 是否截断文本
+        "line-clamp": {
+          value: 1,
+          label: "最多显示几行",
+          type: "inputNumber",
+          min: 1
+        }, // 最多显示几行
+        defaultLabel: {
+          value: "我是文本，请修改我",
+          label: "文本内容",
+          type: "textarea",
+          rows: 3,
+          placeholder: "请输入内容"
+        },
+        tag: {
+          value: "span",
+          label: "自定义元素标签",
+          type: "input",
+          placeholder: "请输入自定义元素标签",
+        }, // 自定义元素标签
       },
     },
     {
@@ -299,16 +358,74 @@ export const BaseComponents = {
       tagIcon: "swagger", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/space", // 组件文档链接
       attr: {
-        alignment: "center", // 对齐方式
-        class: "", // 自定义类名
-        direction: "horizontal", // 排列方向 (horizontal/vertical)
-        "prffix-cls": "", // 前缀类名
-        style: "", // 自定义样式
-        spacer: "", // 分隔符
-        size: "small", // 间距大小
-        wrap: false, // 是否换行
-        fill: false, // 是否填充父容器
-        "fill-radio": 100, // 填充比例
+        alignment: {
+          value: "center",
+          label: "对齐方式",
+          options: [
+            { label: "居中", value: "center" },
+            { label: "顶部对齐", value: "top" },
+            { label: "底部对齐", value: "bottom" },
+            { label: "伸展", value: "stretch" },
+          ],
+        }
+        , // 对齐方式
+        class: {
+          value: "",
+          label: "自定义类名",
+          type: "input",
+          placeholder: "请输入自定义类名"
+        }, // 自定义类名
+        direction: {
+          value: "horizontal",
+          label: "排列方向",
+          options: [
+            { label: "水平", value: "horizontal" },
+            { label: "垂直", value: "vertical" },
+          ],
+          type: "radio",
+        }, // 排列方向 (horizontal/vertical)
+        "prffix-cls": {
+          value: "",
+          label: "前缀类名",
+          type: "input",
+          placeholder: "请输入前缀类名",
+        }, // 前缀类名
+        style: {
+          value: "",
+          label: "自定义样式",
+          type: "input",
+          placeholder: "请输入自定义样式",
+          info: "请输入自定义样式，如：{color: red;}",
+        }, // 自定义样式
+        spacer: {
+          value: "",
+          label: "分隔符",
+          type: "input",
+          placeholder: "请输入分隔符"
+        }, // 分隔符
+        size:
+        {
+          label: "间距大小",
+          value: 10,
+          type: "slider"
+        }, // 间距大小
+        wrap: {
+          value: false,
+          label: "是否换行",
+          type: "switch"
+        }, // 是否换行
+        fill: {
+          value: false,
+          label: "是否填充父容器",
+          type: "switch"
+        }, // 是否填充父容器
+        "fill-radio": {
+          value: 100,
+          label: "填充比例",
+          type: "number",
+          min: 0,
+          max: 100
+        }, // 填充比例
       },
       options: [], // 子组件列表
     },
