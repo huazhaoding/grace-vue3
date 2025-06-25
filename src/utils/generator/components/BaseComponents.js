@@ -244,7 +244,7 @@ export const BaseComponents = {
               },
             },
             data: [],
-          }
+          },
         ],
       },
     },
@@ -448,18 +448,18 @@ export const BaseComponents = {
       attr: {
         "resize-start": {
           value: undefined,
-          type:"function",
-          label: "调整开始事件"
+          type: "function",
+          label: "调整开始事件",
         }, // 调整开始事件
         "resize-end": {
           value: undefined,
-          type:"function",
-          label: "调整结束事件"
+          type: "function",
+          label: "调整结束事件",
         }, // 调整结束事件
         resize: {
           value: undefined,
-          type:"function",
-          label: "调整事件"
+          type: "function",
+          label: "调整事件",
         }, // 调整事件
       },
       options: {
@@ -469,31 +469,31 @@ export const BaseComponents = {
         attr: {
           size: {
             value: undefined,
-            type:"number",
-            label: "面板尺寸"
+            type: "number",
+            label: "面板尺寸",
           }, // 面板尺寸
-          min:{
+          min: {
             value: undefined,
-            type:"number",
-            label: "最小尺寸"
+            type: "number",
+            label: "最小尺寸",
           }, // 最小尺寸
           max: {
             value: undefined,
-            type:"number",
-            label: "最大尺寸"
+            type: "number",
+            label: "最大尺寸",
           }, // 最大尺寸
           resizable: {
             value: true,
-            type:"switch",
-            label: "是否可调整"
+            type: "switch",
+            label: "是否可调整",
           }, // 是否可调整大小
           collapsible: {
             value: false,
-            type:"switch",
-            label: "是否可折叠" 
+            type: "switch",
+            label: "是否可折叠",
           }, // 是否可折叠
         },
-        data:[]
+        data: [],
       },
     },
   ],

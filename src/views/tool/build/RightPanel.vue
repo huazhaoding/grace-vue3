@@ -18,7 +18,7 @@
               <el-input v-model="item.value" :placeholder="item.placeholder"  v-if="item.type === 'input'" />
               <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
               <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-                <el-radio v-for="(radio, index) in item.options" :key="index" :label="radio.value">{{radio.label}}</el-radio>
+                <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value" >{{radio.label}}</el-radio>
               </el-radio-group>
               <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
             </el-form-item>

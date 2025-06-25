@@ -1,5 +1,9 @@
 <template>
-  <div class="draggable-item">
+  <div
+    :class="className"
+    ref="draggableItemRef"
+    @click.stop="activeItem(elementData)"
+  >
     <div class="draggable-item-mark">
       <el-icon>
         <Rank />
@@ -20,7 +24,7 @@
       :error="elementData.hedge.error"
       :label-position="elementData.hedge.labelPosition"
       :required="elementData.hedge.required"
-      class="field-wrapper"
+      class="field-wrapper not-drg"
     >
       <render
         :key="elementData.tag"
@@ -33,15 +37,17 @@
       :gutter="elementData.attr.gutter.value"
       :justify="elementData.attr.justify.value"
       :align="elementData.attr.align.value"
-      :customTag="elementData.attr.tag.value"
+      :tag="elementData.attr.tag.value"
+      class="drg-row"
     >
       <el-col
-        :xl="item.xl"
-        :lg="item.lg"
-        :md="item.md"
-        :sm="item.sm"
-        :xs="item.xs"
-        v-for="(item, index) in elementData.optionChild.attr"
+        v-for="(item, index) in elementData.optionChild.options"
+        :xl="item.attr.xl.value"
+        :lg="item.attr.lg.value"
+        :md="item.attr.md.value"
+        :sm="item.attr.sm.value"
+        :xs="item.attr.xs.value"
+        class="can-drg"
       >
         <draggable
           group="componentsGroup"
@@ -58,7 +64,8 @@
               :drawing-list="item.data"
               :elementData="element"
               :index="index"
-              @activeItem="activeItem(element)"
+              :active-id="activeId"
+              @click.stop="activeItem(element)"
               @copyItem="copyItem(element, item.data)"
               @deleteItem="deleteItem(index, item.data)"
             />
@@ -74,6 +81,7 @@
       :label-width="elementData.attr.labelWidth"
       :hide-required-asterisk="elementData.attr.hideRequiredAsterisk"
       :label-position="elementData.attr.labelPosition"
+      class="can-drg"
     >
       <draggable
         group="componentsGroup"
@@ -89,21 +97,25 @@
             :key="element.renderKey"
             :drawing-list="elementData.data"
             :elementData="element"
+            @click.stop="activeItem(element)"
+            :active-id="activeId"
             :index="index"
-            @activeItem="activeItem(element)"
             @copyItem="copyItem(element, elementData.data)"
             @deleteItem="deleteItem(index, elementData.data)"
           />
         </template>
       </draggable>
     </el-form>
-    <render
-      v-else
-      :key="elementData.tag"
-      :conf="elementData"
-      v-model="elementData.attr.defaultValue"
-    />
-    <div class="drawing-item-tool">
+
+    <div v-else class="not-drg">
+      <render
+        :key="elementData.tag"
+        :conf="elementData"
+        v-model="elementData.attr.defaultValue"
+      />
+    </div>
+
+    <div class="draggable-item-tool">
       <span
         class="drawing-item-copy"
         title="复制"
@@ -142,24 +154,32 @@ const props = defineProps({
 const className = ref("");
 const draggableItemRef = ref(null);
 
-watch(
-  () => props.elementData,
-  (val) => {
-    console.log(val);
-  },
-  { deep: true }
-);
+
 function activeItem(item) {
-  alert("stop");
   emits("activeItem", item);
 }
 
 function copyItem(item, parent) {
-
   emits("copyItem", item, parent ?? props.drawingList);
 }
 function deleteItem(item, parent) {
-
   emits("deleteItem", item, parent ?? props.drawingList);
 }
+
+// 监听 activeId 的变化，动态更新激活状态 可拖拽组件为虚线 不可拖拽组件为实线
+watch(
+  () => props.activeId,
+  (val) => {
+    console.log("activeId",val)
+    if (val) {
+      if (val !== props.elementData.id) {
+        className.value = "draggable-item draggable-item-inactive"; // 移除激活样式
+      } else {
+        className.value = "draggable-item draggable-item-active"; // 添加激活样式
+      }
+    }
+
+  },
+  { immediate: true }
+);
 </script>

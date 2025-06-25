@@ -31,8 +31,6 @@
             :animation="340"
             group="componentsGroup"
             item-key="renderKey"
-            @start="onDragStart"
-            @change="onDragChange"
           >
             <template #item="{ element, index }">
               <draggable-item
@@ -58,8 +56,6 @@
           :active-data-property="activeData"
           :form-conf="{}"
           :show-field="!!drawingList.length"
-         
-          @activeDataChange="fieldsAttributeChange"
         />
       </el-aside>
     </el-container>
@@ -124,7 +120,7 @@ function drawingItemDelete(index, parent) {
 // 激活表单项
 function activeFormItem(element) {
   activeData.value = element; // 设置当前激活的表单项数据
-  activeId.value = element.formId; // 设置当前激活的表单项 ID
+  activeId.value = element.id; // 设置当前激活的表单项 ID
 }
 </script>
 
@@ -251,49 +247,6 @@ $lighterBlue: #409eff;
       min-height: 800px;
       padding: 10px;
       background-color: aquamarine;
-      .draggable-item {
-        border: 1px solid red;
-        cursor: move;
-        position: relative;
-        margin-bottom: 10px;
-        .drag-wrapper {
-          background-color: #787be8;
-          height: auto;
-          min-height: 200px;
-        }
-        .field-wrapper {
-          margin: 0;
-        }
-        .draggable-item-mark {
-          z-index: 9999;
-          color: aliceblue;
-          position: absolute;
-          background-color: #409eff;
-          text-align: center;
-          font-size: 12px;
-          font-style: normal;
-          padding: 4px;
-          opacity: 0.6;
-          .draggable-item-name {
-            padding-left: 10px;
-            padding-bottom: 20px;
-          }
-        }
-        .drawing-item-tool {
-          position: absolute;
-          color: aliceblue;
-          left: calc(100% - 48px);
-          bottom: 3px;
-          font-size: 12px;
-          font-style: normal;
-          .drawing-item-copy,
-          .drawing-item-delete {
-            background-color: #409eff;
-            padding: 7px 6px 3px 6px;
-            cursor: pointer;
-          }
-        }
-      }
     }
     .empty-info {
       position: absolute;
@@ -305,6 +258,75 @@ $lighterBlue: #409eff;
       color: #ccb1ea;
       letter-spacing: 4px;
     }
+  }
+}
+
+.draggable-item {
+  cursor: move;
+  position: relative;
+  margin-bottom: 10px;
+  .drag-wrapper {
+    height: auto;
+    min-height: 200px;
+  }
+  .field-wrapper {
+    margin: 0;
+  }
+  .draggable-item-mark {
+    z-index: 9999;
+    color: aliceblue;
+    position: absolute;
+    background-color: #409eff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    padding: 4px;
+    opacity: 0.6;
+    .draggable-item-name {
+      padding-left: 10px;
+      padding-bottom: 20px;
+    }
+  }
+  .draggable-item-tool {
+    position: absolute;
+    color: aliceblue;
+    left: calc(100% - 48px);
+    bottom: 3px;
+    font-size: 12px;
+    font-style: normal;
+    .drawing-item-copy,
+    .drawing-item-delete {
+      background-color: #409eff;
+      padding: 7px 6px 3px 6px;
+      cursor: pointer;
+    }
+  }
+  .drg-row {
+    padding: 3px;
+    .drg-col {
+      margin: 2px;
+    }
+  }
+  .can-drg,
+  .drg-row {
+    border: 1px dashed #f50000;
+  }
+}
+
+.draggable-item-active {
+  & >.not-drg {
+    border: 1px solid #f50000;
+  }
+  & > .draggable-item-mark,
+  & > .draggable-item-tool {
+    display: block;
+  }
+}
+
+.draggable-item-inactive {
+  & > .draggable-item-mark,
+  & > .draggable-item-tool {
+    display: none;
   }
 }
 </style>
