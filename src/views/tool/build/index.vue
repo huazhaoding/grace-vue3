@@ -119,6 +119,13 @@ function drawingItemDelete(index, parent) {
 
 // 激活表单项
 function activeFormItem(element) {
+  if (!element.id) {
+    element.id = ++idGlobal.value;
+  }
+  if (!element.renderKey) {
+    element.renderKey = +new Date();
+  }
+
   activeData.value = element; // 设置当前激活的表单项数据
   activeId.value = element.id; // 设置当前激活的表单项 ID
 }
@@ -278,10 +285,13 @@ $lighterBlue: #409eff;
     position: absolute;
     background-color: #409eff;
     text-align: center;
+    top: 1px;
+    left: 1px;
+    opacity: 0.5;
     font-size: 12px;
     font-style: normal;
     padding: 4px;
-    opacity: 0.6;
+   
     .draggable-item-name {
       padding-left: 10px;
       padding-bottom: 20px;
@@ -290,8 +300,8 @@ $lighterBlue: #409eff;
   .draggable-item-tool {
     position: absolute;
     color: aliceblue;
-    left: calc(100% - 48px);
-    bottom: 3px;
+    left: calc(100% - 49px);
+    bottom: 4px;
     font-size: 12px;
     font-style: normal;
     .drawing-item-copy,
@@ -314,7 +324,7 @@ $lighterBlue: #409eff;
 }
 
 .draggable-item-active {
-  & >.not-drg {
+  & > .not-drg {
     border: 1px solid #f50000;
   }
   & > .draggable-item-mark,

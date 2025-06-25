@@ -175,78 +175,76 @@ export const BaseComponents = {
           placeholder: "请输入自定义标签名",
         }, // 自定义标签名
       },
-      optionChild: {
-        tagIcon: "el-col", // 子组件图标名称
-        tagLabel: "列配置", // 子组件标签名
-        tag: "el-col", // 子组件标签类型
-        options: [
-          {
-            attr: {
-              span: {
-                value: 24,
-                label: "栅格占据的列数",
-                type: "slider",
-                min: 0,
-                max: 24,
-              },
-              offset: {
-                value: 0,
-                label: "栅格左侧的间隔格数",
-                type: "slider",
-                min: 0,
-                max: 24,
-              },
-              pull: {
-                value: 0,
-                label: "栅格向左移动格数",
-                type: "slider",
-                min: 0,
-                max: 24,
-              },
-              push: {
-                value: 0,
-                label: "栅格向右移动格数",
-                type: "slider",
-                min: 0,
-                max: 24,
-              },
-              xs: {
-                value: { span: 24, offset: 0, pull: 0, push: 0 },
-                label: "小屏幕下的栅格配置",
-                type: "object",
-              }, // 超小屏幕下的栅格配置
-              sm: {
-                value: { span: 24, offset: 0, pull: 0, push: 0 },
-                label: "小屏幕下的栅格配置",
-                type: "object",
-              }, // 小屏幕下的栅格配置
-              md: {
-                value: { span: 24, offset: 0, pull: 0, push: 0 },
-                label: "小屏幕下的栅格配置",
-                type: "object",
-              },
-              // 中等屏幕下的栅格配置
-              lg: {
-                value: { span: 24, offset: 0, pull: 0, push: 0 },
-                label: "小屏幕下的栅格配置",
-                type: "object",
-              }, // 大屏幕下的栅格配置
-              xl: {
-                value: { span: 24, offset: 0, pull: 0, push: 0 },
-                label: "小屏幕下的栅格配置",
-                type: "object",
-              }, // 超大屏幕下的栅格配置,
-              tag: {
-                value: "div",
-                label: "自定义标签",
-                type: "input",
-                placeholder: "请输入自定义标签",
-              },
+      child: [
+        {
+          tagIcon: "el-col", // 子组件图标名称
+          tagLabel: "列配置", // 子组件标签名
+          tag: "el-col", // 子组件标签类型
+          attr: {
+            span: {
+              value: 24,
+              label: "栅格占据的列数",
+              type: "slider",
+              min: 0,
+              max: 24,
             },
-            data: [],
+            offset: {
+              value: 0,
+              label: "栅格左侧的间隔格数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            pull: {
+              value: 0,
+              label: "栅格向左移动格数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            push: {
+              value: 0,
+              label: "栅格向右移动格数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            xs: {
+              value: { span: 24, offset: 0, pull: 0, push: 0 },
+              label: "小屏幕下的栅格配置",
+              type: "object",
+            }, // 超小屏幕下的栅格配置
+            sm: {
+              value: { span: 24, offset: 0, pull: 0, push: 0 },
+              label: "小屏幕下的栅格配置",
+              type: "object",
+            }, // 小屏幕下的栅格配置
+            md: {
+              value: { span: 24, offset: 0, pull: 0, push: 0 },
+              label: "小屏幕下的栅格配置",
+              type: "object",
+            },
+            // 中等屏幕下的栅格配置
+            lg: {
+              value: { span: 24, offset: 0, pull: 0, push: 0 },
+              label: "小屏幕下的栅格配置",
+              type: "object",
+            }, // 大屏幕下的栅格配置
+            xl: {
+              value: { span: 24, offset: 0, pull: 0, push: 0 },
+              label: "小屏幕下的栅格配置",
+              type: "object",
+            }, // 超大屏幕下的栅格配置,
+            tag: {
+              value: "div",
+              label: "自定义标签",
+              type: "input",
+              placeholder: "请输入自定义标签",
+            },
           },
-        ],
-      },
+          data: [],
+        },
+      ],
     },
     {
       tag: "el-link", // 定义组件类型为链接

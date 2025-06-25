@@ -41,38 +41,65 @@
       class="drg-row"
     >
       <el-col
-        v-for="(item, index) in elementData.optionChild.options"
+        v-for="(item, index) in elementData.child"
         :xl="item.attr.xl.value"
         :lg="item.attr.lg.value"
         :md="item.attr.md.value"
         :sm="item.attr.sm.value"
         :xs="item.attr.xs.value"
+        @click.stop="activeItem(item)"
         class="can-drg"
       >
-        <draggable
-          group="componentsGroup"
-          :animation="340"
-          :list="item.data"
-          class="drag-wrapper"
-          item-key="renderKey"
-          @start="drag = true"
-          @end="drag = false"
-        >
-          <template #item="{ element, index }">
-            <draggable-item
-              :key="element.renderKey"
-              :drawing-list="item.data"
-              :elementData="element"
-              :index="index"
-              :active-id="activeId"
-              @click.stop="activeItem(element)"
-              @copyItem="copyItem(element, item.data)"
-              @deleteItem="deleteItem(index, item.data)"
-            />
-          </template>
-        </draggable>
+        <div :class="activeId === item.id ? 'draggable-item draggable-item-active' : 'draggable-item draggable-item-inactive'">
+          <div class="draggable-item-mark">
+            <span class="draggable-item-name">{{ item.tagLabel }}</span>
+          </div>
+          <draggable
+            group="componentsGroup"
+            :animation="340"
+            :list="item.data"
+            class="drag-wrapper"
+            item-key="renderKey"
+            @start="drag = true"
+            @end="drag = false"
+          >
+            <template #item="{ element, index }">
+              <draggable-item
+                :key="element.renderKey"
+                :drawing-list="item.data"
+                :elementData="element"
+                :index="index"
+                :active-id="activeId"
+                @click.stop="activeItem(element)"
+                @copyItem="copyItem(element, item.data)"
+                @deleteItem="deleteItem(index, item.data)"
+              />
+            </template>
+          </draggable>
+          <div class="draggable-item-tool" style="bottom:-7px">
+            <span
+              class="drawing-item-copy"
+              title="复制"
+              @click.stop="copyItem(item, elementData.child)"
+            >
+              <el-icon>
+                <CopyDocument />
+              </el-icon>
+            </span>
+            <span
+              class="drawing-item-delete"
+              title="删除"
+              @click.stop="deleteItem(index, elementData.child)"
+            >
+              <el-icon>
+                <Delete />
+              </el-icon>
+            </span>
+          </div>
+        </div>
       </el-col>
     </el-row>
+
     <el-form
       v-else-if="elementData.tag === 'el-form'"
       :model="elementData.attr.model"
@@ -154,7 +181,6 @@ const props = defineProps({
 const className = ref("");
 const draggableItemRef = ref(null);
 
-
 function activeItem(item) {
   emits("activeItem", item);
 }
@@ -170,7 +196,7 @@ function deleteItem(item, parent) {
 watch(
   () => props.activeId,
   (val) => {
-    console.log("activeId",val)
+    console.log("activeId", val);
     if (val) {
       if (val !== props.elementData.id) {
         className.value = "draggable-item draggable-item-inactive"; // 移除激活样式
@@ -178,7 +204,6 @@ watch(
         className.value = "draggable-item draggable-item-active"; // 添加激活样式
       }
     }
-
   },
   { immediate: true }
 );
