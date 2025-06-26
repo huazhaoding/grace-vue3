@@ -6,25 +6,25 @@ import { makeMap } from "@/utils/index";
 
 const isAttr = makeMap(
   "accept,accept-charset,accesskey,action,align,alt,async,autocomplete," +
-    "autofocus,autoplay,autosave,bgcolor,border,buffered,challenge,charset," +
-    "checked,cite,class,code,codebase,color,cols,colspan,content,http-equiv," +
-    "name,contenteditable,contextmenu,controls,coords,data,datetime,default," +
-    "defer,dir,dirname,disabled,download,draggable,dropzone,enctype,method,for," +
-    "form,formaction,headers,height,hidden,high,href,hreflang,http-equiv," +
-    "icon,id,ismap,itemprop,keytype,kind,label,lang,language,list,loop,low," +
-    "manifest,max,maxlength,media,method,GET,POST,min,multiple,email,file," +
-    "muted,name,novalidate,open,optimum,pattern,ping,placeholder,poster," +
-    "preload,radiogroup,readonly,rel,required,reversed,rows,rowspan,sandbox," +
-    "scope,scoped,seamless,selected,shape,size,type,text,password,sizes,span," +
-    "spellcheck,src,srcdoc,srclang,srcset,start,step,style,summary,tabindex," +
-    "target,title,type,usemap,value,width,wrap,prefix-icon"
+  "autofocus,autoplay,autosave,bgcolor,border,buffered,challenge,charset," +
+  "checked,cite,class,code,codebase,color,cols,colspan,content,http-equiv," +
+  "name,contenteditable,contextmenu,controls,coords,data,datetime,default," +
+  "defer,dir,dirname,disabled,download,draggable,dropzone,enctype,method,for," +
+  "form,formaction,headers,height,hidden,high,href,hreflang,http-equiv," +
+  "icon,id,ismap,itemprop,keytype,kind,label,lang,language,list,loop,low," +
+  "manifest,max,maxlength,media,method,GET,POST,min,multiple,email,file," +
+  "muted,name,novalidate,open,optimum,pattern,ping,placeholder,poster," +
+  "preload,radiogroup,readonly,rel,required,reversed,rows,rowspan,sandbox," +
+  "scope,scoped,seamless,selected,shape,size,type,text,password,sizes,span," +
+  "spellcheck,src,srcdoc,srclang,srcset,start,step,style,summary,tabindex," +
+  "target,title,type,usemap,value,width,wrap,prefix-icon,suffix-icon"
 );
 
 // 转换函数：将复杂结构简化为简单结构
 function simplifyItem(item) {
   const simplified = {};
   for (const key in item) {
-    simplified[key] = item[key].value; 
+    simplified[key] = item[key].value;
 
   }
   return simplified;
@@ -58,38 +58,38 @@ const componentChild = {
     options(h, conf, key) {
       return conf.attr.type.value === "button"
         ? conf.options.map((item) =>
-            h(
-              resolveComponent("el-radio-button"),
-              simplifyItem(item),
-              () => item.label.value
-            )
+          h(
+            resolveComponent("el-radio-button"),
+            simplifyItem(item),
+            () => item.label.value
           )
+        )
         : conf.options.map((item) =>
-            h(
-              resolveComponent("el-radio"),
-               simplifyItem(item),
-              () => item.label.value
-            )
-          );
+          h(
+            resolveComponent("el-radio"),
+            simplifyItem(item),
+            () => item.label.value
+          )
+        );
     },
   },
   "el-checkbox-group": {
     options(h, conf, key) {
       return conf.attr.type.value === "button"
         ? conf.options.map((item) =>
-            h(
-              resolveComponent("el-checkbox-button"),
-              simplifyItem(item),
-              () => item.label.value
-            )
+          h(
+            resolveComponent("el-checkbox-button"),
+            simplifyItem(item),
+            () => item.label.value
           )
+        )
         : conf.options.map((item) =>
-            h(
-              resolveComponent("el-checkbox"),
-              simplifyItem(item),
-              () => item.label.value
-            )
-          );
+          h(
+            resolveComponent("el-checkbox"),
+            simplifyItem(item),
+            () => item.label.value
+          )
+        );
     },
   },
   "el-upload": {
@@ -141,24 +141,17 @@ export default defineComponent({
 
 
 
-    
-    // 区分 label 和 aria-label
-    // if (cloneAttr.label) {
-    //   if (['el-input'].includes(cloneTag)) {
-    //     cloneAttr['aria-label'] = cloneAttr.label
-    //     delete cloneAttr.label
-    //   } else {
-    //     dataObject.props.label = cloneAttr.label
-    //   }
-    // }
+
+
 
     // 子元素 & 插槽处理
     const children = [];
+
+    // 插槽处理
     const slot = {};
-    
+
     //获取子元素对象
     const childObjs = componentChild[cloneTag];
-
     // 子元素对象
     if (childObjs) {
       Object.keys(childObjs).forEach((key) => {
@@ -167,7 +160,6 @@ export default defineComponent({
           children.push(childFunc(h, component, key));
         }
       });
-
     }
     //插槽内容
     const slotObjs = componentSlot[cloneTag];
@@ -189,7 +181,7 @@ export default defineComponent({
         slot.append = () => cloneAttr.append.value;
       }
     }
-    
+
     //子元素处理
     if (children.length > 0) {
       slot.default = () => children;
@@ -207,7 +199,6 @@ export default defineComponent({
       } else if (dataObject[key]) {
         dataObject[key] = val;
       } else if (isAttr(key)) {
-       
         dataObject.attrs[key] = val;
       } else if (!isNotProps(key)) {
         dataObject.props[key] = val;
@@ -222,7 +213,7 @@ export default defineComponent({
     const vnode = h(
       resolveComponent(this.conf.tag),
       {
-       modelValue: this.modelValue,
+        modelValue: this.modelValue,
         "onUpdate:modelValue": (val) => this.$emit("update:modelValue", val),
         ...dataObject.props,
         ...dataObject.attrs,

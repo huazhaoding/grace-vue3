@@ -100,7 +100,7 @@ watch(() => props.activeDataProperty, (val) => {
   formItemHedge.value = val.hedge
 })
 watch(() => formItemAttr, (val) => {
-
+console.log(val);
   // emit('formItemChange', {
   //   formItemAttr: val
   //   , formItemHedge: formItemHedge.value
@@ -111,7 +111,7 @@ watch(() => formItemAttr, (val) => {
 })
 
 watch(() => formItemHedge, (val) => {
-  console.log(val);
+  
   // emit('formItemChange', {
   //   formItemAttr: formItemAttr.value
   //   , formItemHedge: val
@@ -394,7 +394,7 @@ function openIconsDialog(model) {
 }
 
 function setIcon(val) {
-  formItemAttr.value[currentIconModel.value] = val
+  formItemAttr.value[currentIconModel.value].value = val
 }
 
 
