@@ -26,6 +26,13 @@
             </el-radio-group>
             <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
             <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
+            <el-input v-else-if="item.type === 'icon'" v-model="item.value">
+              <template #append>
+                <el-button icon="Pointer" @click="openIconsDialog(key)">
+                  选择
+                </el-button>
+              </template>
+            </el-input>
           </el-form-item>
         </el-form>
 
@@ -54,7 +61,7 @@
 
       </el-scrollbar>
     </div>
-    <!-- <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" /> -->
+     <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
     <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
 
   </div>

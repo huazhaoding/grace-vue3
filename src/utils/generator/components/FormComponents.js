@@ -211,12 +211,12 @@ export const FormComponents = {
         },
         "prefix-icon": {
           value: "",
-          type: "input",
+          type: "icon",
           label: "前缀图标"
         },
         "suffix-icon": {
           value: "",
-          type: "input",
+          type: "icon",
           label: "后缀图标"
         },
         clearable: {
@@ -382,7 +382,7 @@ export const FormComponents = {
       type: "form",
       attr: {
         defaultValue: {
-          value: {},
+          value: [],
           type: "input",
           label: "内容",
         },
@@ -461,11 +461,6 @@ export const FormComponents = {
       // 多选框组的选项
       options: [
         {
-          "v-model": {
-            value: "",
-            type: "input",
-            label: "绑定的值",
-          },
           label: {
             value: "选项一",
             type: "input",
@@ -543,11 +538,6 @@ export const FormComponents = {
           },
         },
         {
-          "v-model": {
-            value: "",
-            type: "input",
-            label: "绑定的值",
-          },
           label: {
             value: "选项二",
             type: "input",
@@ -750,12 +740,12 @@ export const FormComponents = {
             label: "绑定的值",
           },
           label: {
-            value: "选项一",
+            value: "选项二",
             type: "input",
             label: "显示的标签",
           },
           value: {
-            value: 1,
+            value: 2,
             type: "input",
             label: "选项值",
           },

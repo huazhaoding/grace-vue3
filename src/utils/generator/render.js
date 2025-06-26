@@ -56,7 +56,7 @@ const componentChild = {
   },
   "el-radio-group": {
     options(h, conf, key) {
-      return conf.type === "button"
+      return conf.attr.type.value === "button"
         ? conf.options.map((item) =>
             h(
               resolveComponent("el-radio-button"),
@@ -75,7 +75,7 @@ const componentChild = {
   },
   "el-checkbox-group": {
     options(h, conf, key) {
-      return conf.optionType === "button"
+      return conf.attr.type.value === "button"
         ? conf.options.map((item) =>
             h(
               resolveComponent("el-checkbox-button"),
@@ -182,10 +182,10 @@ export default defineComponent({
 
     // 插槽：处理 prepend / append
     if (cloneAttr.prepend || cloneAttr.append) {
-      if (cloneAttr.prepend) {
+      if (cloneAttr.prepend.value) {
         slot.prepend = () => cloneAttr.prepend.value;
       }
-      if (cloneAttr.append) {
+      if (cloneAttr.append.value) {
         slot.append = () => cloneAttr.append.value;
       }
     }
