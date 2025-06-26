@@ -20,6 +20,16 @@ const isAttr = makeMap(
     "target,title,type,usemap,value,width,wrap,prefix-icon"
 );
 
+// 转换函数：将复杂结构简化为简单结构
+function simplifyItem(item) {
+  const simplified = {};
+  for (const key in item) {
+    simplified[key] = item[key].value;  
+  }
+  return simplified;
+}
+
+
 const isNotProps = makeMap(
   "layout,prepend,regList,tag,document,changeTag,defaultValue"
 );
@@ -43,19 +53,19 @@ const componentChild = {
   },
   "el-radio-group": {
     options(h, conf, key) {
-      return conf.optionType === "button"
+      return conf.type === "button"
         ? conf.options.map((item) =>
             h(
               resolveComponent("el-radio-button"),
-              item,
-              () => item.label
+              simplifyItem(item),
+              () => item.label.value
             )
           )
         : conf.options.map((item) =>
             h(
               resolveComponent("el-radio"),
-              item,
-              () => item.label
+               simplifyItem(item),
+              () => item.label.value
             )
           );
     },
@@ -66,15 +76,15 @@ const componentChild = {
         ? conf.options.map((item) =>
             h(
               resolveComponent("el-checkbox-button"),
-              item,
-              () => item.label
+              simplifyItem(item),
+              () => item.label.value
             )
           )
         : conf.options.map((item) =>
             h(
               resolveComponent("el-checkbox"),
-              item,
-              () => item.label
+              simplifyItem(item),
+              () => item.label.value
             )
           );
     },
@@ -126,7 +136,7 @@ export default defineComponent({
 
     const cloneChildren = component.children;
 
-    //const componentChild = component.children
+
 
     // 动态处理 maxlength 和 show-word-limit
     if (cloneAttr["show-word-limit"] && !cloneAttr.maxlength) {
@@ -146,10 +156,11 @@ export default defineComponent({
     // 子元素 & 插槽处理
     const children = [];
     const slot = {};
-
+    
+    //获取子元素对象
     const childObjs = componentChild[cloneTag];
 
-
+    // 子元素对象
     if (childObjs) {
       Object.keys(childObjs).forEach((key) => {
         const childFunc = childObjs[key];
@@ -159,7 +170,7 @@ export default defineComponent({
       });
 
     }
-
+    //插槽内容
     const slotObjs = componentSlot[cloneTag];
     if (slotObjs) {
       Object.keys(slotObjs).forEach((key) => {
@@ -173,13 +184,14 @@ export default defineComponent({
     // 插槽：处理 prepend / append
     if (cloneAttr.prepend || cloneAttr.append) {
       if (cloneAttr.prepend) {
-        slot.prepend = () => cloneAttr.prepend;
+        slot.prepend = () => cloneAttr.prepend.value;
       }
       if (cloneAttr.append) {
-        slot.append = () => cloneAttr.append;
+        slot.append = () => cloneAttr.append.value;
       }
     }
-
+    
+    //子元素处理
     if (children.length > 0) {
       slot.default = () => children;
     }
@@ -187,6 +199,7 @@ export default defineComponent({
     // 属性分类 处理组件的attr
     Object.keys(cloneAttr).forEach((key) => {
       const val = cloneAttr[key].value;
+      
       // 特殊处理布尔值属性
       if (
         ["show-word-limit", "clearable", "readonly", "disabled"].includes(key)
