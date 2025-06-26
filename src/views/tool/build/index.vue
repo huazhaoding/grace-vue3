@@ -12,37 +12,22 @@
           <el-scrollbar class="left-scrollbar" height="90vh">
             <el-tabs v-model="leftActiveTab">
               <el-tab-pane label="组件库" name="componentLibrary">
-                <components-library
-                  :idGlobal="idGlobal"
-                  @updateCloneComponent="updateCloneComponent"
-                />
+                <components-library :idGlobal="idGlobal" @updateCloneComponent="updateCloneComponent" />
               </el-tab-pane>
               <el-tab-pane label="模板库" name="templateLibrary"> </el-tab-pane>
             </el-tabs>
           </el-scrollbar>
         </div>
       </el-aside>
-      <el-main style="padding: 5px"
-        ><div class="center-board">
+      <el-main style="padding: 5px">
+        <div class="center-board">
           <!-- 编辑器 -->
-          <draggable
-            class="drawing-board"
-            :list="drawingList"
-            :animation="340"
-            group="componentsGroup"
-            item-key="renderKey"
-          >
+          <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
+            item-key="renderKey">
             <template #item="{ element, index }">
-              <draggable-item
-                :key="element.renderKey"
-                :drawing-list="drawingList"
-                :elementData="element"
-                :index="index"
-                :active-id="activeId"
-                @activeItem="activeFormItem"
-                @copyItem="drawingItemCopy"
-                @deleteItem="drawingItemDelete"
-              />
+              <draggable-item :key="element.renderKey" :drawing-list="drawingList" :elementData="element" :index="index"
+                :active-id="activeId" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
+                @deleteItem="drawingItemDelete" />
             </template>
           </draggable>
           <div v-show="!drawingList.length" class="empty-info">
@@ -52,11 +37,7 @@
       </el-main>
       <el-aside width="350px">
         <!-- 右边属性库 -->
-        <right-panel
-          :active-data-property="activeData"
-          :form-conf="{}"
-          :show-field="!!drawingList.length"
-        />
+        <right-panel :active-data-property="activeData" :form-conf="{}" :show-field="!!drawingList.length" />
       </el-aside>
     </el-container>
   </div>
@@ -98,7 +79,9 @@ function drawingItemCopy(item, parent) {
 // 为表单项生成唯一的 ID 和 key
 function createIdAndKey(clone) {
   clone.id = ++idGlobal.value; // 为克隆的组件生成唯一的 id
-  clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
+  if (clone.type === "form") {
+    clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
+  }
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   if (Array.isArray(clone.data)) {
     clone.data = clone.data.map((childItem) => createIdAndKey(childItem)); // 递归处理子项
@@ -160,7 +143,7 @@ $lighterBlue: #409eff;
         font-size: 17px;
         white-space: nowrap;
 
-        > img {
+        >img {
           width: 30px;
           height: 30px;
           vertical-align: top;
@@ -171,7 +154,7 @@ $lighterBlue: #409eff;
           vertical-align: sub;
           margin-left: 15px;
 
-          > img {
+          >img {
             height: 22px;
           }
         }
@@ -188,6 +171,7 @@ $lighterBlue: #409eff;
         box-sizing: border-box;
         overflow-x: hidden !important;
         margin-bottom: 0 !important;
+
         .components-list {
           padding: 8px;
           box-sizing: border-box;
@@ -248,6 +232,7 @@ $lighterBlue: #409eff;
     position: relative;
     width: 100%;
     min-height: 800px;
+
     .drawing-board {
       position: absolute;
       width: 100%;
@@ -255,6 +240,7 @@ $lighterBlue: #409eff;
       padding: 10px;
       background-color: aquamarine;
     }
+
     .empty-info {
       position: absolute;
       top: 40%;
@@ -272,13 +258,16 @@ $lighterBlue: #409eff;
   cursor: move;
   position: relative;
   margin-bottom: 10px;
+
   .drag-wrapper {
     height: auto;
     min-height: 200px;
   }
+
   .field-wrapper {
     margin: 0;
   }
+
   .draggable-item-mark {
     z-index: 9999;
     color: aliceblue;
@@ -291,12 +280,13 @@ $lighterBlue: #409eff;
     font-size: 12px;
     font-style: normal;
     padding: 4px;
-   
+
     .draggable-item-name {
       padding-left: 10px;
       padding-bottom: 20px;
     }
   }
+
   .draggable-item-tool {
     position: absolute;
     color: aliceblue;
@@ -304,6 +294,7 @@ $lighterBlue: #409eff;
     bottom: 4px;
     font-size: 12px;
     font-style: normal;
+
     .drawing-item-copy,
     .drawing-item-delete {
       background-color: #409eff;
@@ -311,12 +302,15 @@ $lighterBlue: #409eff;
       cursor: pointer;
     }
   }
+
   .drg-row {
     padding: 3px;
+
     .drg-col {
       margin: 2px;
     }
   }
+
   .can-drg,
   .drg-row {
     border: 1px dashed #f50000;
@@ -324,18 +318,20 @@ $lighterBlue: #409eff;
 }
 
 .draggable-item-active {
-  & > .not-drg {
+  &>.not-drg {
     border: 1px solid #f50000;
   }
-  & > .draggable-item-mark,
-  & > .draggable-item-tool {
+
+  &>.draggable-item-mark,
+  &>.draggable-item-tool {
     display: block;
   }
 }
 
 .draggable-item-inactive {
-  & > .draggable-item-mark,
-  & > .draggable-item-tool {
+
+  &>.draggable-item-mark,
+  &>.draggable-item-tool {
     display: none;
   }
 }

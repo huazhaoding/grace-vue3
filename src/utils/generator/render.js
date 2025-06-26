@@ -24,7 +24,8 @@ const isAttr = makeMap(
 function simplifyItem(item) {
   const simplified = {};
   for (const key in item) {
-    simplified[key] = item[key].value;  
+    simplified[key] = item[key].value; 
+
   }
   return simplified;
 }
@@ -33,6 +34,8 @@ function simplifyItem(item) {
 const isNotProps = makeMap(
   "layout,prepend,regList,tag,document,changeTag,defaultValue"
 );
+
+
 
 // 子组件渲染规则（如 el-select、el-checkbox-group 等）
 const componentChild = {
@@ -138,11 +141,7 @@ export default defineComponent({
 
 
 
-    // 动态处理 maxlength 和 show-word-limit
-    if (cloneAttr["show-word-limit"] && !cloneAttr.maxlength) {
-      cloneAttr.maxlength = 100; // 设置一个默认值
-    }
-
+    
     // 区分 label 和 aria-label
     // if (cloneAttr.label) {
     //   if (['el-input'].includes(cloneTag)) {
@@ -199,7 +198,6 @@ export default defineComponent({
     // 属性分类 处理组件的attr
     Object.keys(cloneAttr).forEach((key) => {
       const val = cloneAttr[key].value;
-      
       // 特殊处理布尔值属性
       if (
         ["show-word-limit", "clearable", "readonly", "disabled"].includes(key)
@@ -209,6 +207,7 @@ export default defineComponent({
       } else if (dataObject[key]) {
         dataObject[key] = val;
       } else if (isAttr(key)) {
+       
         dataObject.attrs[key] = val;
       } else if (!isNotProps(key)) {
         dataObject.props[key] = val;
@@ -223,7 +222,7 @@ export default defineComponent({
     const vnode = h(
       resolveComponent(this.conf.tag),
       {
-        modelValue: this.modelValue,
+       modelValue: this.modelValue,
         "onUpdate:modelValue": (val) => this.$emit("update:modelValue", val),
         ...dataObject.props,
         ...dataObject.attrs,

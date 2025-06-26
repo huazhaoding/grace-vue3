@@ -168,23 +168,28 @@ export const FormComponents = {
       type: "form",
       attr: {
         defaultValue: {
-          value: "",
+          value: "123456",
           type: "input",
           label: "内容",
         },
+        placeholder: {
+          value: "请输入",
+          type: "input",
+          label: "占位文本",
+        },
         type: {
           value: "text",
-          type: "input",
+          type: "radio",
           label: "类型",
           options: [{ value: "text", label: "文本" }],
         },
         maxlength: {
-          value: null,
+          value: 100,
           type: "number",
           label: "最大输入长度",
         },
         minlength: {
-          value: null,
+          value: 1,
           type: "number",
           label: "最小输入长度",
         },
@@ -193,10 +198,26 @@ export const FormComponents = {
           type: "switch",
           label: "是否显示统计字数",
         },
-        placeholder: {
-          value: "请输入",
-          type: "number",
-          label: "占位文本",
+
+        prepend: {
+          value: "",
+          type: "input",
+          label: "前缀符号"
+        },
+        append: {
+          value: "",
+          type: "input",
+          label: "后缀符号"
+        },
+        "prefix-icon": {
+          value: "",
+          type: "input",
+          label: "前缀图标"
+        },
+        "suffix-icon": {
+          value: "",
+          type: "input",
+          label: "后缀图标"
         },
         clearable: {
           value: false,
@@ -613,11 +634,11 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/radio",
       type: "form",
       attr: {
-         defaultValue: {
-          value:"",
+        defaultValue: {
+          value: "",
           type: "input",
           label: "内容",
-         },
+        },
         type: {
           value: "button",
           type: "radio",
@@ -773,11 +794,11 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/color-picker",
       type: "form",
       attr: {
-         defaultValue: {
-          value:"",
+        defaultValue: {
+          value: "",
           type: "input",
           label: "颜色值",
-         },
+        },
         "show-alpha": {
           value: false,
           type: "switch",

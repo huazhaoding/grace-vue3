@@ -14,15 +14,19 @@
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
         <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top">
-            <el-form-item v-for="(item,key) in formItemAttr" :label="item.label">
-              <el-input v-model="item.value" :placeholder="item.placeholder"  v-if="item.type === 'input'" />
-              <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
-              <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-                <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value" >{{radio.label}}</el-radio>
-              </el-radio-group>
-              <el-input-number v-model="item.value"   v-else-if="item.type === 'number'"/>
-              <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
-            </el-form-item>
+          <el-form-item v-if="formItemAttr.vModel" label="字段名">
+            <el-input v-model="formItemAttr.vModel" placeholder="请输入字段名（v-model）"></el-input>
+          </el-form-item>
+          <el-form-item v-for="(item, key) in formItemAttr" :label="item.label">
+            <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
+            <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
+            <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
+              <el-radio v-for="(radio, index) in item.options" :key="index"
+                :value="radio.value">{{ radio.label }}</el-radio>
+            </el-radio-group>
+            <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
+            <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
+          </el-form-item>
         </el-form>
 
         <!-- 包围属性 -->
@@ -44,10 +48,10 @@
     scrollToErrorOffset: 0, // 滚动到错误表单项时的偏移量
     requireAsteriskPosition: "left", // 必填星号的位置：left / right
   } -->
-    
+
 
         <!-- 表单属性 -->
-   
+
       </el-scrollbar>
     </div>
     <!-- <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" /> -->
@@ -85,23 +89,29 @@ const formItemAttr = ref([]);
 
 
 watch(() => props.activeDataProperty, (val) => {
-  formItemAttr.value=val.attr;
-  formItemHedge.value=val.hedge
+  formItemAttr.value = val.attr;
+  formItemHedge.value = val.hedge
 })
 watch(() => formItemAttr, (val) => {
-  console.log(val);
-  emit('formItemChange', {
-    formItemAttr: val
-    , formItemHedge: formItemHedge.value
-  })
+
+  // emit('formItemChange', {
+  //   formItemAttr: val
+  //   , formItemHedge: formItemHedge.value
+  // })
+}, {
+  immediate: true, // 立即执行回调函数
+  deep: true // 深度监听，适用于监听对象或数组
 })
 
 watch(() => formItemHedge, (val) => {
   console.log(val);
-  emit('formItemChange', {
-    formItemAttr: formItemAttr.value
-    , formItemHedge: val
-  })
+  // emit('formItemChange', {
+  //   formItemAttr: formItemAttr.value
+  //   , formItemHedge: val
+  // })
+}, {
+  immediate: true, // 立即执行回调函数
+  deep: true // 深度监听，适用于监听对象或数组
 })
 
 const data = reactive({

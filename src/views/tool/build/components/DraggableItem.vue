@@ -29,7 +29,7 @@
       <render
         :key="elementData.tag"
         :conf="elementData"
-        v-model="elementData.attr.defaultValue"
+        v-model="elementData.attr.defaultValue.value"
       />
     </el-form-item>
     <el-row
@@ -138,7 +138,7 @@
       <render
         :key="elementData.tag"
         :conf="elementData"
-        v-model="elementData.attr.defaultValue"
+        v-model="elementData.attr.defaultValue.value"
       />
     </div>
 
