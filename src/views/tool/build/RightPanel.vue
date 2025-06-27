@@ -37,7 +37,7 @@
             <el-popover placement="left" :width="400" trigger="click"
               v-else-if="item.type === 'object' && activeDataProperty.tag === 'el-col'">
               <template #reference>
-                <el-button style="margin-right: 16px">{{ key }}</el-button>
+                <el-button style="width: 100%;">{{ key }}</el-button>
               </template>
               <el-form-item v-for="(value, key) in item.value" :label="key">
                 <el-slider v-model="item.value[key]" :min="0" :max="24" />
@@ -63,7 +63,7 @@
                 <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
                 <el-popover  placement="left" :width="400" trigger="click" v-else-if="item.type === 'object'">
                   <template #reference>
-                    <el-button style="margin-right: 16px">{{ key }}</el-button>
+                    <el-button style="width: 100%;">{{ key }}</el-button>
                   </template>
                   <el-form-item v-for="(value, key) in item.value" :label="key">
                     <el-slider v-model="item.value[key]" :min="0" :max="24" />
