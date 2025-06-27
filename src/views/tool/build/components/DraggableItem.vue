@@ -42,6 +42,10 @@
     >
       <el-col
         v-for="(item, index) in elementData.child"
+        :span="item.attr.span.value"
+        :offset="item.attr.offset.value"
+        :pull="item.attr.pull.value"
+        :push="item.attr.push.value"
         :xl="item.attr.xl.value"
         :lg="item.attr.lg.value"
         :md="item.attr.md.value"
@@ -52,7 +56,7 @@
       >
         <div :class="activeId === item.id ? 'draggable-item draggable-item-active' : 'draggable-item draggable-item-inactive'">
           <div class="draggable-item-mark">
-            <span class="draggable-item-name">{{ item.tagLabel }}</span>
+            <span class="draggable-item-name">{{ item.tagLabel+'_'+item.id }}</span>
           </div>
           <draggable
             group="componentsGroup"
@@ -135,10 +139,9 @@
     </el-form>
 
     <div v-else class="not-drg">
-      <render
+      <render 
         :key="elementData.tag"
         :conf="elementData"
-        v-model="elementData.attr.defaultValue.value"
       />
     </div>
 
@@ -167,6 +170,7 @@
 <script setup name="DraggableItem">
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import render from "@/utils/generator/render";
+import { watch } from "vue";
 const emits = defineEmits(["activeItem", "copyItem", "deleteItem"]);
 const props = defineProps({
   elementData: Object,
@@ -196,7 +200,6 @@ function deleteItem(item, parent) {
 watch(
   () => props.activeId,
   (val) => {
-    console.log("activeId", val);
     if (val) {
       if (val !== props.elementData.id) {
         className.value = "draggable-item draggable-item-inactive"; // 移除激活样式
@@ -204,6 +207,14 @@ watch(
         className.value = "draggable-item draggable-item-active"; // 添加激活样式
       }
     }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.elementData,
+  (val) => {
+    console.log(val);
   },
   { immediate: true }
 );

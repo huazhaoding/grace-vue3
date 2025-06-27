@@ -21,11 +21,12 @@
             <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
             <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
             <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-              <el-radio v-for="(radio, index) in item.options" :key="index"
-                :value="radio.value">{{ radio.label }}</el-radio>
+              <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
+              }}</el-radio>
             </el-radio-group>
             <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
             <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
+            <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
             <el-input v-else-if="item.type === 'icon'" v-model="item.value">
               <template #append>
                 <el-button icon="Pointer" @click="openIconsDialog(key)">
@@ -34,6 +35,26 @@
               </template>
             </el-input>
           </el-form-item>
+
+          <el-divider content-position="center" v-if="activeDataProperty.tag === 'el-row'">栅格配置</el-divider>
+
+          <template v-if="activeDataProperty.tag === 'el-row'">
+
+            <el-card  v-for="(child, key) in formItemChild">
+              <template #header>
+                <div class="card-header">
+                  <span>栅格{{ key+1 }}配置</span>
+                </div>
+              </template>
+              <el-form-item v-for="(item, key) in child.attr" :label="item.label" :key="key">
+                <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
+                <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
+                <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
+              </el-form-item>
+              <template #footer>Footer content</template>
+            </el-card>
+          </template>
+
         </el-form>
 
         <!-- 包围属性 -->
@@ -61,7 +82,7 @@
 
       </el-scrollbar>
     </div>
-     <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
+    <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
     <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
 
   </div>
@@ -72,7 +93,6 @@ import draggable from "vuedraggable/dist/vuedraggable.common";
 import { isNumberStr } from '@/utils/index'
 import IconsDialog from './IconsDialog'
 import TreeNodeDialog from './TreeNodeDialog'
-
 
 const { proxy } = getCurrentInstance()
 const dateTimeFormat = {
@@ -94,13 +114,16 @@ const formItemHedge = ref([]);
 
 const formItemAttr = ref([]);
 
+const formItemChild = ref([]);
+
 
 watch(() => props.activeDataProperty, (val) => {
-  formItemAttr.value = val.attr;
+  formItemAttr.value = val.attr
   formItemHedge.value = val.hedge
+  formItemChild.value = val.child
 })
 watch(() => formItemAttr, (val) => {
-console.log(val);
+  console.log(val);
   // emit('formItemChange', {
   //   formItemAttr: val
   //   , formItemHedge: formItemHedge.value
@@ -111,7 +134,7 @@ console.log(val);
 })
 
 watch(() => formItemHedge, (val) => {
-  
+
   // emit('formItemChange', {
   //   formItemAttr: formItemAttr.value
   //   , formItemHedge: val

@@ -68,7 +68,7 @@ function updateCloneComponent(element, from) {
   }
 }
 
-// 复制表单项
+// 复制项目
 function drawingItemCopy(item, parent) {
   let clone = JSON.parse(JSON.stringify(item)); // 深拷贝表单项
   clone = createIdAndKey(clone); // 为克隆的表单项生成唯一的 ID 和 key
@@ -83,8 +83,13 @@ function createIdAndKey(clone) {
     clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
   }
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
+  // 处理数据
   if (Array.isArray(clone.data)) {
-    clone.data = clone.data.map((childItem) => createIdAndKey(childItem)); // 递归处理子项
+    clone.data = clone.data.map((data) => createIdAndKey(data)); // 递归处理数据列表
+  }
+  // 处理子项列表
+  if (Array.isArray(clone.child)) {
+    clone.child = clone.child.map((child) => createIdAndKey(child)); // 递归处理子项
   }
   return clone; // 返回更新后的表单项
 }

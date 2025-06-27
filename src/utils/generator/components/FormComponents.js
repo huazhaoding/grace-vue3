@@ -202,22 +202,22 @@ export const FormComponents = {
         prepend: {
           value: "",
           type: "input",
-          label: "前缀符号"
+          label: "前缀符号",
         },
         append: {
           value: "",
           type: "input",
-          label: "后缀符号"
+          label: "后缀符号",
         },
         "prefix-icon": {
           value: "",
           type: "icon",
-          label: "前缀图标"
+          label: "前缀图标",
         },
         "suffix-icon": {
           value: "",
           type: "icon",
-          label: "后缀图标"
+          label: "后缀图标",
         },
         clearable: {
           value: false,
@@ -253,6 +253,28 @@ export const FormComponents = {
           value: true,
           type: "switch",
           label: "输入时是否触发表单的校验",
+        },
+      },
+      slots: {
+        prepend: {
+          value: "",
+          type: "textarea",
+          label: "输入框前置内容",
+        },
+        append: {
+          value: "",
+          type: "textarea",
+          label: "输入框后置内容",
+        },
+        prefix: {
+          value: "",
+          type: "textarea",
+          label: "输入框头部内容",
+        },
+        suffix: {
+          value: "",
+          type: "textarea",
+          label: "输入框尾部内容",
         },
       },
       hedge: Object.assign({}, defaultHedge, {

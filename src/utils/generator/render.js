@@ -25,7 +25,6 @@ function simplifyItem(item) {
   const simplified = {};
   for (const key in item) {
     simplified[key] = item[key].value;
-
   }
   return simplified;
 }
@@ -209,6 +208,8 @@ export default defineComponent({
       slot.default = () => this.conf.attr.defaultLabel.value; // 设置默认插槽内容
     }
 
+
+
     // 生成虚拟 DOM
     const vnode = h(
       resolveComponent(this.conf.tag),
@@ -225,6 +226,9 @@ export default defineComponent({
     return vnode;
   },
 });
+
+
+
 
 // 插槽渲染规则
 const componentSlot = {
