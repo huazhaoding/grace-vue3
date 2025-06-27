@@ -56,7 +56,7 @@
       >
         <div :class="activeId === item.id ? 'draggable-item draggable-item-active' : 'draggable-item draggable-item-inactive'">
           <div class="draggable-item-mark">
-            <span class="draggable-item-name">{{ item.tagLabel+'_'+item.id }}</span>
+            <span class="draggable-item-name">{{ item.tagLabel }}</span>
           </div>
           <draggable
             group="componentsGroup"

@@ -34,22 +34,42 @@
                 </el-button>
               </template>
             </el-input>
+            <el-popover placement="left" :width="400" trigger="click"
+              v-else-if="item.type === 'object' && activeDataProperty.tag === 'el-col'">
+              <template #reference>
+                <el-button style="margin-right: 16px">{{ key }}</el-button>
+              </template>
+              <el-form-item v-for="(value, key) in item.value" :label="key">
+                <el-slider v-model="item.value[key]" :min="0" :max="24" />
+              </el-form-item>
+              {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
+            </el-popover>
           </el-form-item>
+
+
 
           <el-divider content-position="center" v-if="activeDataProperty.tag === 'el-row'">栅格配置</el-divider>
 
           <template v-if="activeDataProperty.tag === 'el-row'">
-
-            <el-card  v-for="(child, key) in formItemChild">
+            <el-card v-for="(child, key) in formItemChild">
               <template #header>
                 <div class="card-header">
-                  <span>栅格{{ key+1 }}配置</span>
+                  <span>栅格{{ key + 1 }}配置</span>
                 </div>
               </template>
               <el-form-item v-for="(item, key) in child.attr" :label="item.label" :key="key">
                 <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                 <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                 <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
+                <el-popover  placement="left" :width="400" trigger="click" v-else-if="item.type === 'object'">
+                  <template #reference>
+                    <el-button style="margin-right: 16px">{{ key }}</el-button>
+                  </template>
+                  <el-form-item v-for="(value, key) in item.value" :label="key">
+                    <el-slider v-model="item.value[key]" :min="0" :max="24" />
+                  </el-form-item>
+                  {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
+                </el-popover>
               </el-form-item>
               <template #footer>Footer content</template>
             </el-card>
