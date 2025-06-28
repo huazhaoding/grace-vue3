@@ -55,7 +55,7 @@ const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref([]); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
 const generateConf = ref(null); // 生成配置
-
+provide('createIdAndKey', createIdAndKey);
 function updateCloneComponent(element, from) {
   if (from === "click") {
     drawingList.value.push(element); // 将克隆的组件添加到表单项列表

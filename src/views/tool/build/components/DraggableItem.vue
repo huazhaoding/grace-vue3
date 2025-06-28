@@ -54,7 +54,13 @@
         @click.stop="activeItem(item)"
         class="can-drg"
       >
-        <div :class="activeId === item.id ? 'draggable-item draggable-item-active' : 'draggable-item draggable-item-inactive'">
+        <div
+          :class="
+            activeId === item.id
+              ? 'draggable-item draggable-item-active'
+              : 'draggable-item draggable-item-inactive'
+          "
+        >
           <div class="draggable-item-mark">
             <span class="draggable-item-name">{{ item.tagLabel }}</span>
           </div>
@@ -80,8 +86,8 @@
               />
             </template>
           </draggable>
-          <div class="draggable-item-tool" style="bottom:-7px">
-            <span
+          <div class="draggable-item-tool" style="bottom: -7px">
+            <span 
               class="drawing-item-copy"
               title="复制"
               @click.stop="copyItem(item, elementData.child)"
@@ -92,11 +98,10 @@
             </span>
             <span
               class="drawing-item-delete"
-              title="删除"
-              @click.stop="deleteItem(index, elementData.child)"
+              title="删除"   
             >
-              <el-icon>
-                <Delete />
+              <el-icon >
+                <Delete v-if="elementData.child.length > 1" @click.stop="deleteItem(index, elementData.child)" />
               </el-icon>
             </span>
           </div>
@@ -139,10 +144,7 @@
     </el-form>
 
     <div v-else class="not-drg">
-      <render 
-        :key="elementData.tag"
-        :conf="elementData"
-      />
+      <render :key="elementData.tag" :conf="elementData" />
     </div>
 
     <div class="draggable-item-tool">
@@ -192,8 +194,8 @@ function activeItem(item) {
 function copyItem(item, parent) {
   emits("copyItem", item, parent ?? props.drawingList);
 }
-function deleteItem(item, parent) {
-  emits("deleteItem", item, parent ?? props.drawingList);
+function deleteItem(index, parent) {
+  emits("deleteItem", index, parent ?? props.drawingList);
 }
 
 // 监听 activeId 的变化，动态更新激活状态 可拖拽组件为虚线 不可拖拽组件为实线

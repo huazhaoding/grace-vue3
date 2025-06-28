@@ -6,27 +6,65 @@
       <el-tab-pane label="表单属性" name="form" />
     </el-tabs>
     <div class="field-box">
-      <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
+      <a
+        class="document-link"
+        target="_blank"
+        :href="documentLink"
+        title="查看组件文档"
+      >
         <el-icon>
           <Link />
         </el-icon>
       </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
-        <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top">
+        <el-form
+          v-show="currentTab === 'field' && showField"
+          size="default"
+          label-width="90px"
+          label-position="top"
+        >
           <el-form-item v-if="formItemAttr.vModel" label="字段名">
-            <el-input v-model="formItemAttr.vModel" placeholder="请输入字段名（v-model）"></el-input>
+            <el-input
+              v-model="formItemAttr.vModel"
+              placeholder="请输入字段名（v-model）"
+            ></el-input>
           </el-form-item>
           <el-form-item v-for="(item, key) in formItemAttr" :label="item.label">
-            <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
-            <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
-            <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-              <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-              }}</el-radio>
+            <el-input
+              v-model="item.value"
+              :placeholder="item.placeholder"
+              v-if="item.type === 'input'"
+            />
+            <el-switch
+              v-model="item.value"
+              v-else-if="item.type === 'switch'"
+            />
+            <el-radio-group
+              v-model="item.value"
+              v-else-if="item.type === 'radio'"
+            >
+              <el-radio
+                v-for="(radio, index) in item.options"
+                :key="index"
+                :value="radio.value"
+                >{{ radio.label }}</el-radio
+              >
             </el-radio-group>
-            <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-            <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
-            <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
+            <el-input-number
+              v-model="item.value"
+              v-else-if="item.type === 'number'"
+            />
+            <el-color-picker
+              v-model="item.value"
+              v-else-if="item.type === 'color'"
+            />
+            <el-slider
+              v-model="item.value"
+              v-else-if="item.type === 'slider'"
+              :min="item.min"
+              :max="item.max"
+            />
             <el-input v-else-if="item.type === 'icon'" v-model="item.value">
               <template #append>
                 <el-button icon="Pointer" @click="openIconsDialog(key)">
@@ -34,47 +72,93 @@
                 </el-button>
               </template>
             </el-input>
-            <el-popover placement="left" :width="400" trigger="click"
-              v-else-if="item.type === 'object' && activeDataProperty.tag === 'el-col'">
+            <el-popover
+              placement="left"
+              :width="400"
+              trigger="click"
+              v-else-if="
+                item.type === 'object' && activeDataProperty.tag === 'el-col'
+              "
+            >
               <template #reference>
-                <el-button style="width: 100%;">{{ key }}</el-button>
+                <el-button style="width: 100%">{{ key }}</el-button>
               </template>
               <el-form-item v-for="(value, key) in item.value" :label="key">
                 <el-slider v-model="item.value[key]" :min="0" :max="24" />
               </el-form-item>
-              {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
+              {{ item.value.span }}-{{ item.value.offset }}-{{
+                item.value.pull
+              }}-{{ item.value.push }}
             </el-popover>
           </el-form-item>
 
-
-
-          <el-divider content-position="center" v-if="activeDataProperty.tag === 'el-row'">栅格配置</el-divider>
+          <el-divider
+            content-position="center"
+            v-if="activeDataProperty.tag === 'el-row'"
+            >栅格配置</el-divider
+          >
 
           <template v-if="activeDataProperty.tag === 'el-row'">
             <el-card v-for="(child, key) in formItemChild">
               <template #header>
                 <div class="card-header">
-                  <span>栅格{{ key + 1 }}配置</span>
+                  <span>栅格{{ key + 1 }}配置</span
+                  ><el-button-group style="float: right">
+                    <el-button
+                      type="primary"
+                      icon="Plus"
+                      @click="addCol(child, key)"
+                      title="复制栏"
+                    />
+                    <el-button
+                      type="danger"
+                      icon="Remove"
+                      @click="removeCol(child, key)"
+                      title="删除栏"
+                    />
+                  </el-button-group>
                 </div>
               </template>
-              <el-form-item v-for="(item, key) in child.attr" :label="item.label" :key="key">
-                <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
-                <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-                <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
-                <el-popover  placement="left" :width="400" trigger="click" v-else-if="item.type === 'object'">
+              <el-form-item
+                v-for="(item, key) in child.attr"
+                :label="item.label"
+                :key="key"
+              >
+                <el-input
+                  v-model="item.value"
+                  :placeholder="item.placeholder"
+                  v-if="item.type === 'input'"
+                />
+                <el-input-number
+                  v-model="item.value"
+                  v-else-if="item.type === 'number'"
+                />
+                <el-slider
+                  v-model="item.value"
+                  v-else-if="item.type === 'slider'"
+                  :min="item.min"
+                  :max="item.max"
+                />
+                <el-popover
+                  placement="left"
+                  :width="400"
+                  trigger="click"
+                  v-else-if="item.type === 'object'"
+                >
                   <template #reference>
-                    <el-button style="width: 100%;">{{ key }}</el-button>
+                    <el-button style="width: 100%">{{ key }}</el-button>
                   </template>
                   <el-form-item v-for="(value, key) in item.value" :label="key">
                     <el-slider v-model="item.value[key]" :min="0" :max="24" />
                   </el-form-item>
-                  {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
+                  {{ item.value.span }}-{{ item.value.offset }}-{{
+                    item.value.pull
+                  }}-{{ item.value.push }}
                 </el-popover>
               </el-form-item>
               <template #footer>Footer content</template>
             </el-card>
           </template>
-
         </el-form>
 
         <!-- 包围属性 -->
@@ -97,38 +181,39 @@
     requireAsteriskPosition: "left", // 必填星号的位置：left / right
   } -->
 
-
         <!-- 表单属性 -->
-
       </el-scrollbar>
     </div>
-    <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
+    <icons-dialog
+      v-model="iconsVisible"
+      :current="formItemAttr[currentIconModel]"
+      @select="setIcon"
+    />
     <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
-
   </div>
 </template>
 
 <script setup>
 import draggable from "vuedraggable/dist/vuedraggable.common";
-import { isNumberStr } from '@/utils/index'
-import IconsDialog from './IconsDialog'
-import TreeNodeDialog from './TreeNodeDialog'
-
-const { proxy } = getCurrentInstance()
+import { isNumberStr } from "@/utils/index";
+import IconsDialog from "./IconsDialog";
+import TreeNodeDialog from "./TreeNodeDialog";
+const createIdAndKey = inject("createIdAndKey");
+const { proxy } = getCurrentInstance();
 const dateTimeFormat = {
-  date: 'YYYY-MM-DD',
-  week: 'YYYY 第 ww 周',
-  month: 'YYYY-MM',
-  year: 'YYYY',
-  datetime: 'YYYY-MM-DD HH:mm:ss',
-  daterange: 'YYYY-MM-DD',
-  monthrange: 'YYYY-MM',
-  datetimerange: 'YYYY-MM-DD HH:mm:ss'
-}
+  date: "YYYY-MM-DD",
+  week: "YYYY 第 ww 周",
+  month: "YYYY-MM",
+  year: "YYYY",
+  datetime: "YYYY-MM-DD HH:mm:ss",
+  daterange: "YYYY-MM-DD",
+  monthrange: "YYYY-MM",
+  datetimerange: "YYYY-MM-DD HH:mm:ss",
+};
 const props = defineProps({
   showField: Boolean,
   activeDataProperty: Object,
-  formConf: Object
+  formConf: Object,
 });
 const formItemHedge = ref([]);
 
@@ -136,197 +221,238 @@ const formItemAttr = ref([]);
 
 const formItemChild = ref([]);
 
+function addCol(child, index) {
+  let clone = JSON.parse(JSON.stringify(child));
+  clone = createIdAndKey(clone);
+  formItemChild.value.push(clone);
+}
 
-watch(() => props.activeDataProperty, (val) => {
-  formItemAttr.value = val.attr
-  formItemHedge.value = val.hedge
-  formItemChild.value = val.child
-})
-watch(() => formItemAttr, (val) => {
-  console.log(val);
-  // emit('formItemChange', {
-  //   formItemAttr: val
-  //   , formItemHedge: formItemHedge.value
-  // })
-}, {
-  immediate: true, // 立即执行回调函数
-  deep: true // 深度监听，适用于监听对象或数组
-})
+function removeCol(child, index) {
+  if(formItemChild.value.length <= 1) {
+    proxy.$modal.msgError("请保留至少一项");
+    return;
+  }
+  formItemChild.value.splice(index, 1);
+}
 
-watch(() => formItemHedge, (val) => {
+watch(
+  () => props.activeDataProperty,
+  (val) => {
+    formItemAttr.value = val.attr;
+    formItemHedge.value = val.hedge;
+    formItemChild.value = val.child;
+  }
+);
+watch(
+  () => formItemAttr,
+  (val) => {
+    console.log(val);
+    // emit('formItemChange', {
+    //   formItemAttr: val
+    //   , formItemHedge: formItemHedge.value
+    // })
+  },
+  {
+    immediate: true, // 立即执行回调函数
+    deep: true, // 深度监听，适用于监听对象或数组
+  }
+);
 
-  // emit('formItemChange', {
-  //   formItemAttr: formItemAttr.value
-  //   , formItemHedge: val
-  // })
-}, {
-  immediate: true, // 立即执行回调函数
-  deep: true // 深度监听，适用于监听对象或数组
-})
+watch(
+  () => formItemHedge,
+  (val) => {
+    // emit('formItemChange', {
+    //   formItemAttr: formItemAttr.value
+    //   , formItemHedge: val
+    // })
+  },
+  {
+    immediate: true, // 立即执行回调函数
+    deep: true, // 深度监听，适用于监听对象或数组
+  }
+);
 
 const data = reactive({
-  currentTab: 'field',
+  currentTab: "field",
   currentNode: null,
   dialogVisible: false,
   iconsVisible: false,
   currentIconModel: null,
   dateTypeOptions: [
     {
-      label: '日(date)',
-      value: 'date'
+      label: "日(date)",
+      value: "date",
     },
     {
-      label: '周(week)',
-      value: 'week'
+      label: "周(week)",
+      value: "week",
     },
     {
-      label: '月(month)',
-      value: 'month'
+      label: "月(month)",
+      value: "month",
     },
     {
-      label: '年(year)',
-      value: 'year'
+      label: "年(year)",
+      value: "year",
     },
     {
-      label: '日期时间(datetime)',
-      value: 'datetime'
-    }
+      label: "日期时间(datetime)",
+      value: "datetime",
+    },
   ],
   dateRangeTypeOptions: [
     {
-      label: '日期范围(daterange)',
-      value: 'daterange'
+      label: "日期范围(daterange)",
+      value: "daterange",
     },
     {
-      label: '月范围(monthrange)',
-      value: 'monthrange'
+      label: "月范围(monthrange)",
+      value: "monthrange",
     },
     {
-      label: '日期时间范围(datetimerange)',
-      value: 'datetimerange'
-    }
+      label: "日期时间范围(datetimerange)",
+      value: "datetimerange",
+    },
   ],
   colorFormatOptions: [
     {
-      label: 'hex',
-      value: 'hex'
+      label: "hex",
+      value: "hex",
     },
     {
-      label: 'rgb',
-      value: 'rgb'
+      label: "rgb",
+      value: "rgb",
     },
     {
-      label: 'rgba',
-      value: 'rgba'
+      label: "rgba",
+      value: "rgba",
     },
     {
-      label: 'hsv',
-      value: 'hsv'
+      label: "hsv",
+      value: "hsv",
     },
     {
-      label: 'hsl',
-      value: 'hsl'
-    }
+      label: "hsl",
+      value: "hsl",
+    },
   ],
   justifyOptions: [
     {
-      label: 'start',
-      value: 'start'
+      label: "start",
+      value: "start",
     },
     {
-      label: 'end',
-      value: 'end'
+      label: "end",
+      value: "end",
     },
     {
-      label: 'center',
-      value: 'center'
+      label: "center",
+      value: "center",
     },
     {
-      label: 'space-around',
-      value: 'space-around'
+      label: "space-around",
+      value: "space-around",
     },
     {
-      label: 'space-between',
-      value: 'space-between'
-    }
+      label: "space-between",
+      value: "space-between",
+    },
   ],
   layoutTreeProps: {
     label(data, node) {
-      return data.componentName || `${data.label}: ${data.vModel}`
-    }
-  }
-})
+      return data.componentName || `${data.label}: ${data.vModel}`;
+    },
+  },
+});
 
-const { currentTab, currentNode, dialogVisible, iconsVisible, currentIconModel, dateTypeOptions, dateRangeTypeOptions, colorFormatOptions, justifyOptions, layoutTreeProps } = toRefs(data)
+const {
+  currentTab,
+  currentNode,
+  dialogVisible,
+  iconsVisible,
+  currentIconModel,
+  dateTypeOptions,
+  dateRangeTypeOptions,
+  colorFormatOptions,
+  justifyOptions,
+  layoutTreeProps,
+} = toRefs(data);
 
-const documentLink = computed(() => formItemAttr.value?.document
-  || 'https://element-plus.org/zh-CN/guide/installation')
+const documentLink = computed(
+  () =>
+    formItemAttr.value?.document ||
+    "https://element-plus.org/zh-CN/guide/installation"
+);
 
 const dateOptions = computed(() => {
   if (
-    formItemAttr.value.type !== undefined
-    && formItemAttr.value.tag === 'el-date-picker'
+    formItemAttr.value.type !== undefined &&
+    formItemAttr.value.tag === "el-date-picker"
   ) {
-    if (formItemAttr.value['start-placeholder'] === undefined) {
-      return dateTypeOptions.value
+    if (formItemAttr.value["start-placeholder"] === undefined) {
+      return dateTypeOptions.value;
     }
-    return dateRangeTypeOptions.value
+    return dateRangeTypeOptions.value;
   }
-  return []
-})
+  return [];
+});
 
-
-
-const emit = defineEmits(['tag-change', 'formItemChange'])
-
+const emit = defineEmits(["tag-change", "formItemChange"]);
 
 function addReg() {
   formItemAttr.value.regList.push({
-    pattern: '',
-    message: ''
-  })
+    pattern: "",
+    message: "",
+  });
 }
 function addSelectItem() {
   formItemAttr.value.options.push({
-    label: '',
-    value: ''
-  })
+    label: "",
+    value: "",
+  });
 }
 
 function addTreeItem() {
-  ++proxy.idGlobal
-  dialogVisible.value = true
-  currentNode.value = formItemAttr.value.options
+  ++proxy.idGlobal;
+  dialogVisible.value = true;
+  currentNode.value = formItemAttr.value.options;
 }
 
 function renderContent(h, { node, data, store }) {
-  return h('div', {
-    class: "custom-tree-node"
-  }, [
-    h('span', node.label),
-    h('span', {
-      class: "node-operation"
-    }, [
-      h(resolveComponent('el-link'), {
-        type: "primary",
-        icon: "Plus",
-        underline: false,
-        onClick: () => {
-          append(data)
-
-        }
-      }),
-      h(resolveComponent('el-link'), {
-        type: "danger",
-        icon: "Delete",
-        underline: false,
-        style: "margin-left: 5px;",
-        onClick: () => {
-          remove(node, data)
-        }
-      })
-    ])
-  ])
+  return h(
+    "div",
+    {
+      class: "custom-tree-node",
+    },
+    [
+      h("span", node.label),
+      h(
+        "span",
+        {
+          class: "node-operation",
+        },
+        [
+          h(resolveComponent("el-link"), {
+            type: "primary",
+            icon: "Plus",
+            underline: false,
+            onClick: () => {
+              append(data);
+            },
+          }),
+          h(resolveComponent("el-link"), {
+            type: "danger",
+            icon: "Delete",
+            underline: false,
+            style: "margin-left: 5px;",
+            onClick: () => {
+              remove(node, data);
+            },
+          }),
+        ]
+      ),
+    ]
+  );
   // return (
   //   <div class="custom-tree-node">
   //     <span>{node.label}</span>
@@ -340,107 +466,108 @@ function renderContent(h, { node, data, store }) {
 function append(data) {
   if (!data.children) {
     // this.$set(data, 'children', [])
-    data.children = []
+    data.children = [];
   }
-  dialogVisible.value = true
-  currentNode.value = data.children
+  dialogVisible.value = true;
+  currentNode.value = data.children;
 }
 function remove(node, data) {
-  const { parent } = node
-  const children = parent.data.children || parent.data
-  const index = children.findIndex(d => d.id === data.id)
-  children.splice(index, 1)
+  const { parent } = node;
+  const children = parent.data.children || parent.data;
+  const index = children.findIndex((d) => d.id === data.id);
+  children.splice(index, 1);
 }
 function addNode(data) {
-  currentNode.value.push(data)
+  currentNode.value.push(data);
 }
 
 function setOptionValue(item, val) {
-  item.value = isNumberStr(val) ? +val : val
+  item.value = isNumberStr(val) ? +val : val;
 }
 function setDefaultValue(val) {
   if (Array.isArray(val)) {
-    return val.join(',')
+    return val.join(",");
   }
-  if (['string', 'number'].indexOf(val) > -1) {
-    return val
+  if (["string", "number"].indexOf(val) > -1) {
+    return val;
   }
-  if (typeof val === 'boolean') {
-    return `${val}`
+  if (typeof val === "boolean") {
+    return `${val}`;
   }
-  return val
+  return val;
 }
 
 function onDefaultValueInput(str) {
-
   if (Array.isArray(formItemAttr.value.defaultValue)) {
     // 数组
-    formItemAttr.value.defaultValue = str.split(',').map(val => (isNumberStr(val) ? +val : val))
-  } else if (['true', 'false'].indexOf(str) > -1) {
+    formItemAttr.value.defaultValue = str
+      .split(",")
+      .map((val) => (isNumberStr(val) ? +val : val));
+  } else if (["true", "false"].indexOf(str) > -1) {
     // 布尔
-    formItemAttr.value.defaultValue = JSON.parse(str)
+    formItemAttr.value.defaultValue = JSON.parse(str);
   } else {
     // 字符串和数字
-    formItemAttr.value.defaultValue = isNumberStr(str) ? +str : str
+    formItemAttr.value.defaultValue = isNumberStr(str) ? +str : str;
   }
-  console.log('defaultValue', formItemAttr.value.defaultValue)
+  console.log("defaultValue", formItemAttr.value.defaultValue);
 }
 
 function onSwitchValueInput(val, name) {
-  if (['true', 'false'].indexOf(val) > -1) {
-    formItemAttr.value[name] = JSON.parse(val)
+  if (["true", "false"].indexOf(val) > -1) {
+    formItemAttr.value[name] = JSON.parse(val);
   } else {
-    formItemAttr.value[name] = isNumberStr(val) ? +val : val
+    formItemAttr.value[name] = isNumberStr(val) ? +val : val;
   }
 }
 
 function setTimeValue(val, type) {
-  const valueFormat = type === 'week' ? dateTimeFormat.date : val
-  formItemAttr.value.defaultValue = null
-  formItemAttr.value['value-format'] = valueFormat
-  formItemAttr.value.format = val
+  const valueFormat = type === "week" ? dateTimeFormat.date : val;
+  formItemAttr.value.defaultValue = null;
+  formItemAttr.value["value-format"] = valueFormat;
+  formItemAttr.value.format = val;
 }
 
 function spanChange(val) {
-  props.formConf.span = val
+  props.formConf.span = val;
 }
 
 function multipleChange(val) {
-  formItemAttr.value.defaultValue = val ? [] : ''
+  formItemAttr.value.defaultValue = val ? [] : "";
 }
 
 function dateTypeChange(val) {
-  setTimeValue(dateTimeFormat[val], val)
+  setTimeValue(dateTimeFormat[val], val);
 }
 
 function rangeChange(val) {
-  formItemAttr.value.defaultValue = val ? [formItemAttr.value.min, formItemAttr.value.max] : formItemAttr.value.min
+  formItemAttr.value.defaultValue = val
+    ? [formItemAttr.value.min, formItemAttr.value.max]
+    : formItemAttr.value.min;
 }
 
 function rateTextChange(val) {
-  if (val) formItemAttr.value['show-score'] = false
+  if (val) formItemAttr.value["show-score"] = false;
 }
 
 function rateScoreChange(val) {
-  if (val) formItemAttr.value['show-text'] = false
+  if (val) formItemAttr.value["show-text"] = false;
 }
 
 function colorFormatChange(val) {
-  formItemAttr.value.defaultValue = null
-  formItemAttr.value['show-alpha'] = val.indexOf('a') > -1
-  formItemAttr.value.renderKey = +new Date() // 更新renderKey,重新渲染该组件
+  formItemAttr.value.defaultValue = null;
+  formItemAttr.value["show-alpha"] = val.indexOf("a") > -1;
+  formItemAttr.value.renderKey = +new Date(); // 更新renderKey,重新渲染该组件
 }
 
 function openIconsDialog(model) {
-  iconsVisible.value = true
-  currentIconModel.value = model
+  iconsVisible.value = true;
+  currentIconModel.value = model;
 }
 
 function setIcon(val) {
-  formItemAttr.value[currentIconModel.value].value = val
+  formItemAttr.value[currentIconModel.value].value = val;
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -475,7 +602,6 @@ function setIcon(val) {
       .el-scrollbar__view {
         padding: 30px 20px;
       }
-
     }
   }
 }
@@ -496,7 +622,7 @@ function setIcon(val) {
     width: 16px;
     height: 16px;
     line-height: 16px;
-    background: rgba(0, 0, 0, .2);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     color: #fff;
     z-index: 1;
@@ -504,7 +630,6 @@ function setIcon(val) {
     font-size: 12px;
   }
 }
-
 
 .select-item {
   display: flex;
@@ -516,12 +641,12 @@ function setIcon(val) {
     color: #f56c6c;
   }
 
-  & .el-input+.el-input {
+  & .el-input + .el-input {
     margin-left: 4px;
   }
 }
 
-.select-item+.select-item {
+.select-item + .select-item {
   margin-top: 4px;
 }
 
