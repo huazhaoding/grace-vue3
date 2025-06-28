@@ -1459,5 +1459,96 @@ export const FormComponents = {
         prop: "",
       }),
     },
+    {
+      tag: "el-mention",
+      tagLabel: "提及输入框",
+      tagIcon: "mention",
+      document: "https://element-plus.org/zh-CN/component/mention",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: "",
+          type: "input",
+          label: "绑定值",
+        },
+        options: {
+          value: [],
+          type: "array",
+          label: "提及选项列表",
+        },
+        prefix: {
+          value: "@",
+          type: "input",
+          label: "触发字段的前缀",
+        },
+        split: {
+          value: " ",
+          type: "input",
+          label: "用于拆分提及的字符",
+        },
+        "filter-option": {
+          value: null,
+          type: "function",
+          label: "定制筛选器选项逻辑",
+        },
+        placement: {
+          value: "bottom",
+          type: "select",
+          label: "设置弹出位置",
+          options: [
+            { label: "顶部", value: "top" },
+            { label: "底部", value: "bottom" },
+            { label: "左侧", value: "left" },
+            { label: "右侧", value: "right" },
+          ],
+        },
+        "show-arrow": {
+          value: false,
+          type: "switch",
+          label: "下拉菜单的内容是否有箭头",
+        },
+        offset: {
+          value: 0,
+          type: "number",
+          label: "下拉面板偏移量",
+        },
+        whole: {
+          value: false,
+          type: "switch",
+          label: "当退格键被按下做删除操作时，是否将提及部分作为整体删除",
+        },
+        "check-is-whole": {
+          value: null,
+          type: "function",
+          label: "当退格键被按下做删除操作时，检查是否将提及部分作为整体删除",
+        },
+        loading: {
+          value: false,
+          type: "switch",
+          label: "提及的下拉面板是否处于加载状态",
+        },
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "自定义浮层类名",
+        },
+        "popper-options": {
+          value: {},
+          type: "object",
+          label: "popper.js 参数",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "提及输入框",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
   ],
 };
