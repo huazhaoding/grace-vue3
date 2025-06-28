@@ -1314,5 +1314,150 @@ export const FormComponents = {
         prop: "",
       }),
     },
+    {
+      tag: "el-input-tag",
+      tagLabel: "标签输入框",
+      tagIcon: "tags",
+      document: "https://element-plus.org/zh-CN/component/tag-input",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: [],
+          type: "tag",
+          label: "绑定值",
+        },
+        max: {
+          value: 9,
+          type: "number",
+          label: "可添加标签的最大数量",
+        },
+        "tag-type": {
+          value: "info",
+          type: "select",
+          label: "标签类型",
+          options: [
+            { label: "主要", value: "primary" },
+            { label: "成功", value: "success" },
+            { label: "信息", value: "info" },
+            { label: "警告", value: "warning" },
+            { label: "危险", value: "danger" },
+          ],
+        },
+        "tag-effect": {
+          value: "light",
+          type: "select",
+          label: "标签效果",
+          options: [
+            { label: "浅色", value: "light" },
+            { label: "深色", value: "dark" },
+            { label: "普通", value: "plain" },
+          ],
+        },
+        trigger: {
+          value: "Enter",
+          type: "select",
+          label: "触发输入标签的按键",
+          options: [
+            { label: "回车键", value: "Enter" },
+            { label: "空格键", value: "Space" },
+          ],
+        },
+        draggable: {
+          value: false,
+          type: "switch",
+          label: "是否可以拖动标签",
+        },
+        delimiter: {
+          value: "",
+          type: "input",
+          label: "在匹配分隔符时添加标签",
+        },
+        size: {
+          value: "default",
+          type: "radio",
+          label: "输入框尺寸",
+          options: [
+            { label: "小尺寸", value: "small" },
+            { label: "中尺寸", value: "default" },
+            { label: "大尺寸", value: "large" },
+          ],
+        },
+        "save-on-blur": {
+          value: true,
+          type: "switch",
+          label: "当输入失去焦点时是否保存输入值",
+        },
+        clearable: {
+          value: false,
+          type: "switch",
+          label: "是否显示清除按钮",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+        readonly: {
+          value: false,
+          type: "switch",
+          label: "等价于原生 readonly 属性",
+        },
+        autofocus: {
+          value: false,
+          type: "switch",
+          label: "等价于原生 autofocus 属性",
+        },
+        id: {
+          value: "",
+          type: "input",
+          label: "等价于原生 input id 属性",
+        },
+        tabindex: {
+          value: null,
+          type: "input",
+          label: "等价于原生 tabindex 属性",
+        },
+        maxlength: {
+          value: null,
+          type: "input",
+          label: "等价于原生 maxlength 属性",
+        },
+        minlength: {
+          value: null,
+          type: "input",
+          label: "等价于原生 minlength 属性",
+        },
+        placeholder: {
+          value: "请输入标签",
+          type: "input",
+          label: "输入框占位文本",
+        },
+        autocomplete: {
+          value: "off",
+          type: "select",
+          label: "等价于原生 autocomplete 属性",
+          options: [
+            { label: "关闭", value: "off" },
+            { label: "开启", value: "on" },
+          ],
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "等价于原生 aria-label 属性",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "标签输入框",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
   ],
 };

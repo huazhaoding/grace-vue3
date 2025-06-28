@@ -65,6 +65,10 @@
               :min="item.min"
               :max="item.max"
             />
+            <el-input-tag
+              v-model="item.value"
+              v-else-if="item.type === 'tag'"
+            />
             <el-input v-else-if="item.type === 'icon'" v-model="item.value">
               <template #append>
                 <el-button icon="Pointer" @click="openIconsDialog(key)">
