@@ -827,15 +827,15 @@ export const FormComponents = {
             { value: "hsl", label: "hsl" },
           ],
         },
-        'popper-class':{
-          value: '',
-          type: 'input',
-          label: 'ColorPicker 下拉框的类名'
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "ColorPicker 下拉框的类名",
         },
-        predefine:{
+        predefine: {
           value: [],
           type: "object",
-          label: '预定义颜色'
+          label: "预定义颜色",
         },
         disabled: {
           value: false,
@@ -862,17 +862,17 @@ export const FormComponents = {
           type: "switch",
           label: "是否触发表单验证",
         },
-        tabindex:{
-          value:"",
+        tabindex: {
+          value: "",
           type: "input",
           label: "ColorPicker 的 tabindex",
         },
-        id:{
-          value:"",
+        id: {
+          value: "",
           type: "input",
           label: "ColorPicker 的 id",
         },
-        teleported:{
+        teleported: {
           value: true,
           type: "switch",
           label: "是否将弹窗插入至 body 元素上",
@@ -887,6 +887,315 @@ export const FormComponents = {
       hedge: Object.assign({}, defaultHedge, {
         // 表单项的标签文字
         label: "颜色选择",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-date-picker",
+      tagLabel: "日期",
+      tagIcon: "date",
+      document: "https://element-plus.org/zh-CN/component/date-picker",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: "",
+          type: "input",
+          label: "绑定值",
+        },
+        readonly: {
+          value: false,
+          type: "switch",
+          label: "是否只读",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        size: {
+          value: "default",
+          type: "radio",
+          label: "输入框尺寸",
+          options: [
+            { label: "小尺寸", value: "small" },
+            { label: "中尺寸", value: "default" },
+            { label: "大尺寸", value: "large" },
+          ],
+        },
+        editable: {
+          value: true,
+          type: "switch",
+          label: "文本框可输入",
+        },
+        clearable: {
+          value: true,
+          type: "switch",
+          label: "是否显示清除按钮",
+        },
+        placeholder: {
+          value: "请选择日期",
+          type: "input",
+          label: "占位内容",
+        },
+        "start-placeholder": {
+          value: "开始日期",
+          type: "input",
+          label: "范围选择时开始日期占位符",
+        },
+        "end-placeholder": {
+          value: "结束日期",
+          type: "input",
+          label: "范围选择时结束日期占位符",
+        },
+        type: {
+          value: "date",
+          type: "radio",
+          label: "显示类型",
+          options: [
+            { label: "年份", value: "year" },
+            { label: "多年份", value: "years" },
+            { label: "月份", value: "month" },
+            { label: "多月份", value: "months" },
+            { label: "日期", value: "date" },
+            { label: "多日期", value: "dates" },
+            { label: "日期时间", value: "datetime" },
+            { label: "周", value: "week" },
+            { label: "日期时间范围", value: "datetimerange" },
+            { label: "日期范围", value: "daterange" },
+            { label: "月份范围", value: "monthrange" },
+            { label: "年份范围", value: "yearrange" },
+          ],
+        },
+        format: {
+          value: "YYYY-MM-DD",
+          type: "input",
+          label: "显示格式",
+        },
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "下拉框类名",
+        },
+        "range-separator": {
+          value: "-",
+          type: "input",
+          label: "范围分隔符",
+        },
+        "default-value": {
+          value: undefined,
+          type: "object",
+          label: "选择器打开时默认显示的时间",
+        },
+        "value-format": {
+          value: undefined,
+          type: "input",
+          label: "绑定值的格式",
+        },
+        id: {
+          value: undefined,
+          type: "input",
+          label: "日期选择器的 id",
+        },
+        name: {
+          value: "",
+          type: "input",
+          label: "日期选择器的 name",
+        },
+
+        "unlink-panels": {
+          value: false,
+          type: "switch",
+          label: "取消两个日期面板联动",
+        },
+        "prefix-icon": {
+          value: "Calendar",
+          type: "input",
+          label: "前缀图标",
+        },
+        "clear-icon": {
+          value: "CircleClose",
+          type: "input",
+          label: "清除图标",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+        teleported: {
+          value: true,
+          type: "switch",
+          label: "是否将下拉列表插入至 body 元素",
+        },
+        "empty-values": {
+          value: [],
+          type: "array",
+          label: "组件的空值配置",
+        },
+        "value-on-clear": {
+          value: "",
+          type: "object",
+          label: "清空时返回的值",
+        },
+        "fallback-placements": {
+          value: [],
+          type: "array",
+          label: "定义了 popper.js 创建的元素在哪些位置可以显示",
+        },
+        placement: {
+          value: "bottom",
+          type: "string",
+          label: "定义了 popper.js 创建的元素在哪个位置显示",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "日期选择器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-date-picker",
+      tagLabel: "日期时间",
+      tagIcon: "date",
+      document: "https://element-plus.org/zh-CN/component/datetime-picker",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: "",
+          type: "input",
+          label: "绑定值",
+        },
+        readonly: {
+          value: false,
+          type: "switch",
+          label: "是否只读",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        editable: {
+          value: true,
+          type: "switch",
+          label: "文本框可输入",
+        },
+        clearable: {
+          value: true,
+          type: "switch",
+          label: "是否显示清除按钮",
+        },
+        size: {
+          value: "default",
+          type: "radio",
+          label: "输入框尺寸",
+          options: [
+            { label: "小尺寸", value: "small" },
+            { label: "中尺寸", value: "default" },
+            { label: "大尺寸", value: "large" },
+          ],
+        },
+        placeholder: {
+          value: "请选择日期",
+          type: "input",
+          label: "非范围选择时的占位内容",
+        },
+        "start-placeholder": {
+          value: "开始日期",
+          type: "input",
+          label: "范围选择时开始日期的占位内容",
+        },
+        "end-placeholder": {
+          value: "结束日期",
+          type: "input",
+          label: "范围选择时结束日期的占位内容",
+        },
+        "arrow-control": {
+          value: false,
+          type: "switch",
+          label: "是否使用箭头进行时间选择",
+        },
+        type: {
+          value: "date",
+          type: "radio",
+          label: "显示类型",
+          options: [
+            { label: "年份", value: "year" },
+            { label: "多年份", value: "years" },
+            { label: "月份", value: "month" },
+            { label: "多月份", value: "months" },
+            { label: "日期", value: "date" },
+            { label: "多日期", value: "dates" },
+            { label: "日期时间", value: "datetime" },
+            { label: "周", value: "week" },
+            { label: "日期时间范围", value: "datetimerange" },
+            { label: "日期范围", value: "daterange" },
+            { label: "月份范围", value: "monthrange" },
+            { label: "年份范围", value: "yearrange" },
+          ],
+        },
+        format: {
+          value: "YYYY-MM-DD HH:mm:ss",
+          type: "input",
+          label: "显示在输入框中的格式",
+        },
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "下拉框类名",
+        },
+        "range-separator": {
+          value: "-",
+          type: "input",
+          label: "选择范围时的分隔符",
+        },
+        "unlink-panels": {
+          value: false,
+          type: "switch",
+          label: "取消两个日期面板之间的联动",
+        },
+        "prefix-icon": {
+          value: "Date",
+          type: "input",
+          label: "自定义前缀图标组件",
+        },
+        "clear-icon": {
+          value: "CircleClose",
+          type: "input",
+          label: "自定义清除图标",
+        },
+        shortcuts: {
+          value: [],
+          type: "object",
+          label: "快捷选项数组对象",
+        },
+        "disabled-date": {
+          value: null,
+          type: "function",
+          label: "判断日期是否被禁用的函数",
+        },
+        "cell-class-name": {
+          value: null,
+          type: "function",
+          label: "设置单元格自定义类名",
+        },
+        teleported: {
+          value: true,
+          type: "switch",
+          label: "是否将下拉列表插入至 body 元素",
+        },
+        "show-now": {
+          value: true,
+          type: "switch",
+          label: "是否显示 now 按钮",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "日期选择器",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
       }),
