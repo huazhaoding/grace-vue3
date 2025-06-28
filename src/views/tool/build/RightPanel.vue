@@ -610,7 +610,6 @@ function setIcon(val) {
 
 <style lang="scss" scoped>
 
-
 .right-board {
   width: 350px;
   position: absolute;

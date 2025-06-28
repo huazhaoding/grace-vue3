@@ -818,8 +818,24 @@ export const FormComponents = {
         },
         "color-format": {
           value: "",
-          type: "input",
+          type: "radio",
           label: "颜色格式",
+          options: [
+            { value: "hex", label: "hex" },
+            { value: "rgb", label: "rgb" },
+            { value: "hsv", label: "hsv" },
+            { value: "hsl", label: "hsl" },
+          ],
+        },
+        'popper-class':{
+          value: '',
+          type: 'input',
+          label: 'ColorPicker 下拉框的类名'
+        },
+        predefine:{
+          value: [],
+          type: "object",
+          label: '预定义颜色'
         },
         disabled: {
           value: false,
@@ -840,6 +856,26 @@ export const FormComponents = {
             { label: "小", value: "small" },
             { label: "大", value: "large" },
           ],
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+        tabindex:{
+          value:"",
+          type: "input",
+          label: "ColorPicker 的 tabindex",
+        },
+        id:{
+          value:"",
+          type: "input",
+          label: "ColorPicker 的 id",
+        },
+        teleported:{
+          value: true,
+          type: "switch",
+          label: "是否将弹窗插入至 body 元素上",
         },
         regList: {
           value: [],
