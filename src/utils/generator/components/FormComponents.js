@@ -1550,5 +1550,135 @@ export const FormComponents = {
         prop: "",
       }),
     },
+    {
+      tag: "el-rate",
+      tagLabel: "评分组件",
+      tagIcon: "rate",
+      document: "https://element-plus.org/zh-CN/component/rate",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: 5,
+          type: "number",
+          label: "选中项绑定值",
+        },
+        max: {
+          value: 5,
+          type: "number",
+          label: "最大分值",
+        },
+        size: {
+          value: "default",
+          type: "radio",
+          label: "尺寸",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否为只读",
+        },
+        "allow-half": {
+          value: false,
+          type: "switch",
+          label: "是否允许半选",
+        },
+        "low-threshold": {
+          value: 2,
+          type: "number",
+          label: "低分和中等分数的界限值",
+        },
+        "high-threshold": {
+          value: 4,
+          type: "number",
+          label: "高分和中等分数的界限值",
+        },
+        colors: {
+          value: ["#f7ba2a", "#f7ba2a", "#f7ba2a"],
+          type: "object",
+          label: "图标颜色",
+        },
+        "void-color": {
+          value: "#c6d1de",
+          type: "color",
+          label: "未选中图标的颜色",
+        },
+        "disabled-void-color": {
+          value: "#eff2f7",
+          type: "color",
+          label: "只读时未选中图标的颜色",
+        },
+        icons: {
+          value: ["StarFilled", "StarFilled", "StarFilled"],
+          type: "object",
+          label: "图标组件",
+        },
+        "void-icon": {
+          value: "Star",
+          type: "input",
+          label: "未被选中的图标组件",
+        },
+        "disabled-void-icon": {
+          value: "StarFilled",
+          type: "input",
+          label: "禁用状态的未选择图标",
+        },
+        "show-text": {
+          value: false,
+          type: "switch",
+          label: "是否显示辅助文字",
+        },
+        "show-score": {
+          value: false,
+          type: "switch",
+          label: "是否显示当前分数",
+        },
+        "text-color": {
+          value: "",
+          type: "color",
+          label: "辅助文字的颜色",
+        },
+        texts: {
+          value: ["极差", "失望", "一般", "满意", "惊喜"],
+          type: "array",
+          label: "辅助文字数组",
+        },
+        "score-template": {
+          value: "{value}",
+          type: "input",
+          label: "分数显示模板",
+        },
+        clearable: {
+          value: false,
+          type: "switch",
+          label: "是否可以重置值为 0",
+        },
+        id: {
+          value: "",
+          type: "input",
+          label: "原生 id 属性",
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "ARIA 标签属性",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "评分组件",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
   ],
 };
