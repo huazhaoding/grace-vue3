@@ -99,65 +99,92 @@
           >
 
           <template v-if="activeDataProperty.tag === 'el-row'">
-            <el-card v-for="(child, key) in formItemChild">
-              <template #header>
-                <div class="card-header">
-                  <span>栅格{{ key + 1 }}配置</span
-                  ><el-button-group style="float: right">
-                    <el-button
-                      type="primary"
-                      icon="Plus"
-                      @click="addCol(child, key)"
-                      title="复制栏"
-                    />
-                    <el-button
-                      type="danger"
-                      icon="Remove"
-                      @click="removeCol(child, key)"
-                      title="删除栏"
-                    />
-                  </el-button-group>
-                </div>
-              </template>
-              <el-form-item
-                v-for="(item, key) in child.attr"
-                :label="item.label"
-                :key="key"
-              >
-                <el-input
-                  v-model="item.value"
-                  :placeholder="item.placeholder"
-                  v-if="item.type === 'input'"
-                />
-                <el-input-number
-                  v-model="item.value"
-                  v-else-if="item.type === 'number'"
-                />
-                <el-slider
-                  v-model="item.value"
-                  v-else-if="item.type === 'slider'"
-                  :min="item.min"
-                  :max="item.max"
-                />
-                <el-popover
-                  placement="left"
-                  :width="400"
-                  trigger="click"
-                  v-else-if="item.type === 'object'"
-                >
-                  <template #reference>
-                    <el-button style="width: 100%">{{ key }}</el-button>
+            <draggable
+              :list="activeDataProperty.child"
+              :group="{ name: 'formItemChild', pull: false, put: false }"
+              :sort="true"
+              item-key="renderKey"
+              class="draggable"
+              @start="onDragStart"
+              @end="onDragEnd"
+            >
+              <template #item="{ element, index }">
+                <el-card  style="margin-bottom: 10px;">
+                  <template #header>
+                    <div class="card-header">
+                      <span>栅格{{ index + 1 }}配置</span
+                      ><el-button-group style="float: right">
+                        <el-button
+                          type="primary"
+                          icon="Plus"
+                          @click="addCol(element, index)"
+                          title="复制栏"
+                        />
+                        <el-button
+                          type="danger"
+                          icon="Remove"
+                          @click="removeCol(element, index)"
+                          title="删除栏"
+                        />
+                         <el-button
+                          type="success"
+                          :icon="colVisible[index]?'Hide':'View'"
+                          @click="changeColVisible(!colVisible[index], index)"
+                          title="显示|隐藏"
+                        />
+
+                      </el-button-group>
+                    </div>
                   </template>
-                  <el-form-item v-for="(value, key) in item.value" :label="key">
-                    <el-slider v-model="item.value[key]" :min="0" :max="24" />
+                  <div v-show="colVisible[index]">
+                  <el-form-item
+                    v-for="(item, key) in element.attr"
+                    :label="item.label"
+                    :key="key"
+                  >
+                    <el-input
+                      v-model="item.value"
+                      :placeholder="item.placeholder"
+                      v-if="item.type === 'input'"
+                    />
+                    <el-input-number
+                      v-model="item.value"
+                      v-else-if="item.type === 'number'"
+                    />
+                    <el-slider
+                      v-model="item.value"
+                      v-else-if="item.type === 'slider'"
+                      :min="item.min"
+                      :max="item.max"
+                    />
+                    <el-popover
+                      placement="left"
+                      :width="400"
+                      trigger="click"
+                      v-else-if="item.type === 'object'"
+                    >
+                      <template #reference>
+                        <el-button style="width: 100%">{{ key }}</el-button>
+                      </template>
+                      <el-form-item
+                        v-for="(value, key) in item.value"
+                        :label="key"
+                      >
+                        <el-slider
+                          v-model="item.value[key]"
+                          :min="0"
+                          :max="24"
+                        />
+                      </el-form-item>
+                      {{ item.value.span }}-{{ item.value.offset }}-{{
+                        item.value.pull
+                      }}-{{ item.value.push }}
+                    </el-popover>
                   </el-form-item>
-                  {{ item.value.span }}-{{ item.value.offset }}-{{
-                    item.value.pull
-                  }}-{{ item.value.push }}
-                </el-popover>
-              </el-form-item>
-              <template #footer>Footer content</template>
-            </el-card>
+                  </div>
+                </el-card>
+              </template>
+            </draggable>
           </template>
         </el-form>
 
@@ -200,6 +227,7 @@ import IconsDialog from "./IconsDialog";
 import TreeNodeDialog from "./TreeNodeDialog";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
+const colVisible = ref([]);
 const dateTimeFormat = {
   date: "YYYY-MM-DD",
   week: "YYYY 第 ww 周",
@@ -221,6 +249,16 @@ const formItemAttr = ref([]);
 
 const formItemChild = ref([]);
 
+function changeColVisible(visible,index){
+  colVisible.value[index]=visible;
+}
+
+ function  onDragStart(evt) {
+      console.log("拖拽开始:", evt);
+    }
+ function   onDragEnd(evt) {
+      console.log("拖拽结束:", evt);
+    }
 function addCol(child, index) {
   let clone = JSON.parse(JSON.stringify(child));
   clone = createIdAndKey(clone);
@@ -228,7 +266,7 @@ function addCol(child, index) {
 }
 
 function removeCol(child, index) {
-  if(formItemChild.value.length <= 1) {
+  if (formItemChild.value.length <= 1) {
     proxy.$modal.msgError("请保留至少一项");
     return;
   }
@@ -571,6 +609,8 @@ function setIcon(val) {
 </script>
 
 <style lang="scss" scoped>
+
+
 .right-board {
   width: 350px;
   position: absolute;
