@@ -1200,5 +1200,119 @@ export const FormComponents = {
         prop: "",
       }),
     },
+    {
+      tag: "el-input-number",
+      tagLabel: "计数器",
+      tagIcon: "number",
+      document: "https://element-plus.org/zh-CN/component/input-number",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: null,
+          type: "input",
+          label: "选中项绑定值",
+        },
+        min: {
+          value: 1,
+          type: "number",
+          label: "设置计数器允许的最小值",
+        },
+        max: {
+          value: 999999999,
+          type: "number",
+          label: "设置计数器允许的最大值",
+        },
+        step: {
+          value: 1,
+          type: "number",
+          label: "计数器步长",
+        },
+        "step-strictly": {
+          value: false,
+          type: "switch",
+          label: "是否只能输入 step 的倍数",
+        },
+        precision: {
+          value: null,
+          type: "number",
+          label: "数值精度",
+        },
+        size: {
+          value: "default",
+          type: "radio",
+          label: "计数器尺寸",
+          options: [
+            { label: "小尺寸", value: "small" },
+            { label: "中尺寸", value: "default" },
+            { label: "大尺寸", value: "large" },
+          ],
+        },
+        readonly: {
+          value: false,
+          type: "switch",
+          label: "原生 readonly 属性，是否只读",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用状态",
+        },
+        controls: {
+          value: true,
+          type: "switch",
+          label: "是否使用控制按钮",
+        },
+        "controls-position": {
+          value: "",
+          type: "select",
+          label: "控制按钮位置",
+          options: [
+            { label: "右侧", value: "right" },
+            { label: "无", value: "" },
+          ],
+        },
+        name: {
+          value: "",
+          type: "input",
+          label: "等价于原生 input name 属性",
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "等价于原生 input aria-label 属性",
+        },
+        placeholder: {
+          value: "",
+          type: "input",
+          label: "等价于原生 input placeholder 属性",
+        },
+        id: {
+          value: "",
+          type: "input",
+          label: "等价于原生 input id 属性",
+        },
+        "value-on-clear": {
+          value: null,
+          type: "select",
+          label: "当输入框被清空时显示的值",
+          options: [
+            { label: "null", value: null },
+            { label: "0", value: 0 },
+            { label: "自定义值", value: "custom" },
+          ],
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "计数器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
   ],
 };
