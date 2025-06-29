@@ -1836,5 +1836,543 @@ export const FormComponents = {
         prop: "",
       }),
     },
+    {
+      tag: "el-switch",
+      tagLabel: "开关组件",
+      tagIcon: "switch",
+      document: "https://element-plus.org/zh-CN/component/switch",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: false,
+          type: "switch",
+          label: "绑定值",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        loading: {
+          value: false,
+          type: "switch",
+          label: "是否显示加载中",
+        },
+        size: {
+          value: "",
+          type: "select",
+          label: "开关的大小",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        width: {
+          value: "",
+          type: "input",
+          label: "开关的宽度",
+        },
+        "inline-prompt": {
+          value: false,
+          type: "switch",
+          label: "是否显示内联提示",
+        },
+        "active-icon": {
+          value: "",
+          type: "input",
+          label: "on 状态时显示的图标",
+        },
+        "inactive-icon": {
+          value: "",
+          type: "input",
+          label: "off 状态时显示的图标",
+        },
+        "active-action-icon": {
+          value: "",
+          type: "input",
+          label: "on 状态下显示的图标组件",
+        },
+        "inactive-action-icon": {
+          value: "",
+          type: "input",
+          label: "off 状态下显示的图标组件",
+        },
+        "active-text": {
+          value: "",
+          type: "input",
+          label: "on 状态时的文字描述",
+        },
+        "inactive-text": {
+          value: "",
+          type: "input",
+          label: "off 状态时的文字描述",
+        },
+        "active-value": {
+          value: true,
+          type: "input",
+          label: "on 状态时的值",
+        },
+        "inactive-value": {
+          value: false,
+          type: "input",
+          label: "off 状态时的值",
+        },
+        name: {
+          value: "",
+          type: "input",
+          label: "switch 对应的 name 属性",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+        "before-change": {
+          value: null,
+          type: "function",
+          label: "状态改变前的钩子函数",
+        },
+        id: {
+          value: "",
+          type: "input",
+          label: "input 的 id 属性",
+        },
+        tabindex: {
+          value: null,
+          type: "input",
+          label: "input 的 tabindex 属性",
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "ARIA 标签属性",
+        },
+        "active-color": {
+          value: "",
+          type: "color",
+          label: "on 状态时的背景颜色（已弃用）",
+        },
+        "inactive-color": {
+          value: "",
+          type: "color",
+          label: "off 状态时的背景颜色（已弃用）",
+        },
+        "border-color": {
+          value: "",
+          type: "color",
+          label: "开关的边框颜色（已弃用）",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "开关组件",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-cascader",
+      tagLabel: "级联选择器",
+      tagIcon: "cascader",
+      document: "https://element-plus.org/zh-CN/component/cascader",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: null,
+          type: "input",
+          label: "选中项绑定值",
+        },
+        options: {
+          value: [],
+          type: "object",
+          label: "选项的数据源",
+        },
+        props: {
+          value: {
+            expandTrigger: {
+              value: "click",
+              type: "select",
+              label: "次级菜单的展开方式",
+              options: [
+                { label: "点击展开", value: "click" },
+                { label: "悬停展开", value: "hover" },
+              ],
+            },
+            multiple: {
+              value: false,
+              type: "switch",
+              label: "是否多选",
+            },
+            checkStrictly: {
+              value: false,
+              type: "switch",
+              label: "是否严格的遵守父子节点不互相关联",
+            },
+            emitPath: {
+              value: true,
+              type: "switch",
+              label: "是否返回完整路径",
+            },
+            lazy: {
+              value: false,
+              type: "switch",
+              label: "是否动态加载子节点",
+            },
+            lazyLoad: {
+              value: null,
+              type: "function",
+              label: "加载动态数据的方法",
+            },
+            value: {
+              value: "value",
+              type: "input",
+              label: "指定选项的值为选项对象的某个属性值",
+            },
+            label: {
+              value: "label",
+              type: "input",
+              label: "指定选项标签为选项对象的某个属性值",
+            },
+            children: {
+              value: "children",
+              type: "input",
+              label: "指定选项的子选项为选项对象的某个属性值",
+            },
+            disabled: {
+              value: "disabled",
+              type: "input",
+              label: "指定选项的禁用为选项对象的某个属性值",
+            },
+            leaf: {
+              value: "leaf",
+              type: "input",
+              label: "指定选项的叶子节点的标志位为选项对象的某个属性值",
+            },
+            hoverThreshold: {
+              value: 500,
+              type: "number",
+              label: "hover 时展开菜单的灵敏度阈值",
+            },
+          },
+          type: "object",
+          label: "配置选项",
+        },
+        size: {
+          value: "",
+          type: "select",
+          label: "尺寸",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        placeholder: {
+          value: "",
+          type: "input",
+          label: "输入框占位文本",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        clearable: {
+          value: false,
+          type: "switch",
+          label: "是否支持清空选项",
+        },
+        "show-all-levels": {
+          value: true,
+          type: "switch",
+          label: "是否显示完整路径",
+        },
+        "collapse-tags": {
+          value: false,
+          type: "switch",
+          label: "多选模式下是否折叠标签",
+        },
+        "collapse-tags-tooltip": {
+          value: false,
+          type: "switch",
+          label: "鼠标悬停时是否显示所有标签",
+        },
+        "max-collapse-tags-tooltip-height": {
+          value: "",
+          type: "input",
+          label: "折叠标签的最大高度",
+        },
+        separator: {
+          value: " / ",
+          type: "input",
+          label: "分隔符",
+        },
+        filterable: {
+          value: false,
+          type: "switch",
+          label: "是否支持搜索",
+        },
+        "filter-method": {
+          value: null,
+          type: "function",
+          label: "自定义搜索逻辑",
+        },
+        debounce: {
+          value: 300,
+          type: "number",
+          label: "搜索去抖延迟（毫秒）",
+        },
+        "before-filter": {
+          value: null,
+          type: "function",
+          label: "过滤前的钩子函数",
+        },
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "弹出内容的自定义类名",
+        },
+        teleported: {
+          value: true,
+          type: "switch",
+          label: "弹层是否使用 teleport",
+        },
+        "tag-type": {
+          value: "info",
+          type: "select",
+          label: "标签类型",
+          options: [
+            { label: "成功", value: "success" },
+            { label: "信息", value: "info" },
+            { label: "警告", value: "warning" },
+            { label: "危险", value: "danger" },
+          ],
+        },
+        "tag-effect": {
+          value: "light",
+          type: "select",
+          label: "标签效果",
+          options: [
+            { label: "浅色", value: "light" },
+            { label: "深色", value: "dark" },
+          ],
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单校验",
+        },
+        "max-collapse-tags": {
+          value: 1,
+          type: "number",
+          label: "需要显示的标签最大数量",
+        },
+        "empty-values": {
+          value: [],
+          type: "array",
+          label: "空值配置",
+        },
+        "value-on-clear": {
+          value: null,
+          type: "input",
+          label: "清空选项的值",
+        },
+        persistent: {
+          value: true,
+          type: "switch",
+          label: "是否持久化弹出框",
+        },
+        "fallback-placements": {
+          value: [],
+          type: "array",
+          label: "Tooltip 可用的位置列表",
+        },
+        placement: {
+          value: "bottom-start",
+          type: "select",
+          label: "下拉框出现的位置",
+          options: [
+            { label: "顶部", value: "top" },
+            { label: "底部", value: "bottom" },
+            { label: "左部", value: "left" },
+            { label: "右部", value: "right" },
+          ],
+        },
+        "popper-append-to-body": {
+          value: true,
+          type: "switch",
+          label: "是否将弹出内容插入到 body 元素（已弃用）",
+        },
+      },
+      events: {
+        change: {
+          label: "当绑定值变化时触发的事件",
+          type: "function",
+        },
+        "expand-change": {
+          label: "当展开状态发生变化时触发",
+          type: "function",
+        },
+        blur: {
+          label: "当失去焦点时触发",
+          type: "function",
+        },
+        focus: {
+          label: "当获得焦点时触发",
+          type: "function",
+        },
+        clear: {
+          label: "清空时触发",
+          type: "function",
+        },
+        "visible-change": {
+          label: "当标签可见性改变时触发",
+          type: "function",
+        },
+        "remove-tag": {
+          label: "删除标签时触发",
+          type: "function",
+        },
+      },
+      slots: {
+        default: {
+          label: "默认插槽",
+          type: "slot",
+        },
+        empty: {
+          label: "空数据时显示的插槽",
+          type: "slot",
+        },
+        prefix: {
+          label: "前缀",
+          type: "slot",
+        },
+        "suggestion-item": {
+          label: "建议项",
+          type: "slot",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "级联选择器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-cascader-panel",
+      tagLabel: "级联面板",
+      tagIcon: "cascader-panel",
+      document: "https://element-plus.org/zh-CN/component/cascader",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: null,
+          type: "input",
+          label: "选中项绑定值",
+        },
+        options: {
+          value: [],
+          type: "object",
+          label: "选项的数据源",
+        },
+        props: {
+          value: {
+            expandTrigger: {
+              value: "click",
+              type: "select",
+              label: "次级菜单的展开方式",
+              options: [
+                { label: "点击展开", value: "click" },
+                { label: "悬停展开", value: "hover" },
+              ],
+            },
+            multiple: {
+              value: false,
+              type: "switch",
+              label: "是否多选",
+            },
+            checkStrictly: {
+              value: false,
+              type: "switch",
+              label: "是否严格的遵守父子节点不互相关联",
+            },
+            emitPath: {
+              value: true,
+              type: "switch",
+              label: "是否返回完整路径",
+            },
+            lazy: {
+              value: false,
+              type: "switch",
+              label: "是否动态加载子节点",
+            },
+            lazyLoad: {
+              value: null,
+              type: "function",
+              label: "加载动态数据的方法",
+            },
+            value: {
+              value: "value",
+              type: "input",
+              label: "指定选项的值字段名",
+            },
+            label: {
+              value: "label",
+              type: "input",
+              label: "指定选项标签字段名",
+            },
+            children: {
+              value: "children",
+              type: "input",
+              label: "指定子节点字段名",
+            },
+            disabled: {
+              value: "disabled",
+              type: "input",
+              label: "指定禁用字段名",
+            },
+            leaf: {
+              value: "leaf",
+              type: "input",
+              label: "指定叶子节点标志字段名",
+            },
+            hoverThreshold: {
+              value: 500,
+              type: "number",
+              label: "hover 展开菜单灵敏度阈值",
+            },
+          },
+          type: "object",
+          label: "配置选项",
+        },
+      },
+      events: { 
+        change:{
+          label: "值改变时触发"
+        },
+        close:{
+          label: "关闭时触发"
+        },
+        "expand-change":{
+          label: "展开状态改变时触发"
+        },
+      },
+      slots: {
+        default: {
+          label: "默认插槽",
+        },     
+        empty: {
+          label: "空数据时显示的插槽",
+        }
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "级联面板",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
   ],
 };
