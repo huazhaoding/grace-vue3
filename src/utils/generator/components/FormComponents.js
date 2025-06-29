@@ -2348,28 +2348,667 @@ export const FormComponents = {
           label: "配置选项",
         },
       },
-      events: { 
-        change:{
-          label: "值改变时触发"
+      events: {
+        change: {
+          label: "值改变时触发",
         },
-        close:{
-          label: "关闭时触发"
+        close: {
+          label: "关闭时触发",
         },
-        "expand-change":{
-          label: "展开状态改变时触发"
+        "expand-change": {
+          label: "展开状态改变时触发",
         },
       },
       slots: {
         default: {
           label: "默认插槽",
-        },     
+        },
         empty: {
           label: "空数据时显示的插槽",
-        }
+        },
       },
       hedge: Object.assign({}, defaultHedge, {
         // 表单项的标签文字
         label: "级联面板",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-select",
+      tagLabel: "下拉选择器",
+      tagIcon: "select",
+      document: "https://element-plus.org/zh-CN/component/select",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: null,
+          type: "input",
+          label: "选中项绑定值",
+        },
+        multiple: {
+          value: false,
+          type: "switch",
+          label: "是否多选",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        "value-key": {
+          value: "value",
+          type: "input",
+          label: "作为 value 唯一标识的键名",
+        },
+        size: {
+          value: "",
+          type: "select",
+          label: "输入框尺寸",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        clearable: {
+          value: false,
+          type: "switch",
+          label: "是否可以清空选项",
+        },
+        "collapse-tags": {
+          value: false,
+          type: "switch",
+          label: "多选时是否将选中值按文字的形式展示",
+        },
+        "collapse-tags-tooltip": {
+          value: false,
+          type: "switch",
+          label: "鼠标悬停时是否显示所有标签",
+        },
+        "multiple-limit": {
+          value: 0,
+          type: "number",
+          label: "用户最多可以选择的项目数",
+        },
+        name: {
+          value: "",
+          type: "input",
+          label: "原生 name 属性",
+        },
+        effect: {
+          value: "light",
+          type: "select",
+          label: "tooltip 主题",
+          options: [
+            { label: "浅色", value: "light" },
+            { label: "深色", value: "dark" },
+          ],
+        },
+        autocomplete: {
+          value: "off",
+          type: "input",
+          label: "原生 autocomplete 属性",
+        },
+        placeholder: {
+          value: "",
+          type: "input",
+          label: "占位符",
+        },
+        filterable: {
+          value: false,
+          type: "switch",
+          label: "是否可筛选",
+        },
+        "allow-create": {
+          value: false,
+          type: "switch",
+          label: "是否允许创建新条目",
+        },
+        "filter-method": {
+          value: null,
+          type: "function",
+          label: "自定义筛选方法",
+        },
+        remote: {
+          value: false,
+          type: "switch",
+          label: "是否从服务器远程加载数据",
+        },
+        "remote-method": {
+          value: null,
+          type: "function",
+          label: "自定义远程搜索方法",
+        },
+        "remote-show-suffix": {
+          value: false,
+          type: "switch",
+          label: "远程搜索方法显示后缀图标",
+        },
+        loading: {
+          value: false,
+          type: "switch",
+          label: "是否正在从远程获取数据",
+        },
+        "loading-text": {
+          value: "",
+          type: "input",
+          label: "加载数据时显示的文本",
+        },
+        "no-match-text": {
+          value: "",
+          type: "input",
+          label: "无匹配时显示的文字",
+        },
+        "no-data-text": {
+          value: "",
+          type: "input",
+          label: "无选项时显示的文字",
+        },
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "下拉菜单的自定义类名",
+        },
+        "reserve-keyword": {
+          value: true,
+          type: "switch",
+          label: "是否在选中一个选项后保留当前的搜索关键词",
+        },
+        "default-first-option": {
+          value: false,
+          type: "switch",
+          label: "是否在输入框按下回车时选择第一个匹配项",
+        },
+        teleported: {
+          value: true,
+          type: "switch",
+          label: "是否使用 teleport",
+        },
+        "append-to": {
+          value: "",
+          type: "input",
+          label: "下拉框挂载到哪个 DOM 元素",
+        },
+        persistent: {
+          value: true,
+          type: "switch",
+          label: "是否持久化选择器",
+        },
+        "automatic-dropdown": {
+          value: false,
+          type: "switch",
+          label: "不可搜索时是否自动弹出选项菜单",
+        },
+        "clear-icon": {
+          value: "",
+          type: "input",
+          label: "自定义清除图标",
+        },
+        "fit-input-width": {
+          value: false,
+          type: "switch",
+          label: "下拉框的宽度是否与输入框相同",
+        },
+        "suffix-icon": {
+          value: "",
+          type: "input",
+          label: "自定义后缀图标",
+        },
+        "tag-type": {
+          value: "info",
+          type: "select",
+          label: "标签类型",
+          options: [
+            { label: "成功", value: "success" },
+            { label: "信息", value: "info" },
+            { label: "警告", value: "warning" },
+            { label: "危险", value: "danger" },
+          ],
+        },
+        "tag-effect": {
+          value: "light",
+          type: "select",
+          label: "标签效果",
+          options: [
+            { label: "浅色", value: "light" },
+            { label: "深色", value: "dark" },
+          ],
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+        offset: {
+          value: 12,
+          type: "number",
+          label: "下拉面板偏移量",
+        },
+        "show-arrow": {
+          value: true,
+          type: "switch",
+          label: "下拉菜单的内容是否有箭头",
+        },
+        placement: {
+          value: "bottom-start",
+          type: "select",
+          label: "下拉框出现的位置",
+          options: [
+            { label: "顶部", value: "top" },
+            { label: "底部", value: "bottom" },
+            { label: "左部", value: "left" },
+            { label: "右部", value: "right" },
+          ],
+        },
+        "fallback-placements": {
+          value: ["bottom-start", "top-start", "right", "left"],
+          type: "array",
+          label: "dropdown 可用的位置列表",
+        },
+        "max-collapse-tags": {
+          value: 1,
+          type: "number",
+          label: "需要显示的 Tag 的最大数量",
+        },
+        "popper-options": {
+          value: {},
+          type: "object",
+          label: "popper.js 参数",
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "ARIA 标签属性",
+        },
+        "empty-values": {
+          value: [],
+          type: "array",
+          label: "空值配置",
+        },
+        "value-on-clear": {
+          value: null,
+          type: "input",
+          label: "清空选项的值",
+        },
+        tabindex: {
+          value: "",
+          type: "input",
+          label: "tabindex 属性",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "下拉选择器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-time-picker",
+      tagLabel: "时间选择器",
+      tagIcon: "time-picker",
+      document: "https://element-plus.org/zh-CN/component/time-picker",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: "",
+          type: "input",
+          label: "绑定值",
+        },
+        readonly: {
+          value: false,
+          type: "switch",
+          label: "是否完全只读",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        editable: {
+          value: true,
+          type: "switch",
+          label: "文本框是否可输入",
+        },
+        clearable: {
+          value: true,
+          type: "switch",
+          label: "是否显示清除按钮",
+        },
+        size: {
+          value: "",
+          type: "select",
+          label: "输入框尺寸",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        placeholder: {
+          value: "",
+          type: "input",
+          label: "非范围选择时的占位内容",
+        },
+        "start-placeholder": {
+          value: "",
+          type: "input",
+          label: "范围选择时开始日期的占位内容",
+        },
+        "end-placeholder": {
+          value: "",
+          type: "input",
+          label: "范围选择时结束日期的占位内容",
+        },
+        "is-range": {
+          value: false,
+          type: "switch",
+          label: "是否为时间范围选择",
+        },
+        "arrow-control": {
+          value: false,
+          type: "switch",
+          label: "是否使用箭头进行时间选择",
+        },
+        "popper-class": {
+          value: "",
+          type: "input",
+          label: "下拉框的自定义类名",
+        },
+        "range-separator": {
+          value: "-",
+          type: "input",
+          label: "选择范围时的分隔符",
+        },
+        format: {
+          value: "",
+          type: "input",
+          label: "显示在输入框中的格式",
+        },
+        "default-value": {
+          value: null,
+          type: "object",
+          label: "选择器打开时默认显示的时间",
+        },
+        "value-format": {
+          value: "",
+          type: "input",
+          label: "绑定值的格式",
+        },
+        id: {
+          value: "",
+          type: "input",
+          label: "原生 input id 属性",
+        },
+        name: {
+          value: "",
+          type: "input",
+          label: "原生 input name 属性",
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "ARIA 标签属性",
+        },
+        "prefix-icon": {
+          value: "Clock",
+          type: "input",
+          label: "自定义前缀图标",
+        },
+        "clear-icon": {
+          value: "CircleClose",
+          type: "input",
+          label: "自定义清除图标",
+        },
+        "disabled-hours": {
+          value: null,
+          type: "function",
+          label: "禁止选择部分小时选项",
+        },
+        "disabled-minutes": {
+          value: null,
+          type: "function",
+          label: "禁止选择部分分钟选项",
+        },
+        "disabled-seconds": {
+          value: null,
+          type: "function",
+          label: "禁止选择部分秒选项",
+        },
+        teleported: {
+          value: true,
+          type: "switch",
+          label: "是否将下拉列表镜像至 body 元素",
+        },
+        tabindex: {
+          value: 0,
+          type: "number",
+          label: "输入框的 tabindex",
+        },
+        "empty-values": {
+          value: [],
+          type: "array",
+          label: "空值配置",
+        },
+        "value-on-clear": {
+          value: null,
+          type: "input",
+          label: "清空选项的值",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "时间选择器",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-time-select",
+      tagLabel: "时间选择器 (Time Select)",
+      tagIcon: "time-select",
+      document: "https://element-plus.org/zh-CN/component/time-select",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: "",
+          type: "input",
+          label: "选中项绑定值",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        editable: {
+          value: true,
+          type: "switch",
+          label: "文本框是否可输入",
+        },
+        clearable: {
+          value: true,
+          type: "switch",
+          label: "是否显示清除按钮",
+        },
+        "include-end-time": {
+          value: false,
+          type: "switch",
+          label: "是否在选项中包含结束时间",
+        },
+        size: {
+          value: "default",
+          type: "select",
+          label: "输入框尺寸",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        placeholder: {
+          value: "",
+          type: "input",
+          label: "非范围选择时的占位内容",
+        },
+        name: {
+          value: "",
+          type: "input",
+          label: "原生 name 属性",
+        },
+        effect: {
+          value: "light",
+          type: "select",
+          label: "Tooltip 主题",
+          options: [
+            { label: "浅色", value: "light" },
+            { label: "深色", value: "dark" },
+          ],
+        },
+        "prefix-icon": {
+          value: "Clock",
+          type: "input",
+          label: "自定义前缀图标",
+        },
+        "clear-icon": {
+          value: "CircleClose",
+          type: "input",
+          label: "自定义清除图标",
+        },
+        start: {
+          value: "09:00",
+          type: "input",
+          label: "开始时间",
+        },
+        end: {
+          value: "18:00",
+          type: "input",
+          label: "结束时间",
+        },
+        step: {
+          value: "00:30",
+          type: "input",
+          label: "间隔时间",
+        },
+        "min-time": {
+          value: "",
+          type: "input",
+          label: "最早时间点",
+        },
+        "max-time": {
+          value: "",
+          type: "input",
+          label: "最晚时间点",
+        },
+        format: {
+          value: "HH:mm",
+          type: "input",
+          label: "设置时间格式",
+        },
+        "empty-values": {
+          value: [],
+          type: "array",
+          label: "空值配置",
+        },
+        "value-on-clear": {
+          value: null,
+          type: "input",
+          label: "清空选项的值",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "时间选择器 (Time Select)",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
+    {
+      tag: "el-transfer",
+      tagLabel: "穿梭框",
+      tagIcon: "transfer",
+      document: "https://element-plus.org/zh-CN/component/transfer",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: [],
+          type: "array",
+          label: "选中项绑定值",
+        },
+        data: {
+          value: [],
+          type: "array",
+          label: "Transfer 的数据源",
+        },
+        filterable: {
+          value: false,
+          type: "switch",
+          label: "是否可搜索",
+        },
+        "filter-placeholder": {
+          value: "",
+          type: "input",
+          label: "搜索框占位符",
+        },
+        "filter-method": {
+          value: null,
+          type: "function",
+          label: "自定义搜索方法",
+        },
+        "target-order": {
+          value: "original",
+          type: "select",
+          label: "右侧列表元素的排序策略",
+          options: [
+            { label: "保持原顺序", value: "original" },
+            { label: "新加入元素排在最后", value: "push" },
+            { label: "新加入元素排在最前", value: "unshift" },
+          ],
+        },
+        titles: {
+          value: [],
+          type: "array",
+          label: "自定义列表标题",
+        },
+        "button-texts": {
+          value: [],
+          type: "array",
+          label: "自定义按钮文案",
+        },
+        "render-content": {
+          value: null,
+          type: "function",
+          label: "自定义数据项渲染函数",
+        },
+        format: {
+          value: {},
+          type: "object",
+          label: "列表顶部勾选状态文案",
+        },
+        props: {
+          value: {},
+          type: "object",
+          label: "数据源的字段别名",
+        },
+        "left-default-checked": {
+          value: [],
+          type: "array",
+          label: "左侧列表初始已勾选项",
+        },
+        "right-default-checked": {
+          value: [],
+          type: "array",
+          label: "右侧列表初始已勾选项",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "穿梭框",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
       }),
