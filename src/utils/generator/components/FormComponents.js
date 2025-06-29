@@ -1680,5 +1680,161 @@ export const FormComponents = {
         prop: "",
       }),
     },
+    {
+      tag: "el-slider",
+      tagLabel: "滑块组件",
+      tagIcon: "slider",
+      document: "https://element-plus.org/zh-CN/component/slider",
+      type: "form",
+      attr: {
+        defaultValue: {
+          value: 0,
+          type: "number",
+          label: "选中项绑定值",
+        },
+        min: {
+          value: 0,
+          type: "number",
+          label: "最小值",
+        },
+        max: {
+          value: 100,
+          type: "number",
+          label: "最大值",
+        },
+        disabled: {
+          value: false,
+          type: "switch",
+          label: "是否禁用",
+        },
+        step: {
+          value: 1,
+          type: "number",
+          label: "步长",
+        },
+        "show-input": {
+          value: false,
+          type: "switch",
+          label: "是否显示输入框",
+        },
+        "show-input-controls": {
+          value: true,
+          type: "switch",
+          label: "是否显示输入框控制按钮",
+        },
+        size: {
+          value: "default",
+          type: "select",
+          label: "滑块包装器的大小",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        "input-size": {
+          value: "default",
+          type: "select",
+          label: "输入框的大小",
+          options: [
+            { label: "小", value: "small" },
+            { label: "默认", value: "default" },
+            { label: "大", value: "large" },
+          ],
+        },
+        "show-stops": {
+          value: false,
+          type: "switch",
+          label: "是否显示间断点",
+        },
+        "show-tooltip": {
+          value: true,
+          type: "switch",
+          label: "是否显示提示信息",
+        },
+        "format-tooltip": {
+          value: null,
+          type: "function",
+          label: "格式化提示信息",
+        },
+        range: {
+          value: false,
+          type: "switch",
+          label: "是否开启选择范围",
+        },
+        vertical: {
+          value: false,
+          type: "switch",
+          label: "是否垂直模式",
+        },
+        height: {
+          value: "",
+          type: "input",
+          label: "滑块高度（垂直模式必填）",
+        },
+        "aria-label": {
+          value: "",
+          type: "input",
+          label: "原生 aria-label 属性",
+        },
+        "range-start-label": {
+          value: "",
+          type: "input",
+          label: "滑块范围起始标签",
+        },
+        "range-end-label": {
+          value: "",
+          type: "input",
+          label: "滑块范围结束标签",
+        },
+        "format-value-text": {
+          value: null,
+          type: "function",
+          label: "屏幕阅读器提示格式",
+        },
+        debounce: {
+          value: 300,
+          type: "number",
+          label: "输入去抖延迟（毫秒）",
+        },
+        "tooltip-class": {
+          value: "",
+          type: "input",
+          label: "Tooltip 自定义类名",
+        },
+        placement: {
+          value: "top",
+          type: "select",
+          label: "Tooltip 出现的位置",
+          options: [
+            { label: "顶部", value: "top" },
+            { label: "底部", value: "bottom" },
+            { label: "左侧", value: "left" },
+            { label: "右侧", value: "right" },
+          ],
+        },
+        marks: {
+          value: {},
+          type: "object",
+          label: "标记配置",
+        },
+        "validate-event": {
+          value: true,
+          type: "switch",
+          label: "是否触发表单验证",
+        },
+        persistent: {
+          value: true,
+          type: "switch",
+          label: "是否持久化 Tooltip",
+        },
+      },
+      hedge: Object.assign({}, defaultHedge, {
+        // 表单项的标签文字
+        label: "滑块组件",
+        // 表单域字段名，用于验证、重置等操作
+        prop: "",
+      }),
+    },
   ],
 };
