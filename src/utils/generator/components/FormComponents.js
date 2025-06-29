@@ -1644,7 +1644,7 @@ export const FormComponents = {
         },
         texts: {
           value: ["极差", "失望", "一般", "满意", "惊喜"],
-          type: "array",
+          type: "input",
           label: "辅助文字数组",
         },
         "score-template": {
