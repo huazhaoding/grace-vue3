@@ -179,6 +179,7 @@ export const BaseComponents = {
       slots: {
         default: {
           slotLabel: "默认插槽",
+          slotType: "childComponent",
           slotOptions: [
             {
               tag: "el-button", // 定义组件类型为按钮
@@ -368,6 +369,87 @@ export const BaseComponents = {
           placeholder: "请输入自定义标签名",
         }, // 自定义标签名
       },
+      slotType: "component",
+      slots: {
+        default: {
+          type: "component",
+          label: "默认插槽",
+          slotOptions: [
+            {
+              tagIcon: "el-col", // 子组件图标名称
+              tagLabel: "列配置", // 子组件标签名
+              tag: "el-col", // 子组件标签类型
+              attr: {
+                span: {
+                  value: 12,
+                  label: "栅格占据的列数",
+                  type: "slider",
+                  min: 0,
+                  max: 24,
+                },
+                offset: {
+                  value: 0,
+                  label: "栅格左侧的间隔格数",
+                  type: "slider",
+                  min: 0,
+                  max: 24,
+                },
+                pull: {
+                  value: 0,
+                  label: "栅格向左移动格数",
+                  type: "slider",
+                  min: 0,
+                  max: 24,
+                },
+                push: {
+                  value: 0,
+                  label: "栅格向右移动格数",
+                  type: "slider",
+                  min: 0,
+                  max: 24,
+                },
+                xs: {
+                  value: { span: 12, offset: 0, pull: 0, push: 0 },
+                  label: "超小屏幕",
+                  type: "object",
+                }, // 超小屏幕下的栅格配置
+                sm: {
+                  value: { span: 12, offset: 0, pull: 0, push: 0 },
+                  label: "小屏幕",
+                  type: "object",
+                }, // 小屏幕下的栅格配置
+                md: {
+                  value: { span: 12, offset: 0, pull: 0, push: 0 },
+                  label: "中等屏幕",
+                  type: "object",
+                },
+                // 中等屏幕下的栅格配置
+                lg: {
+                  value: { span: 12, offset: 0, pull: 0, push: 0 },
+                  label: "大屏幕",
+                  type: "object",
+                }, // 大屏幕下的栅格配置
+                xl: {
+                  value: { span: 12, offset: 0, pull: 0, push: 0 },
+                  label: "超大屏幕",
+                  type: "object",
+                }, // 超大屏幕下的栅格配置,
+                tag: {
+                  value: "div",
+                  label: "自定义标签",
+                  type: "input",
+                  placeholder: "请输入自定义标签",
+                },
+              },
+              slotType:"componentDrop",
+              slotOptions:[
+                
+                
+              ]
+            },
+          ]
+        },
+      },
       child: [
         {
           tagIcon: "el-col", // 子组件图标名称
@@ -502,13 +584,13 @@ export const BaseComponents = {
         },
       },
       slotType: "normal",
-      slots: { 
-        default: { 
+      slots: {
+        default: {
           value: "链接内容",
           label: "链接内容",
           type: "textarea"
         },
-        icon: { 
+        icon: {
           value: undefined,
           label: "图标",
           type: "textarea"
@@ -569,8 +651,8 @@ export const BaseComponents = {
         }, // 自定义元素标签
       },
       slotType: "normal",
-      slots: { 
-        default: { 
+      slots: {
+        default: {
           value: "我是文本，请修改我",
           label: "文本内容",
           type: "textarea",
@@ -652,7 +734,14 @@ export const BaseComponents = {
           max: 100,
         }, // 填充比例
       },
-      child: [], // 子组件列表
+      slotType: "componentDrop",
+      slots: {
+        default: {
+          label: "子组件列表",
+          type: "componentDrop",
+          slotOptions: [],
+        },
+      }, // 子组件列表
     },
     {
       tag: "el-splitter", // 定义组件类型为分割面板
@@ -676,38 +765,54 @@ export const BaseComponents = {
           label: "调整事件",
         }, // 调整事件
       },
-      options: {
-        tag: "el-splitter-panel", // 子组件标签类型
-        tagLabel: "子分割面板", // 子组件标签名
-        tagIcon: "icon-splitter-panel", // 子组件图标名称
-        attr: {
-          size: {
-            value: undefined,
-            type: "number",
-            label: "面板尺寸",
-          }, // 面板尺寸
-          min: {
-            value: undefined,
-            type: "number",
-            label: "最小尺寸",
-          }, // 最小尺寸
-          max: {
-            value: undefined,
-            type: "number",
-            label: "最大尺寸",
-          }, // 最大尺寸
-          resizable: {
-            value: true,
-            type: "switch",
-            label: "是否可调整",
-          }, // 是否可调整大小
-          collapsible: {
-            value: false,
-            type: "switch",
-            label: "是否可折叠",
-          }, // 是否可折叠
+      slotType: "component",
+      slots: {
+        default: {
+          label: "子组件列表",
+          type: "component",
+          slotOptions: [
+            {
+              tag: "el-splitter-panel", // 子组件标签类型
+              tagLabel: "子分割面板", // 子组件标签名
+              tagIcon: "icon-splitter-panel", // 子组件图标名称
+              attr: {
+                size: {
+                  value: undefined,
+                  type: "number",
+                  label: "面板尺寸",
+                }, // 面板尺寸
+                min: {
+                  value: undefined,
+                  type: "number",
+                  label: "最小尺寸",
+                }, // 最小尺寸
+                max: {
+                  value: undefined,
+                  type: "number",
+                  label: "最大尺寸",
+                }, // 最大尺寸
+                resizable: {
+                  value: true,
+                  type: "switch",
+                  label: "是否可调整",
+                }, // 是否可调整大小
+                collapsible: {
+                  value: false,
+                  type: "switch",
+                  label: "是否可折叠",
+                }, // 是否可折叠
+              },
+              slotType: "componentDrop",
+              slots: {
+                default: {
+                  label: "子组件列表",
+                  type: "componentDrop",
+                  slotOptions: [],
+                },
+              }
+            }
+          ],
         },
-        data: [],
       },
     },
   ],
