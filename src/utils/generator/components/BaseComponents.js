@@ -568,6 +568,16 @@ export const BaseComponents = {
           placeholder: "请输入自定义元素标签",
         }, // 自定义元素标签
       },
+      slotType: "normal",
+      slots: { 
+        default: { 
+          value: "我是文本，请修改我",
+          label: "文本内容",
+          type: "textarea",
+          rows: 3,
+          placeholder: "请输入内容",
+        },
+      },
     },
     {
       tag: "el-space", // 定义组件类型为间距
