@@ -483,157 +483,161 @@ export const FormComponents = {
       // 多选框组的选项
       options: [
         {
-          label: {
-            value: "选项一",
-            type: "input",
-            label: "显示的标签",
-          },
-          value: {
-            value: 1,
-            type: "input",
-            label: "选项值",
-          },
-          "true-value": {
-            value: undefined,
-            type: "switch",
-            label: "选中时的值",
-          },
-          "false-value": {
-            value: undefined,
-            type: "switch",
-            label: "未选中时的值",
-          },
-          disabled: {
-            value: false,
-            type: "switch",
-            label: "是否禁用",
-          },
-          size: {
-            value: "small",
-            type: "radio",
-            label: "尺寸",
-            options: [
-              { value: "large", label: "大尺寸" },
-              { value: "default", label: "中尺寸" },
-              { value: "small", label: "小尺寸" },
-            ],
-          },
-          name: {
-            value: undefined,
-            type: "input",
-            label: "checkbox 的 name 属性",
-          },
-          checked: {
-            value: false,
-            type: "switch",
-            label: "是否被选中",
-          },
-          indeterminate: {
-            value: false,
-            type: "switch",
-            label: "是否半选中",
-          },
-          "validate-event": {
-            value: true,
-            type: "switch",
-            label: "是否触发表单验证",
-          },
-          "aria-controls": {
-            value: undefined,
-            type: "input",
-            label: "与 aria-control 一致，当 indeterminate 为 true 时生效",
-          },
-          tabindex: {
-            value: 0,
-            type: "input",
-            label: "输入框的 tabindex",
-          },
-          id: {
-            value: undefined,
-            type: "input",
-            label: "checkbox 的 id",
-          },
-          border: {
-            value: false,
-            type: "switch",
-            label: "checkbox 是否显示边框",
+          attr: {
+            label: {
+              value: "选项一",
+              type: "input",
+              label: "显示的标签",
+            },
+            value: {
+              value: 1,
+              type: "input",
+              label: "选项值",
+            },
+            "true-value": {
+              value: undefined,
+              type: "switch",
+              label: "选中时的值",
+            },
+            "false-value": {
+              value: undefined,
+              type: "switch",
+              label: "未选中时的值",
+            },
+            disabled: {
+              value: false,
+              type: "switch",
+              label: "是否禁用",
+            },
+            size: {
+              value: "small",
+              type: "radio",
+              label: "尺寸",
+              options: [
+                { value: "large", label: "大尺寸" },
+                { value: "default", label: "中尺寸" },
+                { value: "small", label: "小尺寸" },
+              ],
+            },
+            name: {
+              value: undefined,
+              type: "input",
+              label: "checkbox 的 name 属性",
+            },
+            checked: {
+              value: false,
+              type: "switch",
+              label: "是否被选中",
+            },
+            indeterminate: {
+              value: false,
+              type: "switch",
+              label: "是否半选中",
+            },
+            "validate-event": {
+              value: true,
+              type: "switch",
+              label: "是否触发表单验证",
+            },
+            "aria-controls": {
+              value: undefined,
+              type: "input",
+              label: "与 aria-control 一致，当 indeterminate 为 true 时生效",
+            },
+            tabindex: {
+              value: 0,
+              type: "input",
+              label: "输入框的 tabindex",
+            },
+            id: {
+              value: undefined,
+              type: "input",
+              label: "checkbox 的 id",
+            },
+            border: {
+              value: false,
+              type: "switch",
+              label: "checkbox 是否显示边框",
+            },
           },
         },
         {
-          label: {
-            value: "选项二",
-            type: "input",
-            label: "显示的标签",
-          },
-          value: {
-            value: 2,
-            type: "input",
-            label: "选项值",
-          },
-          "true-value": {
-            value: undefined,
-            type: "input",
-            label: "选中时的值",
-          },
-          "false-value": {
-            value: undefined,
-            type: "input",
-            label: "未选中时的值",
-          },
-          disabled: {
-            value: false,
-            type: "switch",
-            label: "是否禁用",
-          },
-          size: {
-            value: "small",
-            type: "radio",
-            label: "尺寸",
-            options: [
-              { value: "large", label: "大尺寸" },
-              { value: "default", label: "中尺寸" },
-              { value: "small", label: "小尺寸" },
-            ],
-          },
-          name: {
-            value: undefined,
-            type: "input",
-            label: "checkbox 的 name 属性",
-          },
-          checked: {
-            value: false,
-            type: "switch",
-            label: "是否被选中",
-          },
-          indeterminate: {
-            value: false,
-            type: "switch",
-            label: "是否半选中",
-          },
-          "validate-event": {
-            value: true,
-            type: "switch",
-            label: "是否触发表单验证",
-          },
-          "aria-controls": {
-            value: undefined,
-            type: "input",
-            label: "与 aria-control 一致，当 indeterminate 为 true 时生效",
-          },
-          tabindex: {
-            value: 0,
-            type: "input",
-            label: "输入框的 tabindex",
-          },
-          id: {
-            value: undefined,
-            type: "input",
-            label: "checkbox 的 id",
-          },
-          border: {
-            value: false,
-            type: "switch",
-            label: "checkbox 是否显示边框",
+          attr: {
+            label: {
+              value: "选项二",
+              type: "input",
+              label: "显示的标签",
+            },
+            value: {
+              value: 2,
+              type: "input",
+              label: "选项值",
+            },
+            "true-value": {
+              value: undefined,
+              type: "input",
+              label: "选中时的值",
+            },
+            "false-value": {
+              value: undefined,
+              type: "input",
+              label: "未选中时的值",
+            },
+            disabled: {
+              value: false,
+              type: "switch",
+              label: "是否禁用",
+            },
+            size: {
+              value: "small",
+              type: "radio",
+              label: "尺寸",
+              options: [
+                { value: "large", label: "大尺寸" },
+                { value: "default", label: "中尺寸" },
+                { value: "small", label: "小尺寸" },
+              ],
+            },
+            name: {
+              value: undefined,
+              type: "input",
+              label: "checkbox 的 name 属性",
+            },
+            checked: {
+              value: false,
+              type: "switch",
+              label: "是否被选中",
+            },
+            indeterminate: {
+              value: false,
+              type: "switch",
+              label: "是否半选中",
+            },
+            "validate-event": {
+              value: true,
+              type: "switch",
+              label: "是否触发表单验证",
+            },
+            "aria-controls": {
+              value: undefined,
+              type: "input",
+              label: "与 aria-control 一致，当 indeterminate 为 true 时生效",
+            },
+            tabindex: {
+              value: 0,
+              type: "input",
+              label: "输入框的 tabindex",
+            },
+            id: {
+              value: undefined,
+              type: "input",
+              label: "checkbox 的 id",
+            },
+            border: {
+              value: false,
+              type: "switch",
+              label: "checkbox 是否显示边框",
+            },
           },
         },
       ],
@@ -673,7 +677,7 @@ export const FormComponents = {
         size: {
           value: "default",
           type: "radio",
-          label: "尺寸",
+          label: "单选框组尺寸",
           options: [
             { value: "large", label: "大尺寸" },
             { value: "default", label: "中尺寸" },
@@ -719,82 +723,81 @@ export const FormComponents = {
       }),
       options: [
         {
-          label: {
-            value: "选项一",
-            type: "input",
-            label: "显示的标签",
-          },
-          value: {
-            value: 1,
-            type: "input",
-            label: "选项值",
-          },
-          disabled: {
-            value: false,
-            type: "switch",
-            label: "是否禁用",
-          },
-          border: {
-            value: false,
-            type: "switch",
-            label: "是否显示边框",
-          },
-          size: {
-            value: "default",
-            type: "radio",
-            label: "尺寸",
-            options: [
-              { value: "large", label: "大尺寸" },
-              { value: "default", label: "中尺寸" },
-              { value: "small", label: "小尺寸" },
-            ],
-          },
-          name: {
-            value: undefined,
-            type: "input",
-            label: "原生 name 属性",
+          attr: {
+            label: {
+              value: "选项一",
+              type: "input",
+              label: "显示的标签",
+            },
+            value: {
+              value: 1,
+              type: "input",
+              label: "选项值",
+            },
+            disabled: {
+              value: false,
+              type: "switch",
+              label: "是否禁用",
+            },
+            border: {
+              value: false,
+              type: "switch",
+              label: "是否显示边框",
+            },
+            size: {
+              value: "default",
+              type: "radio",
+              label: "尺寸",
+              options: [
+                { value: "large", label: "大尺寸" },
+                { value: "default", label: "中尺寸" },
+                { value: "small", label: "小尺寸" },
+              ],
+            },
+            name: {
+              value: undefined,
+              type: "input",
+              label: "原生 name 属性",
+            },
           },
         },
         {
-          "v-model": {
-            value: "value",
-            type: "input",
-            label: "绑定的值",
-          },
-          label: {
-            value: "选项二",
-            type: "input",
-            label: "显示的标签",
-          },
-          value: {
-            value: 2,
-            type: "input",
-            label: "选项值",
-          },
-          disabled: {
-            value: false,
-            type: "switch",
-            label: "是否禁用",
-          },
-          border: {
-            value: false,
-            type: "switch",
-            label: "是否显示边框",
-          },
-          size: {
-            value: "default",
-            type: "radio",
-            label: "尺寸",
-            options: [
-              { value: "large", label: "大尺寸" },
-              { value: "default", label: "中尺寸" },
-              { value: "small", label: "小尺寸" },
-            ],
-          },
-          name: {
-            value: undefined,
-            type: "input",
-            label: "原生 name 属性",
+          attr: {
+            label: {
+              value: "选项二",
+              type: "input",
+              label: "显示的标签",
+            },
+            value: {
+              value: 2,
+              type: "input",
+              label: "选项值",
+            },
+            disabled: {
+              value: false,
+              type: "switch",
+              label: "是否禁用",
+            },
+            border: {
+              value: false,
+              type: "switch",
+              label: "是否显示边框",
+            },
+            size: {
+              value: "default",
+              type: "radio",
+              label: "尺寸",
+              options: [
+                { value: "large", label: "大尺寸" },
+                { value: "default", label: "中尺寸" },
+                { value: "small", label: "小尺寸" },
+              ],
+            },
+            name: {
+              value: undefined,
+              type: "input",
+              label: "原生 name 属性",
+            },
           },
         },
       ],
@@ -849,7 +852,7 @@ export const FormComponents = {
         },
         size: {
           value: "default",
-          type: "select",
+          type: "radio",
           label: "尺寸",
           options: [
             { label: "默认", value: "default" },
@@ -1264,7 +1267,7 @@ export const FormComponents = {
         },
         "controls-position": {
           value: "",
-          type: "select",
+          type: "radio",
           label: "控制按钮位置",
           options: [
             { label: "右侧", value: "right" },
@@ -1293,7 +1296,7 @@ export const FormComponents = {
         },
         "value-on-clear": {
           value: null,
-          type: "select",
+          type: "radio",
           label: "当输入框被清空时显示的值",
           options: [
             { label: "null", value: null },
@@ -1333,7 +1336,7 @@ export const FormComponents = {
         },
         "tag-type": {
           value: "info",
-          type: "select",
+          type: "radio",
           label: "标签类型",
           options: [
             { label: "主要", value: "primary" },
@@ -1345,7 +1348,7 @@ export const FormComponents = {
         },
         "tag-effect": {
           value: "light",
-          type: "select",
+          type: "radio",
           label: "标签效果",
           options: [
             { label: "浅色", value: "light" },
@@ -1355,7 +1358,7 @@ export const FormComponents = {
         },
         trigger: {
           value: "Enter",
-          type: "select",
+          type: "radio",
           label: "触发输入标签的按键",
           options: [
             { label: "回车键", value: "Enter" },
@@ -1439,7 +1442,7 @@ export const FormComponents = {
         },
         autocomplete: {
           value: "off",
-          type: "select",
+          type: "radio",
           label: "等价于原生 autocomplete 属性",
           options: [
             { label: "关闭", value: "off" },
@@ -1493,7 +1496,7 @@ export const FormComponents = {
         },
         placement: {
           value: "bottom",
-          type: "select",
+          type: "radio",
           label: "设置弹出位置",
           options: [
             { label: "顶部", value: "top" },
@@ -1724,7 +1727,7 @@ export const FormComponents = {
         },
         size: {
           value: "default",
-          type: "select",
+          type: "radio",
           label: "滑块包装器的大小",
           options: [
             { label: "小", value: "small" },
@@ -1734,7 +1737,7 @@ export const FormComponents = {
         },
         "input-size": {
           value: "default",
-          type: "select",
+          type: "radio",
           label: "输入框的大小",
           options: [
             { label: "小", value: "small" },
@@ -1804,7 +1807,7 @@ export const FormComponents = {
         },
         placement: {
           value: "top",
-          type: "select",
+          type: "radio",
           label: "Tooltip 出现的位置",
           options: [
             { label: "顶部", value: "top" },
@@ -1860,7 +1863,7 @@ export const FormComponents = {
         },
         size: {
           value: "",
-          type: "select",
+          type: "radio",
           label: "开关的大小",
           options: [
             { label: "小", value: "small" },
@@ -1992,7 +1995,7 @@ export const FormComponents = {
           value: {
             expandTrigger: {
               value: "click",
-              type: "select",
+              type: "radio",
               label: "次级菜单的展开方式",
               options: [
                 { label: "点击展开", value: "click" },
@@ -2060,7 +2063,7 @@ export const FormComponents = {
         },
         size: {
           value: "",
-          type: "select",
+          type: "radio",
           label: "尺寸",
           options: [
             { label: "小", value: "small" },
@@ -2140,7 +2143,7 @@ export const FormComponents = {
         },
         "tag-type": {
           value: "info",
-          type: "select",
+          type: "radio",
           label: "标签类型",
           options: [
             { label: "成功", value: "success" },
@@ -2151,7 +2154,7 @@ export const FormComponents = {
         },
         "tag-effect": {
           value: "light",
-          type: "select",
+          type: "radio",
           label: "标签效果",
           options: [
             { label: "浅色", value: "light" },
@@ -2190,7 +2193,7 @@ export const FormComponents = {
         },
         placement: {
           value: "bottom-start",
-          type: "select",
+          type: "radio",
           label: "下拉框出现的位置",
           options: [
             { label: "顶部", value: "top" },
@@ -2281,7 +2284,7 @@ export const FormComponents = {
           value: {
             expandTrigger: {
               value: "click",
-              type: "select",
+              type: "radio",
               label: "次级菜单的展开方式",
               options: [
                 { label: "点击展开", value: "click" },
@@ -2403,7 +2406,7 @@ export const FormComponents = {
         },
         size: {
           value: "",
-          type: "select",
+          type: "radio",
           label: "输入框尺寸",
           options: [
             { label: "小", value: "small" },
@@ -2438,7 +2441,7 @@ export const FormComponents = {
         },
         effect: {
           value: "light",
-          type: "select",
+          type: "radio",
           label: "tooltip 主题",
           options: [
             { label: "浅色", value: "light" },
@@ -2557,7 +2560,7 @@ export const FormComponents = {
         },
         "tag-type": {
           value: "info",
-          type: "select",
+          type: "radio",
           label: "标签类型",
           options: [
             { label: "成功", value: "success" },
@@ -2568,7 +2571,7 @@ export const FormComponents = {
         },
         "tag-effect": {
           value: "light",
-          type: "select",
+          type: "radio",
           label: "标签效果",
           options: [
             { label: "浅色", value: "light" },
@@ -2592,7 +2595,7 @@ export const FormComponents = {
         },
         placement: {
           value: "bottom-start",
-          type: "select",
+          type: "radio",
           label: "下拉框出现的位置",
           options: [
             { label: "顶部", value: "top" },
@@ -2637,6 +2640,7 @@ export const FormComponents = {
           label: "tabindex 属性",
         },
       },
+      opener: [],
       hedge: Object.assign({}, defaultHedge, {
         // 表单项的标签文字
         label: "下拉选择器",
@@ -2678,7 +2682,7 @@ export const FormComponents = {
         },
         size: {
           value: "",
-          type: "select",
+          type: "radio",
           label: "输入框尺寸",
           options: [
             { label: "小", value: "small" },
@@ -2838,7 +2842,7 @@ export const FormComponents = {
         },
         size: {
           value: "default",
-          type: "select",
+          type: "radio",
           label: "输入框尺寸",
           options: [
             { label: "小", value: "small" },
@@ -2858,7 +2862,7 @@ export const FormComponents = {
         },
         effect: {
           value: "light",
-          type: "select",
+          type: "radio",
           label: "Tooltip 主题",
           options: [
             { label: "浅色", value: "light" },
@@ -2957,7 +2961,7 @@ export const FormComponents = {
         },
         "target-order": {
           value: "original",
-          type: "select",
+          type: "radio",
           label: "右侧列表元素的排序策略",
           options: [
             { label: "保持原顺序", value: "original" },

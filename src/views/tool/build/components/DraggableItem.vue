@@ -30,6 +30,7 @@
         :key="elementData.tag"
         :conf="elementData"
         v-model="elementData.attr.defaultValue.value"
+        :active-item="activeItem"
       />
     </el-form-item>
     <el-row
@@ -144,7 +145,7 @@
     </el-form>
 
     <div v-else class="not-drg">
-      <render :key="elementData.tag" :conf="elementData" />
+      <render :key="elementData.tag" :conf="elementData" :active-item="activeItem" />
     </div>
 
     <div class="draggable-item-tool">
@@ -188,6 +189,7 @@ const className = ref("");
 const draggableItemRef = ref(null);
 
 function activeItem(item) {
+  console.log("activeItem", item);
   emits("activeItem", item);
 }
 
