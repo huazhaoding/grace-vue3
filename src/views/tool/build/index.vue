@@ -25,7 +25,7 @@
           <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
             item-key="renderKey">
             <template #item="{ element, index }">
-              <draggable-item :key="element.renderKey" :drawing-list="drawingList" :elementData="element" :index="index"
+              <dynamic-component :key="element.renderKey" :drawing-list="drawingList" :elementData="element" :index="index"
                 :active-id="activeId" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
                 @deleteItem="drawingItemDelete" />
             </template>
@@ -47,6 +47,7 @@ import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
 import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
 import DraggableItem from "./components/DraggableItem"; // 导入可拖拽表单项组件
+import DynamicComponent from "./components/DynamicComponent";
 import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
@@ -84,13 +85,13 @@ function createIdAndKey(clone) {
   }
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   // 处理数据
-  if (Array.isArray(clone.data)) {
-    clone.data = clone.data.map((data) => createIdAndKey(data)); // 递归处理数据列表
+  if (Array.isArray(clone.slots.default.slotOptions)) {
+    slots.default.slotOptions = slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
   }
-  // 处理子项列表
-  if (Array.isArray(clone.child)) {
-    clone.child = clone.child.map((child) => createIdAndKey(child)); // 递归处理子项
-  }
+  // // 处理子项列表
+  // if (Array.isArray(clone.child)) {
+  //   clone.child = clone.child.map((child) => createIdAndKey(child)); // 递归处理子项
+  // }
   return clone; // 返回更新后的表单项
 }
 

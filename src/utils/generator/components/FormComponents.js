@@ -1,34 +1,35 @@
 // 默认表单包围参数
 const defaultHedge = {
   tag: "el-form-item",
-  attr:{
-  // 表单项的标签文字
-  label: "",
-  // 表单域字段名，用于验证、重置等操作
-  prop: "",
-  // 是否必填
-  required: true,
-  // 表单验证规则
-  rules: [],
-  // 手动设置的错误提示信息
-  errorMessage: "",
-  // 是否显示校验错误信息
-  showMessage: true,
-  // 是否以行内形式展示校验信息
-  inlineMessage: false,
-  // 尺寸：large / default / small
-  size: "default",
-  // 标签宽度
-  labelWidth: "100",
-  // 标签位置：left / right / top
-  labelPosition: "right",
-  // 原生 label 的 for 属性
-  for: "",
-  // 表单域验证错误时的提示信息。设置该值会导致表单验证状态变为 error，并显示该错误信息。
-  error: "",
-  // 表单项的校验状态（success/error/validating）
-  validateStatus: "",
-}};
+  attr: {
+    // 表单项的标签文字
+    label: "",
+    // 表单域字段名，用于验证、重置等操作
+    prop: "",
+    // 是否必填
+    required: true,
+    // 表单验证规则
+    rules: [],
+    // 手动设置的错误提示信息
+    errorMessage: "",
+    // 是否显示校验错误信息
+    showMessage: true,
+    // 是否以行内形式展示校验信息
+    inlineMessage: false,
+    // 尺寸：large / default / small
+    size: "default",
+    // 标签宽度
+    labelWidth: "100",
+    // 标签位置：left / right / top
+    labelPosition: "right",
+    // 原生 label 的 for 属性
+    for: "",
+    // 表单域验证错误时的提示信息。设置该值会导致表单验证状态变为 error，并显示该错误信息。
+    error: "",
+    // 表单项的校验状态（success/error/validating）
+    validateStatus: "",
+  },
+};
 
 export const FormComponents = {
   title: "表单组件",
@@ -160,7 +161,140 @@ export const FormComponents = {
           label: "滚动配置",
         },
       },
-      data: [],
+      slots: {
+        default: {
+          label: "默认值",
+          slotType:"dragComponent",
+          slotOptions: [
+            {
+              tag: "el-input",
+              tagLabel: "输入框",
+              tagIcon: "input",
+              document: "https://element.eleme.cn/#/zh-CN/component/input",
+              type: "form",
+              attr: {
+                defaultValue: {
+                  value: "123456",
+                  type: "input",
+                  label: "内容",
+                },
+                placeholder: {
+                  value: "请输入",
+                  type: "input",
+                  label: "占位文本",
+                },
+                type: {
+                  value: "text",
+                  type: "radio",
+                  label: "类型",
+                  options: [{ value: "text", label: "文本" }],
+                },
+                maxlength: {
+                  value: 100,
+                  type: "number",
+                  label: "最大输入长度",
+                },
+                minlength: {
+                  value: 1,
+                  type: "number",
+                  label: "最小输入长度",
+                },
+                "show-word-limit": {
+                  value: false,
+                  type: "switch",
+                  label: "是否显示统计字数",
+                },
+
+                prepend: {
+                  value: "",
+                  type: "input",
+                  label: "前缀符号",
+                },
+                append: {
+                  value: "",
+                  type: "input",
+                  label: "后缀符号",
+                },
+                "prefix-icon": {
+                  value: "",
+                  type: "icon",
+                  label: "前缀图标",
+                },
+                "suffix-icon": {
+                  value: "",
+                  type: "icon",
+                  label: "后缀图标",
+                },
+                clearable: {
+                  value: false,
+                  type: "switch",
+                  label: "是否显示清除按钮",
+                },
+                disabled: {
+                  value: false,
+                  type: "switch",
+                  label: "是否禁用",
+                },
+                size: {
+                  value: "default",
+                  type: "radio",
+                  label: "输入框尺寸",
+                  options: [
+                    { label: "小尺寸", value: "small" },
+                    { label: "中尺寸", value: "default" },
+                    { label: "大尺寸", value: "large" },
+                  ],
+                },
+                autofocus: {
+                  value: false,
+                  type: "switch",
+                  label: "自动获取焦点",
+                },
+                readonly: {
+                  value: false,
+                  type: "switch",
+                  label: "是否只读",
+                },
+                validateEvent: {
+                  value: true,
+                  type: "switch",
+                  label: "输入时是否触发表单的校验",
+                },
+              },
+              slots: {
+                prepend: {
+                  value: "",
+                  type: "textarea",
+                  label: "输入框前置内容",
+                },
+                append: {
+                  value: "",
+                  type: "textarea",
+                  label: "输入框后置内容",
+                },
+                prefix: {
+                  value: "",
+                  type: "textarea",
+                  label: "输入框头部内容",
+                },
+                suffix: {
+                  value: "",
+                  type: "textarea",
+                  label: "输入框尾部内容",
+                },
+              },
+              hedge: Object.assign({}, defaultHedge, {
+                attr: {
+                  // 表单项的标签文字
+                  label: "输入框",
+                  // 表单域字段名，用于验证、重置等操作
+                  prop: "",
+                },
+              }),
+            },
+          ],
+        },
+      },
     },
     {
       tag: "el-input",
@@ -279,12 +413,14 @@ export const FormComponents = {
           label: "输入框尾部内容",
         },
       },
-      hedge: Object.assign({}, defaultHedge,{attr:{
-        // 表单项的标签文字
-        label: "输入框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
-      }}),
+      hedge: Object.assign({}, defaultHedge, {
+        attr: {
+          // 表单项的标签文字
+          label: "输入框",
+          // 表单域字段名，用于验证、重置等操作
+          prop: "",
+        },
+      }),
     },
     {
       tag: "el-autocomplete",
