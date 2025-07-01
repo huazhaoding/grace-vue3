@@ -111,6 +111,7 @@
             :key="index"
             :is="slotChild.tag"
             v-bind="simplifyItem(slotChild.attr)"
+            @click.stop="activeItem(slotChild)"
             class="can-drag"
           >
             <template
@@ -122,7 +123,7 @@
             >
               <div
                 :class="
-                  activeId === item.id
+                  activeId === slotChild.id
                     ? 'draggable-item draggable-item-active'
                     : 'draggable-item draggable-item-inactive'
                 "
@@ -300,7 +301,7 @@ function simplifyItem(item) {
 }
 
 function activeItem(item) {
-  console.log("activeItem", item);
+  console.log("activeItem", item.id,new Date().getTime());
   emits("activeItem", item);
 }
 

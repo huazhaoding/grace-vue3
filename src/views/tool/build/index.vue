@@ -87,7 +87,7 @@ function createIdAndKey(clone) {
   // 处理数据
   if (Array.isArray(clone.slots.default.slotOptions)) {
 
-    slots.default.slotOptions = slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
+   clone.slots.default.slotOptions = clone.slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
   }
   // // 处理子项列表
   // if (Array.isArray(clone.child)) {
