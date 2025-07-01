@@ -185,6 +185,7 @@
             </template>
           </component>
         </template>
+
       </template>
     </component>
 
@@ -267,16 +268,15 @@ const props = defineProps({
 
 const className = ref("");
 const draggableItemRef = ref(null);
-
 const filteredSlots = computed(() => {
   return Object.entries(props.elementData.slots).reduce((acc, [key, value]) => {
-    if (value.slotType === "normal" && value.value) {
+    //如果插槽未使用或者插槽类型为normal且value为空，直接不使用
+    if (!value.used||value.slotType === "normal" && !value.value) {
+      
+    }
+    else{
       acc[key] = value;
     }
-    if (value.slotType != "normal") {
-      acc[key] = value;
-    }
-    console.log(acc);
     return acc;
   }, {});
 });

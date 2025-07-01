@@ -1,3 +1,5 @@
+import { use } from "react";
+
 // 默认表单包围参数
 const defaultHedge = {
   tag: "el-form-item",
@@ -165,6 +167,7 @@ export const FormComponents = {
         default: {
           label: "默认值",
           slotType:"dragComponent",
+          used:true,
           slotOptions: [
             {
               tag: "el-input",
@@ -263,22 +266,26 @@ export const FormComponents = {
               },
               slots: {
                 prepend: {
-                  value: "",
+                  value: undefined,
                   type: "textarea",
+                  used: false,
                   label: "输入框前置内容",
                 },
                 append: {
-                  value: "",
+                  value: undefined,
                   type: "textarea",
+                  used: false,
                   label: "输入框后置内容",
                 },
                 prefix: {
-                  value: "",
+                  value: undefined,
                   type: "textarea",
+                  used: false,
                   label: "输入框头部内容",
                 },
                 suffix: {
-                  value: "",
+                  value: undefined,
+                  used: false,
                   type: "textarea",
                   label: "输入框尾部内容",
                 },
