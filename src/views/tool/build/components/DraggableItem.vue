@@ -24,7 +24,7 @@
       :error="elementData.hedge.error"
       :label-position="elementData.hedge.labelPosition"
       :required="elementData.hedge.required"
-      class="field-wrapper not-drg"
+      class="field-wrapper not-drag"
     >
       <render
         :key="elementData.tag"

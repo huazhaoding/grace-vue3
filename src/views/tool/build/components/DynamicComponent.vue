@@ -11,6 +11,7 @@
       </el-icon>
       <span class="draggable-item-name">{{ elementData.tagLabel }}</span>
     </div>
+
     <component
       v-if="
         elementData.type && elementData.type === 'form' && elementData.hedge
@@ -19,7 +20,7 @@
       v-bind="elementData.hedge.attr"
       :modelValue="elementData.modelValue"
       @update:modelValue="handleModelValueUpdate(elementData, $event)"
-      class="field-wrapper not-drg"
+      class="field-wrapper not-drag"
     >
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)">
         <template
@@ -47,14 +48,13 @@
       </component>
     </component>
 
+    <div v-else :class="chooseStyle">
     <component
-      v-else
       :is="elementData.tag"
       v-bind="simplifyItem(elementData.attr)"
-      class="drg-row"
     > 
       <template
-        v-for="(item, slotName) in filteredSlots"
+        v-for="(item,slotName) in filteredSlots"
         :key="index"
         v-slot:[slotName]
       >
@@ -62,8 +62,7 @@
           <div v-html="item.value"></div>
         </template>
 
-        <template v-else-if="item.slotType === 'childComponent'">
-          
+        <template v-else-if="item.slotType === 'childComponent'">  
           <template
             v-for="(slotChild, slotChildIndex) in item.slotOptions"
             :key="slotChildIndex"
@@ -112,7 +111,7 @@
             :key="index"
             :is="slotChild.tag"
             v-bind="simplifyItem(slotChild.attr)"
-            class="can-drg"
+            class="can-drag"
           >
             <template
               v-if="
@@ -136,7 +135,7 @@
                 <draggable
                   group="componentsGroup"
                   :animation="340"
-                  :list="slotChild.slotOptions"
+                  :list="slotChild.slots.default.slotOptions"
                   class="drag-wrapper"
                   item-key="renderKey"
                   @start="drag = true"
@@ -145,13 +144,15 @@
                   <template #item="{ element, index }">
                     <draggable-item
                       :key="element.renderKey"
-                      :drawing-list="slotChild.slotOptions"
+                      :drawing-list="slotChild.slots.default.slotOptions"
                       :elementData="element"
                       :index="index"
                       :active-id="activeId"
+                      :tool="true"
                       @click.stop="activeItem(element)"
-                      @copyItem="copyItem(element, slotChild.slotOptions)"
-                      @deleteItem="deleteItem(index, slotChild.slotOptions)"
+                      @copyItem="copyItem(element, slotChild.slots.default.slotOptions)"
+                      @deleteItem="deleteItem(index, slotChild.slots.default.slotOptions)"
+
                     />
                   </template>
                 </draggable>
@@ -188,7 +189,7 @@
 
       </template>
     </component>
-
+    </div>
     <div class="draggable-item-tool">
       <span
         class="drawing-item-copy"
@@ -217,7 +218,7 @@
     v-bind="simplifyItem(elementData.attr)"
   >
     <template
-      v-for="(item, slotName) in filteredSlots"
+      v-for="(item,slotName) in filteredSlots"
       :key="index"
       v-slot:[slotName]
     >
@@ -279,6 +280,14 @@ const filteredSlots = computed(() => {
     }
     return acc;
   }, {});
+});
+
+const chooseStyle = computed(() => {
+     const _type = props.elementData.slots.default.slotType;
+     if(_type === "childComponent"||_type === "normal"){
+       return "not-drag";
+     }
+     return "can-drag";
 });
 
 // 转换函数：将复杂结构简化为简单结构

@@ -131,6 +131,7 @@ export const BaseComponents = {
         default: {
           value: "按钮",
           slotType: "normal",
+          used: true,
           label: "按钮内容",
           type: "textarea",
         },
@@ -138,12 +139,14 @@ export const BaseComponents = {
           value: undefined,
           slotType: "normal",
           label: "加载中内容",
+          used: false,
           type: "textarea",
         },
         icon: {
           value: undefined,
           slotType: "normal",
           label: "图标",
+          used: false,
           type: "input",
         },
       },
@@ -181,6 +184,7 @@ export const BaseComponents = {
         default: {
           label: "默认插槽",
           slotType: "childComponent",
+          used: true,
           slotOptions: [
             {
               tag: "el-button", // 定义组件类型为按钮
@@ -312,18 +316,21 @@ export const BaseComponents = {
                   value: "按钮",
                   label: "按钮内容",
                   slotType: "normal",
+                  used: true,
                   type: "textarea",
                 },
                 loading: {
                   value: undefined,
                   label: "加载中内容",
                   slotType: "normal",
+                  used: false,
                   type: "textarea",
                 },
                 icon: {
                   value: undefined,
                   label: "图标",
                   slotType: "normal",
+                  used: false,
                   type: "input",
                 },
               },
@@ -377,6 +384,7 @@ export const BaseComponents = {
         default: {
           slotType: "childDragComponent",
           label: "默认插槽",
+          used: true,
           slotOptions: [
             {
               tagIcon: "el-col", // 子组件图标名称
@@ -448,6 +456,7 @@ export const BaseComponents = {
                 default: {
                   label: "el-col默认插槽",
                   slotType: "dragComponent",
+                  used: true,
                   slotOptions: [
                     {
                       tag: "el-button", // 定义组件类型为按钮
@@ -580,6 +589,7 @@ export const BaseComponents = {
                           value: "按钮",
                           label: "按钮内容",
                           slotType: "normal",
+                          used: true,
                           type: "textarea",
                         },
                         loading: {

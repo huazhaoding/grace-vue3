@@ -42,3 +42,9 @@ el-radio-button
                el-radio-button
 el-radio-group 
                el-radio
+
+
+可拖拽区域, 元素及子元素一律虚线 激活时变实线 el-row el-col el-form
+
+
+其它激活时一律实线

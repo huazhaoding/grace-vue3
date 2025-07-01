@@ -86,6 +86,7 @@ function createIdAndKey(clone) {
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   // 处理数据
   if (Array.isArray(clone.slots.default.slotOptions)) {
+
     slots.default.slotOptions = slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
   }
   // // 处理子项列表
@@ -308,23 +309,13 @@ $lighterBlue: #409eff;
       cursor: pointer;
     }
   }
-
-  .drg-row {
-    padding: 3px;
-
-    .drg-col {
-      margin: 2px;
-    }
-  }
-
-  .can-drg,
-  .drg-row {
-    border: 1px dashed #f50000;
+  .can-drag {
+    border: 1px dashed #f50000
   }
 }
 
 .draggable-item-active {
-  &>.not-drg {
+  &>.not-drag {
     border: 1px solid #f50000;
   }
 
