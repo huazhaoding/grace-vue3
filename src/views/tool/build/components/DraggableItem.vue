@@ -42,7 +42,7 @@
       class="drg-row"
     >
       <el-col
-        v-for="(item, index) in elementData.child"
+        v-for="(item, index) in elementData.slots.default.slotOptions"
         :span="item.attr.span.value"
         :offset="item.attr.offset.value"
         :pull="item.attr.pull.value"
@@ -68,7 +68,7 @@
           <draggable
             group="componentsGroup"
             :animation="340"
-            :list="item.data"
+            :list="item.slotOptions"
             class="drag-wrapper"
             item-key="renderKey"
             @start="drag = true"
@@ -77,13 +77,13 @@
             <template #item="{ element, index }">
               <draggable-item
                 :key="element.renderKey"
-                :drawing-list="item.data"
+                :drawing-list="item.slotOptions"
                 :elementData="element"
                 :index="index"
                 :active-id="activeId"
                 @click.stop="activeItem(element)"
-                @copyItem="copyItem(element, item.data)"
-                @deleteItem="deleteItem(index, item.data)"
+                @copyItem="copyItem(element, item.slotOptions)"
+                @deleteItem="deleteItem(index, item.slotOptions)"
               />
             </template>
           </draggable>

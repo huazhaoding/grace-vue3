@@ -1,5 +1,7 @@
 // 默认表单包围参数
 const defaultHedge = {
+  tag: "el-form-item",
+  attr:{
   // 表单项的标签文字
   label: "",
   // 表单域字段名，用于验证、重置等操作
@@ -26,7 +28,7 @@ const defaultHedge = {
   error: "",
   // 表单项的校验状态（success/error/validating）
   validateStatus: "",
-};
+}};
 
 export const FormComponents = {
   title: "表单组件",
@@ -277,12 +279,12 @@ export const FormComponents = {
           label: "输入框尾部内容",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
+      hedge: Object.assign({}, defaultHedge,{attr:{
         // 表单项的标签文字
         label: "输入框",
         // 表单域字段名，用于验证、重置等操作
         prop: "",
-      }),
+      }}),
     },
     {
       tag: "el-autocomplete",

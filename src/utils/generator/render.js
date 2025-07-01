@@ -58,6 +58,26 @@ function buildChildSlot(h, slots) {
   });
   return childSlots;
 }
+
+function buildDragSlot(h, slots) {
+  const childSlots = {};
+  Object.keys(slots).forEach((key) => {
+    if (slots[key]&&slots[key].value) {
+      childSlots[key] = () => h("div",  { innerHTML: slots[key].value }) ; // 返回函数形式的插槽
+    }
+  });
+  return childSlots;
+}
+
+function buildNormalSlot(h, slots) {
+  const childSlots = {};
+  Object.keys(slots).forEach((key) => {
+    if (slots[key]&&slots[key].value) {
+      childSlots[key] = () => h("div",  { innerHTML: slots[key].value }) ; // 返回函数形式的插槽
+    }
+  });
+  return childSlots;
+}
 // ... existing code ...
 export default defineComponent({
   props: {
@@ -97,10 +117,11 @@ export default defineComponent({
     const cloneAttr = component.attr;
 
     const cloneSlots = component.slots;
-
+    
+    // 插槽处理 normal componentChild  comoponentDrag
     let slots = {};
 
-    if (cloneSlots&&component.slotType==="component") {
+    if (cloneSlots) {
       Object.keys(cloneSlots).forEach((key) => {
         if (cloneSlots[key]) {
           slots[key] = buildSlot(h, cloneSlots[key], key, this.activeItem);
