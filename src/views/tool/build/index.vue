@@ -49,6 +49,7 @@ import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
 import DraggableItem from "./components/DraggableItem"; // 导入可拖拽表单项组件
 import DynamicComponent from "./components/DynamicComponent";
 import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
+import { watch } from "vue";
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
@@ -115,10 +116,14 @@ function activeFormItem(element) {
   if (!element.renderKey) {
     element.renderKey = +new Date();
   }
-
   activeData.value = element; // 设置当前激活的表单项数据
   activeId.value = element.id; // 设置当前激活的表单项 ID
 }
+
+watch(() => activeData, (val) => { 
+  console.log(val);
+},
+   { immediate: true,deep:true });
 </script>
 
 <style lang="scss">
