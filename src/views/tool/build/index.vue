@@ -86,7 +86,7 @@ function createIdAndKey(clone) {
   }
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   // 处理数据
-  if (Array.isArray(clone.slots.default.slotOptions)) {
+  if (clone?.slots?.default &&Array.isArray(clone.slots.default.slotOptions)) {
 
    clone.slots.default.slotOptions = clone.slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
   }

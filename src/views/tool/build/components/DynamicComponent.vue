@@ -4,7 +4,7 @@
       <el-icon>
         <Rank />
       </el-icon>
-      <span class="draggable-item-name">{{ elementData.tagLabel+elementData.id }}</span>
+      <span class="draggable-item-name">{{ elementData.tagLabel }}</span>
     </div>
 
     <component v-if="
@@ -68,7 +68,7 @@
                   " @click.stop="activeItem(slotChild)">
                   <div class="draggable-item-mark">
                     <span class="draggable-item-name">{{
-                      slotChild.tagLabel+slotChild.id
+                      slotChild.tagLabel
                     }}</span>
                   </div>
                   <draggable group="componentsGroup" :animation="340" :list="slotChild.slots.default.slotOptions"
