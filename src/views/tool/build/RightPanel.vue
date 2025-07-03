@@ -98,11 +98,11 @@
 
           <el-divider
             content-position="center"
-            v-if="activeDataProperty.tag === 'el-row'"
-            >栅格配置</el-divider
+            v-if="activeDataProperty?.slots?.default?.slotType === 'childDragComponent'|| activeDataProperty?.slots?.default?.slotType === 'childComponent'"
+            >子项配置</el-divider
           >
 
-          <template v-if="activeDataProperty.tag === 'el-row'">
+          <template v-if="activeDataProperty?.slots?.default?.slotType === 'childDragComponent'|| activeDataProperty?.slots?.default?.slotType === 'childComponent'">
             <draggable
               :list="activeDataProperty.slots.default.slotOptions"
               :group="{ name: 'formItemChild', pull: false, put: false }"
@@ -114,19 +114,19 @@
                 <el-card style="margin-bottom: 10px">
                   <template #header>
                     <div class="card-header">
-                      <span>栅格{{ index + 1 }}配置</span
+                      <span>子项{{ index + 1 }}配置</span
                       ><el-button-group style="float: right">
                         <el-button
                           type="primary"
                           icon="Plus"
                           @click="addCol(element, index)"
-                          title="复制栏"
+                          title="复制"
                         />
                         <el-button
                           type="danger"
                           icon="Remove"
                           @click="removeCol(element, index)"
-                          title="删除栏"
+                          title="删除"
                         />
                         <el-button
                           type="success"
@@ -162,7 +162,7 @@
                         placement="left"
                         :width="400"
                         trigger="click"
-                        v-else-if="item.type === 'object'"
+                        v-else-if="item.type === 'object' && activeDataProperty?.slots?.default?.slotType === 'childDragComponent'"
                       >
                         <template #reference>
                           <el-button style="width: 100%">{{ key }}</el-button>
@@ -188,6 +188,9 @@
               </template>
             </draggable>
           </template>
+
+
+        
         </el-form>
 
         <!-- 包围属性 -->
