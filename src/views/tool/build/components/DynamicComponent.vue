@@ -55,8 +55,7 @@
 
           <template v-else-if="item.slotType === 'childDragComponent'">
             <component v-for="(slotChild, slotChildIndex) in elementData.slots.default.slotOptions" :key="slotChildIndex"
-              :is="slotChild.tag" v-bind="simplifyItem(slotChild.attr)" @click.stop="activeItem(slotChild)"
-              class="can-drag">
+              :is="slotChild.tag" v-bind="simplifyItem(slotChild.attr)" @click.stop="activeItem(slotChild)">
               <template v-if="
                 slotChild.slots &&
                 slotChild.slots.default &&
@@ -72,7 +71,7 @@
                     }}</span>
                   </div>
                   <draggable group="componentsGroup" :animation="340" :list="slotChild.slots.default.slotOptions"
-                    class="drag-wrapper" item-key="renderKey" @start="drag = true" @end="drag = false">
+                    class="drag-wrapper can-drag" item-key="renderKey" @start="drag = true" @end="drag = false">
                     <template #item="scoped">
                       <dynamic-component :key="scoped.element.renderKey" :drawing-list="slotChild.slots.default.slotOptions"
                         :elementData="scoped.element" :index="scoped.index" :active-id="activeId" :tool="true"
@@ -81,7 +80,7 @@
                         @deleteItem="deleteItem" />
                     </template>
                   </draggable>
-                  <div class="draggable-item-tool" style="bottom: -7px">
+                  <div class="draggable-item-tool">
                     <span class="drawing-item-copy" title="复制" @click.stop="
                       copyItem(slotChild, elementData.slots.default.slotOptions)
                       ">

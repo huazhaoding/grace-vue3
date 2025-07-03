@@ -303,7 +303,7 @@ $lighterBlue: #409eff;
     position: absolute;
     color: aliceblue;
     left: calc(100% - 49px);
-    bottom: 4px;
+    bottom: 3px;
     font-size: 12px;
     font-style: normal;
 
@@ -315,12 +315,15 @@ $lighterBlue: #409eff;
     }
   }
   .can-drag {
-    border: 1px dashed #f50000
+    border: 1px dashed #f50000;
+  }
+  .not-drag {
+    min-height: 30px;
   }
 }
 
 .draggable-item-active {
-  &>.not-drag {
+  &>.not-drag,&>.can-drag {
     border: 1px solid #f50000;
   }
 

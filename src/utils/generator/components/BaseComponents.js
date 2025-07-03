@@ -668,24 +668,20 @@ export const BaseComponents = {
             { label: "父窗口", value: "_parent" },
             { label: "框架", value: "_top" },
           ],
-        },
-        defaultLabel: {
-          value: "链接",
-          label: "链接名字",
-          type: "input",
-          placeholder: "请输入连接名字",
-        },
+        }
       },
       slots: {
         default: {
           value: "链接内容",
           label: "链接内容",
           slotType: "normal",
+          used: true,
           type: "textarea",
         },
         icon: {
           value: undefined,
           label: "图标",
+          used: false,
           slotType: "normal",
           type: "textarea",
         },
@@ -748,6 +744,7 @@ export const BaseComponents = {
         default: {
           slotType: "normal",
           value: "我是文本，请修改我",
+          used: true,
           label: "文本内容",
           type: "textarea",
           rows: 3,
