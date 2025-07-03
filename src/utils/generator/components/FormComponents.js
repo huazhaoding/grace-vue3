@@ -1,4 +1,3 @@
-
 // 默认表单包围参数
 const defaultHedge = {
   tag: "el-form-item",
@@ -165,8 +164,8 @@ export const FormComponents = {
       slots: {
         default: {
           label: "默认值",
-          slotType:"dragComponent",
-          used:true,
+          slotType: "dragComponent",
+          used: true,
           slotOptions: [
             {
               tag: "el-input",
@@ -619,173 +618,108 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "多选框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        attr: {
+          // 表单项的标签文字
+          label: "多选框",
+          // 表单域字段名，用于验证、重置等操作
+          prop: "",
+        },
       }),
-      // 多选框组的选项
-      options: [
-        {
-          attr: {
-            label: {
-              value: "选项一",
-              type: "input",
-              label: "显示的标签",
+      slots: {
+        default: {
+          label: "输入框",
+          slotType: "childComponent",
+          used: true,
+          slotOptions: [
+            {
+              tagIcon: "el-checkbox", // 子组件图标名称
+              tagLabel: "列配置", // 子组件标签名
+              tag: "el-checkbox", // 子组件标签类型
+              attr: {
+                label: {
+                  value: "选项一",
+                  type: "input",
+                  label: "显示的标签",
+                },
+                value: {
+                  value: 1,
+                  type: "input",
+                  label: "选项值",
+                },
+                "true-value": {
+                  value: undefined,
+                  type: "switch",
+                  label: "选中时的值",
+                },
+                "false-value": {
+                  value: undefined,
+                  type: "switch",
+                  label: "未选中时的值",
+                },
+                disabled: {
+                  value: false,
+                  type: "switch",
+                  label: "是否禁用",
+                },
+                size: {
+                  value: "small",
+                  type: "radio",
+                  label: "尺寸",
+                  options: [
+                    { value: "large", label: "大尺寸" },
+                    { value: "default", label: "中尺寸" },
+                    { value: "small", label: "小尺寸" },
+                  ],
+                },
+                name: {
+                  value: undefined,
+                  type: "input",
+                  label: "checkbox 的 name 属性",
+                },
+                checked: {
+                  value: false,
+                  type: "switch",
+                  label: "是否被选中",
+                },
+                indeterminate: {
+                  value: false,
+                  type: "switch",
+                  label: "是否半选中",
+                },
+                "validate-event": {
+                  value: true,
+                  type: "switch",
+                  label: "是否触发表单验证",
+                },
+                "aria-controls": {
+                  value: undefined,
+                  type: "input",
+                  label:
+                    "与 aria-control 一致，当 indeterminate 为 true 时生效",
+                },
+                tabindex: {
+                  value: 0,
+                  type: "input",
+                  label: "输入框的 tabindex",
+                },
+                id: {
+                  value: undefined,
+                  type: "input",
+                  label: "checkbox 的 id",
+                },
+                border: {
+                  value: false,
+                  type: "switch",
+                  label: "checkbox 是否显示边框",
+                },
+              },
+              slots:{
+                
+              }
             },
-            value: {
-              value: 1,
-              type: "input",
-              label: "选项值",
-            },
-            "true-value": {
-              value: undefined,
-              type: "switch",
-              label: "选中时的值",
-            },
-            "false-value": {
-              value: undefined,
-              type: "switch",
-              label: "未选中时的值",
-            },
-            disabled: {
-              value: false,
-              type: "switch",
-              label: "是否禁用",
-            },
-            size: {
-              value: "small",
-              type: "radio",
-              label: "尺寸",
-              options: [
-                { value: "large", label: "大尺寸" },
-                { value: "default", label: "中尺寸" },
-                { value: "small", label: "小尺寸" },
-              ],
-            },
-            name: {
-              value: undefined,
-              type: "input",
-              label: "checkbox 的 name 属性",
-            },
-            checked: {
-              value: false,
-              type: "switch",
-              label: "是否被选中",
-            },
-            indeterminate: {
-              value: false,
-              type: "switch",
-              label: "是否半选中",
-            },
-            "validate-event": {
-              value: true,
-              type: "switch",
-              label: "是否触发表单验证",
-            },
-            "aria-controls": {
-              value: undefined,
-              type: "input",
-              label: "与 aria-control 一致，当 indeterminate 为 true 时生效",
-            },
-            tabindex: {
-              value: 0,
-              type: "input",
-              label: "输入框的 tabindex",
-            },
-            id: {
-              value: undefined,
-              type: "input",
-              label: "checkbox 的 id",
-            },
-            border: {
-              value: false,
-              type: "switch",
-              label: "checkbox 是否显示边框",
-            },
-          },
+          ],
         },
-        {
-          attr: {
-            label: {
-              value: "选项二",
-              type: "input",
-              label: "显示的标签",
-            },
-            value: {
-              value: 2,
-              type: "input",
-              label: "选项值",
-            },
-            "true-value": {
-              value: undefined,
-              type: "input",
-              label: "选中时的值",
-            },
-            "false-value": {
-              value: undefined,
-              type: "input",
-              label: "未选中时的值",
-            },
-            disabled: {
-              value: false,
-              type: "switch",
-              label: "是否禁用",
-            },
-            size: {
-              value: "small",
-              type: "radio",
-              label: "尺寸",
-              options: [
-                { value: "large", label: "大尺寸" },
-                { value: "default", label: "中尺寸" },
-                { value: "small", label: "小尺寸" },
-              ],
-            },
-            name: {
-              value: undefined,
-              type: "input",
-              label: "checkbox 的 name 属性",
-            },
-            checked: {
-              value: false,
-              type: "switch",
-              label: "是否被选中",
-            },
-            indeterminate: {
-              value: false,
-              type: "switch",
-              label: "是否半选中",
-            },
-            "validate-event": {
-              value: true,
-              type: "switch",
-              label: "是否触发表单验证",
-            },
-            "aria-controls": {
-              value: undefined,
-              type: "input",
-              label: "与 aria-control 一致，当 indeterminate 为 true 时生效",
-            },
-            tabindex: {
-              value: 0,
-              type: "input",
-              label: "输入框的 tabindex",
-            },
-            id: {
-              value: undefined,
-              type: "input",
-              label: "checkbox 的 id",
-            },
-            border: {
-              value: false,
-              type: "switch",
-              label: "checkbox 是否显示边框",
-            },
-          },
-        },
-      ],
-      // 是否显示边框
+      },
     },
     {
       tag: "el-radio-group",

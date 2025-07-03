@@ -274,7 +274,7 @@ watch(
   (val) => {
     formItemAttr.value = val.attr;
     formItemHedge.value = val.hedge;
-    if (val.slots.default.slotOptions) {
+    if (val.slots?.default?.slotOptions) {
       formItemChild.value = val.slots.default.slotOptions;
     }
   }
