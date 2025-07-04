@@ -2,32 +2,81 @@
 const defaultHedge = {
   tag: "el-form-item",
   attr: {
-    // 表单项的标签文字
-    label: "",
-    // 表单域字段名，用于验证、重置等操作
-    prop: "",
-    // 是否必填
-    required: true,
-    // 表单验证规则
-    rules: [],
-    // 手动设置的错误提示信息
-    errorMessage: "",
-    // 是否显示校验错误信息
-    showMessage: true,
-    // 是否以行内形式展示校验信息
-    inlineMessage: false,
-    // 尺寸：large / default / small
-    size: "default",
-    // 标签宽度
-    labelWidth: "100",
-    // 标签位置：left / right / top
-    labelPosition: "right",
-    // 原生 label 的 for 属性
-    for: "",
-    // 表单域验证错误时的提示信息。设置该值会导致表单验证状态变为 error，并显示该错误信息。
-    error: "",
-    // 表单项的校验状态（success/error/validating）
-    validateStatus: "",
+    label: {
+      value: "",
+      type: "input",
+      label: "表单项的标签文字",
+    },
+    prop: {
+      value: "",
+      type: "input",
+      label: "表单域字段名，用于验证、重置等操作",
+    },
+    required: {
+      value: true,
+      type: "switch",
+      label: "是否必填",
+    },
+    rules: {
+      value: [],
+      type: "array",
+      label: "表单验证规则",
+    },
+    errorMessage: {
+      value: "",
+      type: "input",
+      label: "手动设置的错误提示信息",
+    },
+    showMessage: {
+      value: true,
+      type: "switch",
+      label: "是否显示校验错误信息",
+    },
+    inlineMessage: {
+      value: false,
+      type: "switch",
+      label: "是否以行内形式展示校验信息",
+    },
+    size: {
+      value: "default",
+      type: "radio",
+      label: "尺寸",
+      options: [
+        { value: "large", label: "大尺寸" },
+        { value: "default", label: "中尺寸" },
+        { value: "small", label: "小尺寸" },
+      ],
+    },
+    labelWidth: {
+      value: "100",
+      type: "number",
+      label: "标签宽度",
+    },
+    labelPosition: {
+      value: "right",
+      type: "radio",
+      label: "标签位置",
+      options: [
+        { value: "left", label: "左侧" },
+        { value: "right", label: "右侧" },
+        { value: "top", label: "顶部" },
+      ],
+    },
+    for: {
+      value: "",
+      type: "input",
+      label: "原生 label 的 for 属性",
+    },
+    error: {
+      value: "",
+      type: "input",
+      label: "错误时的提示信息",
+    },
+    validateStatus: {
+      value: "",
+      type: "input",
+      label: "表单项的校验状态",
+    },
   },
 };
 
@@ -420,10 +469,13 @@ export const FormComponents = {
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
-          // 表单项的标签文字
-          label: "输入框",
-          // 表单域字段名，用于验证、重置等操作
-          prop: "",
+          ...defaultHedge.attr, // 保留 defaultHedge 中的其他属性
+          label: {
+            // 仅覆盖 label 属性
+            value: "输入框",
+            type: "input",
+            label: "输入框",
+          },
         },
       }),
     },
@@ -529,10 +581,14 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "自动补全",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "自动补全",
+            type: "input",
+            label: "自动补全",
+          },
+        },
       }),
     },
     {
@@ -619,10 +675,11 @@ export const FormComponents = {
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
-          // 表单项的标签文字
-          label: "多选框",
-          // 表单域字段名，用于验证、重置等操作
-          prop: "",
+          label: {
+            value: "",
+            type: "input",
+            label: "多选框",
+          },
         },
       }),
       slots: {
@@ -713,9 +770,7 @@ export const FormComponents = {
                   label: "checkbox 是否显示边框",
                 },
               },
-              slots: {
-
-              }
+              slots: {},
             },
           ],
         },
@@ -768,7 +823,7 @@ export const FormComponents = {
               type: "input",
               label: "原生 name 属性",
             },
-          }
+          },
         },
         "el-radio-button": {
           tag: "el-radio-button",
@@ -794,8 +849,8 @@ export const FormComponents = {
               type: "input",
               label: "原生 name 属性",
             },
-          }
-        }
+          },
+        },
       },
       attr: {
         type: {
@@ -860,11 +915,12 @@ export const FormComponents = {
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
-          // 表单项的标签文字
-          label: "单选框组",
-          // 表单域字段名，用于验证、重置等操作
-          prop: "",
-        }
+          label: {
+            value: "",
+            type: "input",
+            label: "多选框",
+          },
+        },
       }),
       slots: {
         default: {
@@ -912,11 +968,11 @@ export const FormComponents = {
                   type: "input",
                   label: "原生 name 属性",
                 },
-              }
-            }
+              },
+            },
           ],
-        }
-      }
+        },
+      },
     },
     {
       tag: "el-color-picker",
@@ -1004,10 +1060,14 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "颜色选择",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        attr: {
+          ...defaultHedge.attr, 
+          label: {  
+            value: "颜色选择",
+            type: "input",
+            label: "颜色选择",
+          },
+        },
       }),
     },
     {
@@ -1169,10 +1229,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "日期选择器",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "日期选择器",
+        },
       }),
     },
     {
@@ -1313,10 +1374,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "日期选择器",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "日期选择器",
+        },
       }),
     },
     {
@@ -1427,10 +1489,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "计数器",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "计数器",
+        },
       }),
     },
     {
@@ -1572,10 +1635,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "标签输入框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "标签输入",
+        },
       }),
     },
     {
@@ -1663,10 +1727,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "提及输入框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "提及",
+        },
       }),
     },
     {
@@ -1793,10 +1858,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "评分组件",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "评分",
+        },
       }),
     },
     {
@@ -1949,10 +2015,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "滑块组件",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "滑块",
+        },
       }),
     },
     {
@@ -2084,10 +2151,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "开关组件",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "开关",
+        },
       }),
     },
     {
@@ -2373,10 +2441,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "级联选择器",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "连级",
+        },
       }),
     },
     {
@@ -2487,10 +2556,11 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "级联面板",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "",
+          type: "input",
+          label: "连级面板",
+        },
       }),
     },
     {
@@ -2758,10 +2828,11 @@ export const FormComponents = {
       },
       opener: [],
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "下拉选择器",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        label: {
+          value: "下拉",
+          type: "input",
+          label: "下拉",
+        },
       }),
     },
     {

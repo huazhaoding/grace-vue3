@@ -6,29 +6,70 @@
       <el-tab-pane label="表单属性" name="form" />
     </el-tabs>
     <div class="field-box">
-      <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
+      <a
+        class="document-link"
+        target="_blank"
+        :href="documentLink"
+        title="查看组件文档"
+      >
         <el-icon>
           <Link />
         </el-icon>
       </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
-        <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top">
+        <el-form
+          v-show="currentTab === 'field' && showField"
+          size="default"
+          label-width="90px"
+          label-position="top"
+        >
           <el-form-item v-if="formItemAttr.vModel" label="字段名">
-            <el-input v-model="formItemAttr.vModel" placeholder="请输入字段名（v-model）"></el-input>
+            <el-input
+              v-model="formItemAttr.vModel"
+              placeholder="请输入字段名（v-model）"
+            ></el-input>
           </el-form-item>
           <el-form-item v-for="(item, key) in formItemAttr" :label="item.label">
-            <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
-            <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
-            <el-radio-group @change="handleRadioChange" v-model="item.value"
-              v-else-if="item.type === 'radio'">
-              <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-              }}</el-radio>
+            <el-input
+              v-model="item.value"
+              :placeholder="item.placeholder"
+              v-if="item.type === 'input'"
+            />
+            <el-switch
+              v-model="item.value"
+              v-else-if="item.type === 'switch'"
+            />
+            <el-radio-group
+              @change="handleRadioChange"
+              v-model="item.value"
+              v-else-if="item.type === 'radio'"
+            >
+              <el-radio
+                v-for="(radio, index) in item.options"
+                :key="index"
+                :value="radio.value"
+                >{{ radio.label }}</el-radio
+              >
             </el-radio-group>
-            <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-            <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
-            <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
-            <el-input-tag v-model="item.value" v-else-if="item.type === 'tag'" />
+            <el-input-number
+              v-model="item.value"
+              v-else-if="item.type === 'number'"
+            />
+            <el-color-picker
+              v-model="item.value"
+              v-else-if="item.type === 'color'"
+            />
+            <el-slider
+              v-model="item.value"
+              v-else-if="item.type === 'slider'"
+              :min="item.min"
+              :max="item.max"
+            />
+            <el-input-tag
+              v-model="item.value"
+              v-else-if="item.type === 'tag'"
+            />
             <el-input v-else-if="item.type === 'icon'" v-model="item.value">
               <template #append>
                 <el-button icon="Pointer" @click="openIconsDialog(key)">
@@ -36,9 +77,14 @@
                 </el-button>
               </template>
             </el-input>
-            <el-popover placement="left" :width="400" trigger="click" v-else-if="
-              item.type === 'object' && activeDataProperty.tag === 'el-col'
-            ">
+            <el-popover
+              placement="left"
+              :width="400"
+              trigger="click"
+              v-else-if="
+                item.type === 'object' && activeDataProperty.tag === 'el-col'
+              "
+            >
               <template #reference>
                 <el-button style="width: 100%">{{ key }}</el-button>
               </template>
@@ -50,43 +96,138 @@
               }}-{{ item.value.push }}
             </el-popover>
           </el-form-item>
+          <el-card
+            v-if="
+              activeDataProperty.type === 'form' && activeDataProperty.hedge
+            "
+          >
+            <template #header>
+              <el-text style="margin-right: 10px">包围属性</el-text>
+            </template>
+            <el-form-item
+              v-for="(item, key) in activeDataProperty.hedge.attr"
+              :label="item.label"
+              :key="key"
+            >
+              <el-input
+                v-model="item.value"
+                :placeholder="item.placeholder"
+                v-if="item.type === 'input'"
+              />
+              <el-input-number
+                v-model="item.value"
+                v-else-if="item.type === 'number'"
+              />
+              <el-slider
+                v-model="item.value"
+                v-else-if="item.type === 'slider'"
+                :min="item.min"
+                :max="item.max"
+              />
 
-          <el-divider content-position="center"
-            v-if="activeDataProperty?.slots?.default?.slotType === 'childDragComponent' || activeDataProperty?.slots?.default?.slotType === 'childComponent'">子项配置<el-button-group>
-              <el-button size="mini" type="primary" icon="el-icon-plus" @click="addItemByTemplate">添加子项
-              </el-button>
-            </el-button-group></el-divider>
+            </el-form-item>
+          </el-card>
 
+          <el-divider
+            content-position="center"
+            v-if="
+              activeDataProperty?.slots?.default?.slotType ===
+                'childDragComponent' ||
+              activeDataProperty?.slots?.default?.slotType === 'childComponent'
+            "
+          >
+            <el-text style="margin-right: 10px">子项配置</el-text>
+            <el-tooltip effect="dark" content="添加子项" placement="top-start">
+              <el-text type="primary" @click="addItemByTemplate"
+                ><el-icon>
+                  <Plus /> </el-icon
+              ></el-text>
+            </el-tooltip>
+          </el-divider>
           <template
-            v-if="activeDataProperty?.slots?.default?.slotType === 'childDragComponent' || activeDataProperty?.slots?.default?.slotType === 'childComponent'">
-            <draggable :list="activeDataProperty.slots.default.slotOptions"
-              :group="{ name: 'formItemChild', pull: false, put: false }" :sort="true" item-key="renderKey"
-              class="draggable">
+            v-if="
+              activeDataProperty?.slots?.default?.slotType ===
+                'childDragComponent' ||
+              activeDataProperty?.slots?.default?.slotType === 'childComponent'
+            "
+          >
+            <draggable
+              :list="activeDataProperty.slots.default.slotOptions"
+              :group="{ name: 'formItemChild', pull: false, put: false }"
+              :sort="true"
+              item-key="renderKey"
+              class="draggable"
+            >
               <template #item="{ element, index }">
                 <el-card style="margin-bottom: 10px">
                   <template #header>
                     <div class="card-header">
-                      <span>子项{{ index + 1 }}配置</span><el-button-group style="float: right">
-                        <el-button type="primary" icon="Plus" @click="addCol(element, index)" title="复制" />
-                        <el-button type="danger" icon="Remove" @click="removeCol(element, index)" title="删除" />
-                        <el-button type="success" :icon="colVisible[index] ? 'Hide' : 'View'"
-                          @click="changeColVisible(!colVisible[index], index)" title="显示|隐藏" />
+                      <span>子项{{ index + 1 }}配置</span
+                      ><el-button-group style="float: right">
+                        <el-button
+                          type="primary"
+                          icon="Plus"
+                          @click="addCol(element, index)"
+                          title="复制"
+                        />
+                        <el-button
+                          type="danger"
+                          icon="Remove"
+                          @click="removeCol(element, index)"
+                          title="删除"
+                        />
+                        <el-button
+                          type="success"
+                          :icon="colVisible[index] ? 'Hide' : 'View'"
+                          @click="changeColVisible(!colVisible[index], index)"
+                          title="显示|隐藏"
+                        />
                       </el-button-group>
                     </div>
                   </template>
                   <div v-show="colVisible[index]">
-                    <el-form-item v-for="(item, key) in element.attr" :label="item.label" :key="key">
-                      <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
-                      <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-                      <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
-                        :max="item.max" />
-                      <el-popover placement="left" :width="400" trigger="click"
-                        v-else-if="item.type === 'object' && activeDataProperty?.slots?.default?.slotType === 'childDragComponent'">
+                    <el-form-item
+                      v-for="(item, key) in element.attr"
+                      :label="item.label"
+                      :key="key"
+                    >
+                      <el-input
+                        v-model="item.value"
+                        :placeholder="item.placeholder"
+                        v-if="item.type === 'input'"
+                      />
+                      <el-input-number
+                        v-model="item.value"
+                        v-else-if="item.type === 'number'"
+                      />
+                      <el-slider
+                        v-model="item.value"
+                        v-else-if="item.type === 'slider'"
+                        :min="item.min"
+                        :max="item.max"
+                      />
+                      <el-popover
+                        placement="left"
+                        :width="400"
+                        trigger="click"
+                        v-else-if="
+                          item.type === 'object' &&
+                          activeDataProperty?.slots?.default?.slotType ===
+                            'childDragComponent'
+                        "
+                      >
                         <template #reference>
                           <el-button style="width: 100%">{{ key }}</el-button>
                         </template>
-                        <el-form-item v-for="(value, key) in item.value" :label="key">
-                          <el-slider v-model="item.value[key]" :min="0" :max="24" />
+                        <el-form-item
+                          v-for="(value, key) in item.value"
+                          :label="key"
+                        >
+                          <el-slider
+                            v-model="item.value[key]"
+                            :min="0"
+                            :max="24"
+                          />
                         </el-form-item>
                         {{ item.value.span }}-{{ item.value.offset }}-{{
                           item.value.pull
@@ -99,9 +240,6 @@
               </template>
             </draggable>
           </template>
-
-
-
         </el-form>
 
         <!-- 包围属性 -->
@@ -127,7 +265,11 @@
         <!-- 表单属性 -->
       </el-scrollbar>
     </div>
-    <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
+    <icons-dialog
+      v-model="iconsVisible"
+      :current="formItemAttr[currentIconModel]"
+      @select="setIcon"
+    />
     <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
   </div>
 </template>
@@ -166,18 +308,20 @@ function changeColVisible(visible, index) {
   colVisible.value[index] = visible;
 }
 
-function chooseTemplate(type) {
-
-}
+function chooseTemplate(type) {}
 
 function handleRadioChange(value) {
-  if (props.activeDataProperty.template&&typeof value==='string'&& value.indexOf('el-')>-1) {
-      props.activeDataProperty.slots.default.slotOptions=[];
-      childTemplate.value=props.activeDataProperty.template[value];
+  if (
+    props.activeDataProperty.template &&
+    typeof value === "string" &&
+    value.indexOf("el-") > -1
+  ) {
+    props.activeDataProperty.slots.default.slotOptions = [];
+    childTemplate.value = props.activeDataProperty.template[value];
   }
 }
 
-function addItemByTemplate(){
+function addItemByTemplate() {
   addCol(childTemplate.value);
 }
 function addCol(child, index) {
@@ -199,6 +343,7 @@ watch(
   (val) => {
     formItemAttr.value = val.attr;
     formItemHedge.value = val.hedge;
+    console.log(val.hedge);
     if (val.slots?.default?.slotOptions) {
       formItemChild.value = val.slots.default.slotOptions;
     }
@@ -555,7 +700,6 @@ function setIcon(val) {
     }
   }
 
-
   .field-box {
     position: relative;
     height: calc(100vh - 50px - 40px - 42px);
@@ -609,12 +753,12 @@ function setIcon(val) {
     color: #f56c6c;
   }
 
-  & .el-input+.el-input {
+  & .el-input + .el-input {
     margin-left: 4px;
   }
 }
 
-.select-item+.select-item {
+.select-item + .select-item {
   margin-top: 4px;
 }
 

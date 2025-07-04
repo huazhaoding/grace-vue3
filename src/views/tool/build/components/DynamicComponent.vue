@@ -9,7 +9,7 @@
 
     <component v-if="
       elementData.type && elementData.type === 'form' && elementData.hedge
-    " :is="elementData.hedge.tag" v-bind="elementData.hedge.attr" class="field-wrapper not-drag">
+    " :is="elementData.hedge.tag" v-bind="simplifyItem(elementData.hedge.attr)" class="field-wrapper not-drag">
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr.defaultValue?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
