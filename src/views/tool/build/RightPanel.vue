@@ -1,249 +1,141 @@
 <template>
   <div class="right-board">
-    <el-tabs v-model="currentTab" stretch class="center-tabs">
-      <el-tab-pane label="组件属性" name="field" />
-      <el-tab-pane label="包围属性" name="hedge" />
-      <el-tab-pane label="表单属性" name="form" />
-    </el-tabs>
     <div class="field-box">
-      <a
-        class="document-link"
-        target="_blank"
-        :href="documentLink"
-        title="查看组件文档"
-      >
-        <el-icon>
-          <Link />
-        </el-icon>
-      </a>
-      <el-scrollbar class="right-scrollbar">
-        <!-- 组件属性 -->
-        <el-form
-          v-show="currentTab === 'field' && showField"
-          size="default"
-          label-width="90px"
-          label-position="top"
-        >
-          <el-form-item v-if="formItemAttr.vModel" label="字段名">
-            <el-input
-              v-model="formItemAttr.vModel"
-              placeholder="请输入字段名（v-model）"
-            ></el-input>
-          </el-form-item>
-          <el-form-item v-for="(item, key) in formItemAttr" :label="item.label">
-            <el-input
-              v-model="item.value"
-              :placeholder="item.placeholder"
-              v-if="item.type === 'input'"
-            />
-            <el-switch
-              v-model="item.value"
-              v-else-if="item.type === 'switch'"
-            />
-            <el-radio-group
-              @change="handleRadioChange"
-              v-model="item.value"
-              v-else-if="item.type === 'radio'"
-            >
-              <el-radio
-                v-for="(radio, index) in item.options"
-                :key="index"
-                :value="radio.value"
-                >{{ radio.label }}</el-radio
-              >
-            </el-radio-group>
-            <el-input-number
-              v-model="item.value"
-              v-else-if="item.type === 'number'"
-            />
-            <el-color-picker
-              v-model="item.value"
-              v-else-if="item.type === 'color'"
-            />
-            <el-slider
-              v-model="item.value"
-              v-else-if="item.type === 'slider'"
-              :min="item.min"
-              :max="item.max"
-            />
-            <el-input-tag
-              v-model="item.value"
-              v-else-if="item.type === 'tag'"
-            />
-            <el-input v-else-if="item.type === 'icon'" v-model="item.value">
-              <template #append>
-                <el-button icon="Pointer" @click="openIconsDialog(key)">
-                  选择
-                </el-button>
-              </template>
-            </el-input>
-            <el-popover
-              placement="left"
-              :width="400"
-              trigger="click"
-              v-else-if="
-                item.type === 'object' && activeDataProperty.tag === 'el-col'
-              "
-            >
-              <template #reference>
-                <el-button style="width: 100%">{{ key }}</el-button>
-              </template>
-              <el-form-item v-for="(value, key) in item.value" :label="key">
-                <el-slider v-model="item.value[key]" :min="0" :max="24" />
-              </el-form-item>
-              {{ item.value.span }}-{{ item.value.offset }}-{{
-                item.value.pull
-              }}-{{ item.value.push }}
-            </el-popover>
-          </el-form-item>
-          <el-card
-            v-if="
-              activeDataProperty.type === 'form' && activeDataProperty.hedge
-            "
-          >
-            <template #header>
-              <el-text style="margin-right: 10px">包围属性</el-text>
-            </template>
-            <el-form-item
-              v-for="(item, key) in activeDataProperty.hedge.attr"
-              :label="item.label"
-              :key="key"
-            >
-              <el-input
-                v-model="item.value"
-                :placeholder="item.placeholder"
-                v-if="item.type === 'input'"
-              />
-              <el-input-number
-                v-model="item.value"
-                v-else-if="item.type === 'number'"
-              />
-              <el-slider
-                v-model="item.value"
-                v-else-if="item.type === 'slider'"
-                :min="item.min"
-                :max="item.max"
-              />
-
-            </el-form-item>
-          </el-card>
-
-          <el-divider
-            content-position="center"
-            v-if="
+      <el-card shadow="never" body-class="card-body">
+        <template #header>
+          <div>组件配置 <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
+              <el-icon>
+                <Link />
+              </el-icon>
+            </a></div>
+        </template>
+        <el-form style="padding-left: 5px;padding-right: 5px;" v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top">
+          <el-collapse v-model="activeName">
+            <el-collapse-item title="基础属性" name="1">
+              <el-scrollbar height="400px">
+                <div class="scrollbar-item">
+                  <el-form-item v-if="formItemAttr.vModel" label="字段名">
+                    <el-input v-model="formItemAttr.vModel" placeholder="请输入字段名（v-model）"></el-input>
+                  </el-form-item>
+                  <el-form-item v-for="(item, key) in formItemAttr" :label="item.label">
+                    <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
+                    <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
+                    <el-radio-group @change="handleRadioChange" v-model="item.value" v-else-if="item.type === 'radio'">
+                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
+                        }}</el-radio>
+                    </el-radio-group>
+                    <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
+                    <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
+                    <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
+                      :max="item.max" />
+                    <el-input-tag v-model="item.value" v-else-if="item.type === 'tag'" />
+                    <el-input v-else-if="item.type === 'icon'" v-model="item.value">
+                      <template #append>
+                        <el-button icon="Pointer" @click="openIconsDialog(key)">
+                          选择
+                        </el-button>
+                      </template>
+                    </el-input>
+                    <el-popover placement="left" :width="400" trigger="click" v-else-if="
+                      item.type === 'object' && activeDataProperty.tag === 'el-col'
+                    ">
+                      <template #reference>
+                        <el-button style="width: 100%">{{ key }}</el-button>
+                      </template>
+                      <el-form-item v-for="(value, key) in item.value" :label="key">
+                        <el-slider v-model="item.value[key]" :min="0" :max="24" />
+                      </el-form-item>
+                      {{ item.value.span }}-{{ item.value.offset }}-{{
+                        item.value.pull
+                      }}-{{ item.value.push }}
+                    </el-popover>
+                  </el-form-item>
+                </div>
+              </el-scrollbar>
+            </el-collapse-item>
+            <el-collapse-item v-if="activeDataProperty.type === 'form' && activeDataProperty.hedge" title="包围属性"
+              name="2">
+              <el-scrollbar>
+                <el-form-item v-for="(item, key) in activeDataProperty.hedge.attr" :label="item.label" :key="key">
+                  <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
+                  <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
+                  <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
+                </el-form-item>
+              </el-scrollbar>
+            </el-collapse-item>
+            <el-collapse-item title="子项配置" name="3" v-if="
               activeDataProperty?.slots?.default?.slotType ===
-                'childDragComponent' ||
+              'childDragComponent' ||
               activeDataProperty?.slots?.default?.slotType === 'childComponent'
-            "
-          >
-            <el-text style="margin-right: 10px">子项配置</el-text>
-            <el-tooltip effect="dark" content="添加子项" placement="top-start">
-              <el-text type="primary" @click="addItemByTemplate"
-                ><el-icon>
-                  <Plus /> </el-icon
-              ></el-text>
-            </el-tooltip>
-          </el-divider>
-          <template
-            v-if="
-              activeDataProperty?.slots?.default?.slotType ===
+            ">
+              <template #title="{ isActive }">
+                <el-text style="margin-right: 10px">子项配置</el-text>
+                <el-tooltip effect="dark" content="添加子项" placement="top-start">
+                  <el-text type="primary" @click.stop="addItemByTemplate"><el-icon>
+                      <Plus />
+                    </el-icon></el-text>
+                </el-tooltip>
+              </template>
+
+              <template v-if="
+                activeDataProperty?.slots?.default?.slotType ===
                 'childDragComponent' ||
-              activeDataProperty?.slots?.default?.slotType === 'childComponent'
-            "
-          >
-            <draggable
-              :list="activeDataProperty.slots.default.slotOptions"
-              :group="{ name: 'formItemChild', pull: false, put: false }"
-              :sort="true"
-              item-key="renderKey"
-              class="draggable"
-            >
-              <template #item="{ element, index }">
-                <el-card style="margin-bottom: 10px">
-                  <template #header>
-                    <div class="card-header">
-                      <span>子项{{ index + 1 }}配置</span
-                      ><el-button-group style="float: right">
-                        <el-button
-                          type="primary"
-                          icon="Plus"
-                          @click="addCol(element, index)"
-                          title="复制"
-                        />
-                        <el-button
-                          type="danger"
-                          icon="Remove"
-                          @click="removeCol(element, index)"
-                          title="删除"
-                        />
-                        <el-button
-                          type="success"
-                          :icon="colVisible[index] ? 'Hide' : 'View'"
-                          @click="changeColVisible(!colVisible[index], index)"
-                          title="显示|隐藏"
-                        />
-                      </el-button-group>
-                    </div>
-                  </template>
-                  <div v-show="colVisible[index]">
-                    <el-form-item
-                      v-for="(item, key) in element.attr"
-                      :label="item.label"
-                      :key="key"
-                    >
-                      <el-input
-                        v-model="item.value"
-                        :placeholder="item.placeholder"
-                        v-if="item.type === 'input'"
-                      />
-                      <el-input-number
-                        v-model="item.value"
-                        v-else-if="item.type === 'number'"
-                      />
-                      <el-slider
-                        v-model="item.value"
-                        v-else-if="item.type === 'slider'"
-                        :min="item.min"
-                        :max="item.max"
-                      />
-                      <el-popover
-                        placement="left"
-                        :width="400"
-                        trigger="click"
-                        v-else-if="
-                          item.type === 'object' &&
-                          activeDataProperty?.slots?.default?.slotType ===
+                activeDataProperty?.slots?.default?.slotType === 'childComponent'
+              ">
+                <draggable :list="activeDataProperty.slots.default.slotOptions"
+                  :group="{ name: 'formItemChild', pull: false, put: false }" :sort="true" item-key="renderKey"
+                  class="draggable">
+                  <template #item="{ element, index }">
+                    <el-card style="margin-bottom: 10px">
+                      <template #header>
+                        <div class="card-header">
+                          <span>子项{{ index + 1 }}配置</span><el-button-group style="float: right">
+                            <el-button type="primary" icon="Plus" @click="addCol(element, index)" title="复制" />
+                            <el-button type="danger" icon="Remove" @click="removeCol(element, index)" title="删除" />
+                            <el-button type="success" :icon="colVisible[index] ? 'Hide' : 'View'"
+                              @click="changeColVisible(!colVisible[index], index)" title="显示|隐藏" />
+                          </el-button-group>
+                        </div>
+                      </template>
+                      <div v-show="colVisible[index]">
+                        <el-form-item v-for="(item, key) in element.attr" :label="item.label" :key="key">
+                          <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
+                          <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
+                          <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
+                            :max="item.max" />
+                          <el-popover placement="left" :width="400" trigger="click" v-else-if="
+                            item.type === 'object' &&
+                            activeDataProperty?.slots?.default?.slotType ===
                             'childDragComponent'
-                        "
-                      >
-                        <template #reference>
-                          <el-button style="width: 100%">{{ key }}</el-button>
-                        </template>
-                        <el-form-item
-                          v-for="(value, key) in item.value"
-                          :label="key"
-                        >
-                          <el-slider
-                            v-model="item.value[key]"
-                            :min="0"
-                            :max="24"
-                          />
+                          ">
+                            <template #reference>
+                              <el-button style="width: 100%">{{ key }}</el-button>
+                            </template>
+                            <el-form-item v-for="(value, key) in item.value" :label="key">
+                              <el-slider v-model="item.value[key]" :min="0" :max="24" />
+                            </el-form-item>
+                            {{ item.value.span }}-{{ item.value.offset }}-{{
+                              item.value.pull
+                            }}-{{ item.value.push }}
+                          </el-popover>
                         </el-form-item>
-                        {{ item.value.span }}-{{ item.value.offset }}-{{
-                          item.value.pull
-                        }}-{{ item.value.push }}
-                      </el-popover>
-                    </el-form-item>
-                  </div>
-                  <el-text class="mx-1" type="info">点击眼睛切换状态</el-text>
-                </el-card>
+                      </div>
+                      <el-text class="mx-1" type="info">点击眼睛切换状态</el-text>
+                    </el-card>
+                  </template>
+                </draggable>
               </template>
-            </draggable>
-          </template>
+            </el-collapse-item>
+          </el-collapse>
         </el-form>
+      </el-card>
 
-        <!-- 包围属性 -->
-        <!-- export const defaultItemHedge= {
+
+      <!-- 组件属性 -->
+
+
+      <!-- 包围属性 -->
+      <!-- export const defaultItemHedge= {
     model: {}, // 表单数据  
     rules: {}, // 表单验证规则
     inline: false, // 是否行内表单
@@ -262,14 +154,10 @@
     requireAsteriskPosition: "left", // 必填星号的位置：left / right
   } -->
 
-        <!-- 表单属性 -->
-      </el-scrollbar>
+      <!-- 表单属性 -->
+
     </div>
-    <icons-dialog
-      v-model="iconsVisible"
-      :current="formItemAttr[currentIconModel]"
-      @select="setIcon"
-    />
+    <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
     <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
   </div>
 </template>
@@ -298,6 +186,7 @@ const props = defineProps({
   activeDataProperty: Object,
   formConf: Object,
 });
+const activeName = ref(1);
 const formItemHedge = ref([]);
 
 const formItemAttr = ref([]);
@@ -308,7 +197,7 @@ function changeColVisible(visible, index) {
   colVisible.value[index] = visible;
 }
 
-function chooseTemplate(type) {}
+function chooseTemplate(type) { }
 
 function handleRadioChange(value) {
   if (
@@ -688,9 +577,19 @@ function setIcon(val) {
   position: absolute;
   right: 0;
   top: 0;
-  padding-top: 3px;
+
+
+  .scrollbar-item {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
 
   &:deep() {
+    .card-body {
+      padding: 0 !important;
+    }
+
     .el-tabs__header {
       margin: 0;
     }
@@ -709,12 +608,6 @@ function setIcon(val) {
 
   .el-scrollbar {
     height: 100%;
-
-    &:deep() {
-      .el-scrollbar__view {
-        padding: 30px 20px;
-      }
-    }
   }
 }
 
@@ -753,12 +646,12 @@ function setIcon(val) {
     color: #f56c6c;
   }
 
-  & .el-input + .el-input {
+  & .el-input+.el-input {
     margin-left: 4px;
   }
 }
 
-.select-item + .select-item {
+.select-item+.select-item {
   margin-top: 4px;
 }
 
@@ -795,7 +688,7 @@ function setIcon(val) {
   width: 26px;
   height: 26px;
   top: 0;
-  left: 0;
+  right: 0;
   cursor: pointer;
   background: #409eff;
   z-index: 1;
