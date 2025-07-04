@@ -675,10 +675,11 @@ export const FormComponents = {
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
+          ...defaultHedge.attr,
           label: {
-            value: "",
+            value: "多选框组",
             type: "input",
-            label: "多选框",
+            label: "多选框组",
           },
         },
       }),
@@ -915,10 +916,11 @@ export const FormComponents = {
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
+          ...defaultHedge.attr,
           label: {
-            value: "",
+            value: "单选框组",
             type: "input",
-            label: "多选框",
+            label: "单选框组",
           },
         },
       }),
@@ -1061,8 +1063,8 @@ export const FormComponents = {
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
-          ...defaultHedge.attr, 
-          label: {  
+          ...defaultHedge.attr,
+          label: {
             value: "颜色选择",
             type: "input",
             label: "颜色选择",
@@ -1229,10 +1231,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "日期选择器",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "日期选择",
+            type: "input",
+            label: "日期选择",
+          },
         },
       }),
     },
@@ -1374,10 +1379,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "日期选择器",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "日期时间",
+            type: "input",
+            label: "日期时间",
+          },
         },
       }),
     },
@@ -1489,10 +1497,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "计数器",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "计数器",
+            type: "input",
+            label: "计数器",
+          },
         },
       }),
     },
@@ -1635,10 +1646,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "标签输入",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "标签输入",
+            type: "input",
+            label: "标签输入",
+          },
         },
       }),
     },
@@ -1727,10 +1741,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "提及",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "提及",
+            type: "input",
+            label: "提及",
+          },
         },
       }),
     },
@@ -1858,10 +1875,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "评分",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "评分",
+            type: "input",
+            label: "评分",
+          },
         },
       }),
     },
@@ -2015,10 +2035,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "滑块",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "滑块",
+            type: "input",
+            label: "滑块",
+          },
         },
       }),
     },
@@ -2151,10 +2174,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "开关",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "开关",
+            type: "input",
+            label: "开关",
+          },
         },
       }),
     },
@@ -2441,10 +2467,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "连级",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "级联选择",
+            type: "input",
+            label: "级联选择",
+          },
         },
       }),
     },
@@ -2556,10 +2585,13 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "",
-          type: "input",
-          label: "连级面板",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "级联面板",
+            type: "input",
+            label: "级联面板",
+          },
         },
       }),
     },
@@ -2828,10 +2860,13 @@ export const FormComponents = {
       },
       opener: [],
       hedge: Object.assign({}, defaultHedge, {
-        label: {
-          value: "下拉",
-          type: "input",
-          label: "下拉",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "下拉选择",
+            type: "input",
+            label: "下拉选择",
+          },
         },
       }),
     },
@@ -2989,15 +3024,19 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "时间选择器",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "时间选择",
+            type: "input",
+            label: "时间选择",
+          },
+        },
       }),
     },
     {
       tag: "el-time-select",
-      tagLabel: "时间选择器 (Time Select)",
+      tagLabel: "时间选择器",
       tagIcon: "time-select",
       document: "https://element-plus.org/zh-CN/component/time-select",
       type: "form",
@@ -3108,10 +3147,14 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "时间选择器 (Time Select)",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        attr: {
+          ...defaultHedge.attr,
+          label: {
+            value: "多选框组",
+            type: "input",
+            label: "多选框组",
+          },
+        },
       }),
     },
     {
@@ -3197,11 +3240,15 @@ export const FormComponents = {
           label: "是否触发表单验证",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "穿梭框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+       hedge: Object.assign({}, defaultHedge, {
+        attr: {
+          ...defaultHedge.attr, 
+          label: {
+            value: "穿梭框",
+            type: "input",
+            label: "穿梭框",
+          },
+        },
       }),
     },
   ],
