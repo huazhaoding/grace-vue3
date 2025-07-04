@@ -601,6 +601,135 @@ export const FormComponents = {
       // 文档链接
       document: "https://element-plus.org/zh-CN/component/checkbox",
       type: "form",
+      template:{
+        "el-checkbox": {
+              tagIcon: "el-checkbox", // 子组件图标名称
+              tagLabel: "多选框", // 子组件标签名
+              tag: "el-checkbox", // 子组件标签类型
+              attr: {
+                label: {
+                  value: "选项一",
+                  type: "input",
+                  label: "显示的标签",
+                },
+                value: {
+                  value: 1,
+                  type: "input",
+                  label: "选项值",
+                },
+                "true-value": {
+                  value: undefined,
+                  type: "switch",
+                  label: "选中时的值",
+                },
+                "false-value": {
+                  value: undefined,
+                  type: "switch",
+                  label: "未选中时的值",
+                },
+                disabled: {
+                  value: false,
+                  type: "switch",
+                  label: "是否禁用",
+                },
+                size: {
+                  value: "small",
+                  type: "radio",
+                  label: "尺寸",
+                  options: [
+                    { value: "large", label: "大尺寸" },
+                    { value: "default", label: "中尺寸" },
+                    { value: "small", label: "小尺寸" },
+                  ],
+                },
+                name: {
+                  value: undefined,
+                  type: "input",
+                  label: "checkbox 的 name 属性",
+                },
+                checked: {
+                  value: false,
+                  type: "switch",
+                  label: "是否被选中",
+                },
+                indeterminate: {
+                  value: false,
+                  type: "switch",
+                  label: "是否半选中",
+                },
+                "validate-event": {
+                  value: true,
+                  type: "switch",
+                  label: "是否触发表单验证",
+                },
+                "aria-controls": {
+                  value: undefined,
+                  type: "input",
+                  label:
+                    "与 aria-control 一致，当 indeterminate 为 true 时生效",
+                },
+                tabindex: {
+                  value: 0,
+                  type: "input",
+                  label: "输入框的 tabindex",
+                },
+                id: {
+                  value: undefined,
+                  type: "input",
+                  label: "checkbox 的 id",
+                },
+                border: {
+                  value: false,
+                  type: "switch",
+                  label: "checkbox 是否显示边框",
+                },
+              },
+              slots: {},
+            },
+        "el-checkbox-button":{
+              tagLabel: "多选框", // 子组件标签名
+              tag: "el-checkbox-button", // 子组件标签类型
+              attr: {
+                label: {
+                  value: "选项一",
+                  type: "input",
+                  label: "显示的标签",
+                },
+                value: {
+                  value: 1,
+                  type: "input",
+                  label: "选项值",
+                },
+                "true-value": {
+                  value: undefined,
+                  type: "switch",
+                  label: "选中时的值",
+                },
+                "false-value": {
+                  value: undefined,
+                  type: "switch",
+                  label: "未选中时的值",
+                },
+                disabled: {
+                  value: false,
+                  type: "switch",
+                  label: "是否禁用",
+                },
+                name: {
+                  value: undefined,
+                  type: "input",
+                  label: "checkbox 的 name 属性",
+                },
+                checked: {
+                  value: false,
+                  type: "switch",
+                  label: "是否被选中",
+                },
+          
+              },
+              slots: {},
+            }
+      },
       attr: {
         defaultValue: {
           value: [],
@@ -608,17 +737,17 @@ export const FormComponents = {
           label: "内容",
         },
         type: {
-          value: "button",
+          value: "el-checkbox",
           type: "radio",
           label: "风格",
           options: [
             {
-              label: "按钮",
-              value: "button",
+              label: "默认",
+              value: "el-checkbox",
             },
             {
-              label: "默认",
-              value: "default",
+              label: "按钮",
+              value: "el-checkbox-button",
             },
           ],
         },
