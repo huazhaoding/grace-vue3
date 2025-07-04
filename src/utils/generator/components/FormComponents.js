@@ -727,14 +727,84 @@ export const FormComponents = {
       tagIcon: "radio",
       document: "https://element-plus.org/zh-CN/component/radio",
       type: "form",
+      template: {
+        "el-radio": {
+          tag: "el-radio",
+          tagLabel: "单选框",
+          attr: {
+            label: {
+              value: "选项一",
+              type: "input",
+              label: "显示的标签",
+            },
+            value: {
+              value: 1,
+              type: "input",
+              label: "选项值",
+            },
+            disabled: {
+              value: false,
+              type: "switch",
+              label: "是否禁用",
+            },
+            border: {
+              value: false,
+              type: "switch",
+              label: "是否显示边框",
+            },
+            size: {
+              value: undefined,
+              type: "radio",
+              label: "尺寸",
+              options: [
+                { value: undefined, label: "跟随容器" },
+                { value: "large", label: "大尺寸" },
+                { value: "default", label: "中尺寸" },
+                { value: "small", label: "小尺寸" },
+              ],
+            },
+            name: {
+              value: undefined,
+              type: "input",
+              label: "原生 name 属性",
+            },
+          }
+        },
+        "el-radio-button": {
+          tag: "el-radio-button",
+          tagLabel: "单选框按钮",
+          attr: {
+            label: {
+              value: "选项一",
+              type: "input",
+              label: "显示的标签",
+            },
+            value: {
+              value: 1,
+              type: "input",
+              label: "选项值",
+            },
+            disabled: {
+              value: false,
+              type: "switch",
+              label: "是否禁用",
+            },
+            name: {
+              value: undefined,
+              type: "input",
+              label: "原生 name 属性",
+            },
+          }
+        }
+      },
       attr: {
         type: {
-          value: "button",
+          value: "el-radio",
           type: "radio",
           label: "单选框类型",
           options: [
-            { value: "default", label: "默认" },
-            { value: "button", label: "按钮" },
+            { value: "el-radio", label: "默认" },
+            { value: "el-radio-button", label: "按钮" },
           ],
         },
         disabled: {
@@ -827,10 +897,11 @@ export const FormComponents = {
                   label: "是否显示边框",
                 },
                 size: {
-                  value: "default",
+                  value: undefined,
                   type: "radio",
                   label: "尺寸",
                   options: [
+                    { value: undefined, label: "跟随容器" },
                     { value: "large", label: "大尺寸" },
                     { value: "default", label: "中尺寸" },
                     { value: "small", label: "小尺寸" },
