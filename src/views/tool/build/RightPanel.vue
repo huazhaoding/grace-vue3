@@ -55,12 +55,14 @@
             </el-collapse-item>
             <el-collapse-item v-if="activeDataProperty.type === 'form' && activeDataProperty.hedge" title="包围属性"
               name="2">
-              <el-scrollbar>
+              <el-scrollbar height="400px">
+                <div class="scrollbar-item">
                 <el-form-item v-for="(item, key) in activeDataProperty.hedge.attr" :label="item.label" :key="key">
                   <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                   <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                   <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
                 </el-form-item>
+                </div>
               </el-scrollbar>
             </el-collapse-item>
             <el-collapse-item title="子项配置" name="3" v-if="
@@ -76,7 +78,8 @@
                     </el-icon></el-text>
                 </el-tooltip>
               </template>
-
+              <el-scrollbar height="400px">
+                <div class="scrollbar-item">
               <template v-if="
                 activeDataProperty?.slots?.default?.slotType ===
                 'childDragComponent' ||
@@ -104,6 +107,7 @@
                           <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
                             :max="item.max" />
                           <el-popover placement="left" :width="400" trigger="click" v-else-if="
+                            activeDataProperty.tag==='el-row' &&
                             item.type === 'object' &&
                             activeDataProperty?.slots?.default?.slotType ===
                             'childDragComponent'
@@ -125,6 +129,8 @@
                   </template>
                 </draggable>
               </template>
+              </div>
+              </el-scrollbar>
             </el-collapse-item>
           </el-collapse>
         </el-form>
