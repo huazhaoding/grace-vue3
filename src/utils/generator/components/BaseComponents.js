@@ -344,6 +344,232 @@ export const BaseComponents = {
       tagLabel: "布局", // 标签名，用于标识组件
       tagIcon: "row", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/layout", // 组件文档链接
+      template: {
+        "el-col": {
+          tagIcon: "el-col", // 子组件图标名称
+          tagLabel: "列配置", // 子组件标签名
+          tag: "el-col", // 子组件标签类型
+          attr: {
+            span: {
+              value: 12,
+              label: "栅格占据的列数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            offset: {
+              value: 0,
+              label: "栅格左侧的间隔格数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            pull: {
+              value: 0,
+              label: "栅格向左移动格数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            push: {
+              value: 0,
+              label: "栅格向右移动格数",
+              type: "slider",
+              min: 0,
+              max: 24,
+            },
+            xs: {
+              value: { span: 12, offset: 0, pull: 0, push: 0 },
+              label: "超小屏幕",
+              type: "object",
+            }, // 超小屏幕下的栅格配置
+            sm: {
+              value: { span: 12, offset: 0, pull: 0, push: 0 },
+              label: "小屏幕",
+              type: "object",
+            }, // 小屏幕下的栅格配置
+            md: {
+              value: { span: 12, offset: 0, pull: 0, push: 0 },
+              label: "中等屏幕",
+              type: "object",
+            },
+            // 中等屏幕下的栅格配置
+            lg: {
+              value: { span: 12, offset: 0, pull: 0, push: 0 },
+              label: "大屏幕",
+              type: "object",
+            }, // 大屏幕下的栅格配置
+            xl: {
+              value: { span: 12, offset: 0, pull: 0, push: 0 },
+              label: "超大屏幕",
+              type: "object",
+            }, // 超大屏幕下的栅格配置,
+            tag: {
+              value: "div",
+              label: "自定义标签",
+              type: "input",
+              placeholder: "请输入自定义标签",
+            },
+          },
+          slots: {
+            default: {
+              label: "el-col默认插槽",
+              slotType: "dragComponent",
+              used: true,
+              slotOptions: [
+                {
+                  tag: "el-button", // 定义组件类型为按钮
+                  tagLabel: "按钮", // 标签名，用于标识组件
+                  tagIcon: "button", // 图标名称，用于可视化展示
+                  document:
+                    "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
+                  attr: {
+                    size: {
+                      value: undefined,
+                      type: "radio",
+                      label: "尺寸",
+                      options: [
+                        { label: "大", value: "large" },
+                        { label: "默认", value: "default" },
+                        { label: "小", value: "small" },
+                      ],
+                    }, // 按钮尺寸 (large/default/small)
+                    type: {
+                      value: "primary",
+                      type: "radio",
+                      label: "样式",
+                      info: "按钮类型，在设置color时，后者优先。",
+                      options: [
+                        { label: "主要", value: "primary" },
+                        { label: "成功", value: "success" },
+                        { label: "警告", value: "warning" },
+                        { label: "危险", value: "danger" },
+                        { label: "信息", value: "info" },
+                        { label: "文本", value: "text" },
+                      ],
+                    },
+                    plain: {
+                      value: false,
+                      label: "朴素按钮",
+                      type: "switch",
+                    }, // 是否为朴素按钮样式
+                    text: {
+                      value: false,
+                      label: "文字按钮",
+                      type: "switch",
+                    }, // 是否为文字按钮样式
+                    bg: {
+                      value: true,
+                      label: "背景色",
+                      type: "switch",
+                    }, // 文字按钮是否有背景色
+                    link: {
+                      value: false,
+                      label: "链接按钮",
+                      type: "switch",
+                    }, // 是否为链接按钮样式
+                    round: {
+                      value: false,
+                      label: "圆角按钮",
+                      type: "switch",
+                    }, // 是否为圆角按钮
+                    circle: {
+                      value: false,
+                      label: "圆形按钮",
+                      type: "switch",
+                    }, // 是否为圆形按钮
+                    loading: {
+                      value: false,
+                      label: "加载状态",
+                      type: "switch",
+                    }, // 是否显示加载状态
+                    "loading-icon": {
+                      value: "Loading",
+                      label: "加载图标",
+                      type: "icon",
+                    }, // 自定义加载图标
+                    disabled: {
+                      value: false,
+                      label: "禁用按钮",
+                      type: "switch",
+                    }, // 是否禁用按钮
+                    icon: {
+                      value: undefined,
+                      label: "按钮图标",
+                      type: "icon",
+                    }, // 按钮上的图标组件
+                    autofocus: {
+                      value: false,
+                      label: "自动获取焦点",
+                      type: "switch",
+                    }, // 是否自动获取焦点
+                    "native-type": {
+                      value: "button",
+                      label: "原生按钮类型",
+                      type: "radio",
+                      options: [
+                        {
+                          value: "button",
+                          label: "按钮",
+                        },
+                        {
+                          value: "submit",
+                          label: "表单提交",
+                        },
+                        {
+                          value: "reset",
+                          label: "重置",
+                        },
+                      ],
+                    }, // 原生 type 属性 (button/submit/reset)
+                    "auto-insert-space": {
+                      value: false,
+                      label: "自动插入空格",
+                      type: "switch",
+                    }, // 中文字符间是否自动加空格
+                    color: {
+                      value: "",
+                      label: "自定义按钮颜色",
+                      type: "color",
+                    }, // 自定义按钮颜色
+                    dark: {
+                      value: false,
+                      label: "dark 模式",
+                      type: "switch",
+                    }, // 是否启用 dark 模式
+                    tag: {
+                      value: "button",
+                      label: "自定义元素标签",
+                      type: "input",
+                    }, // 自定义元素标签
+                  },
+                  slots: {
+                    default: {
+                      value: "按钮",
+                      label: "按钮内容",
+                      slotType: "normal",
+                      used: true,
+                      type: "textarea",
+                    },
+                    loading: {
+                      value: undefined,
+                      label: "加载中内容",
+                      slotType: "normal",
+                      type: "textarea",
+                    },
+                    icon: {
+                      value: undefined,
+                      label: "图标",
+                      slotType: "normal",
+                      type: "input",
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        }
+      },
       attr: {
         gutter: {
           value: 0,
