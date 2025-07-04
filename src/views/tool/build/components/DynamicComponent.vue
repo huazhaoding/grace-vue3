@@ -13,23 +13,23 @@
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr.defaultValue?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
-        <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
-          <template v-if="item.slotType === 'normal' && item.value">
-            <div v-html="item.value"></div>
-          </template>
-          <template v-else-if="item.slotType === 'childComponent'">
-            <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
-              <dynamic-component :drawing-list="item.slotOptions" :active-id="activeId" :index="slotChildIndex" :elementData="slotChild"
-                :tool="false" @activeItem="activeItem" @copyItem="copyItem" 
-                @deleteItem="deleteItem" />
+          <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
+            <template v-if="item.slotType === 'normal' && item.value">
+              <div v-html="item.value"></div>
             </template>
-          </template>
-        </template>
+            <template v-else-if="item.slotType === 'childComponent'">
+              <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
+                <dynamic-component :drawing-list="item.slotOptions" :active-id="activeId" :index="slotChildIndex"
+                  :elementData="slotChild" :tool="false" @activeItem="activeItem" @copyItem="copyItem"
+                  @deleteItem="deleteItem" />
+              </template>
+            </template>
+         </template>
       </component>
     </component>
 
     <div v-else :class="chooseStyle">
-      <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)" >
+      <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)">
         <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
           <template v-if="item.slotType === 'normal'">
             <div v-html="item.value"></div>
@@ -38,7 +38,8 @@
           <template v-else-if="item.slotType === 'childComponent'">
             <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
               <dynamic-component :drawing-list="item.slotOptions" :index="slotChildIndex" :elementData="slotChild"
-                @activeItem="activeItem" @copyItem="copyItem" :active-id="activeId" @deleteItem="deleteItem" :tool="false" />
+                @activeItem="activeItem" @copyItem="copyItem" :active-id="activeId" @deleteItem="deleteItem"
+                :tool="false" />
             </template>
           </template>
 
@@ -54,8 +55,9 @@
           </template>
 
           <template v-else-if="item.slotType === 'childDragComponent'">
-            <component v-for="(slotChild, slotChildIndex) in elementData.slots.default.slotOptions" :key="slotChildIndex"
-              :is="slotChild.tag" v-bind="simplifyItem(slotChild.attr)" @click.stop="activeItem(slotChild)">
+            <component v-for="(slotChild, slotChildIndex) in elementData.slots.default.slotOptions"
+              :key="slotChildIndex" :is="slotChild.tag" v-bind="simplifyItem(slotChild.attr)"
+              @click.stop="activeItem(slotChild)">
               <template v-if="
                 slotChild.slots &&
                 slotChild.slots.default &&
@@ -68,16 +70,15 @@
                   <div class="draggable-item-mark">
                     <span class="draggable-item-name">{{
                       slotChild.tagLabel
-                    }}</span>
+                      }}</span>
                   </div>
                   <draggable group="componentsGroup" :animation="340" :list="slotChild.slots.default.slotOptions"
                     class="drag-wrapper can-drag" item-key="renderKey" @start="drag = true" @end="drag = false">
                     <template #item="scoped">
-                      <dynamic-component :key="scoped.element.renderKey" :drawing-list="slotChild.slots.default.slotOptions"
-                        :elementData="scoped.element" :index="scoped.index" :active-id="activeId" :tool="true"
-                        @activeItem="activeItem"
-                        @copyItem="copyItem"
-                        @deleteItem="deleteItem" />
+                      <dynamic-component :key="scoped.element.renderKey"
+                        :drawing-list="slotChild.slots.default.slotOptions" :elementData="scoped.element"
+                        :index="scoped.index" :active-id="activeId" :tool="true" @activeItem="activeItem"
+                        @copyItem="copyItem" @deleteItem="deleteItem" />
                     </template>
                   </draggable>
                   <div class="draggable-item-tool">
@@ -120,19 +121,16 @@
     </div>
   </div>
 
-  <component v-else :is="elementData.tag" 
-  v-bind="simplifyItem(elementData.attr)" 
-  :class="activeId === elementData.id? 'draggable-item-child': ''"   @click.stop="activeItem(elementData)">
+  <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
+    :class="activeId === elementData.id? 'draggable-item-child': ''" @click.stop="activeItem(elementData)">
     <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
       <template v-if="item.slotType === 'normal' && item.value">
         <div v-html="item.value"></div>
       </template>
       <template v-else-if="item.slotType === 'childComponent'">
         <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
-          <dynamic-component :drawing-list="item.slotOptions" :active-id="activeId"  :index="slotChildIndex" :elementData="slotChild"
-            :tool="false" 
-            @activeItem="activeItem"
-            @copyItem="copyItem"
+          <dynamic-component :drawing-list="item.slotOptions" :active-id="activeId" :index="slotChildIndex"
+            :elementData="slotChild" :tool="false" @activeItem="activeItem" @copyItem="copyItem"
             @deleteItem="deleteItem" />
         </template>
       </template>
@@ -166,7 +164,8 @@ const props = defineProps({
 const className = ref("");
 const draggableItemRef = ref(null);
 const filteredSlots = computed(() => {
-  return Object.entries(props.elementData.slots).reduce((acc, [key, value]) => {
+  if (!props.elementData?.slots) return {};
+  return Object.entries(props.elementData?.slots).reduce((acc, [key, value]) => {
     //如果插槽未使用或者插槽类型为normal且value为空，直接不使用
     if (!value.used || (value.slotType === "normal" && !value.value)) {
 
@@ -234,8 +233,8 @@ watch(
 </script>
 
 
-<style scoped> 
-.draggable-item-child::before{
+<style scoped>
+.draggable-item-child::before {
   content: "->";
   color: red;
   margin-right: 2px;

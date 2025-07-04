@@ -627,7 +627,7 @@ export const FormComponents = {
       }),
       slots: {
         default: {
-          label: "输入框",
+          label: "默认插槽",
           slotType: "childComponent",
           used: true,
           slotOptions: [
@@ -713,8 +713,8 @@ export const FormComponents = {
                   label: "checkbox 是否显示边框",
                 },
               },
-              slots:{
-                
+              slots: {
+
               }
             },
           ],
@@ -728,11 +728,6 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/radio",
       type: "form",
       attr: {
-        defaultValue: {
-          value: "",
-          type: "input",
-          label: "内容",
-        },
         type: {
           value: "button",
           type: "radio",
@@ -794,91 +789,63 @@ export const FormComponents = {
         },
       },
       hedge: Object.assign({}, defaultHedge, {
-        // 表单项的标签文字
-        label: "单选框",
-        // 表单域字段名，用于验证、重置等操作
-        prop: "",
+        attr: {
+          // 表单项的标签文字
+          label: "单选框组",
+          // 表单域字段名，用于验证、重置等操作
+          prop: "",
+        }
       }),
-      options: [
-        {
-          attr: {
-            label: {
-              value: "选项一",
-              type: "input",
-              label: "显示的标签",
-            },
-            value: {
-              value: 1,
-              type: "input",
-              label: "选项值",
-            },
-            disabled: {
-              value: false,
-              type: "switch",
-              label: "是否禁用",
-            },
-            border: {
-              value: false,
-              type: "switch",
-              label: "是否显示边框",
-            },
-            size: {
-              value: "default",
-              type: "radio",
-              label: "尺寸",
-              options: [
-                { value: "large", label: "大尺寸" },
-                { value: "default", label: "中尺寸" },
-                { value: "small", label: "小尺寸" },
-              ],
-            },
-            name: {
-              value: undefined,
-              type: "input",
-              label: "原生 name 属性",
-            },
-          },
-        },
-        {
-          attr: {
-            label: {
-              value: "选项二",
-              type: "input",
-              label: "显示的标签",
-            },
-            value: {
-              value: 2,
-              type: "input",
-              label: "选项值",
-            },
-            disabled: {
-              value: false,
-              type: "switch",
-              label: "是否禁用",
-            },
-            border: {
-              value: false,
-              type: "switch",
-              label: "是否显示边框",
-            },
-            size: {
-              value: "default",
-              type: "radio",
-              label: "尺寸",
-              options: [
-                { value: "large", label: "大尺寸" },
-                { value: "default", label: "中尺寸" },
-                { value: "small", label: "小尺寸" },
-              ],
-            },
-            name: {
-              value: undefined,
-              type: "input",
-              label: "原生 name 属性",
-            },
-          },
-        },
-      ],
+      slots: {
+        default: {
+          label: "插槽",
+          slotType: "childComponent",
+          used: true,
+          slotOptions: [
+            {
+              tag: "el-radio",
+              tagLabel: "单选框",
+              attr: {
+                label: {
+                  value: "选项一",
+                  type: "input",
+                  label: "显示的标签",
+                },
+                value: {
+                  value: 1,
+                  type: "input",
+                  label: "选项值",
+                },
+                disabled: {
+                  value: false,
+                  type: "switch",
+                  label: "是否禁用",
+                },
+                border: {
+                  value: false,
+                  type: "switch",
+                  label: "是否显示边框",
+                },
+                size: {
+                  value: "default",
+                  type: "radio",
+                  label: "尺寸",
+                  options: [
+                    { value: "large", label: "大尺寸" },
+                    { value: "default", label: "中尺寸" },
+                    { value: "small", label: "小尺寸" },
+                  ],
+                },
+                name: {
+                  value: undefined,
+                  type: "input",
+                  label: "原生 name 属性",
+                },
+              }
+            }
+          ],
+        }
+      }
     },
     {
       tag: "el-color-picker",
