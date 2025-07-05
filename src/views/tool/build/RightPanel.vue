@@ -205,8 +205,6 @@ watch(
   () => props.activeDataProperty,
   (val) => {
     formItemAttr.value = val.attr;
-    formItemHedge.value = val.hedge;
-    console.log(val.hedge);
     if (val.slots?.default?.slotOptions) {
       formItemChild.value = val.slots.default.slotOptions;
     }

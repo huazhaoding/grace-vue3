@@ -48,8 +48,9 @@ const defaultHedge = {
       ],
     },
     labelWidth: {
-      value: "100",
+      value: 100,
       type: "number",
+      append: "px",
       label: "标签宽度",
     },
     labelPosition: {
@@ -451,22 +452,26 @@ export const FormComponents = {
       slots: {
         prepend: {
           value: "",
-          type: "textarea",
+          slotType:"normal",
+          used:false,
           label: "输入框前置内容",
         },
         append: {
           value: "",
-          type: "textarea",
+           slotType:"normal",
+          used:false,
           label: "输入框后置内容",
         },
         prefix: {
           value: "",
-          type: "textarea",
+          slotType:"normal",
+          used:false,
           label: "输入框头部内容",
         },
         suffix: {
           value: "",
-          type: "textarea",
+          slotType:"normal",
+          used:false,
           label: "输入框尾部内容",
         },
       },

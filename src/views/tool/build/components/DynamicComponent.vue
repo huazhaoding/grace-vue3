@@ -165,7 +165,7 @@ const className = ref("");
 const draggableItemRef = ref(null);
 const filteredSlots = computed(() => {
   if (!props.elementData?.slots) return {};
-  return Object.entries(props.elementData?.slots).reduce((acc, [key, value]) => {
+  return Object.entries(props.elementData.slots).reduce((acc, [key, value]) => {
     //如果插槽未使用或者插槽类型为normal且value为空，直接不使用
     if (!value.used || (value.slotType === "normal" && !value.value)) {
 
@@ -192,7 +192,14 @@ const chooseStyle = computed(() => {
 function simplifyItem(item) {
   const simplified = {};
   for (const key in item) {
-    simplified[key] = item[key].value;
+    if(item[key].append)
+     {
+      simplified[key] = item[key].value+item[key].append;
+     }
+     else{
+     simplified[key] = item[key].value;
+     }
+    
   }
   return simplified;
 }
