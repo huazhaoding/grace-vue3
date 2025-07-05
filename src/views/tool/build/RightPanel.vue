@@ -25,7 +25,7 @@
                   </el-radio-group>
                   <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                   <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
-                  <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
+                  <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" style="padding-left: 12px;padding-right:12px ;" />
                   <el-input-tag v-model="item.value" v-else-if="item.type === 'tag'" />
                   <el-input v-else-if="item.type === 'icon'" v-model="item.value">
                     <template #append>
@@ -111,7 +111,7 @@
                                 <el-button style="width: 100%">{{ key }}</el-button>
                               </template>
                               <el-form-item v-for="(value, key) in item.value" :label="key">
-                                <el-slider v-model="item.value[key]" :min="0" :max="24" />
+                                <el-slider v-model="item.value[key]" :min="0" :max="24" style="padding-left: 12px;padding-right: 12px;" />
                               </el-form-item>
                               {{ item.value.span }}-{{ item.value.offset }}-{{
                                 item.value.pull
@@ -571,110 +571,7 @@ function setIcon(val) {
   height: calc(100vh - 50px - 150px);
 }
 
-  .scrollbar-item {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
 
-
-
-  .field-box {
-    position: relative;
-    height: calc(100vh - 50px - 40px - 42px);
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  
 }
 
-.reg-item {
-  padding: 12px 6px;
-  background: var(--el-border-color-extra-light);
-  position: relative;
-  border-radius: 4px;
-
-  .close-btn {
-    position: absolute;
-    right: -6px;
-    top: -6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    line-height: 16px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-    color: #fff;
-    z-index: 1;
-    cursor: pointer;
-    font-size: 12px;
-  }
-}
-
-.select-item {
-  display: flex;
-  border: 1px dashed #fff;
-  box-sizing: border-box;
-
-  & .close-btn {
-    cursor: pointer;
-    color: #f56c6c;
-  }
-
-  & .el-input+.el-input {
-    margin-left: 4px;
-  }
-}
-
-.select-item+.select-item {
-  margin-top: 4px;
-}
-
-.select-item.sortable-chosen {
-  border: 1px dashed #409eff;
-}
-
-.select-line-icon {
-  line-height: 32px;
-  font-size: 22px;
-  padding: 0 4px;
-  color: #777;
-}
-
-.option-drag {
-  cursor: move;
-}
-
-.time-range {
-  .el-date-editor {
-    width: 227px;
-  }
-
-  :deep() {
-    .el-icon-time {
-      display: none;
-    }
-  }
-}
-
-
-.node-label {
-  font-size: 14px;
-}
-
-.node-icon {
-  color: #bebfc3;
-}
-</style>
-<style>
-.custom-tree-node {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  padding-right: 8px;
-}
 </style>
