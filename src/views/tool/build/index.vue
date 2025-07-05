@@ -223,6 +223,9 @@ $lighterBlue: #409eff;
 
   .main-box {
     overflow: hidden;
+    .action-bar{
+      float: right;
+    }
   }
 
   .right-aside-box{
