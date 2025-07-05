@@ -11,7 +11,7 @@
       elementData.type && elementData.type === 'form' && elementData.hedge
     " :is="elementData.hedge.tag" v-bind="simplifyItem(elementData.hedge.attr)" class="field-wrapper not-drag">
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
-        :modelValue="elementData.attr.defaultValue?.value ?? ''"
+        :modelValue="elementData.attr['v-model']?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
           <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
             <template v-if="item.slotType === 'normal' && item.value">
@@ -177,7 +177,7 @@ const filteredSlots = computed(() => {
   }, {});
 });
 function handleModelValueUpdate(elementData, $event) {
-  elementData.attr.defaultValue.value = $event;
+  elementData.attr['v-model'].value = $event;
 }
 
 const chooseStyle = computed(() => {

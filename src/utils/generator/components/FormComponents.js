@@ -92,7 +92,7 @@ export const FormComponents = {
       document: "https://element.eleme.cn/#/zh-CN/component/form",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: {},
           type: "object",
           label: "表单数据",
@@ -224,7 +224,7 @@ export const FormComponents = {
               document: "https://element.eleme.cn/#/zh-CN/component/input",
               type: "form",
               attr: {
-                defaultValue: {
+                "v-model": {
                   value: "123456",
                   type: "input",
                   label: "内容",
@@ -361,7 +361,7 @@ export const FormComponents = {
       document: "https://element.eleme.cn/#/zh-CN/component/input",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "123456",
           type: "input",
           label: "内容",
@@ -493,7 +493,7 @@ export const FormComponents = {
       tagIcon: "monitor",
       document: "https://element.eleme.cn/#/zh-CN/component/autocomplete",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "内容",
@@ -737,7 +737,7 @@ export const FormComponents = {
         },
       },
       attr: {
-        defaultValue: {
+        "v-model": {
           value: [],
           type: "input",
           label: "内容",
@@ -1118,7 +1118,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/color-picker",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "颜色值",
@@ -1214,7 +1214,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/date-picker",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "绑定值",
@@ -1383,7 +1383,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/datetime-picker",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "绑定值",
@@ -1531,7 +1531,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/input-number",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: null,
           type: "input",
           label: "选中项绑定值",
@@ -1649,7 +1649,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/tag-input",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: [],
           type: "tag",
           label: "绑定值",
@@ -1798,7 +1798,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/mention",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "绑定值",
@@ -1893,7 +1893,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/rate",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: 5,
           type: "number",
           label: "选中项绑定值",
@@ -2027,7 +2027,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/slider",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: 0,
           type: "number",
           label: "选中项绑定值",
@@ -2187,7 +2187,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/switch",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: false,
           type: "switch",
           label: "绑定值",
@@ -2326,7 +2326,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/cascader",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: null,
           type: "input",
           label: "选中项绑定值",
@@ -2619,7 +2619,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/cascader",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: null,
           type: "input",
           label: "选中项绑定值",
@@ -2737,7 +2737,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/select",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: null,
           type: "input",
           label: "选中项绑定值",
@@ -3012,7 +3012,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/time-picker",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "绑定值",
@@ -3176,7 +3176,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/time-select",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: "",
           type: "input",
           label: "选中项绑定值",
@@ -3299,7 +3299,7 @@ export const FormComponents = {
       document: "https://element-plus.org/zh-CN/component/transfer",
       type: "form",
       attr: {
-        defaultValue: {
+        "v-model": {
           value: [],
           type: "array",
           label: "选中项绑定值",
