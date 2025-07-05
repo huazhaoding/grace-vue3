@@ -1,7 +1,7 @@
 <template>
   <div class="right-board">
     <div class="field-box">
-      <el-card shadow="never" body-class="card-body">
+      <el-card  body-class="card-body" header-class="card-header" >
         <template #header>
           <div>组件配置 <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
               <el-icon>
@@ -593,6 +593,10 @@ function setIcon(val) {
 
   &:deep() {
     .card-body {
+      padding: 0 !important;
+    }
+    
+    .card-header {
       padding: 0 !important;
     }
 

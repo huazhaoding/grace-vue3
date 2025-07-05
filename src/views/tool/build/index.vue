@@ -1,41 +1,50 @@
 <template>
   <div class="container">
     <el-container>
-      <el-aside width="300px" style="background-color: white; overflow: hidden">
-        <div class="left-board">
-          <div class="logo-wrapper">
-            <div class="logo">
-              <img :src="logo" alt="logo" /> Form Generator
+      <el-aside width="300px" class="aside-box">
+        <el-tabs  v-model="leftActiveTab">
+          <el-tab-pane label="组件库" name="componentLibrary">
+            <el-scrollbar class="scrollbar">
+             <components-library :idGlobal="idGlobal" @updateCloneComponent="updateCloneComponent" />
+            </el-scrollbar>
+          </el-tab-pane>
+          <el-tab-pane label="模板库" name="templateLibrary"> 123</el-tab-pane>
+        </el-tabs>
+      </el-aside>
+      <el-main style="padding: 5px" class="main-box">
+        
+        <el-card>
+          <template #header>
+            <!-- 编辑器工具栏 -->
+            <div class="action-bar">
+              <el-button icon="topRight" type="primary" @click="importJson">
+                导入模板
+              </el-button>
+              <el-button icon="View" type="primary" @click="openPreview">
+                预览模板
+              </el-button>
+              <el-button class="delete-btn" icon="Delete" text @click="empty" type="danger">
+                清空模板
+              </el-button>
+            </div>
+          </template>
+          <div class="center-board">
+            <!-- 编辑器 -->
+            <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
+              item-key="renderKey">
+              <template #item="{ element, index }">
+                <dynamic-component :key="element.renderKey" :drawing-list="drawingList" :elementData="element"
+                  :index="index" :active-id="activeId" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
+                  @deleteItem="drawingItemDelete" />
+              </template>
+            </draggable>
+            <div v-show="!drawingList.length" class="empty-info">
+              从左侧拖入或点选组件进行表单设计
             </div>
           </div>
-          <!-- 左边组件库 -->
-          <el-scrollbar class="left-scrollbar" height="90vh">
-            <el-tabs v-model="leftActiveTab">
-              <el-tab-pane label="组件库" name="componentLibrary">
-                <components-library :idGlobal="idGlobal" @updateCloneComponent="updateCloneComponent" />
-              </el-tab-pane>
-              <el-tab-pane label="模板库" name="templateLibrary"> </el-tab-pane>
-            </el-tabs>
-          </el-scrollbar>
-        </div>
-      </el-aside>
-      <el-main style="padding: 5px">
-        <div class="center-board">
-          <!-- 编辑器 -->
-          <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
-            item-key="renderKey">
-            <template #item="{ element, index }">
-              <dynamic-component :key="element.renderKey" :drawing-list="drawingList" :elementData="element" :index="index"
-                :active-id="activeId" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
-                @deleteItem="drawingItemDelete" />
-            </template>
-          </draggable>
-          <div v-show="!drawingList.length" class="empty-info">
-            从左侧拖入或点选组件进行表单设计
-          </div>
-        </div>
+        </el-card>
       </el-main>
-      <el-aside width="350px">
+      <el-aside width="350px" class="aside-box">
         <!-- 右边属性库 -->
         <right-panel :active-data-property="activeData" :form-conf="{}" :show-field="!!drawingList.length" />
       </el-aside>
@@ -86,9 +95,9 @@ function createIdAndKey(clone) {
   }
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   // 处理数据
-  if (clone?.slots?.default &&Array.isArray(clone.slots.default.slotOptions)) {
+  if (clone?.slots?.default && Array.isArray(clone.slots.default.slotOptions)) {
 
-   clone.slots.default.slotOptions = clone.slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
+    clone.slots.default.slotOptions = clone.slots.default.slotOptions.map((data) => createIdAndKey(data)); // 递归处理数据列表
   }
   // // 处理子项列表
   // if (Array.isArray(clone.child)) {
@@ -120,10 +129,10 @@ function activeFormItem(element) {
   activeId.value = element.id; // 设置当前激活的表单项 ID
 }
 
-watch(() => activeData, (val) => { 
+watch(() => activeData, (val) => {
   console.log(val);
 },
-   { immediate: true,deep:true });
+  { immediate: true, deep: true });
 </script>
 
 <style lang="scss">
@@ -135,109 +144,13 @@ $lighterBlue: #409eff;
   height: calc(100vh - 50px - 40px);
   overflow: hidden;
 
-  .left-board {
+  .aside-box {
     width: 260px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5px;
     height: calc(100vh - 50px - 40px);
-
-    .logo-wrapper {
-      position: relative;
-      height: 42px;
-      border-bottom: 1px solid var(--el-border-color-extra-light);
-      box-sizing: border-box;
-
-      .logo {
-        position: absolute;
-        left: 12px;
-        top: 6px;
-        line-height: 30px;
-        color: #00afff;
-        font-weight: 600;
-        font-size: 17px;
-        white-space: nowrap;
-
-        >img {
-          width: 30px;
-          height: 30px;
-          vertical-align: top;
-        }
-
-        .github {
-          display: inline-block;
-          vertical-align: sub;
-          margin-left: 15px;
-
-          >img {
-            height: 22px;
-          }
-        }
-      }
-    }
-
-    .left-scrollbar {
-      .el-tabs__nav-scroll {
-        display: flex;
-        justify-content: center;
-      }
-
-      .el-scrollbar__wrap {
-        box-sizing: border-box;
-        overflow-x: hidden !important;
-        margin-bottom: 0 !important;
-
-        .components-list {
-          padding: 8px;
-          box-sizing: border-box;
-          height: 100%;
-
-          .components-title {
-            font-size: 14px;
-            // color: #222;
-            margin: 6px 2px;
-
-            .svg-icon {
-              // color: #666;
-              font-size: 18px;
-              margin-right: 5px;
-            }
-          }
-
-          .components-draggable {
-            padding-bottom: 20px;
-
-            .components-item {
-              display: inline-block;
-              width: 48%;
-              margin: 1%;
-              transition: transform 0ms !important;
-
-              .components-body {
-                padding: 8px 10px;
-                background: var(--el-border-color-extra-light);
-                font-size: 12px;
-                cursor: move;
-                border: 1px dashed var(--el-border-color-extra-light);
-                border-radius: 3px;
-
-                .svg-icon {
-                  // color: #777;
-                  font-size: 15px;
-                  margin-right: 5px;
-                }
-
-                &:hover {
-                  border: 1px dashed #787be8;
-                  color: #787be8;
-
-                  .svg-icon {
-                    color: #787be8;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    overflow: hidden;
   }
 
   .center-board {
@@ -314,16 +227,20 @@ $lighterBlue: #409eff;
       cursor: pointer;
     }
   }
+
   .can-drag {
     border: 1px dashed #f50000;
   }
+
   .not-drag {
     min-height: 30px;
   }
 }
 
 .draggable-item-active {
-  &>.not-drag,&>.can-drag {
+
+  &>.not-drag,
+  &>.can-drag {
     border: 1px solid #f50000;
   }
 
