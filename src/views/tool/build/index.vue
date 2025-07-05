@@ -1,50 +1,51 @@
 <template>
-  <div class="container">
-    <el-container>
-      <el-aside width="300px" class="aside-box">
-        <el-tabs  v-model="leftActiveTab">
+  <div>
+    <el-container class="container">
+      <el-aside width="300px" class="left-aside-box">
+        <el-tabs v-model="leftActiveTab" class="left-tabs">
           <el-tab-pane label="组件库" name="componentLibrary">
-            <el-scrollbar class="scrollbar">
-             <components-library :idGlobal="idGlobal" @updateCloneComponent="updateCloneComponent" />
+            <el-scrollbar class="left-scrollbar">
+              <components-library :idGlobal="idGlobal" @updateCloneComponent="updateCloneComponent" />
             </el-scrollbar>
           </el-tab-pane>
           <el-tab-pane label="模板库" name="templateLibrary"> 123</el-tab-pane>
         </el-tabs>
       </el-aside>
       <el-main style="padding: 5px" class="main-box">
-        
-        <el-card>
+        <el-card body-class="card-body" header-class="card-header">
           <template #header>
             <!-- 编辑器工具栏 -->
             <div class="action-bar">
-              <el-button icon="topRight" type="primary" @click="importJson">
+              <el-button icon="topRight" type="primary" text @click="importJson">
                 导入模板
               </el-button>
-              <el-button icon="View" type="primary" @click="openPreview">
+              <el-button icon="View" type="primary" text @click="openPreview">
                 预览模板
               </el-button>
-              <el-button class="delete-btn" icon="Delete" text @click="empty" type="danger">
+              <el-button icon="Delete" text @click="empty" type="danger">
                 清空模板
               </el-button>
             </div>
           </template>
-          <div class="center-board">
-            <!-- 编辑器 -->
-            <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
-              item-key="renderKey">
-              <template #item="{ element, index }">
-                <dynamic-component :key="element.renderKey" :drawing-list="drawingList" :elementData="element"
-                  :index="index" :active-id="activeId" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
-                  @deleteItem="drawingItemDelete" />
-              </template>
-            </draggable>
-            <div v-show="!drawingList.length" class="empty-info">
-              从左侧拖入或点选组件进行表单设计
+          <el-scrollbar >
+            <div class="center-board">
+              <!-- 编辑器 -->
+              <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
+                item-key="renderKey">
+                <template #item="{ element, index }">
+                  <dynamic-component :key="element.renderKey" :drawing-list="drawingList" :elementData="element"
+                    :index="index" :active-id="activeId" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
+                    @deleteItem="drawingItemDelete" />
+                </template>
+              </draggable>
+              <div v-show="!drawingList.length" class="empty-info">
+                从左侧拖入或点选组件进行表单设计
+              </div>
             </div>
-          </div>
+          </el-scrollbar>
         </el-card>
       </el-main>
-      <el-aside width="350px" class="aside-box">
+      <el-aside width="350px" class="right-aside-box">
         <!-- 右边属性库 -->
         <right-panel :active-data-property="activeData" :form-conf="{}" :show-field="!!drawingList.length" />
       </el-aside>
@@ -54,8 +55,6 @@
 <script setup>
 import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
-import logo from "@/assets/logo/logo.png"; // 导入 logo 图片资源
-import DraggableItem from "./components/DraggableItem"; // 导入可拖拽表单项组件
 import DynamicComponent from "./components/DynamicComponent";
 import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
 import { watch } from "vue";
@@ -140,18 +139,110 @@ $lighterBlue: #409eff;
 
 .container {
   width: 100%;
-  background-color: var(--el-bg-color-overlay);
   height: calc(100vh - 50px - 40px);
   overflow: hidden;
 
-  .aside-box {
-    width: 260px;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 5px;
-    height: calc(100vh - 50px - 40px);
+  .left-aside-box {
+    background-color: var(--el-bg-color-overlay);
+    padding: 5px;
+    margin-top: 5px;
+    box-shadow: var(--el-box-shadow-light);
+    border-radius: 5px;
+    overflow: hidden;
+    height: calc(100vh - 50px - 50px);
+    .left-tabs {
+      .el-tabs__nav-scroll {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .left-scrollbar {
+        height: calc(100vh - 50px - 100px);
+        .el-scrollbar__wrap {
+          box-sizing: border-box;
+          overflow-x: hidden !important;
+          margin-bottom: 0 !important;
+
+          .components-list {
+            box-sizing: border-box;
+            height: 100%;
+
+            .components-title {
+              font-size: 14px;
+              // color: #222;
+              margin: 6px 2px;
+
+              .svg-icon {
+                // color: #666;
+                font-size: 18px;
+                margin-right: 5px;
+              }
+            }
+
+            .components-draggable {
+              padding-bottom: 20px;
+
+              .components-item {
+                display: inline-block;
+                width: 48%;
+                margin: 1%;
+                transition: transform 0ms !important;
+
+                .components-body {
+                  padding: 8px 10px;
+                  background: var(--el-border-color-extra-light);
+                  font-size: 12px;
+                  cursor: move;
+                  border: 1px dashed var(--el-border-color-extra-light);
+                  border-radius: 3px;
+
+                  .svg-icon {
+                    // color: #777;
+                    font-size: 15px;
+                    margin-right: 5px;
+                  }
+
+                  &:hover {
+                    border: 1px dashed #787be8;
+                    color: #787be8;
+
+                    .svg-icon {
+                      color: #787be8;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+  .main-box {
     overflow: hidden;
   }
+
+  .right-aside-box{
+    background-color: var(--el-bg-color-overlay);
+    padding: 0;
+    margin-top: 5px;
+    box-shadow: var(--el-box-shadow-light);
+    height: calc(100vh - 50px - 50px);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 5px !important;
+  }
+
+  .card-body {
+    padding: 5px !important;
+  }
+
 
   .center-board {
     position: relative;
