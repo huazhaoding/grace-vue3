@@ -218,6 +218,7 @@ function generateCode() {
 
 <style lang="scss">
 $lighterBlue: #409eff;
+$deepBlue: #2e73ff;
 .container {
   width: 100%;
   height: calc(100vh - 50px - 40px);
@@ -333,7 +334,6 @@ $lighterBlue: #409eff;
       width: 100%;
       min-height: 800px;
       padding: 10px;
-      background-color: aquamarine;
     }
 
     .empty-info {
@@ -351,7 +351,8 @@ $lighterBlue: #409eff;
 
 .draggable-item {
   cursor: move;
-  position: relative;
+  overflow: hidden;
+    position: relative;
   margin-bottom: 10px;
 
   .drag-wrapper {
@@ -359,70 +360,54 @@ $lighterBlue: #409eff;
     min-height: 200px;
   }
 
-  .field-wrapper {
-    margin: 0;
-  }
-
   .draggable-item-mark {
-    z-index: 9999;
-    color: aliceblue;
-    position: absolute;
-    background-color: #409eff;
-    text-align: center;
-    top: 1px;
-    left: 1px;
-    opacity: 0.5;
+    color: white;
+    background-color: $deepBlue;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
     font-size: 12px;
     font-style: normal;
-    padding: 4px;
-
-    .draggable-item-name {
-      padding-left: 10px;
-      padding-bottom: 20px;
-    }
+    padding: 4px 4px 2px 4px;
+    position: absolute;
+    z-index: 9999;
   }
 
-  .draggable-item-tool {
+  .draggable-item-tool {  
+    color: white;
     position: absolute;
-    color: aliceblue;
-    left: calc(100% - 49px);
-    bottom: 3px;
+    bottom: 0;
+    right: 0;
     font-size: 12px;
     font-style: normal;
-
     .drawing-item-copy,
     .drawing-item-delete {
-      background-color: #409eff;
-      padding: 7px 6px 3px 6px;
+      background-color: $deepBlue;
+      padding: 4px 4px 2px 4px;
+      margin:1px;
       cursor: pointer;
+      border-radius: 2px;
     }
-  }
-
-  .can-drag {
-    border: 1px dashed #f50000;
-  }
-
-  .not-drag {
-    min-height: 30px;
   }
 }
 
 .draggable-item-active {
-  & > .not-drag,
-  & > .can-drag {
-    border: 1px solid #f50000;
-  }
-
+    border: 2px solid $deepBlue;
   & > .draggable-item-mark,
   & > .draggable-item-tool {
-    display: block;
+     visibility: visible;
+  }
+  & >.can-drag {
+    border: none!important;
   }
 }
-
 .draggable-item-inactive {
   & > .draggable-item-mark,
   & > .draggable-item-tool {
-    display: none;
+    visibility: hidden;
+  }
+  .can-drag {
+    border: 1px dashed $deepBlue;
   }
 }
 </style>

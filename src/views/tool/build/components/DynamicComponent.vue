@@ -4,12 +4,11 @@
       <el-icon>
         <Rank />
       </el-icon>
-      <span class="draggable-item-name">{{ elementData.tagLabel }}</span>
     </div>
 
     <component v-if="
-      elementData.type && elementData.type === 'form' && elementData.hedge
-    " :is="elementData.hedge.tag" v-bind="simplifyItem(elementData.hedge.attr)" class="field-wrapper not-drag">
+      elementData.type && elementData.type === 'form' && elementData.hedge" :is="elementData.hedge.tag"
+      v-bind="simplifyItem(elementData.hedge.attr)">
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr['v-model']?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
@@ -67,11 +66,6 @@
                   ? 'draggable-item draggable-item-active'
                   : 'draggable-item draggable-item-inactive'
                   " @click.stop="activeItem(slotChild)">
-                  <div class="draggable-item-mark">
-                    <span class="draggable-item-name">{{
-                      slotChild.tagLabel
-                      }}</span>
-                  </div>
                   <draggable group="componentsGroup" :animation="340" :list="slotChild.slots.default.slotOptions"
                     class="drag-wrapper can-drag" item-key="renderKey" @start="drag = true" @end="drag = false">
                     <template #item="scoped">
@@ -89,9 +83,9 @@
                         <CopyDocument />
                       </el-icon>
                     </span>
-                    <span class="drawing-item-delete" title="删除">
+                    <span class="drawing-item-delete" title="删除" v-if="elementData.slots.default.slotOptions.length > 1">
                       <el-icon>
-                        <Delete v-if="elementData.slots.default.slotOptions.length > 1" @click.stop="
+                        <Delete @click.stop="
                           deleteItem(
                             slotChildIndex,
                             elementData.slots.default.slotOptions

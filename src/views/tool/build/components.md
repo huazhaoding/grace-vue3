@@ -48,3 +48,14 @@ el-radio-group
 
 
 其它激活时一律实线
+
+
+最终数据
+{ components: [],
+  events: {},
+  methods: {},
+  lifecycles: {}
+  emits: [],
+  componentType: {},
+
+}
