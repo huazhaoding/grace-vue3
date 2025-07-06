@@ -255,17 +255,6 @@ export const FormComponents = {
                   type: "switch",
                   label: "是否显示统计字数",
                 },
-
-                prepend: {
-                  value: "",
-                  type: "input",
-                  label: "前缀符号",
-                },
-                append: {
-                  value: "",
-                  type: "input",
-                  label: "后缀符号",
-                },
                 "prefix-icon": {
                   value: "",
                   type: "icon",
