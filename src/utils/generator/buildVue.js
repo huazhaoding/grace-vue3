@@ -80,8 +80,7 @@ function generateComponent(config) {
     let eventStr="";
     //构建事件
     if (events) { 
-      console.log(events);
-     eventStr= Object.entries(events).filter(([key, value]) => value !== undefined && value.used )
+     eventStr= Object.entries(events).filter(([key, value]) => value !== undefined && value.used && value.value)
       .map(([key, value]) => `@${key}="${value.functionName}"`)
       .join(" ")
     }

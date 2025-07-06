@@ -125,7 +125,7 @@ function buildData(conf, dataList) {
 /**
  * @name: 生成表单验证数据rule
  * @description: 生成表单验证数据rule
- * @param {*} conf
+ * @param {*} conf  
  * @param {*} ruleList 验证数据列表
  * @return {*}
  */
