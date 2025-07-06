@@ -2,6 +2,26 @@
 function buildScript(options) { 
 }   
 
+/**
+ * 避免重复添加事件
+ * 添加时确认是否重复
+ * 解析时确认是否重复
+ * 
+ * 组件
+ * 弹窗
+ * 页面
+ * 
+ * { config:[]
+ *   events:{}
+ *   styles:[]
+ *   data:[]
+ *   imports:[]
+ * 
+ * }
+ * 
+ * @param {*} events 
+ * @returns 
+ */
 
 function buildEvent(events){
     let eventFnc = "";  
