@@ -102,6 +102,41 @@ function simplifyItemAttr(item) {
   return simplified;
 }
 
+
+/**
+ * 事件监听
+ * 生命周期
+ * 内置函数
+ * 插槽
+ * 
+ * 表单
+ * 表单数据
+ * 表单地址
+ * 表单验证
+ * 表单提交
+ * 表单重置
+ * 
+ * 
+ * 生成组件类型
+ * 弹窗组件
+ * 普通组件
+ * 
+ * 去除一些默认配置或者无效输入 空  undefined
+ * 
+ * 
+ * 
+ * 
+ */
+a={events:{blur:{
+    used:false,
+    label:"当选择器的输入框失去焦点时触发",
+    functionName:"handleBlur",
+    default:{},
+    value:function(item){ 
+    }
+}}}
+
+
 const components = [
   {
     tagLabel: "多选框组",
