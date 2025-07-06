@@ -16,6 +16,9 @@ function buildScript(options) {
  *   styles:[]
  *   data:[]
  *   imports:[]
+ *   lifecycle:{}
+ *   emits:{}
+ *   methods:[]
  * 
  * }
  * 
