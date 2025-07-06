@@ -12,7 +12,7 @@ const units = {
  * @param {*} conf
  * @param {*} type 弹窗或表单
  * @return {*}
- */
+ */vueScript
 export function makeUpJs(conf, type) {
   conf = JSON.parse(JSON.stringify(conf))
   const dataList = []

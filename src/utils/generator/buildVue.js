@@ -108,7 +108,8 @@ function simplifyItemAttr(item) {
 }
 
 /**
- * 事件监听
+ * 事件监听 events
+ * 自定义方法  methods
  * 生命周期
  * 内置函数
  * 插槽
