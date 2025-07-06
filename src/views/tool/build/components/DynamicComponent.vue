@@ -5,7 +5,6 @@
         <Rank />
       </el-icon>
     </div>
-
     <component v-if="
       elementData.type && elementData.type === 'form' && elementData.hedge" :is="elementData.hedge.tag"
       v-bind="simplifyItem(elementData.hedge.attr)">

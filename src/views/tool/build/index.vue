@@ -35,7 +35,7 @@
               </el-button>
             </div>
           </template>
-          <el-scrollbar>
+          <el-scrollbar class="center-scrollbar">
             <div class="center-board">
               <!-- 编辑器 -->
               <draggable
@@ -304,6 +304,9 @@ $deepBlue: #2e73ff;
     .action-bar {
       float: right;
     }
+    .center-scrollbar{
+      height: calc(100vh - 50px - 100px);
+    }
   }
 
   .right-aside-box {
@@ -352,8 +355,7 @@ $deepBlue: #2e73ff;
 .draggable-item {
   cursor: move;
   overflow: hidden;
-    position: relative;
-  margin-bottom: 10px;
+  position: relative;
 
   .drag-wrapper {
     height: auto;
