@@ -12,10 +12,11 @@
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr['v-model']?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
-        <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
-          <template v-if="item.slotType === 'normal' && item.value">
-            <div v-html="item.value"></div>
+        <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[slotName]>
+          <template v-if="item.slotType === 'normal'">
+            <div  v-html="item.value"></div>
           </template>
+          
           <template v-else-if="item.slotType === 'childComponent'">
             <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
               <dynamic-component :drawing-list="item.slotOptions" :active-id="activeId" :index="slotChildIndex"
@@ -28,11 +29,10 @@
     </component>
 
     <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)">
-      <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
+      <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[slotName]>
         <template v-if="item.slotType === 'normal'">
           <div v-html="item.value"></div>
         </template>
-
         <template v-else-if="item.slotType === 'childComponent'">
           <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
             <dynamic-component :drawing-list="item.slotOptions" :index="slotChildIndex" :elementData="slotChild"
@@ -128,7 +128,7 @@
 
   <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
     :class="activeId === elementData.id ? 'draggable-item-child' : ''" @click.stop="activeItem(elementData)">
-    <template v-for="(item, slotName) in filteredSlots" :key="item" v-slot:[slotName]>
+    <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[slotName]>
       <template v-if="item.slotType === 'normal' && item.value">
         <div v-html="item.value"></div>
       </template>
@@ -142,7 +142,6 @@
     </template>
   </component>
 </template>
-
 <script setup name="DynamicComponent">
 import draggable from "vuedraggable/dist/vuedraggable.common";
 const emits = defineEmits(["activeItem", "copyItem", "deleteItem"]);
@@ -166,24 +165,24 @@ const props = defineProps({
     required: false,
   },
 });
+
 const className = ref("");
 const draggableItemRef = ref(null);
 const filteredSlots = computed(() => {
   if (!props.elementData?.slots) return {};
-  return Object.entries(props.elementData.slots).reduce((acc, [key, value]) => {
-    //如果插槽未使用或者插槽类型为normal且value为空，直接不使用
+  const slots = Object.entries(props.elementData.slots).reduce((acc, [key, value]) => {
     if (!value.used || (value.slotType === "normal" && !value.value)) {
     } else {
       acc[key] = value;
     }
     return acc;
   }, {});
+  return slots;
 });
+
 function handleModelValueUpdate(elementData, $event) {
   elementData.attr["v-model"].value = $event;
 }
-
-
 
 // 转换函数：将复杂结构简化为简单结构
 function simplifyItem(item) {

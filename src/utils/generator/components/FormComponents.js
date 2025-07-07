@@ -428,19 +428,7 @@ export const FormComponents = {
         },
       },
       slots: {
-        prepend: {
-          value: "",
-          slotType: "normal",
-          used: false,
-          label: "输入框前置内容",
-        },
-        append: {
-          value: "",
-          slotType: "normal",
-          used: false,
-          label: "输入框后置内容",
-        },
-        prefix: {
+         prefix: {
           value: "",
           slotType: "normal",
           used: false,
@@ -452,6 +440,18 @@ export const FormComponents = {
           used: false,
           label: "输入框尾部内容",
         },
+        prepend: {
+          value: "",
+          slotType: "normal",
+          used: false,
+          label: "输入框前置内容",
+        },
+        append: {
+          value: "",
+          slotType: "normal",
+          used: false,
+          label: "输入框后置内容",
+        }
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {

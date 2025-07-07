@@ -65,7 +65,7 @@
           </el-scrollbar>
         </el-card>
       </el-main>
-      <el-aside width="350px" class="right-aside-box">
+      <el-aside width="300px" class="right-aside-box">
         <!-- 右边属性库 -->
         <right-panel
           :active-data-property="activeData"
