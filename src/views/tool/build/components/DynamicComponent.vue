@@ -5,18 +5,14 @@
         <Rank />
       </el-icon>
     </div>
-
-    <component v-if="
-      elementData.type && elementData.type === 'form' && elementData.hedge
-    " :is="elementData.hedge.tag" v-bind="simplifyItem(elementData.hedge.attr)">
+    <component v-if="elementData.type && elementData.type === 'form' && elementData.hedge" :is="elementData.hedge.tag" v-bind="simplifyItem(elementData.hedge.attr)">
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr['v-model']?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
-        <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[slotName]>
+        <template v-for="(item,slotName) in filteredSlots" :key="slotName" #[slotName]>
           <template v-if="item.slotType === 'normal'">
             <div  v-html="item.value"></div>
           </template>
-          
           <template v-else-if="item.slotType === 'childComponent'">
             <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
               <dynamic-component :drawing-list="item.slotOptions" :active-id="activeId" :index="slotChildIndex"
