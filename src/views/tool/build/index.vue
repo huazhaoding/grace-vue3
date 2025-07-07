@@ -334,8 +334,7 @@ $deepRed: #ff2e2e;
     min-height: calc(100vh - 50px - 100px);
 
     .drawing-board {
-      position: absolute;
-       min-height: calc(100vh - 50px - 100px);
+      min-height: calc(100vh - 50px - 100px);
       width: 100%;
       padding: 10px;
     }
@@ -355,9 +354,9 @@ $deepRed: #ff2e2e;
 
 .draggable-item {
   cursor: move;
-  overflow: hidden;
-  position: relative;
   min-height: 32px;
+  width: auto!important;
+  position: relative;
   .drag-wrapper {
     height: auto;
     min-height: 200px;
