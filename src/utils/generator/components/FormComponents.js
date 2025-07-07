@@ -90,7 +90,7 @@ export const FormComponents = {
       tagLabel: "表单",
       tagIcon: "form",
       document: "https://element.eleme.cn/#/zh-CN/component/form",
-      type: "form",
+      type: "layout",
       attr: {
         "v-model": {
           value: {},

@@ -7,6 +7,7 @@ export const BaseComponents = {
       tag: "el-button", // 定义组件类型为按钮
       tagLabel: "按钮", // 标签名，用于标识组件
       tagIcon: "button", // 图标名称，用于可视化展示
+      type:"normal",
       document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
       attr: {
         size: {
@@ -156,6 +157,7 @@ export const BaseComponents = {
       tag: "el-button-group",
       tagLabel: "按钮组",
       tagIcon: "button-group",
+      type:"normal",
       document: "https://element-plus.org/zh-CN/component/button",
       attr: {
         size: {
@@ -846,6 +848,7 @@ export const BaseComponents = {
       tag: "el-link", // 定义组件类型为链接
       tagLabel: "链接", // 标签名，用于标识组件
       tagIcon: "link", // 图标名称，用于可视化展示
+      type:"normal",
       document: "https://element.eleme.cn/#/zh-CN/component/link", // 组件文档链接
       attr: {
         type: {
@@ -919,6 +922,7 @@ export const BaseComponents = {
       tag: "el-text", // 定义组件类型为文本
       tagLabel: "文本", // 标签名，用于标识组件
       tagIcon: "language", // 图标名称，用于可视化展示
+      type:"normal",
       document: "https://element.eleme.cn/#/zh-CN/component/text", // 组件文档链接
       attr: {
         type: {
@@ -985,7 +989,7 @@ export const BaseComponents = {
       tagLabel: "间距", // 标签名，用于标识组件
       tagIcon: "swagger", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/space", // 组件文档链接
-      type: "layout",
+      type: "not-drag-layout",
       attr: {
         alignment: {
           value: "center",

@@ -220,6 +220,7 @@ function generateCode() {
 $lighterBlue: #409eff;
 $deepBlue: #2e73ff;
 $deepRed: #ff2e2e;
+$deepGreen: #105b0e;
 .container {
   width: 100%;
   height: calc(100vh - 50px - 40px);
@@ -352,22 +353,20 @@ $deepRed: #ff2e2e;
   }
 }
 
-._is-inline{
-  display: inline-block;
-  width: auto;
-}
-
-
 .draggable-item {
   cursor: move;
   min-height: 32px;
   overflow: hidden;
   position: relative;
+  padding: 4px;
+  margin: 1px;
   .drag-wrapper {
     height: auto;
     min-height: 200px;
   }
    .not-drag,.item-drag{
+    padding: 4px;
+    margin: 1px;
     min-height: 32px;
    }
 
@@ -402,8 +401,26 @@ $deepRed: #ff2e2e;
   }
 }
 
+._is-layout { 
+  border: 1px dashed $deepRed;
+}
+
+._is-layout-not-drag{
+  border: 1px dashed $deepGreen;
+}
+
+._is-normal { 
+  border: 1px dashed $deepBlue;
+  display: inline-block;
+  width: auto;
+}
+
+.is_form{
+
+}
+
 .draggable-item-active {
-    border: 2px solid $deepBlue;
+    border: 2px solid $deepBlue !important;
   & > .draggable-item-mark,
   & > .draggable-item-tool {
      visibility: visible;
@@ -416,12 +433,6 @@ $deepRed: #ff2e2e;
   & > .draggable-item-mark,
   & > .draggable-item-tool {
     visibility: hidden;
-  }
-  .can-drag {
-    border: 1px dashed $deepBlue;
-  }
-  .item-drag{
-    border: 1px dashed $deepRed;
   }
 }
 </style>
