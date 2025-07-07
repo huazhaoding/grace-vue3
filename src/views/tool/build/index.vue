@@ -355,13 +355,14 @@ $deepRed: #ff2e2e;
 .draggable-item {
   cursor: move;
   min-height: 32px;
-  width: auto!important;
+  overflow: hidden;
   position: relative;
   .drag-wrapper {
     height: auto;
     min-height: 200px;
   }
    .not-drag,.item-drag{
+    display: inline-block;
     min-height: 32px;
    }
 
