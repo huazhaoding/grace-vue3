@@ -1,3 +1,4 @@
+
 export const BaseComponents = {
   title: "基础组件",
   icon: "",
@@ -1054,7 +1055,8 @@ export const BaseComponents = {
       slots: {
         default: {
           label: "子组件列表",
-          type: "dragComponent",
+          used: true,
+          slotType: "itemComponent",
           slotOptions: [],
         },
       }, // 子组件列表

@@ -127,6 +127,15 @@
               </div>
             </el-scrollbar>
           </el-collapse-item>
+          <el-collapse-item title="子项拖拽区" name="4" v-if="activeDataProperty?.slots?.default?.slotType ===
+            'itemComponent'">
+            <draggable group="componentsGroup" :animation="340" :list="activeDataProperty.slots.default.slotOptions"
+              class="drag-wrapper" item-key="renderKey" @start="drag = true" @end="drag = false">
+              <template #item="scoped">
+                <el-button type="primary">{{scoped.element.tagLabel }}</el-button>
+              </template>
+            </draggable>
+          </el-collapse-item>
         </el-collapse>
       </el-form>
     </el-card>

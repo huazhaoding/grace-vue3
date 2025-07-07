@@ -219,6 +219,7 @@ function generateCode() {
 <style lang="scss">
 $lighterBlue: #409eff;
 $deepBlue: #2e73ff;
+$deepRed: #ff2e2e;
 .container {
   width: 100%;
   height: calc(100vh - 50px - 40px);
@@ -356,11 +357,15 @@ $deepBlue: #2e73ff;
   cursor: move;
   overflow: hidden;
   position: relative;
+  min-height: 32px;
 
   .drag-wrapper {
     height: auto;
     min-height: 200px;
   }
+   .not-drag,.item-drag{
+    min-height: 32px;
+   }
 
   .draggable-item-mark {
     color: white;
@@ -410,6 +415,9 @@ $deepBlue: #2e73ff;
   }
   .can-drag {
     border: 1px dashed $deepBlue;
+  }
+  .item-drag{
+    border: 1px dashed $deepRed;
   }
 }
 </style>

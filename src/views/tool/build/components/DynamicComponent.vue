@@ -52,6 +52,14 @@
             </draggable>
           </template>
 
+          <template v-else-if="item.slotType === 'itemComponent'">
+            <template v-for="(slotChild, slotChildIndex) in elementData.slots.default.slotOptions" :key="slotChildIndex">
+                <dynamic-component :drawing-list="elementData.slots.default.slotOptions" :active-id="activeId" :index="slotChildIndex"
+                  :elementData="slotChild" :tool="true" @activeItem="activeItem" @copyItem="copyItem"
+                  @deleteItem="deleteItem" />
+            </template>
+          </template>
+
           <template v-else-if="item.slotType === 'childDragComponent'">
             <component v-for="(slotChild, slotChildIndex) in elementData.slots.default.slotOptions"
               :key="slotChildIndex" :is="slotChild.tag" v-bind="simplifyItem(slotChild.attr)"
@@ -177,6 +185,9 @@ const chooseStyle = computed(() => {
   const _type = props.elementData.slots.default.slotType;
   if (_type === "childComponent" || _type === "normal") {
     return "not-drag";
+  }
+  else if(_type === "itemComponent"){
+    return "item-drag";
   }
   return "can-drag";
 });
