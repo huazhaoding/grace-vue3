@@ -352,6 +352,12 @@ $deepRed: #ff2e2e;
   }
 }
 
+._is-inline{
+  display: inline-block;
+  width: auto;
+}
+
+
 .draggable-item {
   cursor: move;
   min-height: 32px;

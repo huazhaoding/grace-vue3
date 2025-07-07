@@ -345,6 +345,7 @@ export const BaseComponents = {
       tagLabel: "布局", // 标签名，用于标识组件
       tagIcon: "row", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/layout", // 组件文档链接
+      type: "layout",
       template: {
         "el-col": {
           tagIcon: "el-col", // 子组件图标名称
@@ -984,6 +985,7 @@ export const BaseComponents = {
       tagLabel: "间距", // 标签名，用于标识组件
       tagIcon: "swagger", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/space", // 组件文档链接
+      type: "layout",
       attr: {
         alignment: {
           value: "center",
