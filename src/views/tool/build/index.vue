@@ -368,7 +368,6 @@ $deepRed: #ff2e2e;
     min-height: 200px;
   }
    .not-drag,.item-drag{
-    display: inline-block;
     min-height: 32px;
    }
 
