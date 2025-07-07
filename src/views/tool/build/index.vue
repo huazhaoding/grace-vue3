@@ -331,12 +331,12 @@ $deepRed: #ff2e2e;
   .center-board {
     position: relative;
     width: 100%;
-    min-height: 800px;
+    min-height: calc(100vh - 50px - 100px);
 
     .drawing-board {
       position: absolute;
+       min-height: calc(100vh - 50px - 100px);
       width: 100%;
-      min-height: 800px;
       padding: 10px;
     }
 
@@ -358,7 +358,6 @@ $deepRed: #ff2e2e;
   overflow: hidden;
   position: relative;
   min-height: 32px;
-
   .drag-wrapper {
     height: auto;
     min-height: 200px;
