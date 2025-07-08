@@ -437,7 +437,7 @@ export const FormComponents = {
         suffix: {
           value: "",
           slotType: "normal",
-          used: false,
+          used: true,
           label: "输入框尾部内容",
         },
         prepend: {

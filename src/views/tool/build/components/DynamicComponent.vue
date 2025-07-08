@@ -9,8 +9,8 @@
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr['v-model']?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
-        <template v-for="(item,slotName) in filteredSlots" :key="slotName" #[slotName]>
-          <template v-if="item.slotType === 'normal'">
+        <template v-for="(item,slotName) in elementData?.slots" :key="slotName" #[item.used?slotName:'']>
+          <template v-if="item.slotType === 'normal' && item.value">
             <div  v-html="item.value"></div>
           </template>
           <template v-else-if="item.slotType === 'childComponent'">
@@ -25,8 +25,8 @@
     </component>
 
     <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)">
-      <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[slotName]>
-        <template v-if="item.slotType === 'normal'">
+      <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[item.used?slotName:'']>
+        <template v-if="item.slotType === 'normal' && item.value">
           <div v-html="item.value"></div>
         </template>
         <template v-else-if="item.slotType === 'childComponent'">
@@ -124,7 +124,7 @@
 
   <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
     :class="activeId === elementData.id ? 'draggable-item-child' : ''" @click.stop="activeItem(elementData)">
-    <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[slotName]>
+    <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[item.used?slotName:'']>
       <template v-if="item.slotType === 'normal' && item.value">
         <div v-html="item.value"></div>
       </template>
@@ -164,18 +164,6 @@ const props = defineProps({
 
 const className = ref("");
 const draggableItemRef = ref(null);
-const filteredSlots = computed(() => {
-  if (!props.elementData?.slots) return {};
-  const slots = Object.entries(props.elementData.slots).reduce((acc, [key, value]) => {
-    if (!value.used || (value.slotType === "normal" && !value.value)) {
-    } else {
-      acc[key] = value;
-    }
-    return acc;
-  }, {});
-  return slots;
-});
-
 function handleModelValueUpdate(elementData, $event) {
   elementData.attr["v-model"].value = $event;
 }
