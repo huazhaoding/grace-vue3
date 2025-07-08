@@ -827,7 +827,7 @@ function setIcon(val) {
     }
 
     .right-scrollbar{
-       height: calc(100vh - 50px - 100px);
+       height: calc(100vh - 250px);
     }
 
     .panel-drag-wrapper {
