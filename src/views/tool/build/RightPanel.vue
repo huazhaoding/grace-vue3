@@ -2,7 +2,7 @@
   <div class="right-board">
     <el-tabs v-model="rightActiveTab" class="right-tabs">
       <el-tab-pane label="组件配置" name="componentConf">
-        <el-card body-class="card-body" header-class="card-header">
+        <el-card body-class="card-body" v-if="activeDataProperty.tag" header-class="card-header">
           <template #header>
             <div><el-text> {{ activeDataProperty.tagLabel }}-{{ activeDataProperty.id }}</el-text> <a
                 class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
@@ -62,6 +62,7 @@
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                     <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
                       :max="item.max" />
+                    <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
@@ -398,7 +399,7 @@ const {
 
 const documentLink = computed(
   () =>
-    formItemAttr.value?.document ||
+    props.activeDataProperty.document ||
     "https://element-plus.org/zh-CN/guide/installation"
 );
 
