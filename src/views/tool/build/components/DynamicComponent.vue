@@ -25,7 +25,7 @@
     </component>
 
     <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)">
-      <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[item.used?slotName:'']>
+      <template v-for="(item, slotName) in elementData.slots" :key="slotName" #[item.used?slotName:'']>
         <template v-if="item.slotType === 'normal' && item.value">
           <div v-html="item.value"></div>
         </template>
@@ -124,7 +124,7 @@
 
   <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
     :class="activeId === elementData.id ? 'draggable-item-child' : ''" @click.stop="activeItem(elementData)">
-    <template v-for="(item, slotName) in filteredSlots" :key="slotName" #[item.used?slotName:'']>
+    <template v-for="(item, slotName) in elementData.slots" :key="slotName" #[item.used?slotName:'']>
       <template v-if="item.slotType === 'normal' && item.value">
         <div v-html="item.value"></div>
       </template>

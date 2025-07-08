@@ -15,7 +15,7 @@
             size="default" label-width="90px" label-position="top">
             <el-collapse v-model="activeName">
               <el-collapse-item title="基础属性" name="1">
-                <el-scrollbar class="right-scrollbar">
+                <el-scrollbar max-height="300px">
                   <el-form-item v-if="formItemAttr.vModel" label="字段名">
                     <el-input v-model="formItemAttr.vModel" placeholder="请输入字段名（v-model）"></el-input>
                   </el-form-item>
@@ -56,7 +56,7 @@
               </el-collapse-item>
               <el-collapse-item v-if="activeDataProperty.type === 'form' && activeDataProperty.hedge" title="包围属性"
                 name="2">
-                <el-scrollbar class="right-scrollbar">
+                <el-scrollbar max-height="300px">
                   <el-form-item v-for="(item, key) in activeDataProperty.hedge.attr" :label="item.label" :key="key">
                     <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
@@ -78,7 +78,7 @@
                       </el-icon></el-text>
                   </el-tooltip>
                 </template>
-                <el-scrollbar class="right-scrollbar">
+                <el-scrollbar max-height="300px">
                   <div class="scrollbar-item">
                     <template v-if="
                       activeDataProperty?.slots?.default?.slotType ===
@@ -137,10 +137,12 @@
               </el-collapse-item>
 
               <el-collapse-item title="插槽配置" name="4" v-if="Object.keys(filteredSlots).length > 0">
-                <el-form-item v-for="(item, key) in filteredSlots" :label="item.label" :key="key">
+                <el-scrollbar max-height="300px">
+                  <el-form-item v-for="(item, key) in filteredSlots" :label="item.label" :key="key">
                   <el-input v-model="item.value" :placeholder="item.placeholder" type="textarea" />
-                  <el-switch v-model="item.used" v-if="key !== 'default'" />
+                  <el-switch v-model="item.used"  />
                 </el-form-item>
+                </el-scrollbar>
               </el-collapse-item>
 
             </el-collapse>
@@ -608,10 +610,6 @@ function setIcon(val) {
       align-items: center;
       color: #fff;
       font-size: 18px;
-    }
-
-    .right-scrollbar {
-      height: calc(100vh - 50px - 200px);
     }
 
     .panel-drag-wrapper {
