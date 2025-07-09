@@ -382,16 +382,7 @@ const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const childTemplate = ref({});
 const colVisible = ref([]);
-const dateTimeFormat = {
-  date: "YYYY-MM-DD",
-  week: "YYYY 第 ww 周",
-  month: "YYYY-MM",
-  year: "YYYY",
-  datetime: "YYYY-MM-DD HH:mm:ss",
-  daterange: "YYYY-MM-DD",
-  monthrange: "YYYY-MM",
-  datetimerange: "YYYY-MM-DD HH:mm:ss",
-};
+
 const props = defineProps({
   showField: Boolean,
   activeDataProperty: Object,
@@ -430,9 +421,9 @@ const filteredSlots = computed(() => {
   );
 });
 
-function chooseTemplate(type) {}
 
 function handleRadioChange(value) {
+  //模板切换
   if (
     props.activeDataProperty.template &&
     typeof value === "string" &&
@@ -443,6 +434,7 @@ function handleRadioChange(value) {
   }
 }
 
+//通过模板添加
 function addItemByTemplate() {
   addCol(childTemplate.value);
 }
@@ -475,126 +467,16 @@ watch(
     }
   }
 );
-watch(
-  () => formItemAttr,
-  (val) => {
-    console.log(val);
-    // emit('formItemChange', {
-    //   formItemAttr: val
-    //   , formItemHedge: formItemHedge.value
-    // })
-  },
-  {
-    immediate: true, // 立即执行回调函数
-    deep: true, // 深度监听，适用于监听对象或数组
-  }
-);
 
-watch(
-  () => formItemHedge,
-  (val) => {
-    // emit('formItemChange', {
-    //   formItemAttr: formItemAttr.value
-    //   , formItemHedge: val
-    // })
-  },
-  {
-    immediate: true, // 立即执行回调函数
-    deep: true, // 深度监听，适用于监听对象或数组
-  }
-);
+
+
 
 const data = reactive({
   currentTab: "field",
   currentNode: null,
   dialogVisible: false,
   iconsVisible: false,
-  currentIconModel: null,
-  dateTypeOptions: [
-    {
-      label: "日(date)",
-      value: "date",
-    },
-    {
-      label: "周(week)",
-      value: "week",
-    },
-    {
-      label: "月(month)",
-      value: "month",
-    },
-    {
-      label: "年(year)",
-      value: "year",
-    },
-    {
-      label: "日期时间(datetime)",
-      value: "datetime",
-    },
-  ],
-  dateRangeTypeOptions: [
-    {
-      label: "日期范围(daterange)",
-      value: "daterange",
-    },
-    {
-      label: "月范围(monthrange)",
-      value: "monthrange",
-    },
-    {
-      label: "日期时间范围(datetimerange)",
-      value: "datetimerange",
-    },
-  ],
-  colorFormatOptions: [
-    {
-      label: "hex",
-      value: "hex",
-    },
-    {
-      label: "rgb",
-      value: "rgb",
-    },
-    {
-      label: "rgba",
-      value: "rgba",
-    },
-    {
-      label: "hsv",
-      value: "hsv",
-    },
-    {
-      label: "hsl",
-      value: "hsl",
-    },
-  ],
-  justifyOptions: [
-    {
-      label: "start",
-      value: "start",
-    },
-    {
-      label: "end",
-      value: "end",
-    },
-    {
-      label: "center",
-      value: "center",
-    },
-    {
-      label: "space-around",
-      value: "space-around",
-    },
-    {
-      label: "space-between",
-      value: "space-between",
-    },
-  ],
-  layoutTreeProps: {
-    label(data, node) {
-      return data.componentName || `${data.label}: ${data.vModel}`;
-    },
-  },
+  currentIconModel: null
 });
 
 const {
@@ -603,11 +485,6 @@ const {
   dialogVisible,
   iconsVisible,
   currentIconModel,
-  dateTypeOptions,
-  dateRangeTypeOptions,
-  colorFormatOptions,
-  justifyOptions,
-  layoutTreeProps,
 } = toRefs(data);
 
 const documentLink = computed(
@@ -616,180 +493,13 @@ const documentLink = computed(
     "https://element-plus.org/zh-CN/guide/installation"
 );
 
-const dateOptions = computed(() => {
-  if (
-    formItemAttr.value.type !== undefined &&
-    formItemAttr.value.tag === "el-date-picker"
-  ) {
-    if (formItemAttr.value["start-placeholder"] === undefined) {
-      return dateTypeOptions.value;
-    }
-    return dateRangeTypeOptions.value;
-  }
-  return [];
-});
+
 
 const emit = defineEmits(["tag-change", "formItemChange"]);
 
-function addReg() {
-  formItemAttr.value.regList.push({
-    pattern: "",
-    message: "",
-  });
-}
-function addSelectItem() {
-  formItemAttr.value.options.push({
-    label: "",
-    value: "",
-  });
-}
 
-function addTreeItem() {
-  ++proxy.idGlobal;
-  dialogVisible.value = true;
-  currentNode.value = formItemAttr.value.options;
-}
-
-function renderContent(h, { node, data, store }) {
-  return h(
-    "div",
-    {
-      class: "custom-tree-node",
-    },
-    [
-      h("span", node.label),
-      h(
-        "span",
-        {
-          class: "node-operation",
-        },
-        [
-          h(resolveComponent("el-link"), {
-            type: "primary",
-            icon: "Plus",
-            underline: false,
-            onClick: () => {
-              append(data);
-            },
-          }),
-          h(resolveComponent("el-link"), {
-            type: "danger",
-            icon: "Delete",
-            underline: false,
-            style: "margin-left: 5px;",
-            onClick: () => {
-              remove(node, data);
-            },
-          }),
-        ]
-      ),
-    ]
-  );
-  // return (
-  //   <div class="custom-tree-node">
-  //     <span>{node.label}</span>
-  //     <span class="node-operation">
-  //       <el-link type="primary" on-click={() => append(data)} icon="Plus" underline={false}></el-link>
-  //       <el-link style="margin-left: 5px;" type="danger" on-click={() => remove(node, data)} icon="Delete" underline={false}></el-link>
-  //     </span>
-  //   </div>
-  // )
-}
-function append(data) {
-  if (!data.children) {
-    // this.$set(data, 'children', [])
-    data.children = [];
-  }
-  dialogVisible.value = true;
-  currentNode.value = data.children;
-}
-function remove(node, data) {
-  const { parent } = node;
-  const children = parent.data.children || parent.data;
-  const index = children.findIndex((d) => d.id === data.id);
-  children.splice(index, 1);
-}
 function addNode(data) {
   currentNode.value.push(data);
-}
-
-function setOptionValue(item, val) {
-  item.value = isNumberStr(val) ? +val : val;
-}
-function setDefaultValue(val) {
-  if (Array.isArray(val)) {
-    return val.join(",");
-  }
-  if (["string", "number"].indexOf(val) > -1) {
-    return val;
-  }
-  if (typeof val === "boolean") {
-    return `${val}`;
-  }
-  return val;
-}
-
-function onDefaultValueInput(str) {
-  if (Array.isArray(formItemAttr.value.defaultValue)) {
-    // 数组
-    formItemAttr.value.defaultValue = str
-      .split(",")
-      .map((val) => (isNumberStr(val) ? +val : val));
-  } else if (["true", "false"].indexOf(str) > -1) {
-    // 布尔
-    formItemAttr.value.defaultValue = JSON.parse(str);
-  } else {
-    // 字符串和数字
-    formItemAttr.value.defaultValue = isNumberStr(str) ? +str : str;
-  }
-  console.log("defaultValue", formItemAttr.value.defaultValue);
-}
-
-function onSwitchValueInput(val, name) {
-  if (["true", "false"].indexOf(val) > -1) {
-    formItemAttr.value[name] = JSON.parse(val);
-  } else {
-    formItemAttr.value[name] = isNumberStr(val) ? +val : val;
-  }
-}
-
-function setTimeValue(val, type) {
-  const valueFormat = type === "week" ? dateTimeFormat.date : val;
-  formItemAttr.value.defaultValue = null;
-  formItemAttr.value["value-format"] = valueFormat;
-  formItemAttr.value.format = val;
-}
-
-function spanChange(val) {
-  props.formConf.span = val;
-}
-
-function multipleChange(val) {
-  formItemAttr.value.defaultValue = val ? [] : "";
-}
-
-function dateTypeChange(val) {
-  setTimeValue(dateTimeFormat[val], val);
-}
-
-function rangeChange(val) {
-  formItemAttr.value.defaultValue = val
-    ? [formItemAttr.value.min, formItemAttr.value.max]
-    : formItemAttr.value.min;
-}
-
-function rateTextChange(val) {
-  if (val) formItemAttr.value["show-score"] = false;
-}
-
-function rateScoreChange(val) {
-  if (val) formItemAttr.value["show-text"] = false;
-}
-
-function colorFormatChange(val) {
-  formItemAttr.value.defaultValue = null;
-  formItemAttr.value["show-alpha"] = val.indexOf("a") > -1;
-  formItemAttr.value.renderKey = +new Date(); // 更新renderKey,重新渲染该组件
 }
 
 function openIconsDialog(model) {
