@@ -152,6 +152,15 @@ export const BaseComponents = {
           type: "input",
         },
       },
+      style: {},
+      events: {
+        click: {
+          used: false,
+          label: "点击事件",
+          functionName: "handleFocus",
+          value: function (item) {},
+        },
+      }
     },
     {
       tag: "el-button-group",
