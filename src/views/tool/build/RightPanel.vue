@@ -173,7 +173,7 @@
                 v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
-                    <el-button type="primary" @click="editEvent(item)">编辑</el-button>
+                    <el-button type="primary" @click="handleEvent(item,key)">编辑</el-button>
                     <el-switch v-model="item.used" />
                   </el-form-item>
                 </el-scrollbar>
@@ -231,7 +231,7 @@ const fnFrom = ref('');
 const isDefault = ref(false);
 const method = ref({});
 
-function handleEvent(key, item) {
+function handleEvent(item,key) {
   const med = defaultConfig.methods[item.functionName];
   if (med) {
     handleMethod(med, "event", true, key);
