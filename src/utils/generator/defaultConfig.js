@@ -1,59 +1,64 @@
 export const  defaultConfig = {
   methods: {},
-  lifecycles: {
+  lifeCycles: {
+    onMounted2: {
+        used: false,
+        value: "function erg(a) {const a=1;return a+1;}",
+        label: "注册一个回调函数，在组件挂载完成后执行"
+    },
     onMounted: {
         used: false,
-        value: onMounted(() => {}),
+        value: "onMounted((a,b) => {})",
         label: "注册一个回调函数，在组件挂载完成后执行"
     },
     onUpdated: {
         used: false,
-        value: onUpdated(() => {}),
+        value: "onUpdated(( ) => {})",
         label: "注册一个回调函数，在组件更新完成后执行"
     },
     onUnmounted: {
         used: false,
-        value: onUnmounted(() => {}),
+        value: "onUnmounted(( a ) => {})",
         label: "注册一个回调函数，在组件卸载完成后执行"
     },
     onBeforeMount: {
         used: false,
-        value: onBeforeMount(() => {}),
+        value: "onBeforeMount(() => {})",
         label: "注册一个回调函数，在组件挂载之前执行"
     },
     onBeforeUpdate: {
         used: false,
-        value: onBeforeUpdate(() => {}),
+        value: "onBeforeUpdate(() => {})",
         label: "注册一个回调函数，在组件更新之前执行"
     },
     onBeforeUnmount: {
         used: false,
-        value: onBeforeUnmount(() => {}),
+        value: "onBeforeUnmount(() => {})",
         label: "注册一个回调函数，在组件卸载之前执行"
     },
     onErrorCaptured: {
         used: false,
-        value: onErrorCaptured((err, vm, info) => {}),
+        value: "onErrorCaptured((err, vm, info) => {})",
         label: "注册一个回调函数，用于捕获发生在后代组件中的错误"
     },
     onRenderTracked: {
         used: false,
-        value: onRenderTracked((e) => {}),
+        value: "onRenderTracked((e) => {})",
         label: "调试钩子，追踪虚拟 DOM 重新渲染时作为依赖被追踪的具体响应式属性"
     },
     onRenderTriggered: {
         used: false,
-        value: onRenderTriggered((e) => {}),
+        value: "onRenderTriggered((e) => {})",
         label: "调试钩子，当虚拟 DOM 重新渲染被触发时调用"
     },
     onActivated: {
         used: false,
-        value: onActivated(() => {}),
+        value: "onActivated(() => {})",
         label: "被 keep-alive 缓存的组件激活时调用"
     },
     onDeactivated: {
         used: false,
-        value: onDeactivated(() => {}),
+        value: "onDeactivated(() => {})",
         label: "被 keep-alive 缓存的组件停用时调用"
     }
 },

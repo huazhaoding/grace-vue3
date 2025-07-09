@@ -172,7 +172,6 @@
             </el-collapse>
           </el-form>
         </el-card>
-
         <el-card style="width: 100%; margin-top: 5px" v-if="
           activeDataProperty?.slots?.default?.slotType === 'itemComponent'
         ">
@@ -187,22 +186,46 @@
           </draggable>
         </el-card>
       </el-tab-pane>
-      <el-tab-pane label="全局配置" name="componentGlobal"> </el-tab-pane>
+      <el-tab-pane label="全局配置" name="componentGlobal">
+        <el-collapse v-model:active-name="activeName" @change="handleCollapseChange">
+          <el-collapse-item title="生命周期管理" name="lifeCycle">
+            <el-form-item v-for="(item, key) in defaultConfig.lifeCycles" :label="item.label" :key="key">
+                    <el-button type="primary" @click="handleMethod(item)">编辑</el-button>
+                    <el-switch v-model="item.used" />
+                  </el-form-item>
+          </el-collapse-item>
+        </el-collapse>
+
+        <!-- 事件列表
+        生命周期 -->
+      
+      
+      
+      </el-tab-pane>
     </el-tabs>
   </div>
   <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
-  <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
+  <method-edit-dialog v-model="methodsVisible" :method="method"/>
 </template>
 
 <script setup>
 import draggable from "vuedraggable/dist/vuedraggable.common";
-import { isNumberStr } from "@/utils/index";
 import IconsDialog from "./IconsDialog";
-import TreeNodeDialog from "./TreeNodeDialog";
+import {defaultConfig} from "@/utils/generator/defaultConfig"
+import methodEditDialog from "./components/methodEditDialog";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const childTemplate = ref({});
 const colVisible = ref([]);
+const method= ref({});
+
+
+
+
+function handleMethod(item){
+   method.value = item;
+   methodsVisible.value = true;
+}
 
 const props = defineProps({
   showField: Boolean,
@@ -218,7 +241,7 @@ function handleCollapseChange(val) {
 }
 
 const rightActiveTab = ref("componentConf");
-const formItemHedge = ref([]);
+
 
 const formItemAttr = ref([]);
 
@@ -297,6 +320,7 @@ const data = reactive({
   currentTab: "field",
   currentNode: null,
   dialogVisible: false,
+  methodsVisible: false,
   iconsVisible: false,
   currentIconModel: null
 });
@@ -305,6 +329,7 @@ const {
   currentTab,
   currentNode,
   dialogVisible,
+  methodsVisible,
   iconsVisible,
   currentIconModel,
 } = toRefs(data);
