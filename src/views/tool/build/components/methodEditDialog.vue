@@ -42,6 +42,7 @@
 <script setup>
 import Codemirror from "vue-codemirror6";
 import { javascript } from "@codemirror/lang-javascript";
+import { js_beautify as jsBeautify } from "js-beautify";
 import { oneDark } from "@codemirror/theme-one-dark";
 
 // Props 定义
@@ -98,7 +99,7 @@ watch(
           functionHeardSuffix.value="){";
           functionEndSuffix.value="}";
           functionHeard.value="function"
-          functionContent.value =fnString.slice(fnString.indexOf("{")+1,-1);
+          functionContent.value =jsBeautify(fnString.slice(fnString.indexOf("{")+1,-1));
       } else {
         functionName.value = fnString.split("((")[0].trim();
         ps = fnString
@@ -112,7 +113,7 @@ watch(
           functionHeardSuffix.value=") => {";
           functionEndSuffix.value="})";
           functionHeard.value="";
-          functionContent.value =fnString.slice(fnString.indexOf("{")+1,-2);
+          functionContent.value =jsBeautify(fnString.slice(fnString.indexOf("{")+1,-2));
       }
     }
   }

@@ -1,24 +1,19 @@
 export const  defaultConfig = {
   methods: {},
   lifeCycles: {
-    onMounted2: {
-        used: false,
-        value: "function erg(a) {const a=1;return a+1;}",
-        label: "注册一个回调函数，在组件挂载完成后执行"
-    },
     onMounted: {
         used: false,
-        value: "onMounted((a,b) => {})",
+        value: "onMounted(() => {})",
         label: "注册一个回调函数，在组件挂载完成后执行"
     },
     onUpdated: {
         used: false,
-        value: "onUpdated(( ) => {})",
+        value: "onUpdated(() => {})",
         label: "注册一个回调函数，在组件更新完成后执行"
     },
     onUnmounted: {
         used: false,
-        value: "onUnmounted(( a ) => {})",
+        value: "onUnmounted(() => {})",
         label: "注册一个回调函数，在组件卸载完成后执行"
     },
     onBeforeMount: {
