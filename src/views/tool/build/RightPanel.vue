@@ -29,7 +29,7 @@
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group @change="handleRadioChange" v-model="item.value" v-else-if="item.type === 'radio'">
                       <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-                        }}</el-radio>
+                      }}</el-radio>
                     </el-radio-group>
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                     <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
@@ -72,7 +72,7 @@
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
                       <el-radio v-for="(radio, index) in item.options" :key="index" :label="radio.value">{{ radio.label
-                        }}</el-radio>
+                      }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-scrollbar>
@@ -169,6 +169,15 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
+              <el-collapse-item title="事件配置" v-show="activeName === undefined || activeName === 'five'" name="five"
+                v-if="activeDataProperty.events">
+                <el-scrollbar class="right-scrollbar">
+                  <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
+                    <el-button type="primary" @click="editEvent(item)">编辑</el-button>
+                    <el-switch v-model="item.used" />
+                  </el-form-item>
+                </el-scrollbar>
+              </el-collapse-item>
             </el-collapse>
           </el-form>
         </el-card>
@@ -190,48 +199,62 @@
         <el-collapse v-model:active-name="activeName" @change="handleCollapseChange">
           <el-collapse-item title="生命周期管理" name="lifeCycle">
             <el-form-item v-for="(item, key) in defaultConfig.lifeCycles" :label="item.label" :key="key">
-                    <el-button type="primary" @click="handleMethod(item,'lifeCycle',true)">编辑</el-button>
-                    <el-switch v-model="item.used" />
-                  </el-form-item>
+              <el-button type="primary" @click="handleMethod(item, 'lifeCycle', true, key)">编辑</el-button>
+              <el-switch v-model="item.used" />
+            </el-form-item>
           </el-collapse-item>
         </el-collapse>
 
         <!-- 事件列表
         生命周期 -->
-      
-      
-      
+
+
+
       </el-tab-pane>
     </el-tabs>
   </div>
   <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
-  <method-edit-dialog v-model="methodsVisible" :fnFrom="fnFrom" :isDefault="isDefault" :method="method" @updateMethod="updateMethod" />
+  <method-edit-dialog v-model="methodsVisible" :fnFrom="fnFrom" :isDefault="isDefault" :method="method"
+    @updateMethod="updateMethod" />
 </template>
 
 <script setup>
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import IconsDialog from "./IconsDialog";
-import {defaultConfig} from "@/utils/generator/defaultConfig"
-import methodEditDialog from "./components/methodEditDialog";
+import { defaultConfig } from "@/utils/generator/defaultConfig"
+import MethodEditDialog from "./components/MethodEditDialog";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const childTemplate = ref({});
 const colVisible = ref([]);
 const fnFrom = ref('');
 const isDefault = ref(false);
-const method= ref({});
+const method = ref({});
 
-function handleMethod(item,fnFrom,isDefault){
-   method.value = item;
-   fnFrom.value = fnFrom;
-   isDefault.value = isDefault;
-   methodsVisible.value = true;
+function handleEvent(key, item) {
+  const med = defaultConfig.methods[item.functionName];
+  if (med) {
+    handleMethod(med, "event", true, key);
+  }
+  else {
+    med.value = `function ${item.functionName+new Date()}(${item.param.join(',')}){${item.usedReturn ? `return;` : ""}}}`;
+    handleMethod(med, "event", true, key);
+  }
 }
-function updateMethod(fnString,fnFrom,fnName){ 
-  if(fnFrom=== 'lifeCycle'){
-    props.activeDataProperty.lifeCycles[fnName] = fnString;
-  }else{
-    props.activeDataProperty.methods[fnName] = fnString;
+
+function handleMethod(item, fnFrom, isDefault, key) {
+  method.value = item;
+  method.value.key = key;
+  fnFrom.value = fnFrom;
+  isDefault.value = isDefault;
+  methodsVisible.value = true;
+}
+function updateMethod(fnString, fnFrom, fnName,key) {
+  if (fnFrom === 'lifeCycle') {
+    defaultConfig.lifeCycles[fnName].value = fnString;
+  } else {
+    defaultConfig.methods[fnName].value = fnString;
+    props.activeDataProperty.events[key].functionName = fnName;
   }
 }
 

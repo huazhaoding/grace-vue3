@@ -1,23 +1,13 @@
 <template>
   <el-dialog v-model="visible" title="事件编辑" width="60%">
     <div class="tip" style="display: flex; justify-content: flex-start">
-      <el-input
-        v-model="functionName"
-        placeholder="请输入方法名"
-        style="width: 20%"
-        :disabled="isDefault"
-      >
-      <template v-if="functionHeard != ''" #prefix >
-        {{ functionHeard }} &nbsp&nbsp
-      </template>
+      <el-input v-model="functionName" placeholder="请输入方法名" style="width: 20%"
+        :disabled="isDefault && fnFrom === 'lifeCycle'">
+        <template v-if="functionHeard != ''" #prefix>
+          {{ functionHeard }} &nbsp&nbsp
+        </template>
       </el-input>
-      <el-input-tag
-        v-model="functionParam"
-        clearable
-        placeholder="请输入参数"
-        :disabled="isDefault"
-        style="width: 30%"
-      >
+      <el-input-tag v-model="functionParam" clearable placeholder="请输入参数" :disabled="isDefault" style="width: 30%">
         <template #prefix>
           {{ functionHeardPrefix }}
         </template>
@@ -27,13 +17,8 @@
       </el-input-tag>
     </div>
     <div class="preview-content">
-      <Codemirror
-        ref="templatePreviewRef"
-        v-model="functionContent"
-        :extensions="[javascript(), oneDark]"
-        :options="codeOperate"
-        basic
-      />
+      <Codemirror ref="templatePreviewRef" v-model="functionContent" :extensions="[javascript(), oneDark]"
+        :options="codeOperate" basic />
     </div>
     <div class="tip">
       <span>{{ functionEndSuffix }}</span>
@@ -60,9 +45,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  fnFrom:{
-    type:String,
-    default:""
+  fnFrom: {
+    type: String,
+    default: ""
   }
 });
 const codeOperate = ref({
@@ -82,7 +67,7 @@ const visible = computed({
 });
 
 const functionName = ref("");
-const functionHeard= ref("function");
+const functionHeard = ref("function");
 const functionHeardPrefix = ref("((");
 const functionHeardSuffix = ref(") => {");
 const functionParam = ref([]);
@@ -94,44 +79,43 @@ watch(
     if (val) {
       // 提取参数
       const fnString = val.value.trim();
-      let ps="";
+      let ps = "";
       if (fnString.startsWith("function")) {
         functionName.value = fnString.split("(")[0].split(" ")[1].trim();
         ps = fnString
           .split("(")[1]
           .split(")")[0]
           .trim();
-        functionParam.value=ps===""?[]:ps.split(",")
+        functionParam.value = ps === "" ? [] : ps.split(",")
           .map((val) => val.trim());
-          functionHeardPrefix.value="(";
-          functionHeardSuffix.value="){";
-          functionEndSuffix.value="}";
-          functionHeard.value="function"
-          functionContent.value =jsBeautify(fnString.slice(fnString.indexOf("{")+1,-1));
+        functionHeardPrefix.value = "(";
+        functionHeardSuffix.value = "){";
+        functionEndSuffix.value = "}";
+        functionHeard.value = "function"
+        functionContent.value = jsBeautify(fnString.slice(fnString.indexOf("{") + 1, -1));
       } else {
         functionName.value = fnString.split("((")[0].trim();
         ps = fnString
           .split("((")[1]
           .split(")")[0]
           .trim();
-          alert(ps);
-        functionParam.value=(ps==="")?[]:ps.split(",")
+        alert(ps);
+        functionParam.value = (ps === "") ? [] : ps.split(",")
           .map((val) => val.trim());
-          functionHeardPrefix.value="((";
-          functionHeardSuffix.value=") => {";
-          functionEndSuffix.value="})";
-          functionHeard.value="";
-          functionContent.value =jsBeautify(fnString.slice(fnString.indexOf("{")+1,-2));
+        functionHeardPrefix.value = "((";
+        functionHeardSuffix.value = ") => {";
+        functionEndSuffix.value = "})";
+        functionHeard.value = "";
+        functionContent.value = jsBeautify(fnString.slice(fnString.indexOf("{") + 1, -2));
       }
     }
   }
 );
 // Emits 定义
-const emit = defineEmits(["update:modelValue","updateFunction"]);
-
-function saveFunction(){
+const emit = defineEmits(["update:modelValue", "updateFunction"]);
+function saveFunction() {
   const fnString = `${functionHeard.value} ${functionName.value} ${functionHeardPrefix.value} ${functionParam.value.join(",")}) ${functionHeardSuffix.value} ${functionContent.value} ${functionEndSuffix.value}`;
-  emit("updateMethod",fnString,props.fnFrom,functionName.value);
+  emit("updateMethod", fnString, props.fnFrom, functionName.value,props.method.key);
 }
 
 </script>
@@ -144,6 +128,7 @@ function saveFunction(){
   background-color: #f9fafc;
   overflow: scroll;
 }
+
 .actions {
   display: flex;
   gap: 8px;

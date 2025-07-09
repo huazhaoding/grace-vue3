@@ -469,69 +469,80 @@ export const FormComponents = {
           used: false,
           label: "当选择器的输入框失去焦点时触发",
           functionName: "handleBlur",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
         focus: {
           used: false,
           label: "当选择器的输入框获得焦点时触发",
           functionName: "handleFocus",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
         change: {
           used: false,
           label: "仅当 modelValue 改变时，当输入框失去焦点或用户按Enter时触发",
           functionName: "handleChange",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["value"]
         },
         input: {
           used: false,
           label: "在 Input 值改变时触发",
           functionName: "handleInput",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["value"]
         },
         clear: {
           used: false,
           label: "在点击由 clearable 属性生成的清空按钮时触发",
           functionName: "handleClear",
-          value: function (item) {},
+          usedRetuen: false,
+          param:[],
         },
         keydown: {
           used: false,
           label: "按下键时触发",
           functionName: "handleKeydown",
-          value: function () {},
+         usedRetuen: false,
+          param:["event"]
         },
         mouseleave: {
           used: false,
           label: "当鼠标进入输入框时触发",
           functionName: "handleMouseleave",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
         mouseenter: {
           used: false,
           label: "当鼠标离开输入框时触发",
           functionName: "handleMouseenter",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
         compositionstart: {
           used: false,
           label: "输入法输入开始时触发",
           functionName: "handleCompositionstart",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
         compositionupdate: {
           used: false,
           label: "输入法输入改变时触发",
           functionName: "handleCompositionupdate",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
         compositionend: {
           used: false,
           label: "输入法输入完成时触发",
           functionName: "handleCompositionend",
-          value: function (item) {},
+          usedRetuen: false,
+          param:["event"]
         },
-      },
+      }
     },
     {
       tag: "el-autocomplete",
