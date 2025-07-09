@@ -5,6 +5,7 @@
         v-model="functionName"
         placeholder="请输入方法名"
         style="width: 20%"
+        :disabled="isDefault"
       >
       <template v-if="functionHeard != ''" #prefix >
         {{ functionHeard }} &nbsp&nbsp
@@ -14,6 +15,7 @@
         v-model="functionParam"
         clearable
         placeholder="请输入参数"
+        :disabled="isDefault"
         style="width: 30%"
       >
         <template #prefix>
@@ -37,6 +39,8 @@
       <span>{{ functionEndSuffix }}</span>
     </div>
   </el-dialog>
+  <el-button @click="visible = false">取消</el-button>
+  <el-button type="primary" @click="saveFunction">确定</el-button>
 </template>
 
 <script setup>
@@ -56,6 +60,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  fnFrom:{
+    type:String,
+    default:""
+  }
 });
 const codeOperate = ref({
   lineNumbers: true,
@@ -118,9 +126,14 @@ watch(
     }
   }
 );
-
 // Emits 定义
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue","updateFunction"]);
+
+function saveFunction(){
+  const fnString = `${functionHeard.value} ${functionName.value} ${functionHeardPrefix.value} ${functionParam.value.join(",")}) ${functionHeardSuffix.value} ${functionContent.value} ${functionEndSuffix.value}`;
+  emit("updateMethod",fnString,props.fnFrom,functionName.value);
+}
+
 </script>
 
 <style scoped>

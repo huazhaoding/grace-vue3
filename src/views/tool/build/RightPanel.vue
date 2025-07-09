@@ -190,7 +190,7 @@
         <el-collapse v-model:active-name="activeName" @change="handleCollapseChange">
           <el-collapse-item title="生命周期管理" name="lifeCycle">
             <el-form-item v-for="(item, key) in defaultConfig.lifeCycles" :label="item.label" :key="key">
-                    <el-button type="primary" @click="handleMethod(item)">编辑</el-button>
+                    <el-button type="primary" @click="handleMethod(item,'lifeCycle',true)">编辑</el-button>
                     <el-switch v-model="item.used" />
                   </el-form-item>
           </el-collapse-item>
@@ -205,7 +205,7 @@
     </el-tabs>
   </div>
   <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
-  <method-edit-dialog v-model="methodsVisible" :method="method"/>
+  <method-edit-dialog v-model="methodsVisible" :fnFrom="fnFrom" :isDefault="isDefault" :method="method" @updateMethod="updateMethod" />
 </template>
 
 <script setup>
@@ -217,14 +217,22 @@ const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const childTemplate = ref({});
 const colVisible = ref([]);
+const fnFrom = ref('');
+const isDefault = ref(false);
 const method= ref({});
 
-
-
-
-function handleMethod(item){
+function handleMethod(item,fnFrom,isDefault){
    method.value = item;
+   fnFrom.value = fnFrom;
+   isDefault.value = isDefault;
    methodsVisible.value = true;
+}
+function updateMethod(fnString,fnFrom,fnName){ 
+  if(fnFrom=== 'lifeCycle'){
+    props.activeDataProperty.lifeCycles[fnName] = fnString;
+  }else{
+    props.activeDataProperty.methods[fnName] = fnString;
+  }
 }
 
 const props = defineProps({

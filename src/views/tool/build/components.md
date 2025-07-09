@@ -57,7 +57,9 @@ el-radio-group
 
 自定义验证规则
 
+事件->
 
+属性计算
 
 最终数据
 { components: [],
