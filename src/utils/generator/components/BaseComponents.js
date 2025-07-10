@@ -7,7 +7,7 @@ export const BaseComponents = {
       tag: "el-button", // 定义组件类型为按钮
       tagLabel: "按钮", // 标签名，用于标识组件
       tagIcon: "button", // 图标名称，用于可视化展示
-      type:"normal",
+      type: "normal",
       document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
       attr: {
         size: {
@@ -158,7 +158,7 @@ export const BaseComponents = {
           used: false,
           label: "点击事件",
           functionName: "handleFocus",
-          value: function (item) {},
+          info: "点击事件",
         },
       }
     },
@@ -166,7 +166,7 @@ export const BaseComponents = {
       tag: "el-button-group",
       tagLabel: "按钮组",
       tagIcon: "button-group",
-      type:"normal",
+      type: "normal",
       document: "https://element-plus.org/zh-CN/component/button",
       attr: {
         size: {
@@ -857,7 +857,7 @@ export const BaseComponents = {
       tag: "el-link", // 定义组件类型为链接
       tagLabel: "链接", // 标签名，用于标识组件
       tagIcon: "link", // 图标名称，用于可视化展示
-      type:"normal",
+      type: "normal",
       document: "https://element.eleme.cn/#/zh-CN/component/link", // 组件文档链接
       attr: {
         type: {
@@ -931,7 +931,7 @@ export const BaseComponents = {
       tag: "el-text", // 定义组件类型为文本
       tagLabel: "文本", // 标签名，用于标识组件
       tagIcon: "language", // 图标名称，用于可视化展示
-      type:"normal",
+      type: "normal",
       document: "https://element.eleme.cn/#/zh-CN/component/text", // 组件文档链接
       attr: {
         type: {
@@ -1081,7 +1081,60 @@ export const BaseComponents = {
       tagLabel: "分割面板", // 标签名，用于标识组件
       tagIcon: "nested", // 图标名称，用于可视化展示
       document: "https://element.eleme.cn/#/zh-CN/component/splitter", // 组件文档链接
+      type: "layout",
+      template: {
+        "el-splitter-panel": {
+          tag: "el-splitter-panel", // 子组件标签类型
+          tagLabel: "子分割面板", // 子组件标签名
+          tagIcon: "icon-splitter-panel", // 子组件图标名称
+          attr: {
+            size: {
+              value: undefined,
+              type: "number",
+              label: "面板尺寸",
+            }, // 面板尺寸
+            min: {
+              value: undefined,
+              type: "number",
+              label: "最小尺寸",
+            }, // 最小尺寸
+            max: {
+              value: undefined,
+              type: "number",
+              label: "最大尺寸",
+            }, // 最大尺寸
+            resizable: {
+              value: true,
+              type: "switch",
+              label: "是否可调整",
+            }, // 是否可调整大小
+            collapsible: {
+              value: false,
+              type: "switch",
+              label: "是否可折叠",
+            }, // 是否可折叠
+          },
+          slots: {
+            default: {
+              label: "子组件列表",
+              slotType: "dragComponent",
+              slotOptions: [],
+            },
+          },
+        },
+      },
       attr: {
+        layout: {
+          value: "horizontal",
+          label: "布局方向",
+          type: "radio",
+          options: [
+            { label: "水平", value: "horizontal" },
+            { label: "垂直", value: "vertical" },
+          ],
+        }
+      },
+      events: {
         "resize-start": {
           value: undefined,
           type: "function",
@@ -1098,11 +1151,11 @@ export const BaseComponents = {
           label: "调整事件",
         }, // 调整事件
       },
-      slotType: "component",
       slots: {
         default: {
           label: "子组件列表",
-          type: "component",
+          slotType: "childDragComponent",
+          used: true,
           slotOptions: [
             {
               tag: "el-splitter-panel", // 子组件标签类型
@@ -1138,11 +1191,50 @@ export const BaseComponents = {
               slots: {
                 default: {
                   label: "子组件列表",
-                  type: "dragComponent",
+                  slotType: "dragComponent",
                   slotOptions: [],
                 },
               },
             },
+            {
+              tag: "el-splitter-panel", // 子组件标签类型
+              tagLabel: "子分割面板", // 子组件标签名
+              tagIcon: "icon-splitter-panel", // 子组件图标名称
+              attr: {
+                size: {
+                  value: undefined,
+                  type: "number",
+                  label: "面板尺寸",
+                }, // 面板尺寸
+                min: {
+                  value: undefined,
+                  type: "number",
+                  label: "最小尺寸",
+                }, // 最小尺寸
+                max: {
+                  value: undefined,
+                  type: "number",
+                  label: "最大尺寸",
+                }, // 最大尺寸
+                resizable: {
+                  value: true,
+                  type: "switch",
+                  label: "是否可调整",
+                }, // 是否可调整大小
+                collapsible: {
+                  value: false,
+                  type: "switch",
+                  label: "是否可折叠",
+                }, // 是否可折叠
+              },
+              slots: {
+                default: {
+                  label: "子组件列表",
+                  slotType: "dragComponent",
+                  slotOptions: [],
+                },
+              },
+            }
           ],
         },
       },
