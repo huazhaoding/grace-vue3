@@ -1,5 +1,12 @@
 export const  defaultConfig = {
-  methods: {},
+  methods: {
+    testFunction:{
+        value: "function testFunction(){return 'hello world';}",
+        label: "测试方法",
+        info: "测试方法",
+        used: false
+    }
+  },
   lifeCycles: {
     onMounted: {
         used: false,
@@ -58,5 +65,8 @@ export const  defaultConfig = {
     }
 },
   emits: [],
+  props: {},
+  components: {},
+  imports: {},
   componentType: {}
 }

@@ -467,80 +467,93 @@ export const FormComponents = {
       events: {
         blur: {
           used: false,
-          label: "当选择器的输入框失去焦点时触发",
+          label: "输入框失去焦点时触发",
           functionName: "handleBlur",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "当选择器的输入框失去焦点时触发"
         },
         focus: {
           used: false,
           label: "当选择器的输入框获得焦点时触发",
           functionName: "handleFocus",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "当选择器的输入框失去焦点时触发"
+          
         },
         change: {
           used: false,
-          label: "仅当 modelValue 改变时，当输入框失去焦点或用户按Enter时触发",
+          label: "输入框失去焦点或用户按Enter时触发",
           functionName: "handleChange",
           usedRetuen: false,
-          param:["value"]
+          param:["value"],
+          info: "输入框失去焦点或用户按Enter时触发"
         },
         input: {
           used: false,
           label: "在 Input 值改变时触发",
           functionName: "handleInput",
           usedRetuen: false,
-          param:["value"]
+          param:["value"],
+          info: "在 Input 值改变时触发"
         },
         clear: {
           used: false,
-          label: "在点击由 clearable 属性生成的清空按钮时触发",
+          label: "清空按钮时触发",
           functionName: "handleClear",
           usedRetuen: false,
           param:[],
+          info: "清空按钮时触发"
         },
         keydown: {
           used: false,
           label: "按下键时触发",
           functionName: "handleKeydown",
-         usedRetuen: false,
-          param:["event"]
+          usedRetuen: false,
+          param:["event"],
+          info: "按下键时触发"
+
         },
         mouseleave: {
           used: false,
           label: "当鼠标进入输入框时触发",
           functionName: "handleMouseleave",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "当选择器的输入框失去焦点时触发"
         },
         mouseenter: {
           used: false,
           label: "当鼠标离开输入框时触发",
           functionName: "handleMouseenter",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "当鼠标离开输入框时触发"
         },
         compositionstart: {
           used: false,
           label: "输入法输入开始时触发",
           functionName: "handleCompositionstart",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "输入法输入开始时触发"
         },
         compositionupdate: {
           used: false,
           label: "输入法输入改变时触发",
           functionName: "handleCompositionupdate",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "输入法输入改变时触发"
         },
         compositionend: {
           used: false,
           label: "输入法输入完成时触发",
           functionName: "handleCompositionend",
           usedRetuen: false,
-          param:["event"]
+          param:["event"],
+          info: "输入法输入完成时触发"
         },
       }
     },
