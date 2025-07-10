@@ -5,13 +5,14 @@
         <Rank />
       </el-icon>
     </div>
-    <component v-if="elementData.type && elementData.type === 'form' && elementData.hedge" :is="elementData.hedge.tag" v-bind="simplifyItem(elementData.hedge.attr)">
+    <component v-if="elementData.type && elementData.type === 'form' && elementData.hedge" :is="elementData.hedge.tag"
+      v-bind="simplifyItem(elementData.hedge.attr)">
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr['v-model']?.value ?? ''"
         @update:modelValue="handleModelValueUpdate(elementData, $event)">
-        <template v-for="(item,slotName) in elementData?.slots" :key="slotName" #[item.used?slotName:'']>
+        <template v-for="(item, slotName) in elementData?.slots" :key="slotName" #[item.used?slotName:'']>
           <template v-if="item.slotType === 'normal' && item.value">
-            <div  v-html="item.value"></div>
+            <div v-html="item.value"></div>
           </template>
           <template v-else-if="item.slotType === 'childComponent'">
             <template v-for="(slotChild, slotChildIndex) in item.slotOptions" :key="slotChildIndex">
@@ -24,7 +25,9 @@
       </component>
     </component>
 
-    <component v-else :is="elementData.tag" v-bind="simplifyItem(elementData.attr)">
+    <component  :modelValue="elementData.attr['v-model']?.value ?? ''"
+        @update:modelValue="handleModelValueUpdate(elementData, $event)" v-else :is="elementData.tag"
+      v-bind="simplifyItem(elementData.attr)">
       <template v-for="(item, slotName) in elementData.slots" :key="slotName" #[item.used?slotName:'']>
         <template v-if="item.slotType === 'normal' && item.value">
           <div v-html="item.value"></div>
@@ -165,14 +168,19 @@ const props = defineProps({
 const className = ref("");
 const draggableItemRef = ref(null);
 function handleModelValueUpdate(elementData, $event) {
+ setTimeout(() => {
   elementData.attr["v-model"].value = $event;
+ }, 200);
 }
 
 // 转换函数：将复杂结构简化为简单结构
 function simplifyItem(item) {
   const simplified = {};
   for (const key in item) {
-    if (item[key].append) {
+    if (key === "v-model") {
+
+    }
+    else if (item[key].append) {
       simplified[key] = item[key].value + item[key].append;
     } else {
       simplified[key] = item[key].value;
@@ -197,8 +205,6 @@ watch(
   () => props.activeId,
   (val) => {
     if (val) {
-      let inline = "";
-
       //布局组件layout(_is-layout-drag) 表单组件form(_is-form) 普通组件normal(_is-normal)
       //虽然是布局组件，但是布局组件的子组件也是不可拖拽的not-drag-layout(_is-layout-not-drag)
       let componentTypeClass = "";

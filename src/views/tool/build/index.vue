@@ -130,8 +130,8 @@ function drawingItemCopy(item, parent) {
 // 为表单项生成唯一的 ID 和 key
 function createIdAndKey(clone) {
   clone.id = ++idGlobal.value; // 为克隆的组件生成唯一的 id
-  if (clone.type === "form") {
-    clone.attr.vModel = `field-${clone.id}`; // 动态生成 vModel
+  if (clone.attr["v-model"]) {
+    clone.vModel= `field-${clone.id}`;
   }
   clone.renderKey = +new Date(); // 改变 renderKey 以强制更新组件
   // 处理数据
@@ -380,7 +380,7 @@ $deepGreen: #105b0e;
     font-style: normal;
     padding: 4px 4px 2px 4px;
     position: absolute;
-    z-index: 99;
+    z-index: 666;
   }
 
   .draggable-item-tool {  

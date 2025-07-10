@@ -21,8 +21,8 @@
             <el-collapse v-model="activeName" accordion @change="handleCollapseChange">
               <el-collapse-item title="基础属性" v-show="activeName === undefined || activeName === 'one'" name="one">
                 <el-scrollbar class="right-scrollbar">
-                  <el-form-item v-if="activeDataProperty.attr.vModel" label="字段名">
-                    <el-input v-model="activeDataProperty.attr.vModel" placeholder="请输入字段名（v-model）"></el-input>
+                  <el-form-item v-if="activeDataProperty.vModel!==undefined" label="字段名">
+                    <el-input v-model="activeDataProperty.vModel" placeholder="请输入字段名（v-model）"></el-input>
                   </el-form-item>
                   <el-form-item v-for="(item, key) in activeDataProperty.attr" :label="item.label">
                     <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
@@ -129,6 +129,10 @@
                                 <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                                 <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
                                   :max="item.max" />
+                                <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
+                                <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'"> 
+                                  <el-radio v-for="(item, index) in item.options" :key="index" :value="item.value">{{ item.label }}</el-radio>
+                                </el-radio-group>
                                 <el-popover placement="left" :width="400" trigger="click" v-else-if="
                                   activeDataProperty.tag === 'el-row' &&
                                   item.type === 'object' &&
