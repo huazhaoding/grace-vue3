@@ -16,7 +16,7 @@
               </a>
             </div>
           </template>
-          <el-form style="padding-left: 5px; padding-right: 5px" v-show="currentTab === 'field' && showField"
+          <el-form style="padding-left: 5px; padding-right: 5px"
             size="default" label-width="90px" label-position="top">
             <el-collapse v-model="activeName" accordion @change="handleCollapseChange">
               <el-collapse-item title="基础属性" v-show="activeName === undefined || activeName === 'one'" name="one">
@@ -71,7 +71,7 @@
                       :max="item.max" />
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-                      <el-radio v-for="(radio, index) in item.options" :key="index" :label="radio.value">{{ radio.label
+                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
                       }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
@@ -173,7 +173,7 @@
                 v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
-                    <el-button type="primary" @click="handleEvent(item,key)">编辑</el-button>
+                    <el-button type="primary" @click="handleEvent(item,key)" style="margin-right: 10px;">编辑</el-button>
                     <el-switch v-model="item.used" />
                   </el-form-item>
                 </el-scrollbar>
@@ -195,16 +195,20 @@
           </draggable>
         </el-card>
       </el-tab-pane>
-      <el-tab-pane label="全局配置" name="componentGlobal">
-        <el-collapse v-model:active-name="activeName" @change="handleCollapseChange">
+      <el-tab-pane label="全局配置" name="componentGlobal" style="padding-left: 5px; padding-right: 5px">
+       <el-form style="padding-left: 5px; padding-right: 5px"
+            size="default" label-width="90px" label-position="top"> 
+        <el-collapse>
           <el-collapse-item title="生命周期管理" name="lifeCycle">
-            <el-form-item v-for="(item, key) in defaultConfig.lifeCycles" :label="item.label" :key="key">
-              <el-button type="primary" @click="handleMethod(item, 'lifeCycle', true, key)">编辑</el-button>
+            <el-scrollbar class="right-scrollbar">
+            <el-form-item v-for="(item, key) in gloubalConfig.lifeCycles" :label="item.label" :key="key">
+              <el-button style="margin-right: 10px;" type="primary" @click="handleMethod(item, 'lifeCycle', true, key)" icon="Edit">编辑</el-button>
               <el-switch v-model="item.used" />
             </el-form-item>
+            </el-scrollbar>
           </el-collapse-item>
         </el-collapse>
-
+      </el-form>
         <!-- 事件列表
         生命周期 -->
 
@@ -230,31 +234,35 @@ const colVisible = ref([]);
 const fnFrom = ref('');
 const isDefault = ref(false);
 const method = ref({});
+const gloubalConfig = ref(defaultConfig);
 
 function handleEvent(item,key) {
-  const med = defaultConfig.methods[item.functionName];
+  let med = gloubalConfig.value.methods[item.functionName];
   if (med) {
     handleMethod(med, "event", true, key);
   }
   else {
-    med.value = `function ${item.functionName+new Date()}(${item.param.join(',')}){${item.usedReturn ? `return;` : ""}}}`;
+    med={}
+    med.value = `function ${item.functionName+new Date().getTime()}(${item.param.join(',')}){${item.usedReturn ? `return;` : ""}}`;
     handleMethod(med, "event", true, key);
   }
 }
 
-function handleMethod(item, fnFrom, isDefault, key) {
+function handleMethod(item, fnFromAc, isDefaultAc, key) {
   method.value = item;
   method.value.key = key;
-  fnFrom.value = fnFrom;
-  isDefault.value = isDefault;
+  fnFrom.value = fnFromAc;
+  isDefault.value = isDefaultAc;
   methodsVisible.value = true;
 }
-function updateMethod(fnString, fnFrom, fnName,key) {
-  if (fnFrom === 'lifeCycle') {
-    defaultConfig.lifeCycles[fnName].value = fnString;
+function updateMethod(fnString, fnFromAc, fnName,key) {
+  if (fnFromAc === 'lifeCycle') {
+    gloubalConfig.value.lifeCycles[fnName].value = fnString;
   } else {
-    defaultConfig.methods[fnName].value = fnString;
+    gloubalConfig.value.methods[fnName]={};
+    gloubalConfig.value.methods[fnName].value = fnString;
     props.activeDataProperty.events[key].functionName = fnName;
+    console.log(gloubalConfig.value.methods);
   }
 }
 

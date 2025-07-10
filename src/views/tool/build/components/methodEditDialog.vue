@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" title="事件编辑" width="60%">
+  <el-dialog v-model="visible" title="事件编辑" width="60%" style="z-index: 9999999;">
     <div class="tip" style="display: flex; justify-content: flex-start">
       <el-input v-model="functionName" placeholder="请输入方法名" style="width: 20%"
         :disabled="isDefault && fnFrom === 'lifeCycle'">
@@ -7,7 +7,7 @@
           {{ functionHeard }} &nbsp&nbsp
         </template>
       </el-input>
-      <el-input-tag v-model="functionParam" clearable placeholder="请输入参数" :disabled="isDefault" style="width: 30%">
+      <el-input-tag v-model="functionParam" clearable :placeholder="isDefault?'':'请输入参数名'" :disabled="isDefault" style="width: 30%">
         <template #prefix>
           {{ functionHeardPrefix }}
         </template>
@@ -23,9 +23,12 @@
     <div class="tip">
       <span>{{ functionEndSuffix }}</span>
     </div>
+    <div class="actions">
+      <el-button @click="visible = false">取消</el-button>
+      <el-button type="primary" @click="saveFunction">保存</el-button>
+    </div>
   </el-dialog>
-  <el-button @click="visible = false">取消</el-button>
-  <el-button type="primary" @click="saveFunction">确定</el-button>
+ 
 </template>
 
 <script setup>
@@ -99,7 +102,6 @@ watch(
           .split("((")[1]
           .split(")")[0]
           .trim();
-        alert(ps);
         functionParam.value = (ps === "") ? [] : ps.split(",")
           .map((val) => val.trim());
         functionHeardPrefix.value = "((";
@@ -112,7 +114,7 @@ watch(
   }
 );
 // Emits 定义
-const emit = defineEmits(["update:modelValue", "updateFunction"]);
+const emit = defineEmits(["update:modelValue", "updateMethod"]);
 function saveFunction() {
   const fnString = `${functionHeard.value} ${functionName.value} ${functionHeardPrefix.value} ${functionParam.value.join(",")}) ${functionHeardSuffix.value} ${functionContent.value} ${functionEndSuffix.value}`;
   emit("updateMethod", fnString, props.fnFrom, functionName.value,props.method.key);

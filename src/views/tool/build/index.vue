@@ -380,7 +380,7 @@ $deepGreen: #105b0e;
     font-style: normal;
     padding: 4px 4px 2px 4px;
     position: absolute;
-    z-index: 9999;
+    z-index: 99;
   }
 
   .draggable-item-tool {  
