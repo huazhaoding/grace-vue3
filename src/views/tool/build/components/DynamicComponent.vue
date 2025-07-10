@@ -142,6 +142,7 @@
   </component>
 </template>
 <script setup name="DynamicComponent">
+import { nextTick } from "vue";
 import draggable from "vuedraggable/dist/vuedraggable.common";
 const emits = defineEmits(["activeItem", "copyItem", "deleteItem"]);
 const props = defineProps({
@@ -168,9 +169,9 @@ const props = defineProps({
 const className = ref("");
 const draggableItemRef = ref(null);
 function handleModelValueUpdate(elementData, $event) {
- setTimeout(() => {
+  nextTick(() => {
   elementData.attr["v-model"].value = $event;
- }, 200);
+ });
 }
 
 // 转换函数：将复杂结构简化为简单结构

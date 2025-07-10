@@ -55,7 +55,11 @@ export const NavComponent = {
                     label: "标签的宽度是否自撑开",
                     type: "switch"
                 }, // 标签的宽度是否自撑开
-               
+                beforeLeave: {
+                    value: "",
+                    label: "切换标签之前的钩子函数",
+                    type: "function"
+                } // 切换标签之前的钩子函数
             },
             template: {
                 "el-tab-pane": {
