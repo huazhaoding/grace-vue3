@@ -261,7 +261,11 @@ function updateMethod(fnString, fnFromAc, fnName, key) {
 
 const props = defineProps({
   showField: Boolean,
-  activeDataProperty: Object,
+  activeDataProperty: {
+    type: Object,
+    required: true,
+    default: undefined,
+  },
   formConf: Object,
 });
 const activeName = ref(undefined);

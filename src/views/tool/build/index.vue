@@ -101,7 +101,7 @@ const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
 const idGlobal = ref(100); // 全局唯一 ID 生成器
-const activeData = ref([]); // 当前激活的表单项数据
+const activeData = ref({}); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
 const generateConf = ref(null); // 生成配置
 const componentTemplateData = ref(""); // 存储生成的表单模板
@@ -195,6 +195,7 @@ function empty() {
     .then(() => {
       idGlobal.value = 100; // 重置全局 ID
       drawingList.value = []; // 清空表单项列表
+      activeData.value = {};
     });
 }
 
