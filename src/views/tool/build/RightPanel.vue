@@ -26,7 +26,8 @@
                     <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group @change="handleRadioChange" v-model="item.value" v-else-if="item.type === 'radio'">
-                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label }}</el-radio>
+                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
+                        }}</el-radio>
                     </el-radio-group>
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                     <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
@@ -62,10 +63,12 @@
                   <el-form-item v-for="(item, key) in activeDataProperty.hedge.attr" :label="item.label" :key="key">
                     <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-                    <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
+                    <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
+                      :max="item.max" />
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label }}</el-radio>
+                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
+                        }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-scrollbar>
@@ -107,7 +110,8 @@
                                 <span>子项{{ index + 1 }}配置</span>
                                 <el-button-group style="float: right">
                                   <el-button type="primary" icon="Plus" @click="addCol(element, index)" title="复制" />
-                                  <el-button type="danger" icon="Remove" @click="removeCol(element, index)" title="删除" />
+                                  <el-button type="danger" icon="Remove" @click="removeCol(element, index)"
+                                    title="删除" />
                                   <el-button type="success" :icon="colVisible[index] ? 'Hide' : 'View'"
                                     @click="changeColVisible(!colVisible[index], index)" title="显示|隐藏" />
                                 </el-button-group>
@@ -140,7 +144,8 @@
                                         padding-right: 12px;
                                       " />
                                   </el-form-item>
-                                  {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
+                                  {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push
+                                  }}
                                 </el-popover>
                               </el-form-item>
                             </div>
@@ -191,8 +196,8 @@
             <el-collapse-item title="生命周期管理" name="lifeCycle">
               <el-scrollbar class="right-scrollbar">
                 <el-form-item v-for="(item, key) in globalConfig.lifeCycles" :label="item.label" :key="key">
-                  <el-button style="margin-right: 10px;" type="primary" @click="handleMethod(item, 'lifeCycle', true, key)"
-                    icon="Edit">编辑</el-button>
+                  <el-button style="margin-right: 10px;" type="primary"
+                    @click="handleMethod(item, 'lifeCycle', true, key)" icon="Edit">编辑</el-button>
                   <el-switch v-model="item.used" />
                 </el-form-item>
               </el-scrollbar>
@@ -202,7 +207,8 @@
       </el-tab-pane>
     </el-tabs>
   </div>
-  <icons-dialog v-model="iconsVisible" :current="currentIconModel?activeDataProperty.attr[currentIconModel]:null" @select="setIcon" />
+  <icons-dialog v-model="iconsVisible" :current="currentIconModel ? activeDataProperty.attr[currentIconModel] : null"
+    @select="setIcon" />
   <method-edit-dialog v-model="methodsVisible" :fnFrom="fnFrom" :isDefault="isDefault" :method="method"
     @updateMethod="updateMethod" />
 </template>
@@ -305,11 +311,27 @@ function handleRadioChange(value) {
 
 // 通过模板添加
 function addItemByTemplate() {
+  if (Object.keys(childTemplate.value).length > 0) {
+
+  }
+  else {
+    if (props.activeDataProperty.template && Object.keys(props.activeDataProperty.template).length > 0) {
+      for (let item in props.activeDataProperty.template) {
+        childTemplate.value =props.activeDataProperty.template[item];
+        break;
+      }
+    }
+    else{
+      proxy.$modal.msgError("请确认模板存在");
+    }
+
+  }
   addCol(childTemplate.value);
 }
 
 function addCol(child, index) {
   const clone = createIdAndKey(cloneDeep(child));
+  console.log(clone);
   props.activeDataProperty.slots.default.slotOptions.push(clone);
   changeColVisible(true, props.activeDataProperty.slots.default.slotOptions.length - 1);
 }
@@ -326,18 +348,6 @@ function removeCol(child, index) {
   }
 }
 
-watch(
-  () => props.activeDataProperty,
-  (val) => {
-    if (val.template && Object.keys(val.template).length > 0) {
-      for (let item in val.template) {
-        childTemplate.value = cloneDeep(val.template[item]);
-        break;
-      }
-    }
-  },
-  { deep: true, immediate: true }
-);
 
 const data = reactive({
   currentTab: "field",
@@ -374,7 +384,7 @@ function openIconsDialog(model) {
 
 function setIcon(val) {
   if (props.activeDataProperty.attr[currentIconModel.value]) {
-   props.activeDataProperty.attr[currentIconModel.value].value = val;
+    props.activeDataProperty.attr[currentIconModel.value].value = val;
   }
 }
 </script>
