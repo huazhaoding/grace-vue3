@@ -380,9 +380,12 @@ $dragColor: #340b49b4;
     height: 20px;
     border-radius: 2px;
     font-size: 12px;
+    line-height: 12px;
     font-style: normal;
     padding: 4px 4px 2px 4px;
     position: absolute;
+    left:-2px;
+    top:-2px;
     z-index: 666;
   }
 
@@ -392,6 +395,7 @@ $dragColor: #340b49b4;
     bottom: 0;
     right: 0;
     font-size: 12px;
+    line-height: 12px;
     font-style: normal;
     .drawing-item-copy,
     .drawing-item-delete {
