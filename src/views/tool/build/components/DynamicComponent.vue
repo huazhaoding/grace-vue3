@@ -5,7 +5,7 @@
         <Rank />
       </el-icon>
     </div>
-    <component v-if="elementData.type && elementData.type === 'form' && elementData.hedge" :is="elementData.hedge.tag"
+    <component v-if="isFormWithHedge" :is="elementData.hedge.tag"
       v-bind="simplifyItem(elementData.hedge.attr)">
       <component :is="elementData.tag" v-bind="simplifyItem(elementData.attr)"
         :modelValue="elementData.attr['v-model']?.value ?? ''"
@@ -166,34 +166,34 @@ const props = defineProps({
 });
 
 // 监听 activeId 的变化，动态更新激活状态 可拖拽组件为虚线 不可拖拽组件为实线
-// ... existing code ...
+// 计算是否为表单且包含 hedge 属性
+const isFormWithHedge = computed(() => 
+  props.elementData.type === 'form' && props.elementData.hedge
+);
 
+// 动态类名计算
 const className = computed(() => {
-  const val = props.activeId;
-  if (!val) return "draggable-item draggable-item-inactive";
-
-  // 布局组件layout(_is-layout-drag) 表单组件form(_is-form) 普通组件normal(_is-normal)
-  // 虽然是布局组件，但是布局组件的子组件也是不可拖拽的not-drag-layout(_is-layout-not-drag)
-  let componentTypeClass = "";
-  if (
-    props.tool &&
-    props.elementData.type !== "form" &&
-    props.elementData.type !== "layout" &&
-    props.elementData.type !== "not-drag-layout"
-  ) {
-    componentTypeClass = " _is-normal";
-  } else if (props.elementData.type === "not-drag-layout") {
-    componentTypeClass = " _is-layout-not-drag";
-  } else if (props.elementData.type === "layout") {
-    componentTypeClass = " _is-layout";
-  }
-
-  return val !== props.elementData.id
-    ? "draggable-item draggable-item-inactive" + componentTypeClass // 移除激活样式
-    : "draggable-item draggable-item-active" + componentTypeClass; // 添加激活样式
+  const isActive = props.activeId === props.elementData.id;
+  const componentTypeClass = getComponentTypeClass();
+  return isActive
+    ? `draggable-item draggable-item-active${componentTypeClass}`
+    : `draggable-item draggable-item-inactive${componentTypeClass}`;
 });
 
-// ... existing code ...
+// 获取组件类型类名
+function getComponentTypeClass() {
+  if (!props.tool) return "";
+  switch (props.elementData.type) {
+    case "normal":
+      return " _is-normal";
+    case "not-drag-layout":
+      return " _is-layout-not-drag";
+    case "layout":
+      return " _is-layout";
+    default:
+      return "";
+  }
+}
 
 const draggableItemRef = ref(null);
 function handleModelValueUpdate(elementData, $event) {
@@ -231,13 +231,6 @@ function deleteItem(index, parent) {
 }
 
 
-watch(
-  () => props.elementData,
-  (val) => {
-    console.log(val);
-  },
-  { immediate: true, deep: true }
-);
 </script>
 
 <style scoped>
