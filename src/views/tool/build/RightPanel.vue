@@ -178,7 +178,7 @@
             </el-collapse>
           </el-form>
         </el-card>
-        <el-card style="width: 100%; margin-top: 5px" v-if="
+        <el-card body-class="card-body"  header-class="card-header" v-if="
           activeDataProperty?.slots?.default?.slotType === 'itemComponent'
         ">
           <el-text>拖拽区</el-text>
@@ -312,7 +312,6 @@ function handleRadioChange(value) {
 // 通过模板添加
 function addItemByTemplate() {
   if (Object.keys(childTemplate.value).length > 0) {
-
   }
   else {
     if (props.activeDataProperty.template && Object.keys(props.activeDataProperty.template).length > 0) {
