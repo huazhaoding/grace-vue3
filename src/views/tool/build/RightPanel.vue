@@ -219,7 +219,6 @@ import IconsDialog from "./IconsDialog";
 import { defaultConfig } from "@/utils/generator/defaultConfig"
 import MethodEditDialog from "./components/MethodEditDialog";
 import { cloneDeep } from 'lodash-es';
-
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const childTemplate = ref({});
@@ -266,7 +265,6 @@ const props = defineProps({
   formConf: Object,
 });
 const activeName = ref(undefined);
-
 function handleCollapseChange(val) {
   if (!val) {
     activeName.value = undefined;
@@ -274,7 +272,6 @@ function handleCollapseChange(val) {
 }
 
 const rightActiveTab = ref("componentConf");
-
 function changeColVisible(visible, index) {
   if (index >= 0 && index < colVisible.value.length) {
     colVisible.value[index] = visible;
@@ -323,7 +320,6 @@ function addItemByTemplate() {
     else{
       proxy.$modal.msgError("请确认模板存在");
     }
-
   }
   addCol(childTemplate.value);
 }
@@ -371,10 +367,6 @@ const documentLink = computed(
 );
 
 const emit = defineEmits(["tag-change", "formItemChange"]);
-
-function addNode(data) {
-  currentNode.value.push(data);
-}
 
 function openIconsDialog(model) {
   iconsVisible.value = true;

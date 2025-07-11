@@ -165,7 +165,36 @@ const props = defineProps({
   },
 });
 
-const className = ref("");
+// 监听 activeId 的变化，动态更新激活状态 可拖拽组件为虚线 不可拖拽组件为实线
+// ... existing code ...
+
+const className = computed(() => {
+  const val = props.activeId;
+  if (!val) return "draggable-item draggable-item-inactive";
+
+  // 布局组件layout(_is-layout-drag) 表单组件form(_is-form) 普通组件normal(_is-normal)
+  // 虽然是布局组件，但是布局组件的子组件也是不可拖拽的not-drag-layout(_is-layout-not-drag)
+  let componentTypeClass = "";
+  if (
+    props.tool &&
+    props.elementData.type !== "form" &&
+    props.elementData.type !== "layout" &&
+    props.elementData.type !== "not-drag-layout"
+  ) {
+    componentTypeClass = " _is-normal";
+  } else if (props.elementData.type === "not-drag-layout") {
+    componentTypeClass = " _is-layout-not-drag";
+  } else if (props.elementData.type === "layout") {
+    componentTypeClass = " _is-layout";
+  }
+
+  return val !== props.elementData.id
+    ? "draggable-item draggable-item-inactive" + componentTypeClass // 移除激活样式
+    : "draggable-item draggable-item-active" + componentTypeClass; // 添加激活样式
+});
+
+// ... existing code ...
+
 const draggableItemRef = ref(null);
 function handleModelValueUpdate(elementData, $event) {
   if (elementData.attr["v-model"]) {
@@ -174,7 +203,6 @@ function handleModelValueUpdate(elementData, $event) {
  });
   }
 }
-
 // 转换函数：将复杂结构简化为简单结构
 function simplifyItem(item) {
   const simplified = {};
@@ -202,38 +230,6 @@ function deleteItem(index, parent) {
   emits("deleteItem", index, parent ?? props.drawingList);
 }
 
-// 监听 activeId 的变化，动态更新激活状态 可拖拽组件为虚线 不可拖拽组件为实线
-watch(
-  () => props.activeId,
-  (val) => {
-    if (val) {
-      //布局组件layout(_is-layout-drag) 表单组件form(_is-form) 普通组件normal(_is-normal)
-      //虽然是布局组件，但是布局组件的子组件也是不可拖拽的not-drag-layout(_is-layout-not-drag)
-      let componentTypeClass = "";
-
-      if (
-        props.tool &&
-        props.elementData.type !== "form" &&
-        props.elementData.type !== "layout" &&
-        props.elementData.type !== "not-drag-layout"
-      ) {
-        componentTypeClass = " _is-normal";
-      }
-      else if (props.elementData.type === "not-drag-layout") {
-        componentTypeClass = " _is-layout-not-drag";
-      } else if (props.elementData.type === "layout") {
-        componentTypeClass = " _is-layout";
-      }
-
-      if (val !== props.elementData.id) {
-        className.value = "draggable-item draggable-item-inactive" + componentTypeClass; // 移除激活样式
-      } else {
-        className.value = "draggable-item draggable-item-active" + componentTypeClass; // 添加激活样式
-      }
-    }
-  },
-  { immediate: true, deep: true }
-);
 
 watch(
   () => props.elementData,
