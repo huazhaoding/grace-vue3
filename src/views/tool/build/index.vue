@@ -221,6 +221,7 @@ $lighterBlue: #409eff;
 $deepBlue: #2e73ff;
 $deepRed: #ff2e2e;
 $deepGreen: #105b0e;
+$dragColor: #340b49b4;
 .container {
   width: 100%;
   height: calc(100vh - 50px - 40px);
@@ -362,7 +363,9 @@ $deepGreen: #105b0e;
   margin: 1px;
   .drag-wrapper {
     height: auto;
+    width: 100%;
     min-height: 200px;
+    border: 1px dashed $dragColor;
   }
    .not-drag,.item-drag{
     padding: 4px;

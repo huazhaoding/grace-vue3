@@ -5,7 +5,7 @@ const defaultHedge = {
     label: {
       value: "",
       type: "input",
-      label: "表单项的标签文字",
+      label: "表单项目名称",
     },
     prop: {
       value: "",
@@ -341,6 +341,111 @@ export const FormComponents = {
             },
           ],
         },
+      }
+    },
+    {
+      tag: "el-form-item",
+      tagLabel: "表单项目",
+      tagIcon: "icon-form",
+      document: "https://element.eleme.cn/#/zh-CN/component/form",
+      type: "layout",
+      attr: {
+        label: {
+          value: "表单项目",
+          type: "input",
+          label: "表单项目名称",
+        },
+        prop: {
+          value: "",
+          type: "input",
+          label: "表单域字段名，用于验证、重置等操作",
+        },
+        required: {
+          value: true,
+          type: "switch",
+          label: "是否必填",
+        },
+        rules: {
+          value: [],
+          type: "array",
+          label: "表单验证规则",
+        },
+        errorMessage: {
+          value: "",
+          type: "input",
+          label: "手动设置的错误提示信息",
+        },
+        showMessage: {
+          value: true,
+          type: "switch",
+          label: "是否显示校验错误信息",
+        },
+        inlineMessage: {
+          value: false,
+          type: "switch",
+          label: "是否以行内形式展示校验信息",
+        },
+        size: {
+          value: "default",
+          type: "radio",
+          label: "尺寸",
+          options: [
+            { value: "large", label: "大尺寸" },
+            { value: "default", label: "中尺寸" },
+            { value: "small", label: "小尺寸" },
+          ],
+        },
+        labelWidth: {
+          value: 100,
+          type: "number",
+          append: "px",
+          label: "标签宽度",
+        },
+        labelPosition: {
+          value: "right",
+          type: "radio",
+          label: "标签位置",
+          options: [
+            { value: "left", label: "左侧" },
+            { value: "right", label: "右侧" },
+            { value: "top", label: "顶部" },
+          ],
+        },
+        for: {
+          value: "",
+          type: "input",
+          label: "原生 label 的 for 属性",
+        },
+        error: {
+          value: "",
+          type: "input",
+          label: "错误时的提示信息",
+        },
+        validateStatus: {
+          value: "",
+          type: "input",
+          label: "表单项的校验状态",
+        },
+      },
+      slots: {
+        default: {
+          label: "默认值",
+          slotType: "dragComponent",
+          used: true,
+          slotOptions: []
+        },
+        label: {
+          value: "",
+          slotType: "normal",
+          used: false,
+          label: "标签位置显示的内容"
+        },
+        error: {
+          value: "",
+          slotType: "normal",
+          used: false,
+          label: "验证错误信息的显示内容"
+        }
       },
     },
     {
@@ -428,7 +533,7 @@ export const FormComponents = {
         },
       },
       slots: {
-         prefix: {
+        prefix: {
           value: "",
           slotType: "normal",
           used: false,
@@ -470,7 +575,7 @@ export const FormComponents = {
           label: "输入框失去焦点时触发",
           functionName: "handleBlur",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "当选择器的输入框失去焦点时触发"
         },
         focus: {
@@ -478,16 +583,16 @@ export const FormComponents = {
           label: "当选择器的输入框获得焦点时触发",
           functionName: "handleFocus",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "当选择器的输入框失去焦点时触发"
-          
+
         },
         change: {
           used: false,
           label: "输入框失去焦点或用户按Enter时触发",
           functionName: "handleChange",
           usedRetuen: false,
-          param:["value"],
+          param: ["value"],
           info: "输入框失去焦点或用户按Enter时触发"
         },
         input: {
@@ -495,7 +600,7 @@ export const FormComponents = {
           label: "在 Input 值改变时触发",
           functionName: "handleInput",
           usedRetuen: false,
-          param:["value"],
+          param: ["value"],
           info: "在 Input 值改变时触发"
         },
         clear: {
@@ -503,7 +608,7 @@ export const FormComponents = {
           label: "清空按钮时触发",
           functionName: "handleClear",
           usedRetuen: false,
-          param:[],
+          param: [],
           info: "清空按钮时触发"
         },
         keydown: {
@@ -511,7 +616,7 @@ export const FormComponents = {
           label: "按下键时触发",
           functionName: "handleKeydown",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "按下键时触发"
 
         },
@@ -520,7 +625,7 @@ export const FormComponents = {
           label: "当鼠标进入输入框时触发",
           functionName: "handleMouseleave",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "当选择器的输入框失去焦点时触发"
         },
         mouseenter: {
@@ -528,7 +633,7 @@ export const FormComponents = {
           label: "当鼠标离开输入框时触发",
           functionName: "handleMouseenter",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "当鼠标离开输入框时触发"
         },
         compositionstart: {
@@ -536,7 +641,7 @@ export const FormComponents = {
           label: "输入法输入开始时触发",
           functionName: "handleCompositionstart",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "输入法输入开始时触发"
         },
         compositionupdate: {
@@ -544,7 +649,7 @@ export const FormComponents = {
           label: "输入法输入改变时触发",
           functionName: "handleCompositionupdate",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "输入法输入改变时触发"
         },
         compositionend: {
@@ -552,7 +657,7 @@ export const FormComponents = {
           label: "输入法输入完成时触发",
           functionName: "handleCompositionend",
           usedRetuen: false,
-          param:["event"],
+          param: ["event"],
           info: "输入法输入完成时触发"
         },
       }
