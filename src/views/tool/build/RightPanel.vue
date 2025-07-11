@@ -6,9 +6,8 @@
           <template #header>
             <div>
               <el-text>
-                {{ activeDataProperty.tagLabel }}-{{
-                  activeDataProperty.id
-                }}</el-text>
+                {{ activeDataProperty.tagLabel }}-{{ activeDataProperty.id }}
+              </el-text>
               <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
                 <el-icon>
                   <Link />
@@ -16,20 +15,18 @@
               </a>
             </div>
           </template>
-          <el-form style="padding-left: 5px; padding-right: 5px"
-            size="default" label-width="90px" label-position="top">
+          <el-form style="padding-left: 5px; padding-right: 5px" size="default" label-width="90px" label-position="top">
             <el-collapse v-model="activeName" accordion @change="handleCollapseChange">
               <el-collapse-item title="基础属性" v-show="activeName === undefined || activeName === 'one'" name="one">
                 <el-scrollbar class="right-scrollbar">
-                  <el-form-item v-if="activeDataProperty.vModel!==undefined" label="字段名">
+                  <el-form-item v-if="activeDataProperty.vModel !== undefined" label="字段名">
                     <el-input v-model="activeDataProperty.vModel" placeholder="请输入字段名（v-model）"></el-input>
                   </el-form-item>
-                  <el-form-item v-for="(item, key) in activeDataProperty.attr" :label="item.label">
+                  <el-form-item v-for="(item, key) in activeDataProperty.attr" :label="item.label" :key="key">
                     <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group @change="handleRadioChange" v-model="item.value" v-else-if="item.type === 'radio'">
-                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-                      }}</el-radio>
+                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label }}</el-radio>
                     </el-radio-group>
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                     <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
@@ -50,12 +47,10 @@
                       <template #reference>
                         <el-button style="width: 100%">{{ key }}</el-button>
                       </template>
-                      <el-form-item v-for="(value, key) in item.value" :label="key">
+                      <el-form-item v-for="(value, key) in item.value" :label="key" :key="key">
                         <el-slider v-model="item.value[key]" :min="0" :max="24" />
                       </el-form-item>
-                      {{ item.value.span }}-{{ item.value.offset }}-{{
-                        item.value.pull
-                      }}-{{ item.value.push }}
+                      {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
                     </el-popover>
                   </el-form-item>
                 </el-scrollbar>
@@ -67,12 +62,10 @@
                   <el-form-item v-for="(item, key) in activeDataProperty.hedge.attr" :label="item.label" :key="key">
                     <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-                    <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
-                      :max="item.max" />
+                    <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min" :max="item.max" />
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-                      }}</el-radio>
+                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-scrollbar>
@@ -87,9 +80,11 @@
                 <template #title="{ isActive }">
                   <el-text style="margin-right: 10px">子项配置</el-text>
                   <el-tooltip effect="dark" content="添加子项" placement="top-start">
-                    <el-text type="primary" @click.stop="addItemByTemplate"><el-icon>
+                    <el-text type="primary" @click.stop="addItemByTemplate">
+                      <el-icon>
                         <Plus />
-                      </el-icon></el-text>
+                      </el-icon>
+                    </el-text>
                   </el-tooltip>
                 </template>
                 <el-scrollbar class="right-scrollbar">
@@ -109,16 +104,12 @@
                           <el-card style="margin-bottom: 10px">
                             <template #header>
                               <div class="card-header">
-                                <span>子项{{ index + 1 }}配置</span><el-button-group style="float: right">
+                                <span>子项{{ index + 1 }}配置</span>
+                                <el-button-group style="float: right">
                                   <el-button type="primary" icon="Plus" @click="addCol(element, index)" title="复制" />
-                                  <el-button type="danger" icon="Remove" @click="removeCol(element, index)"
-                                    title="删除" />
-                                  <el-button type="success" :icon="colVisible[index] ? 'Hide' : 'View'" @click="
-                                    changeColVisible(
-                                      !colVisible[index],
-                                      index
-                                    )
-                                    " title="显示|隐藏" />
+                                  <el-button type="danger" icon="Remove" @click="removeCol(element, index)" title="删除" />
+                                  <el-button type="success" :icon="colVisible[index] ? 'Hide' : 'View'"
+                                    @click="changeColVisible(!colVisible[index], index)" title="显示|隐藏" />
                                 </el-button-group>
                               </div>
                             </template>
@@ -130,8 +121,9 @@
                                 <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
                                   :max="item.max" />
                                 <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
-                                <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'"> 
-                                  <el-radio v-for="(item, index) in item.options" :key="index" :value="item.value">{{ item.label }}</el-radio>
+                                <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
+                                  <el-radio v-for="(item, index) in item.options" :key="index" :value="item.value">{{
+                                    item.label }}</el-radio>
                                 </el-radio-group>
                                 <el-popover placement="left" :width="400" trigger="click" v-else-if="
                                   activeDataProperty.tag === 'el-row' &&
@@ -140,19 +132,15 @@
                                     ?.slotType === 'childDragComponent'
                                 ">
                                   <template #reference>
-                                    <el-button style="width: 100%">{{
-                                      key
-                                    }}</el-button>
+                                    <el-button style="width: 100%">{{ key }}</el-button>
                                   </template>
-                                  <el-form-item v-for="(value, key) in item.value" :label="key">
+                                  <el-form-item v-for="(value, key) in item.value" :label="key" :key="key">
                                     <el-slider v-model="item.value[key]" :min="0" :max="24" style="
                                         padding-left: 12px;
                                         padding-right: 12px;
                                       " />
                                   </el-form-item>
-                                  {{ item.value.span }}-{{
-                                    item.value.offset
-                                  }}-{{ item.value.pull }}-{{ item.value.push }}
+                                  {{ item.value.span }}-{{ item.value.offset }}-{{ item.value.pull }}-{{ item.value.push }}
                                 </el-popover>
                               </el-form-item>
                             </div>
@@ -177,7 +165,7 @@
                 v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
-                    <el-button type="primary" @click="handleEvent(item,key)" style="margin-right: 10px;">编辑</el-button>
+                    <el-button type="primary" @click="handleEvent(item, key)" style="margin-right: 10px;">编辑</el-button>
                     <el-switch v-model="item.used" />
                   </el-form-item>
                 </el-scrollbar>
@@ -192,32 +180,25 @@
           <draggable group="componentsGroup" :animation="340" :list="activeDataProperty.slots.default.slotOptions"
             class="panel-drag-wrapper" item-key="renderKey" @start="drag = true" @end="drag = false">
             <template #item="scoped">
-              <el-button type="primary">{{
-                scoped.element.tagLabel
-              }}</el-button>
+              <el-button type="primary">{{ scoped.element.tagLabel }}</el-button>
             </template>
           </draggable>
         </el-card>
       </el-tab-pane>
       <el-tab-pane label="全局配置" name="componentGlobal" style="padding-left: 5px; padding-right: 5px">
-       <el-form style="padding-left: 5px; padding-right: 5px"
-            size="default" label-width="90px" label-position="top"> 
-        <el-collapse>
-          <el-collapse-item title="生命周期管理" name="lifeCycle">
-            <el-scrollbar class="right-scrollbar">
-            <el-form-item v-for="(item, key) in gloubalConfig.lifeCycles" :label="item.label" :key="key">
-              <el-button style="margin-right: 10px;" type="primary" @click="handleMethod(item, 'lifeCycle', true, key)" icon="Edit">编辑</el-button>
-              <el-switch v-model="item.used" />
-            </el-form-item>
-            </el-scrollbar>
-          </el-collapse-item>
-        </el-collapse>
-      </el-form>
-        <!-- 事件列表
-        生命周期 -->
-
-
-
+        <el-form style="padding-left: 5px; padding-right: 5px" size="default" label-width="90px" label-position="top">
+          <el-collapse>
+            <el-collapse-item title="生命周期管理" name="lifeCycle">
+              <el-scrollbar class="right-scrollbar">
+                <el-form-item v-for="(item, key) in globalConfig.lifeCycles" :label="item.label" :key="key">
+                  <el-button style="margin-right: 10px;" type="primary" @click="handleMethod(item, 'lifeCycle', true, key)"
+                    icon="Edit">编辑</el-button>
+                  <el-switch v-model="item.used" />
+                </el-form-item>
+              </el-scrollbar>
+            </el-collapse-item>
+          </el-collapse>
+        </el-form>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -231,6 +212,8 @@ import draggable from "vuedraggable/dist/vuedraggable.common";
 import IconsDialog from "./IconsDialog";
 import { defaultConfig } from "@/utils/generator/defaultConfig"
 import MethodEditDialog from "./components/MethodEditDialog";
+import { cloneDeep } from 'lodash-es';
+
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const childTemplate = ref({});
@@ -238,35 +221,36 @@ const colVisible = ref([]);
 const fnFrom = ref('');
 const isDefault = ref(false);
 const method = ref({});
-const gloubalConfig = ref(defaultConfig);
+const globalConfig = ref(cloneDeep(defaultConfig));
 
-function handleEvent(item,key) {
-  let med = gloubalConfig.value.methods[item.functionName];
+function handleEvent(item, key) {
+  let med = globalConfig.value.methods[item.functionName];
   if (med) {
     handleMethod(med, "event", true, key);
-  }
-  else {
-    med={}
-    med.value = `function ${item.functionName+new Date().getTime()}(${item.param.join(',')}){${item.usedReturn ? `return;` : ""}}`;
+  } else {
+    med = {};
+    const functionName = `${item.functionName}${new Date().getTime()}`;
+    med.value = `function ${functionName}(${item.param.join(',')}){${item.usedReturn ? 'return;' : ""}}`;
     handleMethod(med, "event", true, key);
   }
 }
 
 function handleMethod(item, fnFromAc, isDefaultAc, key) {
-  method.value = item;
+  method.value = cloneDeep(item);
   method.value.key = key;
   fnFrom.value = fnFromAc;
   isDefault.value = isDefaultAc;
   methodsVisible.value = true;
 }
-function updateMethod(fnString, fnFromAc, fnName,key) {
+
+function updateMethod(fnString, fnFromAc, fnName, key) {
   if (fnFromAc === 'lifeCycle') {
-    gloubalConfig.value.lifeCycles[fnName].value = fnString;
+    globalConfig.value.lifeCycles[fnName].value = fnString;
   } else {
-    gloubalConfig.value.methods[fnName]={};
-    gloubalConfig.value.methods[fnName].value = fnString;
+    globalConfig.value.methods[fnName] = {
+      value: fnString
+    };
     props.activeDataProperty.events[key].functionName = fnName;
-    console.log(gloubalConfig.value.methods);
   }
 }
 
@@ -285,20 +269,23 @@ function handleCollapseChange(val) {
 
 const rightActiveTab = ref("componentConf");
 
-
 const formItemAttr = ref([]);
 
 const formItemChild = ref([]);
 
 function changeColVisible(visible, index) {
-  colVisible.value[index] = visible;
+  if (index >= 0 && index < colVisible.value.length) {
+    colVisible.value[index] = visible;
+  } else if (index === colVisible.value.length) {
+    colVisible.value.push(visible);
+  }
 }
 
 const filteredSlots = computed(() => {
   if (!props.activeDataProperty?.slots) return {};
   return Object.entries(props.activeDataProperty.slots).reduce(
     (acc, [key, value]) => {
-      //如果插槽未使用或者插槽类型为normal且value为空，直接不使用
+      // 如果插槽类型为normal，则包含该插槽
       if (value.slotType === "normal") {
         acc[key] = value;
       }
@@ -308,10 +295,8 @@ const filteredSlots = computed(() => {
   );
 });
 
-
-
 function handleRadioChange(value) {
-  //模板切换
+  // 模板切换
   if (
     props.activeDataProperty.template &&
     typeof value === "string" &&
@@ -322,42 +307,45 @@ function handleRadioChange(value) {
   }
 }
 
-//通过模板添加
+// 通过模板添加
 function addItemByTemplate() {
   addCol(childTemplate.value);
 }
+
 function addCol(child, index) {
-  let clone = JSON.parse(JSON.stringify(child));
-  clone = createIdAndKey(clone);
+  const clone = createIdAndKey(cloneDeep(child));
   props.activeDataProperty.slots.default.slotOptions.push(clone);
+  changeColVisible(true, props.activeDataProperty.slots.default.slotOptions.length - 1);
 }
 
 function removeCol(child, index) {
-  if (formItemChild.value.length <= 1) {
+  const items = props.activeDataProperty.slots.default.slotOptions;
+  if (items.length <= 1) {
     proxy.$modal.msgError("请保留至少一项");
     return;
   }
-  formItemChild.value.splice(index, 1);
+  items.splice(index, 1);
+  if (colVisible.value.length > items.length) {
+    colVisible.value.pop();
+  }
 }
 
 watch(
   () => props.activeDataProperty,
   (val) => {
-    formItemAttr.value = val.attr;
+    formItemAttr.value = {...val.attr || {}};
     if (val.slots?.default?.slotOptions) {
-      formItemChild.value = val.slots.default.slotOptions;
+      formItemChild.value = [...val.slots.default.slotOptions];
     }
-    if (val.template && Object.keys(val).length > 0) {
+    if (val.template && Object.keys(val.template).length > 0) {
       for (let item in val.template) {
-        childTemplate.value = val.template[item];
+        childTemplate.value = cloneDeep(val.template[item]);
         break;
       }
     }
-  }
+  },
+  { deep: true, immediate: true }
 );
-
-
-
 
 const data = reactive({
   currentTab: "field",
@@ -378,15 +366,10 @@ const {
 } = toRefs(data);
 
 const documentLink = computed(
-  () =>
-    props.activeDataProperty.document ||
-    "https://element-plus.org/zh-CN/guide/installation"
+  () => props.activeDataProperty.document || "https://element-plus.org/zh-CN/guide/installation"
 );
 
-
-
 const emit = defineEmits(["tag-change", "formItemChange"]);
-
 
 function addNode(data) {
   currentNode.value.push(data);
@@ -398,14 +381,16 @@ function openIconsDialog(model) {
 }
 
 function setIcon(val) {
-  formItemAttr.value[currentIconModel.value].value = val;
+  if (formItemAttr.value[currentIconModel.value]) {
+    formItemAttr.value[currentIconModel.value].value = val;
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .right-board {
   .right-tabs {
-    ::v-deep .el-tabs__nav-scroll {
+    :deep(.el-tabs__nav-scroll) {
       display: flex !important;
       justify-content: space-around !important;
     }
