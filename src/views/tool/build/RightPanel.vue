@@ -202,7 +202,7 @@
       </el-tab-pane>
     </el-tabs>
   </div>
-  <icons-dialog v-model="iconsVisible" :current="formItemAttr[currentIconModel]" @select="setIcon" />
+  <icons-dialog v-model="iconsVisible" :current="currentIconModel?activeDataProperty.attr[currentIconModel]:null" @select="setIcon" />
   <method-edit-dialog v-model="methodsVisible" :fnFrom="fnFrom" :isDefault="isDefault" :method="method"
     @updateMethod="updateMethod" />
 </template>
@@ -269,10 +269,6 @@ function handleCollapseChange(val) {
 
 const rightActiveTab = ref("componentConf");
 
-const formItemAttr = ref([]);
-
-const formItemChild = ref([]);
-
 function changeColVisible(visible, index) {
   if (index >= 0 && index < colVisible.value.length) {
     colVisible.value[index] = visible;
@@ -333,10 +329,6 @@ function removeCol(child, index) {
 watch(
   () => props.activeDataProperty,
   (val) => {
-    formItemAttr.value = {...val.attr || {}};
-    if (val.slots?.default?.slotOptions) {
-      formItemChild.value = [...val.slots.default.slotOptions];
-    }
     if (val.template && Object.keys(val.template).length > 0) {
       for (let item in val.template) {
         childTemplate.value = cloneDeep(val.template[item]);
@@ -381,8 +373,8 @@ function openIconsDialog(model) {
 }
 
 function setIcon(val) {
-  if (formItemAttr.value[currentIconModel.value]) {
-    formItemAttr.value[currentIconModel.value].value = val;
+  if (props.activeDataProperty.attr[currentIconModel.value]) {
+   props.activeDataProperty.attr[currentIconModel.value].value = val;
   }
 }
 </script>
