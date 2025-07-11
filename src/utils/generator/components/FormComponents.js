@@ -1196,6 +1196,11 @@ export const FormComponents = {
         },
       },
       attr: {
+           "v-model": {
+          value: '',
+          type: "input",
+          label: "选项值",
+        },
         type: {
           value: "el-radio",
           type: "radio",
