@@ -341,7 +341,7 @@ export const FormComponents = {
             },
           ],
         },
-      }
+      },
     },
     {
       tag: "el-form-item",
@@ -432,20 +432,20 @@ export const FormComponents = {
           label: "默认值",
           slotType: "dragComponent",
           used: true,
-          slotOptions: []
+          slotOptions: [],
         },
         label: {
           value: "",
           slotType: "normal",
           used: false,
-          label: "标签位置显示的内容"
+          label: "标签位置显示的内容",
         },
         error: {
           value: "",
           slotType: "normal",
           used: false,
-          label: "验证错误信息的显示内容"
-        }
+          label: "验证错误信息的显示内容",
+        },
       },
     },
     {
@@ -556,7 +556,7 @@ export const FormComponents = {
           slotType: "normal",
           used: false,
           label: "输入框后置内容",
-        }
+        },
       },
       hedge: Object.assign({}, defaultHedge, {
         attr: {
@@ -576,7 +576,7 @@ export const FormComponents = {
           functionName: "handleBlur",
           usedRetuen: false,
           param: ["event"],
-          info: "当选择器的输入框失去焦点时触发"
+          info: "当选择器的输入框失去焦点时触发",
         },
         focus: {
           used: false,
@@ -584,8 +584,7 @@ export const FormComponents = {
           functionName: "handleFocus",
           usedRetuen: false,
           param: ["event"],
-          info: "当选择器的输入框失去焦点时触发"
-
+          info: "当选择器的输入框失去焦点时触发",
         },
         change: {
           used: false,
@@ -593,7 +592,7 @@ export const FormComponents = {
           functionName: "handleChange",
           usedRetuen: false,
           param: ["value"],
-          info: "输入框失去焦点或用户按Enter时触发"
+          info: "输入框失去焦点或用户按Enter时触发",
         },
         input: {
           used: false,
@@ -601,7 +600,7 @@ export const FormComponents = {
           functionName: "handleInput",
           usedRetuen: false,
           param: ["value"],
-          info: "在 Input 值改变时触发"
+          info: "在 Input 值改变时触发",
         },
         clear: {
           used: false,
@@ -609,7 +608,7 @@ export const FormComponents = {
           functionName: "handleClear",
           usedRetuen: false,
           param: [],
-          info: "清空按钮时触发"
+          info: "清空按钮时触发",
         },
         keydown: {
           used: false,
@@ -617,8 +616,7 @@ export const FormComponents = {
           functionName: "handleKeydown",
           usedRetuen: false,
           param: ["event"],
-          info: "按下键时触发"
-
+          info: "按下键时触发",
         },
         mouseleave: {
           used: false,
@@ -626,7 +624,7 @@ export const FormComponents = {
           functionName: "handleMouseleave",
           usedRetuen: false,
           param: ["event"],
-          info: "当选择器的输入框失去焦点时触发"
+          info: "当选择器的输入框失去焦点时触发",
         },
         mouseenter: {
           used: false,
@@ -634,7 +632,7 @@ export const FormComponents = {
           functionName: "handleMouseenter",
           usedRetuen: false,
           param: ["event"],
-          info: "当鼠标离开输入框时触发"
+          info: "当鼠标离开输入框时触发",
         },
         compositionstart: {
           used: false,
@@ -642,7 +640,7 @@ export const FormComponents = {
           functionName: "handleCompositionstart",
           usedRetuen: false,
           param: ["event"],
-          info: "输入法输入开始时触发"
+          info: "输入法输入开始时触发",
         },
         compositionupdate: {
           used: false,
@@ -650,7 +648,7 @@ export const FormComponents = {
           functionName: "handleCompositionupdate",
           usedRetuen: false,
           param: ["event"],
-          info: "输入法输入改变时触发"
+          info: "输入法输入改变时触发",
         },
         compositionend: {
           used: false,
@@ -658,9 +656,9 @@ export const FormComponents = {
           functionName: "handleCompositionend",
           usedRetuen: false,
           param: ["event"],
-          info: "输入法输入完成时触发"
+          info: "输入法输入完成时触发",
         },
-      }
+      },
     },
     {
       tag: "el-autocomplete",
@@ -866,7 +864,15 @@ export const FormComponents = {
               label: "checkbox 是否显示边框",
             },
           },
-          slots: {},
+          slots: {
+            default: {
+              value: "值1",
+              slotType: "normal",
+              used: true,
+              label: "默认插槽",
+              type: "textarea",
+            },
+          },
         },
         "el-checkbox-button": {
           tagLabel: "多选框", // 子组件标签名
@@ -1081,7 +1087,15 @@ export const FormComponents = {
                   label: "checkbox 是否显示边框",
                 },
               },
-              slots: {},
+              slots: {
+                default: {
+                  value: "值1",
+                  slotType: "normal",
+                  used: true,
+                  label: "默认插槽",
+                  type: "textarea",
+                },
+              },
             },
           ],
         },
@@ -1135,6 +1149,15 @@ export const FormComponents = {
               label: "原生 name 属性",
             },
           },
+          slots: {
+            default: {
+              value: "值1",
+              slotType: "normal",
+              used: true,
+              label: "默认插槽",
+              type: "textarea",
+            },
+          },
         },
         "el-radio-button": {
           tag: "el-radio-button",
@@ -1159,6 +1182,15 @@ export const FormComponents = {
               value: undefined,
               type: "input",
               label: "原生 name 属性",
+            },
+          },
+          slots: {
+            default: {
+              value: "值1",
+              slotType: "normal",
+              used: true,
+              label: "默认插槽",
+              type: "textarea",
             },
           },
         },
@@ -1279,6 +1311,15 @@ export const FormComponents = {
                   value: undefined,
                   type: "input",
                   label: "原生 name 属性",
+                },
+              },
+              slots: {
+                default: {
+                  value: "值1",
+                  slotType: "normal",
+                  used: true,
+                  label: "默认插槽",
+                  type: "textarea",
                 },
               },
             },
