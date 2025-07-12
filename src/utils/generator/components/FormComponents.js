@@ -16,9 +16,9 @@ export const FormComponents = {
         },
         // 表单验证规则对象，定义各个字段的验证逻辑
         rules: {
-          value: "[]",
+          value: [],
           label: "验证规则",
-          type: "object",
+          type: "array",
         },
         // 是否为行内表单，设置为 true 时表单项水平排列
         inline: {

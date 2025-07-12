@@ -154,15 +154,6 @@ function drawingItemDelete(index, parent) {
   });
 }
 
-watch(
-  () => drawingList,
-  (val) => { 
-   console.log(val);
-  }
-,{
-  deep: true,immediate: true  
-});
-
 // 激活表单项
 function activeComponentItem(element) {
   if (!element.id) {
