@@ -1,86 +1,3 @@
-// 默认表单包围参数
-const defaultHedge = {
-  tag: "el-form-item",
-  attr: {
-    label: {
-      value: "",
-      type: "input",
-      label: "表单项目名称",
-    },
-    prop: {
-      value: "",
-      type: "input",
-      label: "表单域字段名，用于验证、重置等操作",
-    },
-    required: {
-      value: true,
-      type: "switch",
-      label: "是否必填",
-    },
-    rules: {
-      value: [],
-      type: "array",
-      label: "表单验证规则",
-    },
-    errorMessage: {
-      value: "",
-      type: "input",
-      label: "手动设置的错误提示信息",
-    },
-    showMessage: {
-      value: true,
-      type: "switch",
-      label: "是否显示校验错误信息",
-    },
-    inlineMessage: {
-      value: false,
-      type: "switch",
-      label: "是否以行内形式展示校验信息",
-    },
-    size: {
-      value: "default",
-      type: "radio",
-      label: "尺寸",
-      options: [
-        { value: "large", label: "大尺寸" },
-        { value: "default", label: "中尺寸" },
-        { value: "small", label: "小尺寸" },
-      ],
-    },
-    labelWidth: {
-      value: 100,
-      type: "number",
-      append: "px",
-      label: "标签宽度",
-    },
-    labelPosition: {
-      value: "right",
-      type: "radio",
-      label: "标签位置",
-      options: [
-        { value: "left", label: "左侧" },
-        { value: "right", label: "右侧" },
-        { value: "top", label: "顶部" },
-      ],
-    },
-    for: {
-      value: "",
-      type: "input",
-      label: "原生 label 的 for 属性",
-    },
-    error: {
-      value: "",
-      type: "input",
-      label: "错误时的提示信息",
-    },
-    validateStatus: {
-      value: "",
-      type: "input",
-      label: "表单项的校验状态",
-    },
-  },
-};
-
 export const FormComponents = {
   title: "表单组件",
   icon: "",
@@ -217,128 +134,6 @@ export const FormComponents = {
           slotType: "dragComponent",
           used: true,
           slotOptions: [
-            {
-              tag: "el-input",
-              tagLabel: "输入框",
-              tagIcon: "input",
-              document: "https://element.eleme.cn/#/zh-CN/component/input",
-              type: "form",
-              attr: {
-                "v-model": {
-                  value: "123456",
-                  type: "input",
-                  label: "内容",
-                },
-                placeholder: {
-                  value: "请输入",
-                  type: "input",
-                  label: "占位文本",
-                },
-                type: {
-                  value: "text",
-                  type: "radio",
-                  label: "类型",
-                  options: [{ value: "text", label: "文本" }],
-                },
-                maxlength: {
-                  value: 100,
-                  type: "number",
-                  label: "最大输入长度",
-                },
-                minlength: {
-                  value: 1,
-                  type: "number",
-                  label: "最小输入长度",
-                },
-                "show-word-limit": {
-                  value: false,
-                  type: "switch",
-                  label: "是否显示统计字数",
-                },
-                "prefix-icon": {
-                  value: "",
-                  type: "icon",
-                  label: "前缀图标",
-                },
-                "suffix-icon": {
-                  value: "",
-                  type: "icon",
-                  label: "后缀图标",
-                },
-                clearable: {
-                  value: false,
-                  type: "switch",
-                  label: "是否显示清除按钮",
-                },
-                disabled: {
-                  value: false,
-                  type: "switch",
-                  label: "是否禁用",
-                },
-                size: {
-                  value: "default",
-                  type: "radio",
-                  label: "输入框尺寸",
-                  options: [
-                    { label: "小尺寸", value: "small" },
-                    { label: "中尺寸", value: "default" },
-                    { label: "大尺寸", value: "large" },
-                  ],
-                },
-                autofocus: {
-                  value: false,
-                  type: "switch",
-                  label: "自动获取焦点",
-                },
-                readonly: {
-                  value: false,
-                  type: "switch",
-                  label: "是否只读",
-                },
-                validateEvent: {
-                  value: true,
-                  type: "switch",
-                  label: "输入时是否触发表单的校验",
-                },
-              },
-              slots: {
-                prepend: {
-                  value: undefined,
-                  type: "textarea",
-                  used: false,
-                  label: "输入框前置内容",
-                },
-                append: {
-                  value: undefined,
-                  type: "textarea",
-                  used: false,
-                  label: "输入框后置内容",
-                },
-                prefix: {
-                  value: undefined,
-                  type: "textarea",
-                  used: false,
-                  label: "输入框头部内容",
-                },
-                suffix: {
-                  value: undefined,
-                  used: false,
-                  type: "textarea",
-                  label: "输入框尾部内容",
-                },
-              },
-              hedge: Object.assign({}, defaultHedge, {
-                attr: {
-                  ...defaultHedge.attr, // 保留 defaultHedge 中的其他属性
-                  label: {
-                    // 仅覆盖 label 属性
-                    value: "输入框",
-                    type: "input",
-                    label: "输入框",
-                  },
-                },
-              }),
-            },
           ],
         },
       },
@@ -558,17 +353,6 @@ export const FormComponents = {
           label: "输入框后置内容",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr, // 保留 defaultHedge 中的其他属性
-          label: {
-            // 仅覆盖 label 属性
-            value: "输入框",
-            type: "input",
-            label: "输入框",
-          },
-        },
-      }),
       events: {
         blur: {
           used: false,
@@ -761,16 +545,6 @@ export const FormComponents = {
           label: "下拉框的宽度是否与输入框相同",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "自动补全",
-            type: "input",
-            label: "自动补全",
-          },
-        },
-      }),
     },
     {
       // 表单项的标签文字
@@ -989,16 +763,6 @@ export const FormComponents = {
           label: "是否触发表单验证",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "多选框组",
-            type: "input",
-            label: "多选框组",
-          },
-        },
-      }),
       slots: {
         default: {
           label: "默认插槽",
@@ -1196,7 +960,7 @@ export const FormComponents = {
         },
       },
       attr: {
-           "v-model": {
+        "v-model": {
           value: '',
           type: "input",
           label: "选项值",
@@ -1261,16 +1025,6 @@ export const FormComponents = {
           label: "是否触发表单验证",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "单选框组",
-            type: "input",
-            label: "单选框组",
-          },
-        },
-      }),
       slots: {
         default: {
           label: "插槽",
@@ -1417,16 +1171,6 @@ export const FormComponents = {
           tips: "正则校验，JSON数组格式",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "颜色选择",
-            type: "input",
-            label: "颜色选择",
-          },
-        },
-      }),
     },
     {
       tag: "el-date-picker",
@@ -1586,16 +1330,6 @@ export const FormComponents = {
           label: "定义了 popper.js 创建的元素在哪个位置显示",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "日期选择",
-            type: "input",
-            label: "日期选择",
-          },
-        },
-      }),
     },
     {
       tag: "el-date-picker",
@@ -1734,16 +1468,6 @@ export const FormComponents = {
           label: "是否显示 now 按钮",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "日期时间",
-            type: "input",
-            label: "日期时间",
-          },
-        },
-      }),
     },
     {
       tag: "el-input-number",
@@ -1852,16 +1576,6 @@ export const FormComponents = {
           label: "是否触发表单验证",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "计数器",
-            type: "input",
-            label: "计数器",
-          },
-        },
-      }),
     },
     {
       tag: "el-input-tag",
@@ -2001,16 +1715,6 @@ export const FormComponents = {
           label: "等价于原生 aria-label 属性",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "标签输入",
-            type: "input",
-            label: "标签输入",
-          },
-        },
-      }),
     },
     {
       tag: "el-mention",
@@ -2096,16 +1800,6 @@ export const FormComponents = {
           label: "是否触发表单验证",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "提及",
-            type: "input",
-            label: "提及",
-          },
-        },
-      }),
     },
     {
       tag: "el-rate",
@@ -2230,16 +1924,6 @@ export const FormComponents = {
           label: "是否触发表单验证",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "评分",
-            type: "input",
-            label: "评分",
-          },
-        },
-      }),
     },
     {
       tag: "el-slider",
@@ -2390,16 +2074,6 @@ export const FormComponents = {
           label: "是否持久化 Tooltip",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "滑块",
-            type: "input",
-            label: "滑块",
-          },
-        },
-      }),
     },
     {
       tag: "el-switch",
@@ -2529,16 +2203,6 @@ export const FormComponents = {
           label: "开关的边框颜色（已弃用）",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "开关",
-            type: "input",
-            label: "开关",
-          },
-        },
-      }),
     },
     {
       tag: "el-cascader",
@@ -2822,16 +2486,6 @@ export const FormComponents = {
           type: "slot",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "级联选择",
-            type: "input",
-            label: "级联选择",
-          },
-        },
-      }),
     },
     {
       tag: "el-cascader-panel",
@@ -2940,16 +2594,6 @@ export const FormComponents = {
           label: "空数据时显示的插槽",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "级联面板",
-            type: "input",
-            label: "级联面板",
-          },
-        },
-      }),
     },
     {
       tag: "el-select",
@@ -3215,16 +2859,6 @@ export const FormComponents = {
         },
       },
       opener: [],
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "下拉选择",
-            type: "input",
-            label: "下拉选择",
-          },
-        },
-      }),
     },
     {
       tag: "el-time-picker",
@@ -3379,16 +3013,6 @@ export const FormComponents = {
           label: "清空选项的值",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "时间选择",
-            type: "input",
-            label: "时间选择",
-          },
-        },
-      }),
     },
     {
       tag: "el-time-select",
@@ -3502,16 +3126,6 @@ export const FormComponents = {
           label: "清空选项的值",
         },
       },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "多选框组",
-            type: "input",
-            label: "多选框组",
-          },
-        },
-      }),
     },
     {
       tag: "el-transfer",
@@ -3595,17 +3209,7 @@ export const FormComponents = {
           type: "switch",
           label: "是否触发表单验证",
         },
-      },
-      hedge: Object.assign({}, defaultHedge, {
-        attr: {
-          ...defaultHedge.attr,
-          label: {
-            value: "穿梭框",
-            type: "input",
-            label: "穿梭框",
-          },
-        },
-      }),
+      }
     },
   ],
 };

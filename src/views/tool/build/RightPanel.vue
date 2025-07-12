@@ -56,24 +56,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item v-show="activeName === undefined || activeName === 'two'" v-if="
-                activeDataProperty.type === 'form' && activeDataProperty.hedge
-              " title="包围属性" name="two">
-                <el-scrollbar class="right-scrollbar">
-                  <el-form-item v-for="(item, key) in activeDataProperty.hedge.attr" :label="item.label" :key="key">
-                    <el-input v-model="item.value" :placeholder="item.placeholder" v-if="item.type === 'input'" />
-                    <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
-                    <el-slider v-model="item.value" v-else-if="item.type === 'slider'" :min="item.min"
-                      :max="item.max" />
-                    <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
-                    <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
-                      <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-                        }}</el-radio>
-                    </el-radio-group>
-                  </el-form-item>
-                </el-scrollbar>
-              </el-collapse-item>
-              <el-collapse-item v-show="activeName === undefined || activeName === 'three'" title="子项配置" name="three"
+              <el-collapse-item v-show="activeName === undefined || activeName === 'two'" title="子项配置" name="three"
                 v-if="
                   activeDataProperty?.slots?.default?.slotType ===
                   'childDragComponent' ||
@@ -157,7 +140,7 @@
                   </div>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="插槽配置" v-show="activeName === undefined || activeName === 'four'" name="four"
+              <el-collapse-item title="插槽配置" v-show="activeName === undefined || activeName === 'three'" name="four"
                 v-if="Object.keys(filteredSlots).length > 0">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in filteredSlots" :label="item.label" :key="key">
@@ -166,7 +149,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="事件配置" v-show="activeName === undefined || activeName === 'five'" name="five"
+              <el-collapse-item title="事件配置" v-show="activeName === undefined || activeName === 'four'" name="five"
                 v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">

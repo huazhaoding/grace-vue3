@@ -360,12 +360,11 @@ $dragColor: #340b49b4;
   min-height: 32px;
   overflow: hidden;
   position: relative;
-  padding: 4px;
   margin: 1px;
   .drag-wrapper {
     height: auto;
     width: 100%;
-    min-height: 200px;
+    min-height: 32px;
     border: 1px dashed $dragColor;
   }
    .not-drag,.item-drag{
