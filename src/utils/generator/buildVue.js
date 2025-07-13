@@ -1,5 +1,6 @@
 //模板
-export function vueTemplate(str) {
+export function vueTemplate(components) {
+  let str = listGenerateComponent(components);
   return `<template>
     <div class="app-container">
       ${str}
@@ -7,8 +8,8 @@ export function vueTemplate(str) {
   </template>`;
 }
 // 脚本
-export function vueScript(methods,lifeCycles) {
-  let str = generateJavaScript(methods);
+export function vueScript(events, lifeCycles) {
+  let str = generateJavaScript(events) + "\n";
   str += generateJavaScript(lifeCycles);
   return `<script setup>
     ${str}
@@ -22,11 +23,10 @@ export function cssStyle(cssStr) {
   </style>`;
 }
 
-export function makeUpHtml(conf, type) {
+export function makeUpHtml(config) {
   let html = "";
-  html += vueTemplate(conf.children);
-  html += cssStyle(conf.style);
-  html += vueScript(conf.script);
+  html += vueTemplate(config.list) + "\n";
+  html += vueScript(config.events, config.lifeCycle);
   return html;
 }
 
@@ -89,7 +89,7 @@ function generateComponent(config) {
     if (events) {
       eventStr = Object.entries(events)
         .filter(
-          ([key, value]) => value !== undefined && value.used && value.value
+          ([key, value]) => value !== undefined && value.used
         )
         .map(([key, value]) => `@${key}="${value.functionName}"`)
         .join(" ");
@@ -116,6 +116,14 @@ function simplifyItemAttr(item) {
   return simplified;
 }
 
+function generateJavaScript(methods) {
+  const jsContent = Object.entries(methods)
+    .filter(([key, value]) => value !== undefined && value.used)
+    .map(([key, value]) => value.value)
+    .join("\n");
+  return jsContent;
+}
+
 /**
  * 事件监听 events
  * 自定义方法  methods
@@ -140,15 +148,18 @@ function simplifyItemAttr(item) {
  *
  *
  *
+ * 脚本文件
+ * 引入组件
+ * 定义组件属性
+ * 定义事件发射器emit
+ * 数据模型  响应式和非响应式
+ * 定义方法
+ * 生命周期函数
+ * 内置函数
+ *
+ * 暴露给模板的方法和变量
+ *
  */
-
-function generateJavaScript(methods) {
-  const jsContent = Object.entries(methods)
-    .filter(([key, value]) => value !== undefined && value.used)
-    .map(([key, value]) => value.value)
-    .join("\n");
-  return jsContent;
-}
 
 const components = [
   {
@@ -824,5 +835,251 @@ const components2 = [
     },
   },
 ];
-console.log(listGenerateComponent(components));
-console.log(listGenerateComponent(components2));
+
+/**
+ * {
+ * list:[],
+ * lifecycle:{},
+ * props:{},
+ * emits:{},
+ * exports:{},
+ * methods:{},
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+let vue = {
+  list: [
+    {
+      tag: "el-button-group",
+      tagLabel: "按钮组",
+      tagIcon: "button-group",
+      document: "https://element-plus.org/zh-CN/component/button",
+      attr: {
+        size: {
+          value: "",
+          type: "radio",
+          label: "用于控制该按钮组内按钮的大小",
+          options: [
+            { label: "大", value: "large" },
+            { label: "默认", value: "default" },
+            { label: "小", value: "small" },
+          ],
+        },
+        type: {
+          value: "",
+          type: "radio",
+          label: "用于控制该按钮组内按钮的类型",
+          options: [
+            { label: "主要", value: "primary" },
+            { label: "成功", value: "success" },
+            { label: "警告", value: "warning" },
+            { label: "危险", value: "danger" },
+            { label: "信息", value: "info" },
+          ],
+        },
+      },
+      slots: {
+        default: {
+          label: "默认插槽",
+          slotType: "childComponent",
+          used: true,
+          slotOptions: [
+            {
+              tag: "el-button", // 定义组件类型为按钮
+              tagLabel: "按钮", // 标签名，用于标识组件
+              tagIcon: "button", // 图标名称，用于可视化展示
+              document: "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
+              attr: {
+                size: {
+                  value: undefined,
+                  type: "radio",
+                  label: "尺寸",
+                  options: [
+                    { label: "大", value: "large" },
+                    { label: "默认", value: "default" },
+                    { label: "小", value: "small" },
+                  ],
+                }, // 按钮尺寸 (large/default/small)
+                type: {
+                  value: "primary",
+                  type: "radio",
+                  label: "样式",
+                  info: "按钮类型，在设置color时，后者优先。",
+                  options: [
+                    { label: "主要", value: "primary" },
+                    { label: "成功", value: "success" },
+                    { label: "警告", value: "warning" },
+                    { label: "危险", value: "danger" },
+                    { label: "信息", value: "info" },
+                    { label: "文本", value: "text" },
+                  ],
+                },
+                plain: {
+                  value: false,
+                  label: "朴素按钮",
+                  type: "switch",
+                }, // 是否为朴素按钮样式
+                text: {
+                  value: false,
+                  label: "文字按钮",
+                  type: "switch",
+                }, // 是否为文字按钮样式
+                bg: {
+                  value: true,
+                  label: "背景色",
+                  type: "switch",
+                }, // 文字按钮是否有背景色
+                link: {
+                  value: false,
+                  label: "链接按钮",
+                  type: "switch",
+                }, // 是否为链接按钮样式
+                round: {
+                  value: false,
+                  label: "圆角按钮",
+                  type: "switch",
+                }, // 是否为圆角按钮
+                circle: {
+                  value: false,
+                  label: "圆形按钮",
+                  type: "switch",
+                }, // 是否为圆形按钮
+                loading: {
+                  value: false,
+                  label: "加载状态",
+                  type: "switch",
+                }, // 是否显示加载状态
+                "loading-icon": {
+                  value: "Loading",
+                  label: "加载图标",
+                  type: "icon",
+                }, // 自定义加载图标
+                disabled: {
+                  value: false,
+                  label: "禁用按钮",
+                  type: "switch",
+                }, // 是否禁用按钮
+                icon: {
+                  value: undefined,
+                  label: "按钮图标",
+                  type: "icon",
+                }, // 按钮上的图标组件
+                autofocus: {
+                  value: false,
+                  label: "自动获取焦点",
+                  type: "switch",
+                }, // 是否自动获取焦点
+                "native-type": {
+                  value: "button",
+                  label: "原生按钮类型",
+                  type: "radio",
+                  options: [
+                    {
+                      value: "button",
+                      label: "按钮",
+                    },
+                    {
+                      value: "submit",
+                      label: "表单提交",
+                    },
+                    {
+                      value: "reset",
+                      label: "重置",
+                    },
+                  ],
+                }, // 原生 type 属性 (button/submit/reset)
+                "auto-insert-space": {
+                  value: false,
+                  label: "自动插入空格",
+                  type: "switch",
+                }, // 中文字符间是否自动加空格
+                color: {
+                  value: "",
+                  label: "自定义按钮颜色",
+                  type: "color",
+                }, // 自定义按钮颜色
+                dark: {
+                  value: false,
+                  label: "dark 模式",
+                  type: "switch",
+                }, // 是否启用 dark 模式
+                tag: {
+                  value: "button",
+                  label: "自定义元素标签",
+                  type: "input",
+                }, // 自定义元素标签
+              },
+              slots: {
+                default: {
+                  value: "按钮",
+                  label: "按钮内容",
+                  slotType: "normal",
+                  used: true,
+                  type: "textarea",
+                },
+                loading: {
+                  value: undefined,
+                  label: "加载中内容",
+                  slotType: "normal",
+                  used: false,
+                  type: "textarea",
+                },
+                icon: {
+                  value: undefined,
+                  label: "图标",
+                  slotType: "normal",
+                  used: false,
+                  type: "input",
+                },
+              },
+              events: {
+                click: {
+                  used: true,
+                  label: "点击事件",
+                  functionName: "handleClick",
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+  ],
+  lifeCycle: {
+    onMounted: {
+      used: true,
+      value: "onMounted(() => {})",
+      label: "注册一个回调函数，在组件挂载完成后执行",
+    },
+    onUpdated: {
+      used: true,
+      value: "onUpdated(() => {})",
+      label: "注册一个回调函数，在组件更新完成后执行",
+    },
+  },
+  props: {},
+  emits: {},
+  exports: {},
+  events: {
+    handleBlur: {
+      value: "function handleBlur(){return 'handleBlur';}",
+      label: "测试方法",
+      info: "测试方法",
+      used: true,
+    },
+  },
+};
+
+// console.log(listGenerateComponent(components));
+// console.log(listGenerateComponent(components2));
+// console.log(generateJavaScript(components2[0].events));
+console.log(makeUpHtml(vue));

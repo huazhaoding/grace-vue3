@@ -82,6 +82,7 @@
   </div>
 </template>
 <script setup>
+
 import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
 import PreviewDialog from "./PreviewDialog"; // 导出预览对话框组件
@@ -96,7 +97,6 @@ import {
 } from "@/utils/generator/html";
 import { makeUpJs } from "@/utils/generator/js"; // 生成 JS 脚本
 import { makeUpCss } from "@/utils/generator/css"; // 生成 CSS 样式
-import { watch } from "vue";
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
