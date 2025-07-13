@@ -1046,6 +1046,8 @@ let vue = {
                   used: true,
                   label: "点击事件",
                   functionName: "handleClick",
+                  usedReturn: false,
+                  param: ["value"],
                 },
               },
             },
@@ -1070,8 +1072,8 @@ let vue = {
   emits: {},
   exports: {},
   events: {
-    handleBlur: {
-      value: "function handleBlur(){return 'handleBlur';}",
+    handleClick: {
+      value: "function handleClick(){return handleClick';}",
       label: "测试方法",
       info: "测试方法",
       used: true,
