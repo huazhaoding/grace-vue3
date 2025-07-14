@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <el-container class="container">
       <el-aside width="300px" class="left-aside-box">
         <el-tabs v-model="leftActiveTab" class="left-tabs">
@@ -69,7 +69,7 @@
         <!-- 右边属性库 -->
         <right-panel
           :active-data-property="activeData"
-          :form-conf="{}"
+          :generate-conf="generateConf"
           :show-field="!!drawingList.length"
         />
       </el-aside>
@@ -89,6 +89,7 @@ import PreviewDialog from "./PreviewDialog"; // 导出预览对话框组件
 import DynamicComponent from "./components/DynamicComponent";
 import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
 import beautifier from "js-beautify"; // 用于格式化生成的代码
+import { defaultConfig  }  from "@/utils/generator/defaultConfig"
 import {
   makeUpHtml, // 生成 HTML 模板
   vueTemplate, // Vue 模板生成器
@@ -103,7 +104,7 @@ const { proxy } = getCurrentInstance(); // 获取当前组件实例
 const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref({}); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
-const generateConf = ref(null); // 生成配置
+const generateConf = ref(defaultConfig); // 生成配置
 const componentTemplateData = ref(""); // 存储生成的表单模板
 const componentJsonData = ref({}); // 存储生成的 JSON 数据
 const previewDialogVisible = ref(false); // 控制预览对话框显示状态

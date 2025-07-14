@@ -8,9 +8,13 @@ export function vueTemplate(components) {
   </template>`;
 }
 // 脚本
-export function vueScript(events, lifeCycles) {
-  let str = generateJavaScript(events) + "\n";
-  str += generateJavaScript(lifeCycles);
+export function vueScript(config) {
+  let str ="";
+  str += generateProps(config.props);
+  str += generateEmits(config.emits);
+  str += generateMethods(config.events);
+  str += generateMethods(config.lifeCycles);
+  str += generateExposes(config.exposes);
   return `<script setup>
     ${str}
   </script>`;
@@ -25,8 +29,8 @@ export function cssStyle(cssStr) {
 
 export function makeUpHtml(config) {
   let html = "";
-  html += vueTemplate(config.list) + "\n";
-  html += vueScript(config.events, config.lifeCycle);
+  html += vueTemplate(config.components) + "\n";
+  html += vueScript(config);
   return html;
 }
 
@@ -116,12 +120,37 @@ function simplifyItemAttr(item) {
   return simplified;
 }
 
-function generateJavaScript(methods) {
+function generateMethods(methods) {
   const jsContent = Object.entries(methods)
     .filter(([key, value]) => value !== undefined && value.used)
     .map(([key, value]) => value.value)
     .join("\n");
   return jsContent;
+}
+
+function generateProps(props){
+  const propsContent = Object.entries(props)
+    .filter(([key, value]) => value !== undefined)
+    .map(([key, value]) =>{
+      if(value instanceof Object)
+      {
+       return `${key}:${JSON.stringify(value)} ,`;
+      }
+      else{
+        return `${key}:${value} ,`;
+      }
+    })
+    .join("\n");
+   return `defineProps({${propsContent}})`;  
+}
+
+function generateEmits(emits){
+   return `defineEmits([${emits.join(",")}])`;
+}
+
+function generateExpose(expose){
+   return `defineExpose({${expose.join(",")}})`;
+
 }
 
 /**
@@ -838,7 +867,8 @@ const components2 = [
 
 /**
  * {
- * list:[],
+ * components: [],
+:[],
  * lifecycle:{},
  * props:{},
  * emits:{},
@@ -857,7 +887,7 @@ const components2 = [
  */
 
 let vue = {
-  list: [
+  components: [
     {
       tag: "el-button-group",
       tagLabel: "按钮组",
@@ -1069,8 +1099,8 @@ let vue = {
     },
   },
   props: {},
-  emits: {},
-  exports: {},
+  emits: [],
+  expose: [],
   events: {
     handleClick: {
       value: "function handleClick(){return handleClick';}",

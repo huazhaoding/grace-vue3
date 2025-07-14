@@ -1,4 +1,5 @@
 export const  defaultConfig = {
+ components: [],
   methods: {
     testFunction:{
         value: "function testFunction(){return 'hello world';}",
@@ -65,8 +66,15 @@ export const  defaultConfig = {
     }
 },
   emits: [],
-  props: {},
-  components: {},
+  props: {
+    name:{
+        label: "组件名称",
+        type: "string",
+        default: "",
+        required: true
+    }
+  },
+  expose: [],
   imports: {},
   componentType: {}
 }

@@ -27,7 +27,7 @@
                     <el-switch v-model="item.value" v-else-if="item.type === 'switch'" />
                     <el-radio-group @change="handleRadioChange" v-model="item.value" v-else-if="item.type === 'radio'">
                       <el-radio v-for="(radio, index) in item.options" :key="index" :value="radio.value">{{ radio.label
-                        }}</el-radio>
+                      }}</el-radio>
                     </el-radio-group>
                     <el-input-number v-model="item.value" v-else-if="item.type === 'number'" />
                     <el-color-picker v-model="item.value" v-else-if="item.type === 'color'" />
@@ -56,7 +56,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item v-show="activeName === undefined || activeName === 'two'" title="子项配置" name="three"
+              <el-collapse-item v-show="activeName === undefined || activeName === 'two'" title="子项配置" name="two"
                 v-if="
                   activeDataProperty?.slots?.default?.slotType ===
                   'childDragComponent' ||
@@ -140,7 +140,7 @@
                   </div>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="插槽配置" v-show="activeName === undefined || activeName === 'three'" name="four"
+              <el-collapse-item title="插槽配置" v-show="activeName === undefined || activeName === 'three'" name="three"
                 v-if="Object.keys(filteredSlots).length > 0">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in filteredSlots" :label="item.label" :key="key">
@@ -149,7 +149,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="事件配置" v-show="activeName === undefined || activeName === 'four'" name="five"
+              <el-collapse-item title="事件配置" v-show="activeName === undefined || activeName === 'four'" name="four"
                 v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
@@ -161,7 +161,7 @@
             </el-collapse>
           </el-form>
         </el-card>
-        <el-card body-class="card-body"  header-class="card-header" v-if="
+        <el-card body-class="card-body" header-class="card-header" v-if="
           activeDataProperty?.slots?.default?.slotType === 'itemComponent'
         ">
           <el-text>拖拽区</el-text>
@@ -178,11 +178,29 @@
           <el-collapse>
             <el-collapse-item title="生命周期管理" name="lifeCycle">
               <el-scrollbar class="right-scrollbar">
-                <el-form-item v-for="(item, key) in globalConfig.lifeCycles" :label="item.label" :key="key">
+                <el-form-item v-for="(item, key) in generateConf.lifeCycles" :label="item.label" :key="key">
                   <el-button style="margin-right: 10px;" type="primary"
                     @click="handleMethod(item, 'lifeCycle', true, key)" icon="Edit">编辑</el-button>
                   <el-switch v-model="item.used" />
                 </el-form-item>
+              </el-scrollbar>
+            </el-collapse-item>
+            <el-collapse-item title="方法管理" name="methods">
+              <el-scrollbar class="right-scrollbar">
+                <el-form-item v-for="(item, key) in generateConf.methods" :label="item.label" :key="key">
+                  <el-button style="margin-right: 10px;" type="primary"
+                    @click="handleMethod(item, 'methods', true, key)" icon="Edit">编辑</el-button>
+                  <el-switch v-model="item.used" />
+                </el-form-item>
+                <el-button>添加方法</el-button>
+              </el-scrollbar>
+            </el-collapse-item>
+            <el-collapse-item title="props管理" name="props">
+              <el-scrollbar class="right-scrollbar">
+                <edit-props :props-config="{}" :props-key="undefined" :is-add="true" />
+                <template v-for="(item, key) in generateConf.props" :key="key">
+                  <edit-props :props-config="item" :props-key="key" />
+                </template>
               </el-scrollbar>
             </el-collapse-item>
           </el-collapse>
@@ -199,20 +217,32 @@
 <script setup>
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import IconsDialog from "./IconsDialog";
-import { defaultConfig } from "@/utils/generator/defaultConfig"
 import MethodEditDialog from "./components/MethodEditDialog";
 import { cloneDeep } from 'lodash-es';
+import EditProps from "./components/EditProps";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
+const props = defineProps({
+  showField: Boolean,
+  activeDataProperty: {
+    type: Object,
+    required: true,
+    default: undefined,
+  },
+  generateConf: {
+    type: Object,
+    required: true,
+    default: () => ({})
+  },
+});
 const childTemplate = ref({});
 const colVisible = ref([]);
 const fnFrom = ref('');
 const isDefault = ref(false);
 const method = ref({});
-const globalConfig = ref(cloneDeep(defaultConfig));
 
 function handleEvent(item, key) {
-  let med = globalConfig.value.methods[item.functionName];
+  let med = props.generateConf.methods[item.functionName];
   if (med) {
     handleMethod(med, "event", true, key);
   } else {
@@ -233,24 +263,16 @@ function handleMethod(item, fnFromAc, isDefaultAc, key) {
 
 function updateMethod(fnString, fnFromAc, fnName, key) {
   if (fnFromAc === 'lifeCycle') {
-    globalConfig.value.lifeCycles[fnName].value = fnString;
+    props.generateConf.lifeCycles[fnName].value = fnString;
   } else {
-    globalConfig.value.methods[fnName] = {
+    props.generateConf.methods[fnName] = {
       value: fnString
     };
     props.activeDataProperty.events[key].functionName = fnName;
   }
 }
 
-const props = defineProps({
-  showField: Boolean,
-  activeDataProperty: {
-    type: Object,
-    required: true,
-    default: undefined,
-  },
-  formConf: Object,
-});
+
 const activeName = ref(undefined);
 function handleCollapseChange(val) {
   if (!val) {
@@ -300,11 +322,11 @@ function addItemByTemplate() {
   else {
     if (props.activeDataProperty.template && Object.keys(props.activeDataProperty.template).length > 0) {
       for (let item in props.activeDataProperty.template) {
-        childTemplate.value =props.activeDataProperty.template[item];
+        childTemplate.value = props.activeDataProperty.template[item];
         break;
       }
     }
-    else{
+    else {
       proxy.$modal.msgError("请确认模板存在");
     }
   }
@@ -313,7 +335,6 @@ function addItemByTemplate() {
 
 function addCol(child, index) {
   const clone = createIdAndKey(cloneDeep(child));
-  console.log(clone);
   props.activeDataProperty.slots.default.slotOptions.push(clone);
   changeColVisible(true, props.activeDataProperty.slots.default.slotOptions.length - 1);
 }
