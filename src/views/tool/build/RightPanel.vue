@@ -16,8 +16,8 @@
             </div>
           </template>
           <el-form style="padding-left: 5px; padding-right: 5px" size="default" label-width="90px" label-position="top">
-            <el-collapse v-model="activeName" accordion @change="handleCollapseChange">
-              <el-collapse-item title="基础属性" v-show="activeName === undefined || activeName === 'one'" name="one">
+            <el-collapse v-model="activeComponent" accordion @change="handleCollapseChange">
+              <el-collapse-item title="基础属性" v-show="activeComponent === undefined || activeComponent === 'one'" name="one">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-if="activeDataProperty.vModel !== undefined" label="字段名">
                     <el-input v-model="activeDataProperty.vModel" placeholder="请输入字段名（v-model）"></el-input>
@@ -56,7 +56,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item v-show="activeName === undefined || activeName === 'two'" title="子项配置" name="two"
+              <el-collapse-item v-show="activeComponent === undefined || activeComponent === 'two'" title="子项配置" name="two"
                 v-if="
                   activeDataProperty?.slots?.default?.slotType ===
                   'childDragComponent' ||
@@ -140,7 +140,7 @@
                   </div>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="插槽配置" v-show="activeName === undefined || activeName === 'three'" name="three"
+              <el-collapse-item title="插槽配置" v-show="activeComponent === undefined || activeComponent === 'three'" name="three"
                 v-if="Object.keys(filteredSlots).length > 0">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in filteredSlots" :label="item.label" :key="key">
@@ -149,7 +149,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="事件配置" v-show="activeName === undefined || activeName === 'four'" name="four"
+              <el-collapse-item title="事件配置" v-show="activeComponent === undefined || activeComponent === 'four'" name="four"
                 v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
@@ -175,8 +175,8 @@
       </el-tab-pane>
       <el-tab-pane label="全局配置" name="componentGlobal" style="padding-left: 5px; padding-right: 5px">
         <el-form style="padding-left: 5px; padding-right: 5px" size="default" label-width="90px" label-position="top">
-          <el-collapse>
-            <el-collapse-item title="生命周期管理" name="lifeCycle">
+          <el-collapse v-model="activeGeneral" accordion @change="handleCollapseChange">
+            <el-collapse-item title="生命周期管理" name="lifeCycle" v-show="activeGeneral === undefined || activeGeneral === 'lifeCycle'">
               <el-scrollbar class="right-scrollbar">
                 <el-form-item v-for="(item, key) in generateConf.lifeCycles" :label="item.label" :key="key">
                   <el-button style="margin-right: 10px;" type="primary"
@@ -185,7 +185,7 @@
                 </el-form-item>
               </el-scrollbar>
             </el-collapse-item>
-            <el-collapse-item title="方法管理" name="methods">
+            <el-collapse-item title="方法管理" name="methods" v-show="activeGeneral === undefined || activeGeneral === 'methods'">
               <el-scrollbar class="right-scrollbar">
                 <el-form-item v-for="(item, key) in generateConf.methods" :label="item.label" :key="key">
                   <el-button style="margin-right: 10px;" type="primary"
@@ -195,11 +195,11 @@
                 <el-button>添加方法</el-button>
               </el-scrollbar>
             </el-collapse-item>
-            <el-collapse-item title="props管理" name="props">
+            <el-collapse-item title="props管理" name="props" v-show="activeGeneral === undefined || activeGeneral === 'props'">
               <el-scrollbar class="right-scrollbar">
-                <edit-props :props-config="{}" :props-key="undefined" :is-add="true" />
+                <edit-props :props-config="{}" :props-key="undefined" @updateProps="updateProps" :is-add="true" />
                 <template v-for="(item, key) in generateConf.props" :key="key">
-                  <edit-props :props-config="item" :props-key="key" />
+                  <edit-props :props-config="item" @updateProps="updateProps" :props-key="key" />
                 </template>
               </el-scrollbar>
             </el-collapse-item>
@@ -272,11 +272,25 @@ function updateMethod(fnString, fnFromAc, fnName, key) {
   }
 }
 
+function updateProps(key,value,type){
+  if(type==="delete"){
+    delete props.generateConf.props[key];
+  }
+  else{
+  props.generateConf.props[key]=value;
+  }
 
-const activeName = ref(undefined);
+}
+
+
+const activeComponent = ref(undefined);
+
+const activeGeneral = ref(undefined);
+
 function handleCollapseChange(val) {
   if (!val) {
-    activeName.value = undefined;
+    activeComponent.value = undefined;
+    activeGeneral.value = undefined;
   }
 }
 
