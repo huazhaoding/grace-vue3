@@ -141,7 +141,7 @@ function generateProps(props){
       }
     })
     .join("\n");
-   return `defineProps({${propsContent}})`;  
+   return `const props=defineProps({${propsContent}})`;  
 }
 
 function generateEmits(emits){
