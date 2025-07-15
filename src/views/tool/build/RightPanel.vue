@@ -460,6 +460,13 @@
                 </template>
               </el-scrollbar>
             </el-collapse-item>
+                  <el-collapse-item
+              title="emits管理"
+              name="emits"
+              v-show="activeGeneral === undefined || activeGeneral === 'emits'"
+            >
+              
+            </el-collapse-item>
           </el-collapse>
         </el-form>
       </el-tab-pane>
