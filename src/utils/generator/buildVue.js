@@ -144,6 +144,26 @@ function generateProps(props){
    return `const props=defineProps({${propsContent}})`;  
 }
 
+function generateAttrbutes(attrbutes){
+    const attrContent = Object.entries(attrbutes)
+    .filter(([key, value]) => value !== undefined)
+    .map(([key, value]) =>{
+      if(value.restType==="ref"){
+        return `${value.type} ${key}=ref(${value.default})\n`;
+      }
+      else if(value.restType==="reactive"){
+       return `${value.type} ${key}=reactive(${value.default})\n`
+         +`const {${value.toRefs.join(',')}})=toRefs(${key})\n`;
+      }
+      else{
+        return `${value.type} ${key}=${value.default}\n`;
+      }
+    })
+    .join("\n");
+
+  return attrContent;
+}
+
 function generateEmits(emits){
    return `defineEmits([${emits.join(",")}])`;
 }
@@ -1109,9 +1129,32 @@ let vue = {
       used: true,
     },
   },
+  atttrbutes: {
+    user:{
+        label: "用户名",
+        type: "let",//let 或者 const
+        restType:"reactive", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
+        toRefs: ['age'],//需要转化的节点
+        default: {name:'',
+          age:16
+        },
+    }
+  },
 };
 
 // console.log(listGenerateComponent(components));
 // console.log(listGenerateComponent(components2));
 // console.log(generateJavaScript(components2[0].events));
-console.log(makeUpHtml(vue));
+// console.log(makeUpHtml(vue));
+
+console.log(generateAttrbutes({
+    userName:{
+        label: "用户名",
+        type: "let",//let 或者 const
+        restType:"reactive", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
+        toRefs: ['age'],//需要转化的节点
+        default: {name:'',
+          age:16
+        },
+    }
+  }))

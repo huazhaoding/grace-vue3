@@ -1,3 +1,5 @@
+import { toRefs } from "vue";
+
 export const  defaultConfig = {
  components: [],
   methods: {
@@ -77,17 +79,12 @@ export const  defaultConfig = {
   expose: [],
   imports: {},
   atttrbutes: {
-    "class": {
-        label: "类名",
-        type: "string",
+    userName:{
+        label: "用户名",
+        type: "let",//let 或者 const
+        restType:"ref", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
+        toRefs: [],//需要转化的节点
         default: "",
-        required: false
-    },
-    "style": {
-        label: "样式",
-        type: "string",
-        default: "",
-        required: false
     }
   },
   componentType: {}
