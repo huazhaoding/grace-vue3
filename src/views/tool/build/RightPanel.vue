@@ -197,7 +197,7 @@
             </el-collapse-item>
             <el-collapse-item title="props管理" name="props" v-show="activeGeneral === undefined || activeGeneral === 'props'">
               <el-scrollbar class="right-scrollbar">
-                <edit-props :props-config="{}" :props-key="undefined" @updateProps="updateProps" :is-add="true" />
+                <edit-props  :props-key="undefined" @updateProps="updateProps" :is-add="true" />
                 <template v-for="(item, key) in generateConf.props" :key="key">
                   <edit-props :props-config="item" @updateProps="updateProps" :props-key="key" />
                 </template>

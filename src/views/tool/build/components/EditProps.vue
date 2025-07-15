@@ -3,7 +3,7 @@
         <el-card style="margin-bottom: 10px">
             <template #header>
                 <div class="card-header">
-                    <span>{{ !isAdd ? propsData.label : '添加prop' }}</span>
+                    <span>{{ !isAdd ? formData.label : '添加prop' }}</span>
                     <el-button-group style="float: right">
                         <el-button type="success" :icon="show ? 'Hide' : 'View'" @click="changeShow" title="显示|隐藏" />
                         <el-button type="success" v-if="!isAdd" icon="Edit" @click="changeRead" title="编辑" />
@@ -52,12 +52,11 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
 const { proxy } = getCurrentInstance();
 const props = defineProps({
     propsConfig: {
         type: Object,
-        default: () => ({})
+        default: () => ({ label: '', type: '', required: false, default: '' })
     },
     propsKey: {
         type: String,
@@ -76,10 +75,10 @@ const formRef = ref(null);
 // 表单数据模型
 const formData = reactive({
     localPropsKey: props.propsKey || '',
-    label: props.propsConfig.label || '',
-    type: props.propsConfig.type || '',
-    required: !!props.propsConfig.required,
-    default: props.propsConfig.default || ''
+    label: props.propsConfig?.label || '', // Use optional chaining
+    type: props.propsConfig?.type || '',
+    required: !!props.propsConfig?.required,
+    default: props.propsConfig?.default || ''
 });
 
 // 表单验证规则
