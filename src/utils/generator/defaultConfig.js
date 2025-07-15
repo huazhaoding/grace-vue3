@@ -76,5 +76,19 @@ export const  defaultConfig = {
   },
   expose: [],
   imports: {},
+  atttrbutes: {
+    "class": {
+        label: "类名",
+        type: "string",
+        default: "",
+        required: false
+    },
+    "style": {
+        label: "样式",
+        type: "string",
+        default: "",
+        required: false
+    }
+  },
   componentType: {}
 }

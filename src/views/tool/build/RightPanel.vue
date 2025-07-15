@@ -225,7 +225,13 @@
             </el-collapse-item>
             <el-collapse-item title="expose管理" name="expose"
               v-show="activeGeneral === undefined || activeGeneral === 'expose'">
-              <el-input-tag v-model="generateConf.expose" tag-type="success"  placeholder="请输入emit" />
+              <el-select v-model="exposeMethod" @change="exposeChange" multiple>
+                <el-option v-for="(item,key) in generateConf.methods" :key="key" :label="key" :value="key" />
+              </el-select>
+              <el-select v-model="exposeAtttrbutes" multiple @change="exposeChange">
+                <el-option v-for="(item,key) in generateConf.atttrbutes" :key="key" :label="key" :value="key" />
+              </el-select >
+              <el-input-tag disabled v-model="generateConf.expose" tag-type="success"  placeholder="请输入emit" />
             </el-collapse-item>
           </el-collapse>
         </el-form>
@@ -295,6 +301,14 @@ function updateMethod(fnString, fnFromAc, fnName, key) {
     };
     props.activeDataProperty.events[key].functionName = fnName;
   }
+}
+
+const exposeMethod=ref(props.generateConf.expose.filter(item=>Object.keys(props.generateConf.methods).includes(item)));
+
+const exposeAtttrbutes=ref(props.generateConf.expose.filter(item=>Object.keys(props.generateConf.atttrbutes).includes(item)));
+
+function exposeChange(value){
+ props.generateConf.expose = [...new Set([...props.generateConf.expose, ...value])];
 }
 
 function updateProps(key, value, type) {
