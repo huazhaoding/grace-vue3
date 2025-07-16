@@ -78,7 +78,7 @@ export const  defaultConfig = {
   },
   expose: [],
   imports: {},
-  atttrbutes: {
+  attrbutes: {
     userName:{
         label: "用户名",
         type: "let",//let 或者 const

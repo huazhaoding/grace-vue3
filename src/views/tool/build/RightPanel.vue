@@ -210,6 +210,15 @@
                 <el-button>添加方法</el-button>
               </el-scrollbar>
             </el-collapse-item>
+            <el-collapse-item title="属性管理" name="attrbutes"
+              v-show="activeGeneral === undefined || activeGeneral === 'attrbutes'">
+              <el-scrollbar class="right-scrollbar">
+                <edit-attr :props-key="undefined" @updateAttr="updateAttr" :is-add="true" />
+                <template v-for="(item, key) in generateConf.attrbutes" :key="key">
+                  <edit-attr :props-config="item" @updateAttr="updateAttr" :props-key="key" />
+                </template>
+              </el-scrollbar>
+            </el-collapse-item>
             <el-collapse-item title="props管理" name="props"
               v-show="activeGeneral === undefined || activeGeneral === 'props'">
               <el-scrollbar class="right-scrollbar">
@@ -250,6 +259,7 @@ import IconsDialog from "./IconsDialog";
 import MethodEditDialog from "./components/MethodEditDialog";
 import { cloneDeep } from "lodash-es";
 import EditProps from "./components/EditProps";
+import EditAttr from "./components/EditAttr";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const props = defineProps({
@@ -323,11 +333,34 @@ function updateProps(key, value, type) {
       })
       .catch(() => { });
   } else {
-    props.generateConf.props[key] = value;
     proxy.$modal
       .confirm("是否确定要更新吗？")
       .then(function () {
         props.generateConf.props[key] = value;
+      })
+      .then(() => {
+        proxy.$modal.msgSuccess("更新成功");
+      })
+      .catch(() => { });
+  }
+}
+
+function updateAttr(key, value, type) {
+  if (type === "delete") {
+    proxy.$modal
+      .confirm("确定要删除？")
+      .then(function () {
+        delete props.generateConf.attrbutes[key];
+      })
+      .then(() => {
+        proxy.$modal.msgSuccess("更新成功");
+      })
+      .catch(() => { });
+  } else {
+    proxy.$modal
+      .confirm("是否确定要更新吗？")
+      .then(function () {
+        props.generateConf.attrbutes[key] = value;
       })
       .then(() => {
         proxy.$modal.msgSuccess("更新成功");

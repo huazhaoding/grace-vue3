@@ -1137,7 +1137,7 @@ let vue = {
         toRefs: ['age'],//需要转化的节点
         default: {name:'',
           age:16
-        },
+        }
     }
   },
 };
