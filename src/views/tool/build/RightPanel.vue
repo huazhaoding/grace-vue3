@@ -234,12 +234,16 @@
             </el-collapse-item>
             <el-collapse-item title="expose管理" name="expose"
               v-show="activeGeneral === undefined || activeGeneral === 'expose'">
+              <el-form-item label="事件列表"> 
               <el-select v-model="exposeMethod" @change="exposeChange" multiple>
                 <el-option v-for="(item,key) in generateConf.methods" :key="key" :label="key" :value="key" />
               </el-select>
+              </el-form-item>
+              <el-form-item label="属性列表"> 
               <el-select v-model="exposeAtttrbutes" multiple @change="exposeChange">
-                <el-option v-for="(item,key) in generateConf.atttrbutes" :key="key" :label="key" :value="key" />
+                <el-option v-for="(item,key) in generateConf.attrbutes" :key="key" :label="key" :value="key" />
               </el-select >
+              </el-form-item>
               <el-input-tag disabled v-model="generateConf.expose" tag-type="success"  placeholder="请输入emit" />
             </el-collapse-item>
           </el-collapse>

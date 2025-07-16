@@ -78,7 +78,7 @@ const activeTab = ref("formPreview");
 //  代码类型
 const copyType = ref("vue");
 //  JSON数据
-const jsonData = ref({});
+const jsonData = ref("");
 //  表单模板
 const formTemplate = ref(props.formTemplate);
 // 计算属性
@@ -92,7 +92,7 @@ const visible = computed({
 watch(
   () => props.jsonData,
   (val) => {
-    jsonData.value = JSON.stringify(val, null, 2);
+    jsonData.value = val;
   }
 );
 

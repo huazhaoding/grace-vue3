@@ -10,11 +10,12 @@ export function vueTemplate(components) {
 // 脚本
 export function vueScript(config) {
   let str ="";
-  str += generateProps(config.props);
-  str += generateEmits(config.emits);
-  str += generateMethods(config.events);
-  str += generateMethods(config.lifeCycles);
-  str += generateExposes(config.exposes);
+  str += generateAttrbutes(config.attrbutes);
+  str += generateProps(config.props)+"\n";
+  str += generateEmits(config.emits)+"\n";
+  str += generateMethods(config.methods)+"\n";
+  str += generateMethods(config.lifeCycles)+"\n";
+  str += generateExpose(config.expose)+"\n";
   return `<script setup>
     ${str}
   </script>`;
@@ -1129,7 +1130,7 @@ let vue = {
       used: true,
     },
   },
-  atttrbutes: {
+  attrbutes: {
     user:{
         label: "用户名",
         type: "let",//let 或者 const

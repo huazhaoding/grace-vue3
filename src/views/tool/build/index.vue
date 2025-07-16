@@ -77,7 +77,7 @@
     <preview-dialog
       v-model="previewDialogVisible"
       :formTemplate="componentTemplateData"
-      :jsonData="componentJsonData"
+      :jsonData="jsonString"
     />
   </div>
 </template>
@@ -90,23 +90,16 @@ import DynamicComponent from "./components/DynamicComponent";
 import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
 import beautifier from "js-beautify"; // 用于格式化生成的代码
 import { defaultConfig  }  from "@/utils/generator/defaultConfig"
-import {
-  makeUpHtml, // 生成 HTML 模板
-  vueTemplate, // Vue 模板生成器
-  vueScript, // Vue 脚本生成器
-  cssStyle, // CSS 样式生成器
-} from "@/utils/generator/html";
-import { makeUpJs } from "@/utils/generator/js"; // 生成 JS 脚本
-import { makeUpCss } from "@/utils/generator/css"; // 生成 CSS 样式
+import { makeUpHtml } from "@/utils/generator/buildVue";
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
 const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref({}); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
-const generateConf = ref(defaultConfig); // 生成配置
+const generateConf = reactive(defaultConfig); // 生成配置
 const componentTemplateData = ref(""); // 存储生成的表单模板
-const componentJsonData = ref({}); // 存储生成的 JSON 数据
+const jsonString = ref("");
 const previewDialogVisible = ref(false); // 控制预览对话框显示状态
 provide("createIdAndKey", createIdAndKey);
 function updateCloneComponent(element, from) {
@@ -170,13 +163,8 @@ function importJson() {}
 
 // 打开预览对话框并生成代码
 function openPreview() {
-  generateConf.value = {
-    fileName: undefined,
-    type: "file",
-  };
-  AssembleFormData(); // 汇总表单数据
   componentTemplateData.value = generateCode(); // 生成代码模板
-  componentJsonData.value = formData.value; // 生成 JSON 数据
+  jsonString.value=JSON.stringify(generateConf,null,2);
   previewDialogVisible.value = true; // 显示预览对话框
 }
 
@@ -190,22 +178,11 @@ function empty() {
       activeData.value = {};
     });
 }
-
-
-
-// 汇总表单数据
-function AssembleFormData() {
-  componentJsonData.value = JSON.parse(JSON.stringify(drawingList.value));
-}
-
 // 生成代码
 function generateCode() {
-  const { type } = generateConf.value; // 获取生成配置的类型
-  AssembleFormData(); // 汇总表单数据
-  const script = vueScript(makeUpJs(drawingList.value, type)); // 生成 JS 脚本
-  const html = vueTemplate(makeUpHtml(drawingList.value, type)); // 生成 HTML 模板
-  const css = cssStyle(makeUpCss(drawingList.value)); // 生成 CSS 样式
-  return beautifier.html(html + script + css, beautifierConf.html); // 格式化并返回生成的代码
+  generateConf.components=drawingList.value;
+  const html = makeUpHtml(generateConf); // 生成 HTML 模板
+  return beautifier.html(html); // 格式化并返回生成的代码
 }
 </script>
 
