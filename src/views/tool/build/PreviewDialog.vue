@@ -63,8 +63,8 @@ const props = defineProps({
     default: "",
   },
   jsonData: {
-    type: Object,
-    default: () => ({}),
+    type: String,
+    default: '',
   },
 });
 const codeOperate = ref({

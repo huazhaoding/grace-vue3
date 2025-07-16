@@ -207,7 +207,7 @@
                     icon="Edit">编辑</el-button>
                   <el-switch v-model="item.used" />
                 </el-form-item>
-                <el-button>添加方法</el-button>
+                <el-button  @click="handleMethod(undefined, 'methods', false, '')">添加方法</el-button>
               </el-scrollbar>
             </el-collapse-item>
             <el-collapse-item title="属性管理" name="attrbutes"
@@ -299,7 +299,16 @@ function handleEvent(item, key) {
 }
 
 function handleMethod(item, fnFromAc, isDefaultAc, key) {
-  method.value = cloneDeep(item);
+  if (!item) {
+    key = "function_" + new Date().getTime();
+    item={
+        value: `function ${key}(){return 'hello world';}`,
+        label: "测试方法",
+        info: "测试方法",
+        used: false
+    }
+  }
+  method.value = item;
   method.value.key = key;
   fnFrom.value = fnFromAc;
   isDefault.value = isDefaultAc;
