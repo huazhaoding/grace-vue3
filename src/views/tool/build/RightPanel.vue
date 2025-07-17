@@ -67,15 +67,37 @@
                   'childComponent'
                 ">
                 <template #title="{ isActive }">
-                  <el-text style="margin-right: 10px">子项配置</el-text>
-                  <el-tooltip effect="dark" content="添加子项" placement="top-start">
+                  <div>
+                  <el-text>子项配置</el-text>
+                  <el-tooltip  effect="dark" content="子项配置" placement="top-start">
+                    <el-text type="primary" style="margin-right: 10px;margin-left: 20px;">
+                      <el-icon>
+                        <Setting />
+                      </el-icon>
+                    </el-text>
+                  </el-tooltip>
+                   <el-tooltip effect="dark" content="添加子项" placement="top-start">
                     <el-text type="primary" @click.stop="addItemByTemplate">
                       <el-icon>
                         <Plus />
                       </el-icon>
                     </el-text>
                   </el-tooltip>
+                  </div>
                 </template>
+
+                <el-form-item label="数据源" v-if="activeDataProperty.slots.default.dataSource"> 
+                  <el-radio-group v-model="activeDataProperty.slots.default.dataSource" size="small"> 
+                    <el-radio value="static">静态数据</el-radio>
+                    <el-radio value="dict">字典数据</el-radio>
+                    <el-radio value="config">配置数据</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+
+                <el-form-item label="数据源Key" >
+                   <el-input v-model="activeDataProperty.slots.default.dataKey"></el-input>
+                </el-form-item>
+
                 <el-scrollbar class="right-scrollbar">
                   <div class="scrollbar-item">
                     <template v-if="
