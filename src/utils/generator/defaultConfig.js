@@ -3,12 +3,6 @@
 export const  defaultConfig = {
  components: [],
   methods: {
-    testFunction:{
-        value: "function testFunction(){return 'hello world';}",
-        label: "测试方法",
-        info: "测试方法",
-        used: false
-    }
   },
   lifeCycles: {
     onMounted: {
@@ -69,23 +63,10 @@ export const  defaultConfig = {
 },
   emits: [],
   props: {
-    name:{
-        label: "组件名称",
-        type: "string",
-        default: "",
-        required: true
-    }
   },
   expose: [],
   imports: {},
   attrbutes: {
-    userName:{
-        label: "用户名",
-        type: "let",//let 或者 const
-        restType:"ref", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
-        toRefs: [],//需要转化的节点
-        default: "",
-    }
   },
   componentType: {}
 }
