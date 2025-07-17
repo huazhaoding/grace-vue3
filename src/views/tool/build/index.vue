@@ -89,7 +89,6 @@ import RightPanel from "./RightPanel"; // 导入右侧属性面板组件
 import beautifier from "js-beautify"; // 用于格式化生成的代码
 import { defaultConfig  }  from "@/utils/generator/defaultConfig"
 import { makeUpHtml } from "@/utils/generator/buildVue";
-import { watch } from "vue";
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
 const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
@@ -112,12 +111,6 @@ function updateCloneComponent(element, from) {
     activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
   }
 }
-
-watch(() => drawingList.value, (val) => { 
-    if (val.length === 0) { 
-      activeData.value = {};
-    }
-},{ deep: true, immediate: true });
 
 // 复制组件
 function drawingItemCopy(item, parent) {
@@ -148,8 +141,12 @@ function drawingItemDelete(index, parent) {
   parent.splice(index, 1); // 从父级列表中删除表单项
   nextTick(() => {
     const len = drawingList.value.length; // 获取剩余表单项数量
-    if (len) {
+    if (len>0) {
       activeComponentItem(drawingList.value[len - 1]); // 激活最后一个表单项
+    }
+    else {
+      idGlobal.value = 100; // 重置全局 ID
+      activeData.value = {};
     }
   });
 }
