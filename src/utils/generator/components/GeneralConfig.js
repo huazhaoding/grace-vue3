@@ -1,15 +1,13 @@
-
-
-export const  defaultConfig = {
- components: [],
-  methods: {
+const configInfo={
+ components: [],//组件列表
+ methods: {
     testFunction:{
         value: "function testFunction(){return 'hello world';}",
         label: "测试方法",
         info: "测试方法",
         used: false
     }
-  },
+  },//方法列表
   lifeCycles: {
     onMounted: {
         used: false,
@@ -66,8 +64,8 @@ export const  defaultConfig = {
         value: "onDeactivated(() => {})",
         label: "被 keep-alive 缓存的组件停用时调用"
     }
-},
-  emits: [],
+},//生命周期
+  emits: [],//emits
   props: {
     name:{
         label: "组件名称",
@@ -75,9 +73,9 @@ export const  defaultConfig = {
         default: "",
         required: true
     }
-  },
-  expose: [],
-  imports: {},
+  },//props
+  expose: [],//expore
+  imports: {},//导入
   attrbutes: {
     userName:{
         label: "用户名",
@@ -86,6 +84,7 @@ export const  defaultConfig = {
         toRefs: [],//需要转化的节点
         default: "",
     }
-  },
-  componentType: {}
+  },//属性
+  componentType: {}//组件类型
+
 }
