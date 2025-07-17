@@ -319,6 +319,7 @@ export const BaseComponents = {
           },
         },
       },
+      activeTemplate:"el-button",
       attr: {
         size: {
           value: "",
@@ -736,6 +737,7 @@ export const BaseComponents = {
           },
         }
       },
+      activeTemplate:"el-col",
       attr: {
         gutter: {
           value: 0,
@@ -1277,6 +1279,7 @@ export const BaseComponents = {
           },
         },
       },
+      activeTemplate:"el-splitter-panel",
       attr: {
         layout: {
           value: "horizontal",

@@ -691,6 +691,7 @@ export const FormComponents = {
           slots: {},
         },
       },
+      activeTemplate:"el-checkbox",
       attr: {
         "v-model": {
           value: [],
@@ -959,6 +960,7 @@ export const FormComponents = {
           },
         },
       },
+      activeTemplate: "el-radio",
       attr: {
         "v-model": {
           value: '',
