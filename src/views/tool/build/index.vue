@@ -283,7 +283,7 @@ $dragColor: #340b49b4;
 
   .right-aside-box {
     background-color: var(--el-bg-color-overlay);
-    padding: 0;
+    padding: 5px;
     margin-top: 5px;
     box-shadow: var(--el-box-shadow-light);
     height: calc(100vh - 50px - 50px);
@@ -328,6 +328,7 @@ $dragColor: #340b49b4;
   min-height: 32px;
   overflow: hidden;
   position: relative;
+  padding: 3px;
   margin: 1px;
   .drag-wrapper {
     height: auto;

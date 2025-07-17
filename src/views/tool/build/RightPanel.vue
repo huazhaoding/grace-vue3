@@ -15,7 +15,7 @@
               </a>
             </div>
           </template>
-          <el-form style="padding-left: 5px; padding-right: 5px" size="default" label-width="90px" label-position="top">
+          <el-form  size="default" label-width="90px" label-position="top">
             <el-collapse v-model="activeComponent" accordion @change="handleCollapseChange">
               <el-collapse-item title="基础属性" v-show="activeComponent === undefined || activeComponent === 'one'
                 " name="one">
@@ -186,8 +186,9 @@
           </draggable>
         </el-card>
       </el-tab-pane>
-      <el-tab-pane label="全局配置" name="componentGlobal" style="padding-left: 5px; padding-right: 5px">
-        <el-form style="padding-left: 5px; padding-right: 5px" size="default" label-width="90px" label-position="top">
+      <el-tab-pane label="全局配置" name="componentGlobal">
+        <el-card body-class="card-body" header-class="card-header"> 
+        <el-form  size="default" label-width="90px" label-position="top">
           <el-collapse v-model="activeGeneral" accordion @change="handleCollapseChange">
             <el-collapse-item title="生命周期管理" name="lifeCycle" v-show="activeGeneral === undefined || activeGeneral === 'lifeCycle'
               ">
@@ -248,6 +249,7 @@
             </el-collapse-item>
           </el-collapse>
         </el-form>
+        </el-card>
       </el-tab-pane>
     </el-tabs>
   </div>
