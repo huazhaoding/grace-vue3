@@ -325,7 +325,7 @@ export const BaseComponents = {
               },
               slots: {
                 default: {
-                  value: "按钮",
+                  value: "按钮1",
                   label: "按钮内容",
                   slotType: "normal",
                   used: true,
@@ -701,6 +701,7 @@ export const BaseComponents = {
                       tag: "el-button", // 定义组件类型为按钮
                       tagLabel: "按钮", // 标签名，用于标识组件
                       tagIcon: "button", // 图标名称，用于可视化展示
+                      type:"normal",
                       document:
                         "https://element.eleme.cn/#/zh-CN/component/button", // 组件文档链接
                       attr: {
@@ -825,7 +826,7 @@ export const BaseComponents = {
                       },
                       slots: {
                         default: {
-                          value: "按钮",
+                          value: "按钮1",
                           label: "按钮内容",
                           slotType: "normal",
                           used: true,

@@ -401,9 +401,6 @@ $dragColor: #340b49b4;
   & > .draggable-item-tool {
      visibility: visible;
   }
-  & >.can-drag {
-    border: none!important;
-  }
 }
 .draggable-item-inactive {
   & > .draggable-item-mark,

@@ -46,17 +46,13 @@
           <component v-for="(slotChild, slotChildIndex) in elementData.slots.default
             .slotOptions" :key="slotChildIndex" :is="slotChild.tag" v-bind="simplifyItem(slotChild.attr)"
             @click.stop="activeItem(slotChild)">
-            <template v-if="
-              slotChild.slots &&
-              slotChild.slots.default &&
-              slotChild.slots.default.slotType == 'dragComponent'
-            ">
+            <template v-if="slotChild?.slots?.default?.slotType == 'dragComponent'">
               <div :class="activeId === slotChild.id
                 ? 'draggable-item _is-layout draggable-item-active'
                 : 'draggable-item _is-layout draggable-item-inactive'
                 " @click.stop="activeItem(slotChild)">
                 <draggable group="componentsGroup" :animation="340" :list="slotChild.slots.default.slotOptions"
-                  class="drag-wrapper can-drag" item-key="renderKey" @start="drag = true" @end="drag = false">
+                  class="drag-wrapper" item-key="renderKey" @start="drag = true" @end="drag = false">
                   <template #item="scoped">
                     <dynamic-component :key="scoped.element.renderKey"
                       :drawing-list="slotChild.slots.default.slotOptions" :elementData="scoped.element"
@@ -125,7 +121,8 @@
 </template>
 <script setup name="DynamicComponent">
 import draggable from "vuedraggable/dist/vuedraggable.common";
-const emits = defineEmits(["activeItem", "copyItem", "deleteItem"]);
+const emits = defineEmits([
+  "activeItem", "copyItem", "deleteItem"]);
 const props = defineProps({
   elementData: {
     type: Object,
