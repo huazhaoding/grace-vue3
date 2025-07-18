@@ -16,8 +16,8 @@
             </div>
           </template>
           <el-form size="default" label-width="90px" label-position="top">
-            <el-collapse v-model="activeComponent" accordion @change="handleCollapseChange">
-              <el-collapse-item title="基础属性" v-show="activeComponent === undefined || activeComponent === 'one'
+            <el-collapse v-model="activeComponentConf" accordion @change="handleCollapseChange">
+              <el-collapse-item title="基础属性" v-show="activeComponentConf === undefined || activeComponentConf === 'one'
                 " name="one">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-if="activeDataProperty.vModel !== undefined" label="字段名">
@@ -26,7 +26,7 @@
                   <component-attr-edit :active-data-property="activeDataProperty" />
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item v-show="activeComponent === undefined || activeComponent === 'two'
+              <el-collapse-item v-show="activeComponentConf === undefined || activeComponentConf === 'two'
                 " title="子项配置" name="two" v-if="
                   activeDataProperty?.slots?.default?.slotType ===
                   'childDragComponent' ||
@@ -151,7 +151,7 @@
                   </div>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="插槽配置" v-show="activeComponent === undefined || activeComponent === 'three'
+              <el-collapse-item title="插槽配置" v-show="activeComponentConf === undefined || activeComponentConf === 'three'
                 " name="three" v-if="Object.keys(filteredSlots).length > 0">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in filteredSlots" :label="item.label" :key="key">
@@ -160,7 +160,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="事件配置" v-show="activeComponent === undefined || activeComponent === 'four'
+              <el-collapse-item title="事件配置" v-show="activeComponentConf === undefined || activeComponentConf === 'four'
                 " name="four" v-if="activeDataProperty.events">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in activeDataProperty.events" :label="item.label" :key="key">
@@ -186,11 +186,11 @@
           </draggable>
         </el-card>
       </el-tab-pane>
-      <el-tab-pane label="全局配置" name="componentGlobal">
+      <el-tab-pane label="全局配置" name="globalConf">
         <el-card body-class="card-body" header-class="card-header">
           <el-form size="default" label-width="90px" label-position="top">
-            <el-collapse v-model="activeGeneral" accordion @change="handleCollapseChange">
-              <el-collapse-item title="生命周期管理" name="lifeCycle" v-show="activeGeneral === undefined || activeGeneral === 'lifeCycle'
+            <el-collapse v-model="activeGlobalConf" accordion @change="handleCollapseChange">
+              <el-collapse-item title="生命周期管理" name="lifeCycle" v-show="activeGlobalConf === undefined || activeGlobalConf === 'lifeCycle'
                 ">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in generateConf.lifeCycles" :label="item.label" :key="key">
@@ -200,7 +200,7 @@
                   </el-form-item>
                 </el-scrollbar>
               </el-collapse-item>
-              <el-collapse-item title="方法管理" name="methods" v-show="activeGeneral === undefined || activeGeneral === 'methods'
+              <el-collapse-item title="方法管理" name="methods" v-show="activeGlobalConf === undefined || activeGlobalConf === 'methods'
                 ">
                 <el-scrollbar class="right-scrollbar">
                   <el-form-item v-for="(item, key) in generateConf.methods" :label="item.label" :key="key">
@@ -212,7 +212,7 @@
                 </el-scrollbar>
               </el-collapse-item>
               <el-collapse-item title="属性管理" name="attrbutes"
-                v-show="activeGeneral === undefined || activeGeneral === 'attrbutes'">
+                v-show="activeGlobalConf === undefined || activeGlobalConf === 'attrbutes'">
                 <el-scrollbar class="right-scrollbar">
                   <edit-attr :props-key="undefined" @updateAttr="updateAttr" :is-add="true" />
                   <template v-for="(item, key) in generateConf.attrbutes" :key="key">
@@ -221,7 +221,7 @@
                 </el-scrollbar>
               </el-collapse-item>
               <el-collapse-item title="props管理" name="props"
-                v-show="activeGeneral === undefined || activeGeneral === 'props'">
+                v-show="activeGlobalConf === undefined || activeGlobalConf === 'props'">
                 <el-scrollbar class="right-scrollbar">
                   <edit-props :props-key="undefined" @updateProps="updateProps" :is-add="true" />
                   <template v-for="(item, key) in generateConf.props" :key="key">
@@ -230,11 +230,11 @@
                 </el-scrollbar>
               </el-collapse-item>
               <el-collapse-item title="emits管理" name="emits"
-                v-show="activeGeneral === undefined || activeGeneral === 'emits'">
+                v-show="activeGlobalConf === undefined || activeGlobalConf === 'emits'">
                 <el-input-tag v-model="generateConf.emits" tag-type="success" placeholder="请输入emit" />
               </el-collapse-item>
               <el-collapse-item title="expose管理" name="expose"
-                v-show="activeGeneral === undefined || activeGeneral === 'expose'">
+                v-show="activeGlobalConf === undefined || activeGlobalConf === 'expose'">
                 <el-form-item label="事件列表">
                   <el-select v-model="exposeMethod" @change="exposeChange" multiple>
                     <el-option v-for="(item, key) in generateConf.methods" :key="key" :label="key" :value="key" />
@@ -493,21 +493,20 @@ function updateAttr(key, value, type) {
   }
 }
 
-const activeComponent = ref(undefined);
+const activeComponentConf = ref(undefined);
 
-const activeGeneral = ref(undefined);
+const activeGlobalConf = ref(undefined);
 
 function handleCollapseChange(val) {
   if (!val) {
-    activeComponent.value = undefined;
-    activeGeneral.value = undefined;
+    activeComponentConf.value = undefined;
+    activeGlobalConf.value = undefined;
   }
 }
 
 watch(() => props.activeDataProperty, (val) => { 
   if (val) {
-    activeComponent.value ="one";
-    
+    activeComponentConf.value =undefined; 
   }
 
 });
