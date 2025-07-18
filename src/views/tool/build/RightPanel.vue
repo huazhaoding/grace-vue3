@@ -15,7 +15,7 @@
               </a>
             </div>
           </template>
-          <el-form  size="default" label-width="90px" label-position="top">
+          <el-form size="default" label-width="90px" label-position="top">
             <el-collapse v-model="activeComponent" accordion @change="handleCollapseChange">
               <el-collapse-item title="基础属性" v-show="activeComponent === undefined || activeComponent === 'one'
                 " name="one">
@@ -35,36 +35,39 @@
                 ">
                 <template #title="{ isActive }">
                   <div>
-                  <el-text>子项配置</el-text>
+                    <el-text>子项配置</el-text>
                   </div>
                 </template>
                 <el-scrollbar class="right-scrollbar">
                   <div class="scrollbar-item">
-                  <el-card style="margin-bottom: 10px">
-                            <template #header>
-                              <div class="card-header">
-                                <span>模板操作</span>
-                                <el-button-group style="float: right">
-                   <el-button type="primary" icon="Plus" @click="addItemByTemplate" title="添加子项" />
-                                  <el-button type="success" :icon="temSetVisible ? 'Hide' : 'View'" @click="temSetVisible=!temSetVisible" title="显示|隐藏" />
-                                </el-button-group>
-                              </div>
-                            </template>
-                 <div v-show="temSetVisible">
-                <el-form-item label="数据源" v-if="activeDataProperty.slots.default.dataSource"> 
-                  <el-radio-group v-model="activeDataProperty.slots.default.dataSource" size="small"> 
-                    <el-radio value="static">静态数据</el-radio>
-                    <el-radio value="dict">字典数据</el-radio>
-                    <el-radio value="config">配置数据</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="数据源Key" v-if="activeDataProperty.slots.default.dataSource!=='static'" >
-                   <el-input v-model="activeDataProperty.slots.default.dataKey"></el-input>
-                </el-form-item>
-                <component-attr-edit :active-data-property="activeDataProperty.template[activeDataProperty.activeTemplate]"/>
-                </div>
-                            <el-text class="mx-1" type="info">点击眼睛切换状态</el-text>
-                          </el-card>
+                    <el-card style="margin-bottom: 10px">
+                      <template #header>
+                        <div class="card-header">
+                          <span>模板操作</span>
+                          <el-button-group style="float: right">
+                            <el-button type="primary" icon="Plus" @click="addItemByTemplate" title="添加子项" />
+                            <el-button type="success" :icon="temSetVisible ? 'Hide' : 'View'"
+                              @click="temSetVisible = !temSetVisible" title="显示|隐藏" />
+                          </el-button-group>
+                        </div>
+                      </template>
+                      <div v-show="temSetVisible">
+                        <el-form-item label="数据源" v-if="activeDataProperty.slots.default.dataSource">
+                          <el-radio-group v-model="activeDataProperty.slots.default.dataSource">
+                            <el-radio value="static">静态数据</el-radio>
+                            <el-radio value="dict">字典数据</el-radio>
+                            <el-radio value="config">配置数据</el-radio>
+                          </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="数据源Key" v-if="activeDataProperty.slots.default.dataSource !== 'static'">
+                          <el-input v-model="activeDataProperty.slots.default.dataKey"></el-input>
+                          <el-button type="primary" @click="buildDictOptions">加载数据</el-button>
+                        </el-form-item>
+                        <component-attr-edit
+                          :active-data-property="activeDataProperty.template[activeDataProperty.activeTemplate]" />
+                      </div>
+                      <el-text class="mx-1" type="info">点击眼睛切换状态</el-text>
+                    </el-card>
 
 
                     <template v-if="
@@ -107,7 +110,7 @@
                                 <el-radio-group v-model="item.value" v-else-if="item.type === 'radio'">
                                   <el-radio v-for="(item, index) in item.options" :key="index" :value="item.value">{{
                                     item.label
-                                    }}</el-radio>
+                                  }}</el-radio>
                                 </el-radio-group>
                                 <el-popover placement="left" :width="400" trigger="click" v-else-if="
                                   activeDataProperty.tag === 'el-row' &&
@@ -176,68 +179,68 @@
         </el-card>
       </el-tab-pane>
       <el-tab-pane label="全局配置" name="componentGlobal">
-        <el-card body-class="card-body" header-class="card-header"> 
-        <el-form  size="default" label-width="90px" label-position="top">
-          <el-collapse v-model="activeGeneral" accordion @change="handleCollapseChange">
-            <el-collapse-item title="生命周期管理" name="lifeCycle" v-show="activeGeneral === undefined || activeGeneral === 'lifeCycle'
-              ">
-              <el-scrollbar class="right-scrollbar">
-                <el-form-item v-for="(item, key) in generateConf.lifeCycles" :label="item.label" :key="key">
-                  <el-button style="margin-right: 10px" type="primary"
-                    @click="handleMethod(item, 'lifeCycle', true, key)" icon="Edit">编辑</el-button>
-                  <el-switch v-model="item.used" />
+        <el-card body-class="card-body" header-class="card-header">
+          <el-form size="default" label-width="90px" label-position="top">
+            <el-collapse v-model="activeGeneral" accordion @change="handleCollapseChange">
+              <el-collapse-item title="生命周期管理" name="lifeCycle" v-show="activeGeneral === undefined || activeGeneral === 'lifeCycle'
+                ">
+                <el-scrollbar class="right-scrollbar">
+                  <el-form-item v-for="(item, key) in generateConf.lifeCycles" :label="item.label" :key="key">
+                    <el-button style="margin-right: 10px" type="primary"
+                      @click="handleMethod(item, 'lifeCycle', true, key)" icon="Edit">编辑</el-button>
+                    <el-switch v-model="item.used" />
+                  </el-form-item>
+                </el-scrollbar>
+              </el-collapse-item>
+              <el-collapse-item title="方法管理" name="methods" v-show="activeGeneral === undefined || activeGeneral === 'methods'
+                ">
+                <el-scrollbar class="right-scrollbar">
+                  <el-form-item v-for="(item, key) in generateConf.methods" :label="item.label" :key="key">
+                    <el-button style="margin-right: 10px" type="primary"
+                      @click="handleMethod(item, 'methods', true, key)" icon="Edit">编辑</el-button>
+                    <el-switch v-model="item.used" />
+                  </el-form-item>
+                  <el-button @click="handleMethod(undefined, 'methods', false, '')">添加方法</el-button>
+                </el-scrollbar>
+              </el-collapse-item>
+              <el-collapse-item title="属性管理" name="attrbutes"
+                v-show="activeGeneral === undefined || activeGeneral === 'attrbutes'">
+                <el-scrollbar class="right-scrollbar">
+                  <edit-attr :props-key="undefined" @updateAttr="updateAttr" :is-add="true" />
+                  <template v-for="(item, key) in generateConf.attrbutes" :key="key">
+                    <edit-attr :props-config="item" @updateAttr="updateAttr" :props-key="key" />
+                  </template>
+                </el-scrollbar>
+              </el-collapse-item>
+              <el-collapse-item title="props管理" name="props"
+                v-show="activeGeneral === undefined || activeGeneral === 'props'">
+                <el-scrollbar class="right-scrollbar">
+                  <edit-props :props-key="undefined" @updateProps="updateProps" :is-add="true" />
+                  <template v-for="(item, key) in generateConf.props" :key="key">
+                    <edit-props :props-config="item" @updateProps="updateProps" :props-key="key" />
+                  </template>
+                </el-scrollbar>
+              </el-collapse-item>
+              <el-collapse-item title="emits管理" name="emits"
+                v-show="activeGeneral === undefined || activeGeneral === 'emits'">
+                <el-input-tag v-model="generateConf.emits" tag-type="success" placeholder="请输入emit" />
+              </el-collapse-item>
+              <el-collapse-item title="expose管理" name="expose"
+                v-show="activeGeneral === undefined || activeGeneral === 'expose'">
+                <el-form-item label="事件列表">
+                  <el-select v-model="exposeMethod" @change="exposeChange" multiple>
+                    <el-option v-for="(item, key) in generateConf.methods" :key="key" :label="key" :value="key" />
+                  </el-select>
                 </el-form-item>
-              </el-scrollbar>
-            </el-collapse-item>
-            <el-collapse-item title="方法管理" name="methods" v-show="activeGeneral === undefined || activeGeneral === 'methods'
-              ">
-              <el-scrollbar class="right-scrollbar">
-                <el-form-item v-for="(item, key) in generateConf.methods" :label="item.label" :key="key">
-                  <el-button style="margin-right: 10px" type="primary" @click="handleMethod(item, 'methods', true, key)"
-                    icon="Edit">编辑</el-button>
-                  <el-switch v-model="item.used" />
+                <el-form-item label="属性列表">
+                  <el-select v-model="exposeAtttrbutes" multiple @change="exposeChange">
+                    <el-option v-for="(item, key) in generateConf.attrbutes" :key="key" :label="key" :value="key" />
+                  </el-select>
                 </el-form-item>
-                <el-button  @click="handleMethod(undefined, 'methods', false, '')">添加方法</el-button>
-              </el-scrollbar>
-            </el-collapse-item>
-            <el-collapse-item title="属性管理" name="attrbutes"
-              v-show="activeGeneral === undefined || activeGeneral === 'attrbutes'">
-              <el-scrollbar class="right-scrollbar">
-                <edit-attr :props-key="undefined" @updateAttr="updateAttr" :is-add="true" />
-                <template v-for="(item, key) in generateConf.attrbutes" :key="key">
-                  <edit-attr :props-config="item" @updateAttr="updateAttr" :props-key="key" />
-                </template>
-              </el-scrollbar>
-            </el-collapse-item>
-            <el-collapse-item title="props管理" name="props"
-              v-show="activeGeneral === undefined || activeGeneral === 'props'">
-              <el-scrollbar class="right-scrollbar">
-                <edit-props :props-key="undefined" @updateProps="updateProps" :is-add="true" />
-                <template v-for="(item, key) in generateConf.props" :key="key">
-                  <edit-props :props-config="item" @updateProps="updateProps" :props-key="key" />
-                </template>
-              </el-scrollbar>
-            </el-collapse-item>
-            <el-collapse-item title="emits管理" name="emits"
-              v-show="activeGeneral === undefined || activeGeneral === 'emits'">
-              <el-input-tag v-model="generateConf.emits" tag-type="success"  placeholder="请输入emit" />
-            </el-collapse-item>
-            <el-collapse-item title="expose管理" name="expose"
-              v-show="activeGeneral === undefined || activeGeneral === 'expose'">
-              <el-form-item label="事件列表"> 
-              <el-select v-model="exposeMethod" @change="exposeChange" multiple>
-                <el-option v-for="(item,key) in generateConf.methods" :key="key" :label="key" :value="key" />
-              </el-select>
-              </el-form-item>
-              <el-form-item label="属性列表"> 
-              <el-select v-model="exposeAtttrbutes" multiple @change="exposeChange">
-                <el-option v-for="(item,key) in generateConf.attrbutes" :key="key" :label="key" :value="key" />
-              </el-select >
-              </el-form-item>
-              <el-input-tag disabled v-model="generateConf.expose" tag-type="success"  placeholder="请输入emit" />
-            </el-collapse-item>
-          </el-collapse>
-        </el-form>
+                <el-input-tag disabled v-model="generateConf.expose" tag-type="success" placeholder="请输入emit" />
+              </el-collapse-item>
+            </el-collapse>
+          </el-form>
         </el-card>
       </el-tab-pane>
     </el-tabs>
@@ -250,9 +253,10 @@
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import MethodEditDialog from "./components/MethodEditDialog";
 import ComponentAttrEdit from "./components/ComponentAttrEdit.vue";
-import { cloneDeep} from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import EditProps from "./components/EditProps";
 import EditAttr from "./components/EditAttr";
+import { getDicts } from '@/api/system/dict/data';
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const props = defineProps({
@@ -267,12 +271,14 @@ const props = defineProps({
     default: () => ({}),
   },
 });
-const colVisible = ref([]);
-const fnFrom = ref("");
-const isDefault = ref(false);
-const method = ref({});
-const temSetVisible=ref(false)
+const colVisible = ref([])
+const fnFrom = ref("")
+const isDefault = ref(false)
+const method = ref({})
+const temSetVisible = ref(false)
 
+
+//事件控制器
 function handleEvent(item, key) {
   let med = props.generateConf.methods[item.functionName];
   if (med) {
@@ -286,14 +292,111 @@ function handleEvent(item, key) {
   }
 }
 
+const isComponentMounted = ref(true); // 标志变量，表示组件是否已挂载
+
+onUnmounted(() => {
+  isComponentMounted.value = false; // 组件卸载时设置为 false
+});
+
+// ... existing code ...
+function getDictus(key, timeout = 500) {
+  const dictRef = proxy.useDict(key)[key]; // 获取响应式引用
+  return Promise.race([
+    new Promise((resolve, reject) => {
+      let unwatch; // 定义 unwatch 为可选变量
+      const stopWatch = () => {
+        if (unwatch) {
+          unwatch(); // 停止监听
+          unwatch = null; // 避免重复调用
+        }
+      };
+
+      unwatch = watch(
+        () => dictRef.value,
+        (newValue) => {
+          if (newValue && newValue.length > 0 && isComponentMounted.value) {
+            stopWatch(); // 停止监听
+            resolve(newValue); // 返回加载完成的数据
+          }
+        },
+        { immediate: true }
+      );
+
+      // 设置超时逻辑
+      const timeoutId = setTimeout(() => {
+        stopWatch();
+        reject(new Error(`字典数据加载超时: ${key}`)); // 超时后抛出错误
+      }, timeout);
+    }),
+    new Promise((_, reject) => {
+      if (!isComponentMounted.value) {
+        reject(new Error("组件已卸载，无法加载字典数据"));
+      }
+    }),
+  ]).catch((error) => {
+    proxy.$message.warning(error.message || error); // 警告信息
+    return []; // 超时或异常时返回空数组
+  });
+}
+
+async function buildDictOptions() {
+  const tem = props.activeDataProperty.template[props.activeDataProperty.activeTemplate];
+  const key = props.activeDataProperty.slots.default.dataKey;
+
+  switch (props.activeDataProperty.slots.default.dataSource) {
+    case "static":
+      break;
+    case "dict":
+      try {
+        const dis = await getDictus(key); // 等待字典数据加载完成
+        // 清空并更新子项配置
+        props.activeDataProperty.slots.default.slotOptions = [];
+        if (!dis || dis.length === 0) {
+          proxy.$message.warning("字典数据为空或未正确加载");
+          return;
+        }
+        nextTick(() => {
+          if (!isComponentMounted.value) return; // 如果组件已卸载，直接返回
+          const ad = [];
+          for (const item of dis) {
+            let childComponent = cloneDeep(tem);
+            if (childComponent?.attr?.label) {
+              childComponent.attr.label.value = item.label;
+            }
+            if (childComponent?.slots?.default?.slotType === "normal") {
+              childComponent.slots.default.value = item.label;
+            }
+            if (childComponent?.attr?.value) {
+              childComponent.attr.value.value = item.value;
+            }
+            ad.push(childComponent);
+          }
+          props.activeDataProperty.slots.default.slotOptions.push(...ad);
+        });
+      } catch (error) {
+        proxy.$message.warning("加载字典数据失败:", error.message || error);
+      }
+      break;
+    case "config":
+      break;
+    default:
+      break;
+  }
+}
+// ... existing code ...
+
+function getConfig(key) {
+  return proxy.useDict(key)[key];
+}
+
 function handleMethod(item, fnFromAc, isDefaultAc, key) {
   if (!item) {
     key = "function_" + new Date().getTime();
-    item={
-        value: `function ${key}(){return 'hello world';}`,
-        label: "测试方法",
-        info: "测试方法",
-        used: false
+    item = {
+      value: `function ${key}(){return 'hello world';}`,
+      label: "测试方法",
+      info: "测试方法",
+      used: false
     }
   }
   method.value = item;
@@ -302,7 +405,7 @@ function handleMethod(item, fnFromAc, isDefaultAc, key) {
   isDefault.value = isDefaultAc;
   methodsVisible.value = true;
 }
-
+//更新方法
 function updateMethod(fnString, fnFromAc, fnName, key) {
   if (fnFromAc === "lifeCycle") {
     props.generateConf.lifeCycles[fnName].value = fnString;
@@ -314,12 +417,15 @@ function updateMethod(fnString, fnFromAc, fnName, key) {
   }
 }
 
-const exposeMethod=ref(props.generateConf.expose.filter(item=>Object.keys(props.generateConf.methods).includes(item)));
+//方法列表
+const exposeMethod = ref(props.generateConf.expose.filter(item => Object.keys(props.generateConf.methods).includes(item)));
 
-const exposeAtttrbutes=ref(props.generateConf.expose.filter(item=>Object.keys(props.generateConf.atttrbutes).includes(item)));
+//属性列表
+const exposeAtttrbutes = ref(props.generateConf.expose.filter(item => Object.keys(props.generateConf.atttrbutes).includes(item)));
 
-function exposeChange(value){
- props.generateConf.expose = [...new Set([...props.generateConf.expose, ...value])];
+//暴露变化
+function exposeChange(value) {
+  props.generateConf.expose = [...new Set([...props.generateConf.expose, ...value])];
 }
 
 function updateProps(key, value, type) {
@@ -453,9 +559,6 @@ const data = reactive({
 });
 
 const {
-  currentTab,
-  currentNode,
-  dialogVisible,
   methodsVisible,
 } = toRefs(data);
 

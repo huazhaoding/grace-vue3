@@ -768,6 +768,8 @@ export const FormComponents = {
         default: {
           label: "默认插槽",
           slotType: "childComponent",
+          dataSource: "static",
+          dataKey: "",
           used: true,
           slotOptions: [
             {
