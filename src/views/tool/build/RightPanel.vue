@@ -60,8 +60,16 @@
                           </el-radio-group>
                         </el-form-item>
                         <el-form-item label="数据源Key" v-if="activeDataProperty.slots.default.dataSource !== 'static'">
-                          <el-input v-model="activeDataProperty.slots.default.dataKey"></el-input>
-                          <el-button type="primary" @click="buildDictOptions">加载数据</el-button>
+                          <el-input v-model="activeDataProperty.slots.default.dataKey" v-if="activeDataProperty.slots.default.dataSource === 'config'"></el-input>
+                          <el-select v-model="activeDataProperty.slots.default.dataKey" v-if="activeDataProperty.slots.default.dataSource === 'dict'" placeholder="请选择dictType">
+                             <el-option
+                              v-for="item in dictTypes"
+                              :key="item.dictType"
+                              :label="item.dictName+'('+item.dictType+')'"
+                              :value="item.dictType">
+                            </el-option> 
+                          </el-select>
+                          <el-button type="primary"style="margin-top: 10px;" @click="buildDictOptions">加载数据</el-button>
                         </el-form-item>
                         <component-attr-edit
                           :active-data-property="activeDataProperty.template[activeDataProperty.activeTemplate]" />
@@ -257,6 +265,8 @@ import { cloneDeep, set } from "lodash-es";
 import EditProps from "./components/EditProps";
 import EditAttr from "./components/EditAttr";
 import { getDicts } from '@/api/system/dict/data';
+import { listType } from '@/api/system/dict/type';
+import { watch } from "vue";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const props = defineProps({
@@ -276,6 +286,7 @@ const fnFrom = ref("")
 const isDefault = ref(false)
 const method = ref({})
 const temSetVisible = ref(false)
+const dictTypes = ref([])
 
 
 //事件控制器
@@ -298,6 +309,13 @@ onUnmounted(() => {
   isComponentMounted.value = false; // 组件卸载时设置为 false
 });
 
+function listDictType() { 
+  listType().then((res) => {
+    dictTypes.value = res.rows;
+  });
+}
+
+listDictType();
 // ... existing code ...
 function getDictus(key, timeout = 500) {
   const dictRef = proxy.useDict(key)[key]; // 获取响应式引用
@@ -342,7 +360,6 @@ function getDictus(key, timeout = 500) {
 async function buildDictOptions() {
   const tem = props.activeDataProperty.template[props.activeDataProperty.activeTemplate];
   const key = props.activeDataProperty.slots.default.dataKey;
-
   switch (props.activeDataProperty.slots.default.dataSource) {
     case "static":
       break;
@@ -486,6 +503,14 @@ function handleCollapseChange(val) {
     activeGeneral.value = undefined;
   }
 }
+
+watch(() => props.activeDataProperty, (val) => { 
+  if (val) {
+    activeComponent.value ="one";
+    
+  }
+
+});
 
 const rightActiveTab = ref("componentConf");
 function changeColVisible(visible, index) {
