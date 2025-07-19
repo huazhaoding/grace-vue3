@@ -23,6 +23,9 @@
                   <el-form-item v-if="activeDataProperty.vModel !== undefined" label="字段名">
                     <el-input v-model="activeDataProperty.vModel" placeholder="请输入字段名（v-model）"></el-input>
                   </el-form-item>
+                  <el-form-item  label="组件名">
+                    <el-input v-model="activeDataProperty.tagLabel" placeholder="请输入组件名"></el-input>
+                  </el-form-item>
                   <component-attr-edit :active-data-property="activeDataProperty" />
                 </el-scrollbar>
               </el-collapse-item>
@@ -266,7 +269,6 @@ import EditProps from "./components/EditProps";
 import EditAttr from "./components/EditAttr";
 import { getDicts } from '@/api/system/dict/data';
 import { listType } from '@/api/system/dict/type';
-import { nextTick, watch } from "vue";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const props = defineProps({
