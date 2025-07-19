@@ -236,6 +236,11 @@
                 v-show="activeGlobalConf === undefined || activeGlobalConf === 'emits'">
                 <el-input-tag v-model="generateConf.emits" tag-type="success" placeholder="请输入emit" />
               </el-collapse-item>
+              <el-collapse-item title="字典类型" name="dictTypes"
+              
+                v-show="activeGlobalConf === undefined || activeGlobalConf === 'dictTypes'">
+                <el-input-tag v-model="generateConf.dictTypes" tag-type="success" disabled />
+              </el-collapse-item>
               <el-collapse-item title="expose管理" name="expose"
                 v-show="activeGlobalConf === undefined || activeGlobalConf === 'expose'">
                 <el-form-item label="事件列表">
@@ -336,6 +341,8 @@ async function buildDictOptions() {
           proxy.$message.warning("字典数据为空或未正确加载");
           return;
         }
+          props.generateConf.dictTypes.push(key);
+          props.generateConf.dictTypes=[...new Set(props.generateConf.dictTypes)];
           const ad = [];
           for (const item of dis){
             let childComponent = cloneDeep(tem);
@@ -363,7 +370,6 @@ async function buildDictOptions() {
       break;
   }
 }
-// ... existing code ...
 
 function getConfig(key) {
   return proxy.useDict(key)[key];

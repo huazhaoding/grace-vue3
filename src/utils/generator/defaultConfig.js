@@ -68,5 +68,6 @@ export const  defaultConfig = {
   imports: {},
   attrbutes: {
   },
+  dictTypes:[],
   componentType: {}
 }
