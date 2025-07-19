@@ -261,12 +261,12 @@
 import draggable from "vuedraggable/dist/vuedraggable.common";
 import MethodEditDialog from "./components/MethodEditDialog";
 import ComponentAttrEdit from "./components/ComponentAttrEdit.vue";
-import { cloneDeep, set } from "lodash-es";
+import { cloneDeep} from "lodash-es";
 import EditProps from "./components/EditProps";
 import EditAttr from "./components/EditAttr";
 import { getDicts } from '@/api/system/dict/data';
 import { listType } from '@/api/system/dict/type';
-import { watch } from "vue";
+import { nextTick, watch } from "vue";
 const createIdAndKey = inject("createIdAndKey");
 const { proxy } = getCurrentInstance();
 const props = defineProps({
@@ -303,11 +303,6 @@ function handleEvent(item, key) {
   }
 }
 
-const isComponentMounted = ref(true); // 标志变量，表示组件是否已挂载
-
-onUnmounted(() => {
-  isComponentMounted.value = false; // 组件卸载时设置为 false
-});
 
 function listDictType() { 
   listType().then((res) => {
@@ -317,44 +312,12 @@ function listDictType() {
 
 listDictType();
 // ... existing code ...
-function getDictus(key, timeout = 500) {
-  const dictRef = proxy.useDict(key)[key]; // 获取响应式引用
-  return Promise.race([
-    new Promise((resolve, reject) => {
-      let unwatch; // 定义 unwatch 为可选变量
-      const stopWatch = () => {
-        if (unwatch) {
-          unwatch(); // 停止监听
-          unwatch = null; // 避免重复调用
-        }
-      };
-
-      unwatch = watch(
-        () => dictRef.value,
-        (newValue) => {
-          if (newValue && newValue.length > 0 && isComponentMounted.value) {
-            stopWatch(); // 停止监听
-            resolve(newValue); // 返回加载完成的数据
-          }
-        },
-        { immediate: true }
-      );
-
-      // 设置超时逻辑
-      const timeoutId = setTimeout(() => {
-        stopWatch();
-        reject(new Error(`字典数据加载超时: ${key}`)); // 超时后抛出错误
-      }, timeout);
-    }),
-    new Promise((_, reject) => {
-      if (!isComponentMounted.value) {
-        reject(new Error("组件已卸载，无法加载字典数据"));
-      }
-    }),
-  ]).catch((error) => {
-    proxy.$message.warning(error.message || error); // 警告信息
-    return []; // 超时或异常时返回空数组
-  });
+async function getDictus(key) {
+   let data=[]
+   await getDicts(key).then((res)=>{
+    data.push(...res.data)
+    })
+    return data;
 }
 
 async function buildDictOptions() {
@@ -364,7 +327,6 @@ async function buildDictOptions() {
     case "static":
       break;
     case "dict":
-      try {
         const dis = await getDictus(key); // 等待字典数据加载完成
         // 清空并更新子项配置
         props.activeDataProperty.slots.default.slotOptions = [];
@@ -372,27 +334,26 @@ async function buildDictOptions() {
           proxy.$message.warning("字典数据为空或未正确加载");
           return;
         }
-        nextTick(() => {
-          if (!isComponentMounted.value) return; // 如果组件已卸载，直接返回
           const ad = [];
-          for (const item of dis) {
+          for (const item of dis){
             let childComponent = cloneDeep(tem);
             if (childComponent?.attr?.label) {
-              childComponent.attr.label.value = item.label;
+              childComponent.attr.label.value = item.dictLabel;
             }
             if (childComponent?.slots?.default?.slotType === "normal") {
-              childComponent.slots.default.value = item.label;
+              childComponent.slots.default.value = item.dictLabel;
             }
             if (childComponent?.attr?.value) {
               childComponent.attr.value.value = item.value;
             }
             ad.push(childComponent);
           }
-          props.activeDataProperty.slots.default.slotOptions.push(...ad);
-        });
-      } catch (error) {
-        proxy.$message.warning("加载字典数据失败:", error.message || error);
-      }
+    
+             props.activeDataProperty.slots.default.slotOptions.push(...ad);
+    
+         
+       
+     
       break;
     case "config":
       break;
