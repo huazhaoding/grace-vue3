@@ -10,6 +10,8 @@ export function vueTemplate(components) {
 // 脚本
 export function vueScript(config) {
   let str = "";
+  str += generateImports(config.imports);
+  str += generateImportDict(config.dictTypes);
   str += generateAttrbutes(config.attrbutes);
   str += generateProps(config.props) + "\n";
   str += generateEmits(config.emits) + "\n";
@@ -73,7 +75,7 @@ function generateComponent(config) {
             const distAttributes = generatelAttrKv(tem.attr,true);
             let defDictSlot="";
             if(tem?.slots?.default?.slotType==='normal'){
-               defDictSlot= `<template #default>{{dict.dictLabel}}</template>`;
+               defDictSlot= `<template #default>{{dict.label}}</template>`;
             }
             
        slotContent +=  `<${tem.tag} v-for='dict in ${value.dataKey}'  ${distAttributes}>
@@ -143,9 +145,18 @@ function generatelAttrKv(item,byDict) {
     .join(" ");
 }
 
-function generateImports(){
+function generateImports(imps){
+  let impStr="";
+      for(const imp in imps)
+      {
+        if(imps[imp].used)
+        {
+          impStr+=imps[imp].value+'\n';
+        }
 
-return  "const { proxy } = getCurrentInstance();"
+      }
+
+return  impStr;
 }
 
 /**
@@ -163,10 +174,16 @@ function generateMethods(methods) {
 
 /**
  * 构造props
- * @param {*} props 
+ * @param {*} props object
  * @returns 
  */
 function generateProps(props) {
+  if(Object.keys(props).length===0)
+  {
+   {
+    return "";
+  }
+  }
   const propsContent = Object.entries(props)
     .filter(([key, value]) => value !== undefined)
     .map(([key, value]) => {
@@ -212,6 +229,12 @@ function generateAttrbutes(attrbutes) {
  * @returns 
  */
 function generateEmits(emits) {
+  if(emits.length===0)
+  {
+    {
+    return "";
+  }
+  }
   return `defineEmits([${emits.join(",")}])`;
 }
 
@@ -221,6 +244,10 @@ function generateEmits(emits) {
  * @returns 
  */
 function generateExpose(expose) {
+    if(expose.length===0)
+  {
+    return "";
+  }
   return `defineExpose({${expose.join(",")}})`;
 }
 

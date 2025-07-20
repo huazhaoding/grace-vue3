@@ -357,12 +357,8 @@ async function buildDictOptions() {
             }
             ad.push(childComponent);
           }
-    
              props.activeDataProperty.slots.default.slotOptions.push(...ad);
     
-         
-       
-     
       break;
     case "config":
       break;
