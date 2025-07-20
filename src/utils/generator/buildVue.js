@@ -9,13 +9,13 @@ export function vueTemplate(components) {
 }
 // 脚本
 export function vueScript(config) {
-  let str ="";
+  let str = "";
   str += generateAttrbutes(config.attrbutes);
-  str += generateProps(config.props)+"\n";
-  str += generateEmits(config.emits)+"\n";
-  str += generateMethods(config.methods)+"\n";
-  str += generateMethods(config.lifeCycles)+"\n";
-  str += generateExpose(config.expose)+"\n";
+  str += generateProps(config.props) + "\n";
+  str += generateEmits(config.emits) + "\n";
+  str += generateMethods(config.methods) + "\n";
+  str += generateMethods(config.lifeCycles) + "\n";
+  str += generateExpose(config.expose) + "\n";
   return `<script setup>
     ${str}
   </script>`;
@@ -55,34 +55,35 @@ function listGenerateComponent(components) {
  * @returns {string} - 生成的 HTML 代码
  */
 function generateComponent(config) {
-  if (config.hedge) {
-    let hedgeItem = Object.assign({}, config.hedge);
-    delete config.hedge;
-    hedgeItem.slots = {
-      default: {
-        used: true,
-        slotType: "childComponent",
-        slotOptions: [],
-      },
-    };
-    hedgeItem.slots.default.slotOptions.push(config);
-    return generateComponent(hedgeItem);
-  } else {
     const { tag, attr, slots, events } = config;
-    const simplify = simplifyItemAttr(attr);
+
     // 构建插槽内容
     let slotContent = "";
     // 构建组件属性
-    const attributes = Object.entries(simplify)
-      .filter(([key, value]) => value !== undefined && value !== "")
-      .map(([key, value]) => `${key}="${value}"`)
-      .join(" ");
+    const attributes = generatelAttrKv(attr,false);
     //构建插槽
     if (slots) {
       for (const [key, value] of Object.entries(slots)) {
         if (value.used) {
           if (key === "default" && value.slotType !== "normal") {
-            slotContent += listGenerateComponent(value.slotOptions);
+            if(value?.dataSource!='static'){
+                if(value.dataSource='dict')
+                {
+                  const tem = config.template[config.activeTemplate];
+            const distAttributes = generatelAttrKv(tem.attr,true);
+            let defDictSlot="";
+            if(tem?.slots?.default?.slotType==='normal'){
+               defDictSlot= `<template #default>{{dict.dictLabel}}</template>`;
+            }
+            
+       slotContent +=  `<${tem.tag} v-for='dict in ${value.dataKey}'  ${distAttributes}>
+            ${defDictSlot}
+         </${tem.tag}>`
+         }
+            }
+          else{
+      slotContent += listGenerateComponent(value.slotOptions);
+          }
           } else {
             slotContent += `<template #${key}>${value.value}</template>`;
           }
@@ -103,7 +104,6 @@ function generateComponent(config) {
     return `<${tag} ${attributes} ${eventStr}>
     ${slotContent}
 </${tag}>`;
-  }
 }
 
 // 转换函数：将复杂结构简化为简单结构
@@ -121,6 +121,28 @@ function simplifyItemAttr(item) {
   return simplified;
 }
 
+function generatelAttrKv(item,byDict) {
+  const simplify = simplifyItemAttr(item);
+  return Object.entries(simplify)
+    .filter(([key, value]) => value !== undefined && value !== "")
+    .map(([key, value]) => {
+      if(byDict &&(key==='label'||key==='value')){
+        if(key==='label')
+        {
+          return `:${key}="dict.dictLabel"`;
+        }
+        else{
+          return `:${key}="dict.dictValue"`;
+      }
+       
+      }
+      else {
+        return `${key}="${value}"`;
+      }
+    })
+    .join(" ");
+}
+
 function generateMethods(methods) {
   const jsContent = Object.entries(methods)
     .filter(([key, value]) => value !== undefined && value.used)
@@ -129,34 +151,33 @@ function generateMethods(methods) {
   return jsContent;
 }
 
-function generateProps(props){
+function generateProps(props) {
   const propsContent = Object.entries(props)
     .filter(([key, value]) => value !== undefined)
-    .map(([key, value]) =>{
-      if(value instanceof Object)
-      {
-       return `${key}:${JSON.stringify(value)} ,`;
+    .map(([key, value]) => {
+      if (value instanceof Object) {
+        return `${key}:${JSON.stringify(value)} ,`;
       }
-      else{
+      else {
         return `${key}:${value} ,`;
       }
     })
     .join("\n");
-   return `const props=defineProps({${propsContent}})`;  
+  return `const props=defineProps({${propsContent}})`;
 }
 
-function generateAttrbutes(attrbutes){
-    const attrContent = Object.entries(attrbutes)
+function generateAttrbutes(attrbutes) {
+  const attrContent = Object.entries(attrbutes)
     .filter(([key, value]) => value !== undefined)
-    .map(([key, value]) =>{
-      if(value.restType==="ref"){
+    .map(([key, value]) => {
+      if (value.restType === "ref") {
         return `${value.type} ${key}=ref(${value.default})\n`;
       }
-      else if(value.restType==="reactive"){
-       return `${value.type} ${key}=reactive(${value.default})\n`
-         +`const {${value.toRefs.join(',')}})=toRefs(${key})\n`;
+      else if (value.restType === "reactive") {
+        return `${value.type} ${key}=reactive(${value.default})\n`
+          + `const {${value.toRefs.join(',')}})=toRefs(${key})\n`;
       }
-      else{
+      else {
         return `${value.type} ${key}=${value.default}\n`;
       }
     })
@@ -165,12 +186,12 @@ function generateAttrbutes(attrbutes){
   return attrContent;
 }
 
-function generateEmits(emits){
-   return `defineEmits([${emits.join(",")}])`;
+function generateEmits(emits) {
+  return `defineEmits([${emits.join(",")}])`;
 }
 
-function generateExpose(expose){
-   return `defineExpose({${expose.join(",")}})`;
+function generateExpose(expose) {
+  return `defineExpose({${expose.join(",")}})`;
 
 }
 
@@ -820,67 +841,67 @@ const components2 = [
         used: true,
         label: "当选择器的输入框失去焦点时触发",
         functionName: "handleBlur",
-        value: function (item) {},
+        value: function (item) { },
       },
       focus: {
         used: false,
         label: "当选择器的输入框获得焦点时触发",
         functionName: "handleFocus",
-        value: function (item) {},
+        value: function (item) { },
       },
       change: {
         used: false,
         label: "仅当 modelValue 改变时，当输入框失去焦点或用户按Enter时触发",
         functionName: "handleChange",
-        value: function (item) {},
+        value: function (item) { },
       },
       input: {
         used: false,
         label: "在 Input 值改变时触发",
         functionName: "handleInput",
-        value: function (item) {},
+        value: function (item) { },
       },
       clear: {
         used: false,
         label: "在点击由 clearable 属性生成的清空按钮时触发",
         functionName: "handleClear",
-        value: function (item) {},
+        value: function (item) { },
       },
       keydown: {
         used: false,
         label: "按下键时触发",
         functionName: "handleKeydown",
-        value: function () {},
+        value: function () { },
       },
       mouseleave: {
         used: false,
         label: "当鼠标进入输入框时触发",
         functionName: "handleMouseleave",
-        value: function (item) {},
+        value: function (item) { },
       },
       mouseenter: {
         used: false,
         label: "当鼠标离开输入框时触发",
         functionName: "handleMouseenter",
-        value: function (item) {},
+        value: function (item) { },
       },
       compositionstart: {
         used: false,
         label: "输入法输入开始时触发",
         functionName: "handleCompositionstart",
-        value: function (item) {},
+        value: function (item) { },
       },
       compositionupdate: {
         used: false,
         label: "输入法输入改变时触发",
         functionName: "handleCompositionupdate",
-        value: function (item) {},
+        value: function (item) { },
       },
       compositionend: {
         used: false,
         label: "输入法输入完成时触发",
         functionName: "handleCompositionend",
-        value: function (item) {},
+        value: function (item) { },
       },
     },
   },
@@ -1131,14 +1152,15 @@ let vue = {
     },
   },
   attrbutes: {
-    user:{
-        label: "用户名",
-        type: "let",//let 或者 const
-        restType:"reactive", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
-        toRefs: ['age'],//需要转化的节点
-        default: {name:'',
-          age:16
-        }
+    user: {
+      label: "用户名",
+      type: "let",//let 或者 const
+      restType: "reactive", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
+      toRefs: ['age'],//需要转化的节点
+      default: {
+        name: '',
+        age: 16
+      }
     }
   },
 };
@@ -1149,13 +1171,14 @@ let vue = {
 // console.log(makeUpHtml(vue));
 
 console.log(generateAttrbutes({
-    userName:{
-        label: "用户名",
-        type: "let",//let 或者 const
-        restType:"reactive", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
-        toRefs: ['age'],//需要转化的节点
-        default: {name:'',
-          age:16
-        },
-    }
-  }))
+  userName: {
+    label: "用户名",
+    type: "let",//let 或者 const
+    restType: "reactive", //ref 或者 reactive 或者normal  reactive时 default 复杂对象
+    toRefs: ['age'],//需要转化的节点
+    default: {
+      name: '',
+      age: 16
+    },
+  }
+}))
