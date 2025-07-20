@@ -129,10 +129,10 @@ function generatelAttrKv(item,byDict) {
       if(byDict &&(key==='label'||key==='value')){
         if(key==='label')
         {
-          return `:${key}="dict.dictLabel"`;
+          return `:${key}="dict.label"`;
         }
         else{
-          return `:${key}="dict.dictValue"`;
+          return `:${key}="dict.value"`;
       }
        
       }
@@ -143,6 +143,16 @@ function generatelAttrKv(item,byDict) {
     .join(" ");
 }
 
+function generateImports(){
+
+return  "const { proxy } = getCurrentInstance();"
+}
+
+/**
+ * 构造方法
+ * @param {*} methods 
+ * @returns 
+ */
 function generateMethods(methods) {
   const jsContent = Object.entries(methods)
     .filter(([key, value]) => value !== undefined && value.used)
@@ -151,6 +161,11 @@ function generateMethods(methods) {
   return jsContent;
 }
 
+/**
+ * 构造props
+ * @param {*} props 
+ * @returns 
+ */
 function generateProps(props) {
   const propsContent = Object.entries(props)
     .filter(([key, value]) => value !== undefined)
@@ -166,6 +181,11 @@ function generateProps(props) {
   return `const props=defineProps({${propsContent}})`;
 }
 
+/**
+ * 构造属性
+ * @param {*} attrbutes 
+ * @returns 
+ */
 function generateAttrbutes(attrbutes) {
   const attrContent = Object.entries(attrbutes)
     .filter(([key, value]) => value !== undefined)
@@ -186,13 +206,27 @@ function generateAttrbutes(attrbutes) {
   return attrContent;
 }
 
+/**
+ * 构造Emits
+ * @param {*} emits 
+ * @returns 
+ */
 function generateEmits(emits) {
   return `defineEmits([${emits.join(",")}])`;
 }
 
+/**
+ * 暴露方法属性
+ * @param {*} expose 
+ * @returns 
+ */
 function generateExpose(expose) {
   return `defineExpose({${expose.join(",")}})`;
+}
 
+function generateImportDict(dictTypes){
+  const dictTypesStr=dictTypes.join(",");
+  return `const {${dictTypesStr}}=proxy.useDict(${dictTypesStr})`;
 }
 
 /**
