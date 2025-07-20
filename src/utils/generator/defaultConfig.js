@@ -65,7 +65,12 @@ export const  defaultConfig = {
   props: {
   },
   expose: [],
-  imports: {},
+  imports: {
+    proxy:{
+        used:true,
+        value:"const { proxy } = getCurrentInstance();"
+    },
+  },
   attrbutes: {
   },
   dictTypes:[],
