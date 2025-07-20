@@ -862,7 +862,7 @@ export const FormComponents = {
                   label: "默认插槽",
                   type: "textarea",
                 },
-              },
+              }
             },
           ],
         },

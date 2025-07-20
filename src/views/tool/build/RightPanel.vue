@@ -353,7 +353,7 @@ async function buildDictOptions() {
               childComponent.slots.default.value = item.dictLabel;
             }
             if (childComponent?.attr?.value) {
-              childComponent.attr.value.value = item.value;
+              childComponent.attr.value.value = item.dictValue;
             }
             ad.push(childComponent);
           }
