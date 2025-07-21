@@ -43,7 +43,7 @@
                 :list="drawingList"
                 :animation="340"
                 group="componentsGroup"
-                item-key="renderKey"
+                item-key="tagLabel"
               >
                 <template #item="{ element, index }">
                   <dynamic-component
@@ -80,7 +80,7 @@
     />
   </div>
 </template>
-<script setup>
+<script setup name="Build">
 import ComponentsLibrary from "./components/ComponentsLibrary";
 import draggable from "vuedraggable/dist/vuedraggable.common"; // 导入 vuedraggable 组件
 import PreviewDialog from "./PreviewDialog"; // 导出预览对话框组件
@@ -90,16 +90,22 @@ import beautifier from "js-beautify"; // 用于格式化生成的代码
 import { defaultConfig  }  from "@/utils/generator/defaultConfig"
 import { makeUpHtml } from "@/utils/generator/buildVue";
 const leftActiveTab = ref("componentLibrary"); // 当前左侧活动标签页
-const drawingList = ref([]); // 当前表单项列表
 const { proxy } = getCurrentInstance(); // 获取当前组件实例
 const idGlobal = ref(100); // 全局唯一 ID 生成器
 const activeData = ref({}); // 当前激活的表单项数据
 const activeId = ref(null); // 当前激活的表单项 ID
-const generateConf = reactive(defaultConfig); // 生成配置
 const componentTemplateData = ref(""); // 存储生成的表单模板
 const jsonString = ref("");
 const previewDialogVisible = ref(false); // 控制预览对话框显示状态
 provide("createIdAndKey", createIdAndKey);
+
+const componentConf=reactive({
+      drawingList:[],
+      generateConf:defaultConfig
+})
+
+const {drawingList,generateConf}= toRefs(componentConf)
+
 function updateCloneComponent(element, from) {
   if (from === "click") {
     drawingList.value.push(element); // 将克隆的组件添加到表单项列表
@@ -111,6 +117,14 @@ function updateCloneComponent(element, from) {
     activeId.value = idGlobal.value; // 更新当前激活的表单项 ID
   }
 }
+
+watch(() => drawingList, (val) => { 
+  if (val) {
+   console.log(val)
+  }
+
+},{deep:true,immediate: true});
+
 
 // 复制组件
 function drawingItemCopy(item, parent) {

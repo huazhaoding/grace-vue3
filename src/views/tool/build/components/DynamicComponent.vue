@@ -131,7 +131,7 @@ const props = defineProps({
   index: Number,
   drawingList: {
     type: Array,
-    required: true,
+    // required: true,
   },
   activeId: {
     type: [String, Number],
