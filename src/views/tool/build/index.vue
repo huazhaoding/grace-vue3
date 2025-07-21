@@ -118,14 +118,6 @@ function updateCloneComponent(element, from) {
   }
 }
 
-watch(() => drawingList, (val) => { 
-  if (val) {
-   console.log(val)
-  }
-
-},{deep:true,immediate: true});
-
-
 // 复制组件
 function drawingItemCopy(item, parent) {
   let clone = JSON.parse(JSON.stringify(item)); // 深拷贝表单项
