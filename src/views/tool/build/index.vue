@@ -98,7 +98,6 @@ const componentTemplateData = ref(""); // 存储生成的表单模板
 const jsonString = ref("");
 const previewDialogVisible = ref(false); // 控制预览对话框显示状态
 provide("createIdAndKey", createIdAndKey);
-
 const componentConf=reactive({
       drawingList:[],
       generateConf:defaultConfig
